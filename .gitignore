@@ -1,0 +1,7 @@
+__preview__
+__ship__
+node_modules
+bower_components
+stats.json
+.DS_Store
+.env
