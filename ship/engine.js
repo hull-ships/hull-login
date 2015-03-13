@@ -3,12 +3,42 @@ import { EventEmitter } from 'events';
 import IntlMessageFormat from 'intl-messageformat';
 import constants from './constants';
 
+const USER_SECTIONS = [
+  'showProfile',
+  'editProfile'
+];
+
+const VISITOR_SECTIONS = [
+  'logIn',
+  'signUp',
+  'resetPassword'
+];
+
+const SECTIONS = USER_SECTIONS.concat(VISITOR_SECTIONS);
+
+const ACTIONS = [
+  'showDialog',
+  'hideDialog',
+  'signUp',
+  'logIn',
+  'logOut',
+  'linkIdentity',
+  'unlinkIdentity',
+  'resetPassword',
+  'activateLogInSection',
+  'activateSignUpSection',
+  'activateResePasswordSection',
+  'activateShowProfileSection',
+  'activateEditProfileSection'
+];
+
 const EVENT = 'CHANGE';
 
-function Engine(deployment) {
+function Engine(deployment, organization) {
   this._ship = deployment.ship;
   this._platform = deployment.platform;
   this._settings = deployment.settings;
+  this._organization = organization;
 
   this.resetState();
 
@@ -26,7 +56,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     if (this._actions) { return this._actions; }
 
     var instance = this;
-    this._actions = constants.ACTIONS.reduce(function(m, a) {
+    this._actions = ACTIONS.reduce(function(m, a) {
       m[a] = instance[a].bind(instance);
       return m;
     }, {});
@@ -37,6 +67,9 @@ assign(Engine.prototype, EventEmitter.prototype, {
   getState: function() {
     return {
       user: this._user,
+      organization: this._organization,
+      platform: this._platform,
+      ship: this._ship,
       identities: this._identities,
       providers: this.getProviders(),
       error: this._error,
@@ -45,7 +78,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
       isLogingOut: this._isLogingOut,
       isLinking: this._isLinking,
       isUnlinking: this._isUnlinking,
-      dialogIsVisible: this._dialogIsVisible
+      dialogIsVisible: this._dialogIsVisible,
+      activeSection: this.getActiveSection()
     };
   },
 
@@ -62,7 +96,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   resetState: function() {
-    this.resetTranslations();
     this.resetUser();
 
     this._error = null;
@@ -71,6 +104,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this._isLinking = false;
     this._isUnlinking = false;
     this._dialogIsVisible = false;
+    this._activeSection = 'logIn';
   },
 
   resetUser: function() {
@@ -84,18 +118,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
     }
 
     this._identities = identities;
-  },
-
-  resetTranslations: function() {
-    this._locale = 'en';
-    this._translations = {};
-
-    var translations = this._ship.translations[this._locale];
-    for (var k in translations) {
-      if (translations.hasOwnProperty(k)) {
-        this._translations[k] = new IntlMessageFormat(translations[k], this._locale);
-      }
-    }
   },
 
   getProviders: function() {
@@ -115,6 +137,12 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return providers;
   },
 
+  getActiveSection: function() {
+    var sections = this._user ? USER_SECTIONS : VISITOR_SECTIONS;
+
+    return sections.indexOf(this._activeSection) > -1 ? this._activeSection : sections[0];
+  },
+
   showDialog: function() {
     this._dialogIsVisible = true;
     this.emitChange();
@@ -125,20 +153,15 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.emitChange();
   },
 
-  login: function(provider) {
-    var p = this.perform('login', provider);
-
-    var location = this._settings.redirect_url;
-    if (this.isShopify()) {
-      location = location || '/account';
-    }
-
-    if (location) {
-      p.done(function() { document.location = location; });
-    }
+  signUp: function(credentials) {
+    this.performAndRedirect('signup', credentials);
   },
 
-  logout: function() {
+  logIn: function(providerOrCredentials) {
+    this.performAndRedirect('login', providerOrCredentials);
+  },
+
+  logOut: function() {
     Hull.logout();
   },
 
@@ -150,15 +173,60 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.perform('unlinkIdentity', provider);
   },
 
+  resetPassword: function(email) {
+    console.log('RESET PASSWORD FOR ', email);
+  },
+
+  performAndRedirect: function(action, provider) {
+    var p = this.perform(action, provider);
+
+    var location = this._settings.redirect_url;
+    if (this.isShopify()) {
+      location = location || '/account';
+    }
+
+    if (location) {
+      p.done(function() { document.location = location; });
+    }
+
+    return p;
+  },
+
+  activateLogInSection: function() {
+    this.activateSection('logIn');
+  },
+
+  activateSignUpSection: function() {
+    this.activateSection('signUp');
+  },
+
+  activateResePasswordSection: function() {
+    this.activateSection('resetPassword');
+  },
+
+  activateShowProfileSection: function() {
+    this.activateSection('showProfile');
+  },
+
+  activateEditProfileSection: function() {
+    this.activateSection('editProfile');
+  },
+
   perform: function(method, provider) {
     var s = constants.STATUS[method];
+    var options;
+
+    if (typeof provider === 'string') {
+      options = { provider: provider };
+    } else {
+      options = provider;
+      provider = 'classic';
+    }
 
     this['_' + s] = provider;
     this._error = null;
 
     this.emitChange();
-
-    var options = { provider: provider };
 
     if (this.isShopify()) {
       var proxy = document.location.origin + '/a/hull-callback';
@@ -168,31 +236,36 @@ assign(Engine.prototype, EventEmitter.prototype, {
     }
 
     var promise = Hull[method](options);
-    promise.then(function() {
-      this.resetUser();
 
-      this['_' + s] = false;
-      this._error = null;
+    var instance = this;
+    function onSuccess() {
+      instance.resetUser();
 
-      this.emitChange();
-    }.bind(this), function(error) {
-      this['_' + s] = false;
+      instance['_' + s] = false;
+      instance._error = null;
+
+      instance.emitChange();
+    }
+    function onFailure(error) {
+      instance['_' + s] = false;
 
       error.provider = provider;
-      this._error = error;
+      instance._error = error;
 
-      this.emitChange();
-    }.bind(this));
+      instance.emitChange();
+    }
+    promise.then(onSuccess, onFailure);
 
     return promise;
   },
 
-  translate: function(message, data) {
-    var m = this._translations[message];
-
-    if (m == null) { return; }
-
-    return m.format(data);
+  activateSection: function(name) {
+    if (SECTIONS.indexOf(name) > -1) {
+      this._activeSection = name;
+      this.emitChange();
+    } else {
+      throw new Error('"' + name + '" is not a valid section name');
+    }
   },
 
   isShopify: function() {

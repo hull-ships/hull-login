@@ -15,6 +15,12 @@
       "description": "Where to redirect when login has succeeded.",
       "type": "string"
     }
+  ],
+  "resources": [
+    {
+      "name": "profile_form",
+      "type": "form"
+    }
   ]
 }
 

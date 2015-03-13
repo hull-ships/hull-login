@@ -29,6 +29,6 @@ Hull.init(c, function(hull, me, ship, organization) {
   };
 
   // TODO use Hull.embed
-  bootstrap(document.querySelector(deployment.settings._selector), deployment);
+  bootstrap(document.querySelector(deployment.settings._selector), deployment, organization);
 });
 

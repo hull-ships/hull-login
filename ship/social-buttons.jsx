@@ -1,38 +1,28 @@
-var React = require('react');
-var style = require('./style.scss');
-var constants = require('./constants');
+import React from 'react';
+import { translate } from './i18n';
 
-module.exports = React.createClass({
-  propTypes: {
-    user: React.PropTypes.object,
-    providers: React.PropTypes.array.isRequired,
-    isWorking: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
-    isLogingIn: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
-    isLinking: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
-    isUnlinking: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
-    onLogIn: React.PropTypes.func.isRequired,
-    onLinkIdentity: React.PropTypes.func.isRequired,
-    onUnlinkIdentity: React.PropTypes.func.isRequired,
-    translate: React.PropTypes.func.isRequired
-  },
-
+export default React.createClass({
   renderButton: function(provider) {
     var actionName;
     var status;
     var t;
 
     if (this.props.user == null) {
-      actionName = 'onLogIn';
+      actionName = 'logIn';
       status = 'isLogingIn';
-      t = ['log_in', 'is_loging_in'];
+      if (this.props.activeSection === 'signUp') {
+        t = ['Sign up with {provider}', 'Signing up with {provider}']
+      } else {
+        t = ['Log in with {provider}', 'Logging in with {provider}'];
+      }
     } else if (provider.isLinked && provider.isUnlinkable) {
-      actionName = 'onUnlinkIdentity';
+      actionName = 'unlinkIdentity';
       status = 'isUnlinking';
-      t = ['unlink', 'is_unlinking'];
+      t = ['Unlink your {provider} account', 'Unlinking {provider} account'];
     } else if (!provider.isLinked) {
-      actionName = 'onLinkIdentity';
+      actionName = 'linkIdentity';
       status = 'isLinking';
-      t = ['link', 'is_linking'];
+      t = ['Link your {provider} account', 'Linking {provider} account'];
     } else {
       return;
     }
@@ -41,7 +31,7 @@ module.exports = React.createClass({
     var iconClasses = 'hull-icon hull-icon-' + provider.name;
 
     var m = this.props[status] === provider.name ? t[1] : t[0];
-    var wording = this.props.translate(m, { provider: provider.name });
+    var wording = translate(m, { provider: provider.name });
 
     var handler = this.props[actionName].bind(null, provider.name);
     return (

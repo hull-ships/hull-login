@@ -1,7 +1,20 @@
 import React from 'react';
-import style from './style.scss';
 import LayeredComponentMixin from 'react-components/layered-component-mixin';
-import SocialButtons from './social-buttons.jsx'
+import style from './style.scss';
+import LogInSection from './log-in-section.jsx';
+import SignUpSection from './sign-up-section.jsx';
+import ResetPasswordSection from './reset-password-section.jsx';
+import ShowProfileSection from './show-profile-section.jsx';
+import EditProfileSection from './edit-profile-section.jsx';
+import { translate } from './i18n';
+
+const SECTIONS = {
+  logIn: LogInSection,
+  signUp: SignUpSection,
+  resetPassword: ResetPasswordSection,
+  showProfile: ShowProfileSection,
+  editProfile: EditProfileSection
+};
 
 export default React.createClass({
   mixins: [
@@ -26,52 +39,16 @@ export default React.createClass({
     this.setState(this.props.engine.getState());
   },
 
-  handleAction: function(actionName, providerName, e) {
-    if (arguments.length <= 2) {
-      e = providerName;
-      providerName = null;
-    }
-
-    e.preventDefault();
-
-    var actions = this.props.engine.getActions();
-    actions[actionName](providerName);
-  },
-
-  handleLogOut: function(e) {
-    this.handleAction('logout', e);
-  },
-
-  showDialog: function(e) {
-    this.handleAction('showDialog', e);
-  },
-
-  hideDialog: function(e) {
-    this.handleAction('hideDialog', e);
-  },
-
-  translate: function(message, data) {
-    console.log('MESSAGE', message, data);
-    return this.props.engine.translate(message, data);
-  },
-
   renderDialog: function() {
-    return (
-      <div>
-        <h1>Hey</h1>
-        <a href='#' onClick={this.hideDialog}>Close</a>
+    var Section = SECTIONS[this.state.activeSection];
 
-        <SocialButtons
-          user={this.state.user}
-          providers={this.state.providers}
-          isWorking={this.state.isWorking}
-          isLogingIn={this.state.isLogingIn}
-          isLinking={this.state.isLinking}
-          isUnlinking={this.state.isUnlinking}
-          onLogIn={this.handleAction.bind(this, 'login')}
-          onLinkIdentity={this.handleAction.bind(this, 'linkIdentity')}
-          onUnlinkIdentity={this.handleAction.bind(this, 'unlinkIdentity')}
-          translate={this.translate} />
+    return (
+      <div className='dialog-container'>
+        <div className='dialog'>
+          <a href='#' onClick={this.props.actions.hideDialog}>{translate('close')}</a>
+
+          <Section {...this.state} {...this.props.actions} />
+        </div>
       </div>
     );
   },
@@ -86,12 +63,9 @@ export default React.createClass({
   },
 
   render: function() {
-    console.log(this.state);
-    if (this.state.user) {
-      return <a href='#' onClick={this.handleLogOut}>Log out</a>;
-    } else {
-      return <a href='#' onClick={this.showDialog}>Log in</a>;
-    }
+    var m = this.state.user ? 'Show profile' : 'Log in';
+
+    return <a href='#' onClick={this.props.actions.showDialog}>{translate(m)}</a>;
   }
 });
 
