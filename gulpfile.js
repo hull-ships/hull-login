@@ -1,124 +1,149 @@
-var del = require('del');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var path = require('path');
-var open = require('open');
+"use strict";
+/*global require, console*/
+
+var _ = require("underscore");
+var del = require("del");
+var runSequence = require("run-sequence");
+
+var gulp = require("gulp");
+var gutil = require("gulp-util");
+var deploy = require("gulp-gh-pages");
+var notifier = require("node-notifier");
+
 var ngrok = require('ngrok');
-var deploy = require('gulp-gh-pages');
-var es = require('event-stream');
-var rimraf = require('rimraf');
-var runSequence = require('run-sequence');
 
-var SHIP_PORT = 8480;
+var webpack = require("webpack");
+var WebpackDevServer = require("webpack-dev-server");
 
-var PREVIEW_PORT = SHIP_PORT + 1;
 
-var LOADERS = [
-  { test: /\.json$/, loaders: ['json-loader'] },
-  { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules|bower_components/ },
-  { test: /\.jsx$/, loaders: ['react-hot', 'babel-loader'] },
-  {
-    test: /\.(css|scss)$/,
-    loaders: [
-      'style/useable',
-      'css-loader',
-      'sass-loader?outputStyle=expanded',
-      'autoprefixer-loader?browsers=last 2 version'
-    ]
-  }
-];
+// Get our Config.
+var config = require("./config");
+var webpackConfig = require("./webpack.config");
 
-var SHIP_ENTRY = 'ship';
 
-var SHIP_FOLDER = '__ship__';
+// Task Bundles
+gulp.task("default", ["server"]);
+gulp.task("serve",   ["server"]);
 
-var SHIP_WEBPACK = {
-  entry: './' + SHIP_ENTRY,
-  output: {
-    path: __dirname + '/' + SHIP_FOLDER,
-    filename: 'bundle.js'
-  },
-  module: {
-    loaders: LOADERS
-  },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      minimize:true,
-      ascii_only:true,
-      quote_keys:true,
-      sourceMap: false,
-      beautify: false,
-      compress: { drop_console: true }
-    }),
-  ]
+gulp.task("server",  function(callback) {runSequence("clean", "copy-files:watch", "webpack:server", callback); });
+gulp.task("build",   function(callback) {runSequence("clean", "copy-files", "webpack:build", callback); });
+gulp.task("deploy",  function(callback) {runSequence("build", "gh:deploy", callback); });
+
+
+var notify = function(message){
+  notifier.notify({title: config.displayName+" Gulp",message:message});
 };
 
-gulp.task('ship:clean', function(callback) {
-  rimraf(SHIP_FOLDER, callback);
-});
+// Raise errors on Webpack build errors
+var webpackFeedbackHandler = function(err, stats){
+  handleError(err);
 
-gulp.task('ship:webpack', function(callback) {
-  webpack(SHIP_WEBPACK, function(error) {
-    if (error) throw new gutil.PluginError('ship:webpack', error);
+  var jsonStats = stats.toJson();
 
-    callback();
-  })
-});
+  if(jsonStats.errors.length > 0){
+    gutil.log("[webpack:build:error]", JSON.stringify(jsonStats.errors));
+    throw new gutil.PluginError("webpack:build:error", JSON.stringify(jsonStats.errors));
+  }
 
-gulp.task('ship:build', function(callback) {
-  runSequence('ship:clean', 'ship:webpack', 'ship:copy', callback);
-});
+  // Don't throw an error here : Uglify uses a lot of warnings to mention stripped code
+  if(jsonStats.warnings.length > 0){
+    gutil.log("[webpack:build:warning]", JSON.stringify(jsonStats.warnings,null,2));
+  }
+};
 
-var SHIP_FILES = [
-  'manifest.json',
-  'ship/index.html',
-  'ship/locales/*.json'
-];
-
-function copyShipFiles(callback) {
-  es.concat(
-    gulp.src(['manifest.json', 'ship/index.html']).pipe(gulp.dest(SHIP_FOLDER)),
-    gulp.src(['ship/locales/*.json'], { base: './ship' }).pipe(gulp.dest(SHIP_FOLDER))
-  ).on('end', callback || gutil.noop);
-}
-
-gulp.task('ship:copy', copyShipFiles);
-
-gulp.task('ship:copy-watch', function(){
-  copyShipFiles()
-
-  gulp.watch(SHIP_FILES, copyShipFiles);
-});
-
-gulp.task('ship:github', function () {
-  return gulp.src(SHIP_FOLDER + '/**/*').pipe(deploy({}));
-});
-
-gulp.task('ship:deploy', function(callback) {
-  runSequence('ship:build', 'ship:github', callback);
-});
-
-gulp.task('ship:server', ['ship:clean', 'ship:copy-watch'], function() {
-  var server = new WebpackDevServer(webpack(SHIP_WEBPACK), {
-    contentBase: SHIP_FOLDER,
-    headers: { 'Access-Control-Allow-Origin': '*' }
+// Copy static files from the source to the destination
+var copyFiles = function(callback){
+  _.map(config.files,function(dest, src){
+    gulp.src(src).pipe(gulp.dest(dest));
   });
+  notify("Vendors Updated");
+  if(_.isFunction(callback)) {
+    callback();
+  }
+};
 
-  server.listen(SHIP_PORT, 'localhost', function(error) {
-    if (error) throw new gutil.PluginError('ship:server', error);
+// Handle Gulp Errors
+var handleError = function(err, taskName){
+  if(err){
+    notify(taskName+" Error: "+ err);
+    throw new gutil.PluginError("webpack:build", err);
+  }
+};
 
-    gutil.log('[ship:server]', 'http://localhost:' + SHIP_PORT + '/webpack-dev-server/index.html');
 
-    var options = { port: SHIP_PORT };
-    var e = process.env;
-    if (e.NGROK_AUTHTOKEN && e.NGROK_SUBDOMAIN) {
-      options.authtoken = e.NGROK_AUTHTOKEN;
-      options.subdomain = e.NGROK_SUBDOMAIN;
+/**
+ * GULP TASKS START HERE
+*/
+
+
+// Cleanup build folder
+gulp.task("clean",   function(cb)       {del(["./"+config.outputFolder+"/**/*"], cb); });
+
+// One-time file copy
+gulp.task("copy-files", copyFiles);
+
+// Watch files for changes and copy them
+gulp.task("copy-files:watch", function(){
+  copyFiles();
+  gulp.watch(_.keys(config.files),copyFiles);
+});
+
+
+//Production Build.
+//Minified, clean code. No demo keys inside.
+//demo.html WILL NOT WORK with this build.
+//
+//Webpack handles CSS/SCSS, JS, and HTML files.
+gulp.task("webpack:build", function(callback) {
+  // Then, use Webpack to bundle all JS and html files to the destination folder
+  notify("Building App");
+  webpack(_.values(webpackConfig.production), function(err, stats) {
+    var feedback = webpackFeedbackHandler(err,stats);
+    gutil.log("[webpack:build]", stats.toString({colors: true}));
+    notify({message:"App Built"});
+    callback(feedback);
+  });
+});
+
+// Dev Build
+// Create the webpack compiler here for caching and performance.
+var webpackDevCompiler = webpack(webpackConfig.development.browser);
+
+// Build a Dev version of the project. Launched once on startup so we can have eveything copied.
+gulp.task("webpack:build:dev", function(callback) {
+  // run webpack with Dev profile.
+  // Embeds the Hull config keys, and the necessary stuff to make demo.html work
+  webpackDevCompiler.run(function(err, stats) {
+    var feedback = webpackFeedbackHandler(err,stats);
+    gutil.log("[webpack:build:dev]", stats.toString({colors: true}));
+    notify({message:"Webpack Updated"});
+    callback(feedback);
+  });
+});
+
+// Launch webpack dev server.
+gulp.task("webpack:server", function() {
+  var taskName = "webpack:server";
+  var server = new WebpackDevServer(webpackDevCompiler, {
+    contentBase: config.outputFolder,
+    publicPath: "/"+config.assetsFolder,
+    headers: { "Access-Control-Allow-Origin": "*" },
+    hot: config.hotReload,
+    stats: {colors: true }
+  }).listen(config.serverPort, function(err) {
+    handleError(err, taskName);
+    // Dump the preview URL in the console, and open Chrome when launched for convenience.
+    var url = webpackConfig.development.browser.output.publicPath+"webpack-dev-server/";
+    gutil.log("["+taskName+"] started at ", url);
+    notify({message:"Dev Server Started"});
+
+    var options = { port: config.serverPort };
+    var env = process.env;
+    if (env.NGROK_AUTHTOKEN) {
+      options.authtoken = env.NGROK_AUTHTOKEN;
+    }
+    if(env.NGROK_SUBDOMAIN || config.libName){
+      options.subdomain = env.NGROK_SUBDOMAIN || config.libName;
     }
     ngrok.connect(options, function (error, url) {
       if (error) throw new gutil.PluginError('ship:server', error);
@@ -126,63 +151,18 @@ gulp.task('ship:server', ['ship:clean', 'ship:copy-watch'], function() {
       url = url.replace('https', 'http');
 
       gutil.log('[ship:server]', url);
-      open(url, 'chrome');
     });
-  });
-});
 
-var PREVIEW_ENTRY = 'preview';
-
-var PREVIEW_FOLDER = '__preview__';
-
-var PREVIEW_WEBPACK = {
-  entry: {
-    ship: [
-      'webpack-dev-server/client?http://localhost:' + PREVIEW_PORT,
-      'webpack/hot/only-dev-server',
-      './' + PREVIEW_ENTRY
-    ]
-  },
-  output: {
-    path: __dirname + '/' + PREVIEW_FOLDER,
-    filename: 'bundle.js'
-  },
-  module: {
-    loaders: LOADERS
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.NoErrorsPlugin()
-  ]
-};
-
-gulp.task('preview:clean', function(callback) {
-  rimraf(PREVIEW_FOLDER, callback);
-});
-
-var PREVIEW_FILES = ['preview/index.html']
-
-function copyPreviewFiles() {
-  return gulp.src(PREVIEW_FILES).pipe(gulp.dest(PREVIEW_FOLDER));
-}
-
-gulp.task('preview:copy-watch', function(){
-  copyPreviewFiles()
-  gulp.watch(PREVIEW_FILES, copyPreviewFiles);
-});
-
-gulp.task('preview:server', ['preview:clean', 'preview:copy-watch'], function() {
-  var server = new WebpackDevServer(webpack(PREVIEW_WEBPACK), {
-    contentBase: PREVIEW_FOLDER,
-    hot: true
   });
 
-  server.listen(PREVIEW_PORT, 'localhost', function(error) {
-    if (error) throw new gutil.PluginError('preview:server', error);
+});
 
-    gutil.log('[preview:server]', 'http://localhost:' + PREVIEW_PORT + '/webpack-dev-server/index.html');
-  });
+// Deploy production bundle to gh-pages.
+gulp.task("gh:deploy", function () {
+  var outputBundle = "./"+config.outputFolder+"/**/*";
+  console.log("deploying to "+outputBundle);
+  var stream = gulp.src(outputBundle).pipe(deploy({}));
+  notify("Deploying to Github Pages");
+  return stream;
 });
 

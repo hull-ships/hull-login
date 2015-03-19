@@ -1,13 +1,25 @@
 {
-  "name": "hull-login-buttons",
-  "description": "A login buttons ship",
+  "name": "hull-login",
+  "description": "A Login Ship",
   "version": "0.0.1",
-  "homepage": "https://github.com/hull-ships/hull-ship-boilerplate",
+  "homepage": "https://github.com/hull-ships/hull-login",
   "license": "MIT",
+  "main": "dist/ship.js",
   "author": {
     "name": "Hull",
     "email": "contact@hull.io",
     "url": "https://github.com/hull"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hull-ships/hull-login"
+  },
+  "bugs": {
+    "url": "https://github.com/hull-ships/hull-login/issues"
+  },
+  "scripts": {
+    "start": "./node_modules/.bin/gulp server",
+    "prepublish": "./node_modules/.bin/gulp build"
   },
   "keywords": [
     "hull",
@@ -16,32 +28,68 @@
     "react"
   ],
   "dependencies": {
-    "intl-messageformat": "^1.0.4",
+    "colors": "^1.0.3",
+    "intl-messageformat": "^1.1.0",
+    "moment": "^2.9.0",
     "object-assign": "^2.0.0",
     "react": ">=0.12.2",
     "react-components": "^0.2.0",
     "tcomb-form": "^0.4.3",
     "tcomb-json-schema": "^0.1.1",
-    "underscore": "^1.7.0"
+    "underscore": "^1.8.2",
+    "underscore-contrib": "^0.3.0",
+    "underscore.inflections": "^0.2.1",
+    "underscore.string": "^3.0.3"
   },
   "devDependencies": {
-    "autoprefixer-loader": "^1.2.0",
+    "autoprefixer-loader": "^1.1.0",
+    "babel": "^4.4.5",
+    "babel-core": "^4.4.5",
     "babel-loader": "^4.0.0",
+    "css": "^2.1.0",
     "css-loader": "^0.9.0",
-    "event-stream": "^3.3.0",
-    "gulp": "^3.8.10",
+    "del": "^1.1.0",
+    "file-loader": "^0.8.1",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.1.0",
+    "gulp-chmod": "^1.2.0",
+    "gulp-clone": "^1.0.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-concat-css": "^2.1.1",
+    "gulp-copy": "0.0.2",
+    "gulp-flatten": "0.0.4",
     "gulp-gh-pages": "^0.4.0",
+    "gulp-header": "^1.2.2",
+    "gulp-help": "^1.3.3",
+    "gulp-if": "^1.2.5",
+    "gulp-less": "^3.0.1",
+    "gulp-minify-css": "^0.5.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^0.6.6",
+    "gulp-print": "^1.1.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-replace": "^0.5.3",
+    "gulp-rtlcss": "^0.1.4",
+    "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.1",
+    "gulp-watch": "^4.1.1",
     "json-loader": "^0.5.1",
     "jsx": "^0.9.89",
+    "jsx-loader": "^0.12.2",
+    "less": "^2.4.0",
+    "less-loader": "^2.1.0",
     "ngrok": "^0.1.99",
+    "node-notifier": "^4.1.0",
     "open": "0.0.5",
-    "react-hot-loader": "^1.0.0-alpha.3",
-    "rimraf": "^2.3.2",
+    "react-hot-loader": "^1.2.3",
+    "react-social-icons": "^1.1.0",
+    "react-tools": "^0.11.2",
     "run-sequence": "^1.0.2",
     "sass-loader": "^0.4.0-beta.1",
+    "stats-webpack-plugin": "0.0.1",
     "style-loader": "unity/style-loader",
-    "webpack": "^1.4.15",
-    "webpack-dev-server": "^1.6.6"
+    "touch": "0.0.3",
+    "webpack": "^1.7.1",
+    "webpack-dev-server": "^1.7.0"
   }
 }

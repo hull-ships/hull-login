@@ -1,0 +1,10 @@
+.button{
+  outline: 0;
+  &.bc-social, &.bc-social:hover{
+    color: white;
+  }
+  .svg-icon{
+    vertical-align: middle;
+  }
+}
+

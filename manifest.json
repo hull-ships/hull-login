@@ -1,13 +1,9 @@
 {
-  "name": "login-buttons",
+  "name": "hull-login",
   "description": "Simple login buttons",
   "version": "0.0.1",
-  "index": "index.html",
+  "index": "ship.html",
   "locales": ["en"],
-  "demoKeys": {
-    "orgUrl": "http://04ab8422.hullapp.dev",
-    "appId": "54f719695cc017945c000005"
-  },
   "deployment_settings": [
     {
       "name": "redirect_url",

@@ -1,0 +1,114 @@
+// Colors
+$white:                         #FFFFFF;
+$black:                         #222222;
+$black_2:                       #373f4a;
+$turquoise:                     #4BC2B8;
+$red:                           #E75F45;
+$orange:                        #E7A645;
+$orange:                        #FFC11F;
+
+$blue_darkest:                  #262C36;
+$blue_darkest:                  #344259;
+$blue:                          #2CAAD0;
+$blue_2:                        #0093e6; //rgba(37,164,213,0.98)
+
+$blue_gray_darker:              #222B3F;
+$blue_gray_dark:                #3F4654;
+$blue_gray:                     #677DAD;
+$blue_gray_alt:                 #677DAD;
+$blue_gray_light:               #9AA1B1;
+$blue_gray_lighter:             #E0E2E7;
+$blue_gray_lightest:            #D7DEE7;
+
+$light_gray:                    #7B7B7B;
+$light_blue_gray:               #798291;
+$light-filet:                   #DEE3EA;
+$off-white:                     #EAEEF3;
+$off-white:                     #F1F4F7;
+
+$facebook_color: #3C5A98;
+$google_color:   #EB2F12;
+$twitter_color:  #00ABF5;
+$github_color:   #999999;
+
+$primary        : $blue_2;
+$primary_alt    : $turquoise;
+$secondary      : $blue_gray_dark;
+$secondary-alt  : $blue_gray_alt;
+$base-text      : $blue_gray;
+$inverted-text  : $white;
+$tertiary       : $blue_2;
+$quaternary     : $red;
+
+$easeOutQuint: cubic-bezier(0.230, 1.000, 0.320, 1.000);
+
+
+
+// http://brandcolors.net/
+.button.bc-background-facebook, .bc-background-facebook { background-color: #3b5998; }
+.bc-color-facebook { color: #3b5998; }
+
+.button.bc-background-foursquare, .bc-background-foursquare { background-color: #0072b1; }
+.bc-color-foursquare { color: #0072b1; }
+.button.bc-background-foursquare-2, .bc-background-foursquare-2 { background-color: #eeebac; }
+.bc-color-foursquare-2 { color: #eeebac; }
+.button.bc-background-foursquare-3, .bc-background-foursquare-3 { background-color: #0cbadf; }
+.bc-color-foursquare-3 { color: #0cbadf; }
+.button.bc-background-foursquare-4, .bc-background-foursquare-4 { background-color: #8fd400; }
+.bc-color-foursquare-4 { color: #8fd400; }
+.button.bc-background-foursquare-5, .bc-background-foursquare-5 { background-color: #ff7900; }
+.bc-color-foursquare-5 { color: #ff7900; }
+.button.bc-background-foursquare-6, .bc-background-foursquare-6 { background-color: #ffcb00; }
+.bc-color-foursquare-6 { color: #ffcb00; }
+.button.bc-background-foursquare-7, .bc-background-foursquare-7 { background-color: #d1d4d3; }
+.bc-color-foursquare-7 { color: #d1d4d3; }
+
+.button.bc-background-github, .bc-background-github { background-color: #4183c4; }
+.bc-color-github { color: #4183c4; }
+.button.bc-background-github-2, .bc-background-github-2 { background-color: #999999; }
+.bc-color-github-2 { color: #999999; }
+.button.bc-background-github-3, .bc-background-github-3 { background-color: #666666; }
+.bc-color-github-3 { color: #666666; }
+.button.bc-background-github-4, .bc-background-github-4 { background-color: #333333; }
+.bc-color-github-4 { color: #333333; }
+.button.bc-background-github-5, .bc-background-github-5 { background-color: #6cc644; }
+.bc-color-github-5 { color: #6cc644; }
+.button.bc-background-github-6, .bc-background-github-6 { background-color: #bd2c00; }
+.bc-color-github-6 { color: #bd2c00; }
+.button.bc-background-github-7, .bc-background-github-7 { background-color: #ff9933; }
+.bc-color-github-7 { color: #ff9933; }
+
+.button.bc-background-google, .bc-background-google-plus { background-color: #dd4b39; }
+.bc-color-google-plus { color: #dd4b39; }
+
+.button.bc-background-instagram, .bc-background-instagram { background-color: #3f729b; }
+.bc-color-instagram { color: #3f729b; }
+
+.button.bc-background-linkedin, .bc-background-linkedin { background-color: #0976b4; }
+.bc-color-linkedin { color: #0976b4; }
+.button.bc-background-linkedin-2, .bc-background-linkedin-2 { background-color: #000000; }
+.bc-color-linkedin-2 { color: #000000; }
+
+.button.bc-background-pinterest, .bc-background-pinterest { background-color: #cc2127; }
+.bc-color-pinterest { color: #cc2127; }
+
+.button.bc-background-product-hunt, .bc-background-product-hunt { background-color: #d85536; }
+.bc-color-product-hunt { color: #d85536; }
+
+.button.bc-background-readability, .bc-background-readability { background-color: #990000; }
+.bc-color-readability { color: #990000; }
+
+.button.bc-background-stumbleupon, .bc-background-stumbleupon { background-color: #eb4924; }
+.bc-color-stumbleupon { color: #eb4924; }
+
+.button.bc-background-tumblr, .bc-background-tumblr { background-color: #35465c; }
+.bc-color-tumblr { color: #35465c; }
+
+.button.bc-background-twitter, .bc-background-twitter { background-color: #55acee; }
+.bc-color-twitter { color: #55acee; }
+
+.button.bc-background-vine, .bc-background-vine { background-color: #00b488; }
+.bc-color-vine { color: #00b488; }
+
+.button.bc-background-vkontakte, .bc-background-vkontakte { background-color: #45668e; }
+.bc-color-vkontakte { color: #45668e; }

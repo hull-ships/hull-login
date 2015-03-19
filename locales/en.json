@@ -1,0 +1,18 @@
+{
+  "log_out": "Log out",
+  "log_in": "Sign In",
+  "show_profile": "Show Profile",
+  "is_logging_in": "Signing in with {provider}",
+  "link": "Link your {provider} account",
+  "is_linking": "Linking {provider} account",
+  "unlink": "Unlink your {provider} account",
+  "is_unlinking": "Unlinking {provider} account",
+  "identity_taken_error": "This {provider} account is already linked to another User.",
+  "email_taken_error": "{email} is already taken.",
+  "auth_failed_error": "You did not fully authorize or provider app is not well configured.",
+  "window_closed_error": "<strong>Authorization</strong> window has been closed.",
+  "customer_exists_error": "email is already associated with an account... Please <a href='/account/login'>log in with your password</a>. If you have forgotten your password, you can <a href='/account/login#recover'>reset your password here</a>.",
+  "disabled_customer_error": "An email has been sent to {email}, please click the link included to verify your email address.",
+  "unknown_error": "Bummer, something went wrong during authentication."
+}
+
