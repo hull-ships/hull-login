@@ -136,26 +136,28 @@ gulp.task("webpack:server", function() {
     var url = webpackConfig.development.browser.output.publicPath+"webpack-dev-server/";
     gutil.log("["+taskName+"] started at ", url);
     notify({message:"Dev Server Started"});
-
-    var options = { port: config.serverPort };
-    var env = process.env;
-    if (env.NGROK_AUTHTOKEN) {
-      options.authtoken = env.NGROK_AUTHTOKEN;
-    }
-    if(env.NGROK_SUBDOMAIN || config.libName){
-      options.subdomain = env.NGROK_SUBDOMAIN || config.libName;
-    }
-    ngrok.connect(options, function (error, url) {
-      if (error) throw new gutil.PluginError('ship:server', error);
-
-      url = url.replace('https', 'http');
-
-      gutil.log('[ship:server]', url);
-    });
-
+    ngrokServe(config.libName)
   });
-
 });
+
+var ngrokServe = function(subdomain){
+  var options = { port: config.serverPort };
+  var env = process.env;
+  if (env.NGROK_AUTHTOKEN) {
+    options.authtoken = env.NGROK_AUTHTOKEN;
+  }
+  if(env.NGROK_SUBDOMAIN || subdomain){
+    options.subdomain = env.NGROK_SUBDOMAIN || subdomain;
+  }
+  ngrok.connect(options, function (error, url) {
+    if (error) throw new gutil.PluginError('ship:server', error);
+
+    url = url.replace('https', 'http');
+    notify({message:"Ngrok Started on "+url});
+
+    gutil.log('[ship:server]', url);
+  });
+}
 
 // Deploy production bundle to gh-pages.
 gulp.task("gh:deploy", function () {
