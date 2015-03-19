@@ -35,10 +35,10 @@ gulp server
 
 ### Configuration
 
-- Go to the Hull Dashboard, Create a Platform with URL you will use to demo your ship. For instance, this ship is hosted at `http://hull-ships.github.io/hull-login`.
+- Go to the Hull Dashboard, Create a Platform with URL you will use to demo your ship. For instance, this ship is hosted at `http://hull-ships.github.io/hull-ship-boilerplate`.
 - Copy the snippet, paste in `index.html`
-- In the dashboard, click `Ships > Add Ship > From URL`.
-- Enter the url of the `manifest.json` (it must be publicly accessible), give a name to your ship
+- In the Platform customization screen, click `Add Ship > New Ship > Hull Ship Boilerplate`
+- Go to the `Advanced` tab, and input the URLs to your ship so that Hull can access the `manifest.json`. Save
 
 ### Developing
 
