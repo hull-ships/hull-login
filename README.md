@@ -11,17 +11,15 @@ A Login Dialog [Ship](http://hull.io/ships) you can embed in your site built wit
 
 [todo]
 
-## Building Ships
-
-You can use the tooling of your choice to build Ships, they're technology-agnostic. However, after spending months building them, we've settled on a stack that's a combination of sheer power and ease of use. We recommend it strongly.
+## Ship Architecture
+Uses [Hull Ship Boilerplate](https://github.com/hull-ships/hull-ship-boilerplate/blob/master/README.md)
 
 ##### Setting up your development environment
 
-- First, Create a Platform with URL you will use to demo your ship. For instance, this ship is hosted at `http://hull-ships.github.io/hull-login`.
-- Copy the snippet, paste it in `index.html`
-- In the dashboard, click `Add Ship > From URL`.
-- Enter the url of the `manifest.json` (it must be publicly accessible), give a name to your ship.
-
+- Go to the Hull Dashboard, Create a Platform with URL you will use to demo your ship. For instance, this ship is hosted at `http://hull-ships.github.io/hull-login`.
+- Copy the snippet, paste in `index.html`
+- In the dashboard, click `Ships > Add Ship > From URL`.
+- Enter the url of the `manifest.json` (it must be publicly accessible), give a name to your ship
 
 ##### Ship Architecture
 ```
@@ -33,45 +31,46 @@ You can use the tooling of your choice to build Ships, they're technology-agnost
 
 Ships are loaded as `deployments` inside a `platform`.
 
-
 ##### Read about:
 Using this setup, You get [Scoped Styles](STYLES_SANDBOX.md), [React Hot Code Replacement](https://github.com/gaearon/react-hot-loader), [Webpack](http://webpack.github.io/) with Automatic Reloading of all assets, and [React](http://facebook.github.io/react/), for free, baked in and ready to use.
 
 __Enjoy the future__.
 
-## Setup
-- Install [Node.js](http://nodejs.org), [Bower](http://bower.io/), [Webpack](http://webpack.github.io) [Gulp](http://gulpjs.com/) if not done already, and project dependencies:
+
+### Setup
 
 ```sh
-# First, install node+npm from http://nodejs.org/download/
-npm install -g bower gulp webpack
+npm install -g gulp
 npm install
+gulp server
 ```
 
-- Run `gulp server`
-- Open `http://localhost:8081/demo.html`. Your ship should load. The main entry point is `ship.js`
-- [Ngrok](https://ngrok.com/) will start and serve `http://[NAME_IN_PACKAGE_JSON)].ngrok.com` - For now we don't do any checking, so ensure no one else is using this subdomain at the time.
+### Configuration
 
-## Development
+- Go to the Hull Dashboard, Create a Platform with URL you will use to demo your ship. For instance, this ship is hosted at `http://hull-ships.github.io/hull-login`.
+- Copy the snippet, paste in `index.html`
+- In the dashboard, click `Ships > Add Ship > From URL`.
+- Enter the url of the `manifest.json` (it must be publicly accessible), give a name to your ship
 
-- Run `gulp server` and visit [http://localhost:8081/demo.html](http://localhost:8080/demo.html).
+### Developing
+
+- Run `gulp server` and visit [http://localhost:8081/](http://localhost:8081/).
+- We setup a ngrok tunnel with the subdomain matching `name` in `package.json`. Ensure it's not used, For now we don't do error checking.
 - Write Code
 - Drink Coffee
 - Be nice to others
 - Repeat
 - Publish
 
-## Build
-- When publishing, the manifest file and assets must be publicly available so Hull can use your ship.
-- run `gulp build`
+### Building
 
-## Deployment
-- Publish anywhere you like, as long the following files are public:
-- `manifest.json`
-- `locales` folder with `en.json` at least
-- `index.html`
-- `ship.js`
+```sh
+gulp build
+```
+
+### Deployment on Github Pages
+
+```sh
+gulp deploy
+```
  
-A good way to start is by publishing the built project to the `gh-pages` branch, and linking to the `github.io` public URL. 
-
-The included `gulp deploy` task will do this for you.
