@@ -34,29 +34,33 @@ export default React.createClass({
 
     var m = this.props[status] === provider.name ? t[1] : t[0];
     var providerName = capitalize(provider.name)
-    var wording = translate(m, { provider: providerName });
+    var showLabels = this.props.shipSettings.appearance.show_labels;
+    var socialOnly = this.props.shipSettings.appearance.social_only;
+    var providerLength = this.props.providers.length;
+    var wording = showLabels ? translate(m, { provider: providerName }) : null;
 
     var handler = this.props[actionName].bind(null, provider.name);
     var divClassName = {
-      'medium-6':this.props.providers.length>3,
+      'medium-6':(providerLength>3 && showLabels),
       'columns':true,
-      'small-12':true
+      'small-4':showLabels,
+      'small-3':(!showLabels && !socialOnly)
     }
     return (
-      <div key={[provider.name, actionName].join('-')} className={cx(divClassName)}>
+      <li key={[provider.name, actionName].join('-')} className={cx(divClassName)}>
         <button className={buttonClasses} disabled={this.props.isWorking} onClick={handler}>
           <Icon name={provider.name} settings={this.props.settings} color='#FFFFFF' /> &nbsp;&nbsp; <strong>{wording}</strong>
         </button>
-      </div>
+      </li>
     );
   },
 
   render: function() {
-    return (
-      <div className={`row`}>
-        {this.props.providers.map(this.renderButton, this)}
-      </div>
-    );
+    var containerClassName = {
+      [`medium-block-grid-${this.props.providers.length}`]:(!this.props.shipSettings.appearance.show_labels && this.props.shipSettings.appearance.social_only),
+      'row':true
+    }
+    return <ul className={cx(containerClassName)}>{this.props.providers.map(this.renderButton, this)}</ul>;
   }
 });
 

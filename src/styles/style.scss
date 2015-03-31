@@ -59,9 +59,10 @@
     opacity: 1;
     visibility: visible;
     width: 100%;
-    top: 0;
+    @media #{$medium-only}{
+      top: 0;
+    }
     @media #{$large-up}{
-      // top: 100px;
       width: 90%;
       max-width: 840px;
     }

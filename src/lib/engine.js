@@ -27,7 +27,7 @@ const ACTIONS = [
   'resetPassword',
   'activateLogInSection',
   'activateSignUpSection',
-  'activateResePasswordSection',
+  'activateResetPasswordSection',
   'activateShowProfileSection',
   'activateEditProfileSection'
 ];
@@ -67,6 +67,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
   getState: function() {
     return {
       user: this._user,
+      settings: this._settings,
+      shipSettings: this._ship.settings,
       organization: this._organization,
       platform: this._platform,
       ship: this._ship,
@@ -241,7 +243,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.activateSection('signUp');
   },
 
-  activateResePasswordSection: function() {
+  activateResetPasswordSection: function() {
     this.activateSection('resetPassword');
   },
 
