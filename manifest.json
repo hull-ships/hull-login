@@ -1,6 +1,7 @@
 {
   "name": "Hull Login",
-  "description": "Simple login buttons",
+  "description": "A social + email login modal",
+  "picture": "picture.png",
   "version": "0.0.1",
   "index": "ship.html",
   "locales": ["en"],
