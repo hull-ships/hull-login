@@ -1,9 +1,5 @@
+@import "reset";
 @import "settings";
-
-body{
-  -webkit-font-smoothing: antialiased;
-}
-
 @import "foundation";
 
 // Or selectively include components
@@ -43,6 +39,19 @@ body{
 @import "foundation/components/visibility";
 
 @import "buttons";
+@import "rhythm";
+
+body{
+  -webkit-font-smoothing: antialiased;
+}
+
+// #ship {
+//   @include reset();
+//   .button{
+//     @include button();
+//   }
+// }
+
 
 .reveal-modal-container.open{
   .reveal-modal{
@@ -60,5 +69,9 @@ body{
   .close-reveal-modal{
     font-size: 1.5rem;
   }
+}
+
+img.circle{
+  border-radius: $global-rounded;
 }
 

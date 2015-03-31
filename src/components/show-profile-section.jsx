@@ -10,10 +10,14 @@ export default React.createClass({
   },
 
   render: function() {
+    if(this.props.user.picture){
+      var img = <img src={this.props.user.picture} className='avatar circle'/>
+    }
     return (
-      <div>
-        <h1>Hi {this.props.user.name}</h1>
-        <p><a href="#" className='small button round right' onClick={this.handleLogOut}>{translate('Log out')}</a></p>
+      <div className='text-center'>
+        {img}
+        <h4>Hi {this.props.user.name}</h4>
+        <p><a href="#" className='small button radius expand m0' onClick={this.handleLogOut}>{translate('Log out')}</a></p>
       </div>
     );
   }

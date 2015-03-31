@@ -32,7 +32,7 @@ export default React.createClass({
     return (
       <form onSubmit={this.handleSubmit}>
         <TCombForm ref='form' type={this.props.type} options={this.props.options} value={this.state.value} onChange={this.handleChange} />
-        <button className='small button radius' disabled={this.state.isDisabled} type='submit'>{this.props.submitMessage}</button>
+        <button className='small button radius expand success' disabled={this.state.isDisabled} type='submit'>{this.props.submitMessage}</button>
       </form>
     );
   }

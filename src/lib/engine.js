@@ -174,6 +174,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   resetPassword: function(email) {
+    // TODO : Jimmy -> Make this real
     console.log('RESET PASSWORD FOR ', email);
   },
 

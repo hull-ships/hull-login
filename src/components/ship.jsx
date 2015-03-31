@@ -63,6 +63,9 @@ export default React.createClass({
   },
 
   render: function() {
+    if(this.state.dialogIsVisible){
+      return <span></span>;
+    }
     var m = this.state.user ? 'Show Profile' : 'Login';
     return <a href='#' className='tiny button radius' onClick={this.props.actions.showDialog}><strong>{translate(m)}</strong></a>;
   }
