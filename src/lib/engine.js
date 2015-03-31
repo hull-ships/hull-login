@@ -145,11 +145,13 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
   showDialog: function() {
     this._dialogIsVisible = true;
+    this.showFullScreenModal();
     this.emitChange();
   },
 
   hideDialog: function() {
     this._dialogIsVisible = false;
+    this.hideFullScreenModal();
     this.emitChange();
   },
 
@@ -193,6 +195,19 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return p;
   },
 
+  setShipSize: function(){
+    var self=this;
+    // Automatically resize the frame to match the Ship Content
+    // Call the method once to know if we're in a sandbox or not
+    if(Hull.setShipSize()){
+      setInterval(function(){
+        if(!this._dialogIsVisible){
+          var height = document.getElementById('ship').offsetHeight
+          Hull.setShipSize({height:height});
+        }
+      } , 500)
+    }
+  },
   showFullScreenModal:function(){
     if(Hull && Hull.setShipStyle){
       Hull.setShipStyle({

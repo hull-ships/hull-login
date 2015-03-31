@@ -14,18 +14,8 @@ import App from './components/app';
 // MainStyles.unuse();
 
 if (Hull){
-
   // This is called when the ship has been embedded in the page.
   Hull.onEmbed(document, App);
-
-  // Automatically resize the frame to match the Ship Content
-  // Call the method once to know if we're in a sandbox or not
-  if(Hull.setShipSize()){
-    setInterval(function(){
-      var height = document.getElementById('ship').offsetHeight
-      Hull.setShipSize({height:height});
-    } , 500)
-  }
 }
 
 module.exports=App
