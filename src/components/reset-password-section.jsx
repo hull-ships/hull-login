@@ -36,7 +36,6 @@ export default React.createClass({
       <div className='text-center'>
         <h4>{translate('Reset your password')}</h4>
         <p><a href="#" onClick={this.props.activateLogInSection}>{translate('Know your password? Log in.')}</a></p>
-
         <Form type={this.getType()} options={this.getOptions()} submitMessage={translate('Send password reset email')} onSubmit={this.handleSubmit} />
       </div>
     );

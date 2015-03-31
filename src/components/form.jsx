@@ -28,10 +28,14 @@ export default React.createClass({
   },
 
   render: function() {
+    console.log(this.props)
     return (
-      <form onSubmit={this.handleSubmit}>{<TCombForm ref='form' type={this.props.type} options={this.props.options} value={this.state.value} onChange={this.handleChange} />}<button disabled={this.state.isDisabled} type='submit'>{this.props.submitMessage}</button>
+      <form onSubmit={this.handleSubmit}>
+        <TCombForm ref='form' type={this.props.type} options={this.props.options} value={this.state.value} onChange={this.handleChange} />
+        <button className='small button radius' disabled={this.state.isDisabled} type='submit'>{this.props.submitMessage}</button>
       </form>
     );
   }
 });
+
 

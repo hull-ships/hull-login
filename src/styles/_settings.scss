@@ -498,17 +498,17 @@ $input-border-color: $filet-color;
 $input-focus-border-color: $primary-color;
 $input-border-style: solid;
 $input-border-width: 2px;
-// $input-border-radius: $global-radius;
+$input-border-radius: 2px;
 // $input-disabled-bg: #ddd;
 $input-box-shadow: none;
 // $input-include-glowing-effect: true;
 
 // We use these to style the fieldset border and spacing.
-// $fieldset-border-style: solid;
-// $fieldset-border-width: 1px;
-// $fieldset-border-color: #ddd;
-// $fieldset-padding: rem-calc(20);
-// $fieldset-margin: rem-calc(18 0);
+$fieldset-border-style: solid;
+$fieldset-border-width: 0px;
+$fieldset-border-color: #ddd;
+$fieldset-padding: rem-calc(0);
+$fieldset-margin: rem-calc(18 0);
 
 // We use these to style the legends when you use them
 // $legend-bg: #fff;

@@ -192,6 +192,31 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return p;
   },
 
+  showFullScreenModal:function(){
+    if(Hull && Hull.setShipStyle){
+      Hull.setShipStyle({
+        position:'fixed',
+        top:0,
+        left:0,
+        right:0,
+        bottom:0,
+        zIndex: 1000
+      });
+    }
+  },
+  hideFullScreenModal: function(){
+    if(Hull && Hull.setShipStyle){
+      Hull.setShipStyle({
+        position:"static",
+        top:'auto',
+        left:'auto',
+        right:'auto',
+        bottom:'auto',
+        zIndex: 1
+      });
+    }
+  },
+
   activateLogInSection: function() {
     this.activateSection('logIn');
   },

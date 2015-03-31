@@ -42,7 +42,9 @@ export default React.createClass({
       <div className='text-center'>
         <h4>{translate('Login')}</h4>
         <p><a href="#" onClick={this.props.activateSignUpSection}>{translate('No Account?')}</a></p>
+        <hr/>
         <SocialButtons {...this.props} />
+        <hr/>
         <p><a href="#" onClick={this.props.activateResePasswordSection}>{translate('Forgot Password?')}</a></p>
       </div>
     );

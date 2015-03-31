@@ -46,10 +46,11 @@ export default React.createClass({
       <div className='text-center'>
         <h4>{translate('Join {organization}', { organization: this.props.organization.name })}</h4>
         <p><a href="#" onClick={this.props.activateLogInSection}>{translate('Already have an account? Log in.')}</a></p>
-
+        <hr/>
         <Form type={this.getType()} options={this.getOptions()} submitMessage={translate('Sign up')} onSubmit={this.handleSubmit} />
+        <hr/>
         <SocialButtons {...this.props} />
-
+        <hr/>
         <p className='light'><small>{translate("By signing up, you agree to {organization}'s Terms of Service.", { organization: this.props.organization.name })}</small></p>
       </div>
     );
