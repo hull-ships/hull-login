@@ -66,8 +66,15 @@ export default React.createClass({
     if(this.state.dialogIsVisible){
       return <span></span>;
     }
+    if(this.state.user){
+      var logout = <a href='#' className='tiny button radius' onClick={this.props.actions.logOut}><strong>{translate('log_out')}</strong></a>
+    }
     var m = this.state.user ? 'Show Profile' : 'Login';
-    return <a href='#' className='tiny button radius' onClick={this.props.actions.showDialog}><strong>{translate(m)}</strong></a>;
+    return <div>
+      <a href='#' className='tiny button radius' onClick={this.props.actions.showDialog}><strong>{translate(m)}</strong></a>
+      &nbsp;
+      {logout}
+    </div>
   }
 });
 
