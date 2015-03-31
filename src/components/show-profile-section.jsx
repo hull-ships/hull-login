@@ -13,7 +13,7 @@ export default React.createClass({
     return (
       <div>
         <h1>Hi {this.props.user.name}</h1>
-        <p><a href="#" className='small button round right' onClick={this.handleLogOut}>{translate('log_out')}</a></p>
+        <p><a href="#" className='small button round right' onClick={this.handleLogOut}>{translate('Log out')}</a></p>
       </div>
     );
   }

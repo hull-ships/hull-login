@@ -39,11 +39,11 @@ export default React.createClass({
 
   render: function() {
     return (
-      <div>
-        <h4 className='text-center'>{translate('Log in')}</h4>
-        <p><a href="#" onClick={this.props.activateSignUpSection}>{translate('No account?')}</a></p>
+      <div className='text-center'>
+        <h4>{translate('Login')}</h4>
+        <p><a href="#" onClick={this.props.activateSignUpSection}>{translate('No Account?')}</a></p>
         <SocialButtons {...this.props} />
-        <p><a href="#" onClick={this.props.activateResePasswordSection}>{translate('Forgot password?')}</a></p>
+        <p><a href="#" onClick={this.props.activateResePasswordSection}>{translate('Forgot Password?')}</a></p>
       </div>
     );
   }

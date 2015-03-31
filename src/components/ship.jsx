@@ -41,7 +41,6 @@ export default React.createClass({
 
   renderDialog: function() {
     var Section = SECTIONS[this.state.activeSection];
-
     return (
       <div className="reveal-modal-container open">
         <div className="reveal-modal-bg">
@@ -64,8 +63,8 @@ export default React.createClass({
   },
 
   render: function() {
-    var m = this.state.user ? 'show_profile' : 'login';
-    return <a href='#' className='small button round' onClick={this.props.actions.showDialog}>{translate(m)}</a>;
+    var m = this.state.user ? 'Show Profile' : 'Login';
+    return <a href='#' className='tiny button radius' onClick={this.props.actions.showDialog}><strong>{translate(m)}</strong></a>;
   }
 });
 

@@ -82,7 +82,7 @@ var ngrokServe = function(subdomain){
     options.subdomain = env.NGROK_SUBDOMAIN || subdomain;
   }
   ngrok.connect(options, function (error, url) {
-    if (error) throw new gutil.PluginError('ship:server', error);
+    // if (error) throw new gutil.PluginError('ship:server', error);
 
     url = url.replace('https', 'http');
     notify({message:"Ngrok Started on "+url});

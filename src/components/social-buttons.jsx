@@ -28,7 +28,7 @@ export default React.createClass({
       return;
     }
 
-    var buttonClasses = 'round expand columms tiny button bc-social bc-background-' + provider.name;
+    var buttonClasses = 'radius expand columms tiny button bc-social bc-background-' + provider.name;
     var iconClasses = 'icon icon-' + provider.name;
 
     var m = this.props[status] === provider.name ? t[1] : t[0];
@@ -37,9 +37,9 @@ export default React.createClass({
 
     var handler = this.props[actionName].bind(null, provider.name);
     return (
-      <div key={[provider.name, actionName].join('-')} className="small-4 columns">
+      <div key={[provider.name, actionName].join('-')} className="small-6 columns">
         <button className={buttonClasses} disabled={this.props.isWorking} onClick={handler}>
-          <Icon name={provider.name} settings={this.props.settings} color='#FFFFFF' /> {wording}
+          <Icon name={provider.name} settings={this.props.settings} color='#FFFFFF' /> &nbsp;&nbsp; <strong>{wording}</strong>
         </button>
       </div>
     );
@@ -47,7 +47,7 @@ export default React.createClass({
 
   render: function() {
     return (
-      <div className={`even-${this.props.providers.length} round small-block-grid-3`}>
+      <div className={`even-${this.props.providers.length} small-block-grid-2`}>
         {this.props.providers.map(this.renderButton, this)}
       </div>
     );
