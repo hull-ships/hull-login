@@ -45,6 +45,8 @@ export default React.createClass({
         <hr/>
         <SocialButtons {...this.props} />
         <hr/>
+        <Form type={this.getType()} options={this.getOptions()} submitMessage={translate('Log in')} onSubmit={this.handleSubmit} />
+        <hr/>
         <p><a href="#" onClick={this.props.activateResePasswordSection}>{translate('Forgot Password?')}</a></p>
       </div>
     );
