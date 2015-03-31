@@ -12,6 +12,27 @@
       "type": "string"
     }
   ],
+  "settings": [
+    {
+      "name":"appearance",
+      "title":"Appearance",
+      "type":"object",
+      "properties":{
+        "show_labels": {
+          "title": "Show Button Labels",
+          "description": "",
+          "type": "boolean",
+          "default": true
+        },
+        "social_only": {
+          "title": "Social Login only",
+          "description": "",
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  ],
   "resources": [
     {
       "name": "profile_form",
