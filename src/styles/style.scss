@@ -58,8 +58,13 @@ body{
     display: block;
     opacity: 1;
     visibility: visible;
-    top: 100px;
-    width: 420px;
+    width: 100%;
+    // top: 0;
+    @media #{$large-up}{
+      // top: 100px;
+      width: 90%;
+      max-width: 840px;
+    }
   }
   .reveal-modal-bg{
     opacity: 1;
@@ -75,3 +80,7 @@ img.circle{
   border-radius: $global-rounded;
 }
 
+
+fieldset{
+  margin-top:0;
+}

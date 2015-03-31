@@ -1,3 +1,4 @@
+import cx from 'react/lib/cx';
 import React from 'react';
 import Icon from './icon';
 import capitalize from '../lib/capitalize';
@@ -36,8 +37,13 @@ export default React.createClass({
     var wording = translate(m, { provider: providerName });
 
     var handler = this.props[actionName].bind(null, provider.name);
+    var divClassName = {
+      'medium-6':this.props.providers.length>3,
+      'columns':true,
+      'small-12':true
+    }
     return (
-      <div key={[provider.name, actionName].join('-')} className="small-6 columns">
+      <div key={[provider.name, actionName].join('-')} className={cx(divClassName)}>
         <button className={buttonClasses} disabled={this.props.isWorking} onClick={handler}>
           <Icon name={provider.name} settings={this.props.settings} color='#FFFFFF' /> &nbsp;&nbsp; <strong>{wording}</strong>
         </button>
@@ -47,7 +53,7 @@ export default React.createClass({
 
   render: function() {
     return (
-      <div className={`even-${this.props.providers.length} small-block-grid-2`}>
+      <div className={`row`}>
         {this.props.providers.map(this.renderButton, this)}
       </div>
     );

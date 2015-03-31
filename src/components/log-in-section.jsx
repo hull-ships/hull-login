@@ -43,10 +43,16 @@ export default React.createClass({
         <h4>{translate('Login')}</h4>
         <p><a href="#" onClick={this.props.activateSignUpSection}>{translate('No Account?')}</a></p>
         <hr/>
-        <SocialButtons {...this.props} />
-        <hr/>
-        <Form type={this.getType()} options={this.getOptions()} submitMessage={translate('Log in')} onSubmit={this.handleSubmit} />
-        <hr/>
+        <div className="row">
+          <div className="medium-12 large-6 columns">
+            <SocialButtons {...this.props} />
+            <hr className='hide-for-large-up'/>
+          </div>
+          <div className="medium-12 large-6 columns">
+            <Form type={this.getType()} options={this.getOptions()} submitMessage={translate('Log in')} onSubmit={this.handleSubmit} />
+          </div>
+        </div>
+        <hr className='show-for-large-up'/>
         <p><a href="#" onClick={this.props.activateResePasswordSection}>{translate('Forgot Password?')}</a></p>
       </div>
     );
