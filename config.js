@@ -64,13 +64,13 @@ var output = {
   publicPath: assetsFolder+"/"
 };
 
-var extensions         = ["", ".js", ".jsx", ".css", ".scss"];
+var extensions         = ["", ".js", ".jsx"];
 
 var modulesDirectories = ["node_modules", "bower_components", "bower_components/foundation/scss/", "src/vendor"];
 
-var cssIncludes   = modulesDirectories.map(function(include){
-  return ("includePaths[]="+path.resolve(__dirname, include));
-}).join("&");
+//var cssIncludes   = modulesDirectories.map(function(include){
+  //return ("includePaths[]="+path.resolve(__dirname, include));
+//}).join("&");
 
 
 // https://github.com/webpack/react-starter/blob/master/make-webpack-config.js
@@ -82,7 +82,7 @@ var loaders = [
   {test: /\.json$/,                loaders: ["json-loader"] },
   {test: /\.js$/,                  loaders: ["babel-loader"], exclude: /node_modules|bower_components/},
   {test: /\.jsx$/,                 loaders: ["react-hot", "babel-loader"], exclude: /node_modules/},
-  {test: /\.(css|scss)$/,          loaders: ["style/useable", "css-loader", "autoprefixer-loader?browsers=last 2 version", "sass-loader?outputStyle=expanded&"+cssIncludes]},
+  //{test: /\.(css|scss)$/,          loaders: ["style/useable", "css-loader", "autoprefixer-loader?browsers=last 2 version", "sass-loader?outputStyle=expanded&"+cssIncludes]},
   {test: /\.jpe?g$|\.gif$|\.png$/, loaders: ["file"]},
   {test: /\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file" },
 ];

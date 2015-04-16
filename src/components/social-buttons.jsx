@@ -1,21 +1,23 @@
 import cx from 'react/lib/cx';
 import React from 'react';
-import Icon from './icon';
 import capitalize from '../lib/capitalize';
 import { translate } from '../lib/i18n';
+import Button from './button';
 
 export default React.createClass({
-  renderButton: function(provider) {
+  renderButton: function(provider, index) {
     var actionName;
     var status;
     var t;
+
+    // TODO @jimmy clean up
     if (this.props.user == null) {
       actionName = 'logIn';
       status = 'isLogingIn';
       if (this.props.activeSection === 'signUp') {
-        t = ['{provider}', 'Signing up with {provider}']
+        t = ['Sign up with {provider}', 'Signing up with {provider}']
       } else {
-        t = ['{provider}', 'Logging in with {provider}'];
+        t = ['Log in with {provider}', 'Logging in with {provider}'];
       }
     } else if (provider.isLinked && provider.isUnlinkable) {
       actionName = 'unlinkIdentity';
@@ -29,38 +31,28 @@ export default React.createClass({
       return;
     }
 
-    var buttonClasses = 'radius expand columms tiny button bc-social bc-background-' + provider.name;
-    var iconClasses = 'icon icon-' + provider.name;
-
     var m = this.props[status] === provider.name ? t[1] : t[0];
     var providerName = capitalize(provider.name)
-    var showLabels = this.props.shipSettings.appearance.show_labels;
     var socialOnly = this.props.shipSettings.appearance.social_only;
     var providerLength = this.props.providers.length;
-    var wording = showLabels ? translate(m, { provider: providerName }) : null;
+    var wording = translate(m, { provider: providerName });
 
     var handler = this.props[actionName].bind(null, provider.name);
-    var divClassName = {
-      'medium-6':(providerLength>3 && showLabels),
-      'columns':true,
-      'small-4':showLabels,
-      'small-3':(!showLabels && !socialOnly)
-    }
+
+    var isLast = this.props.providers.length === index + 1;
+    var s = isLast ? {} : { marginBottom: 10 };
+
     return (
-      <li key={[provider.name, actionName].join('-')} className={cx(divClassName)}>
-        <button className={buttonClasses} disabled={this.props.isWorking} onClick={handler}>
-          <Icon name={provider.name} settings={this.props.settings} color='#FFFFFF' /> &nbsp;&nbsp; <strong>{wording}</strong>
-        </button>
-      </li>
+      <Button key={provider.name} kind={provider.name} block={true} disabled={this.props.isWorking} style={s} onClick={handler}>
+        {wording}
+      </Button>
     );
   },
 
   render: function() {
-    var containerClassName = {
-      [`medium-block-grid-${this.props.providers.length}`]:(!this.props.shipSettings.appearance.show_labels && this.props.shipSettings.appearance.social_only),
-      'row':true
-    }
-    return <ul className={cx(containerClassName)}>{this.props.providers.map(this.renderButton, this)}</ul>;
+    return (
+      <div>{this.props.providers.map(this.renderButton, this)}</div>
+    );
   }
 });
 

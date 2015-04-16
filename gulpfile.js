@@ -75,14 +75,13 @@ var handleError = function(err, taskName){
 var ngrokServe = function(subdomain){
   var options = { port: config.serverPort };
   var env = process.env;
-  if (env.NGROK_AUTHTOKEN) {
+  if (env.NGROK_AUTHTOKEN && (env.NGROK_SUBDOMAIN || subdomain)) {
     options.authtoken = env.NGROK_AUTHTOKEN;
-  }
-  if(env.NGROK_SUBDOMAIN || subdomain){
     options.subdomain = env.NGROK_SUBDOMAIN || subdomain;
   }
+
   ngrok.connect(options, function (error, url) {
-    // if (error) throw new gutil.PluginError('ship:server', error);
+    if (error) throw new gutil.PluginError('ship:server', error);
 
     url = url.replace('https', 'http');
     notify({message:"Ngrok Started on "+url});

@@ -1,80 +1,81 @@
-import React from 'react';
-import LayeredComponentMixin from 'react-components/layered-component-mixin';
-import style from '../styles/style.scss';
-import LogInSection from './log-in-section';
-import SignUpSection from './sign-up-section';
-import ResetPasswordSection from './reset-password-section';
-import ShowProfileSection from './show-profile-section';
-import EditProfileSection from './edit-profile-section';
-import { translate } from '../lib/i18n';
+'use strict';
 
-const SECTIONS = {
-  logIn: LogInSection,
-  signUp: SignUpSection,
-  resetPassword: ResetPasswordSection,
-  showProfile: ShowProfileSection,
-  editProfile: EditProfileSection
-};
+import React from 'react';
+import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
+import LayeredComponentMixin from 'react-components/layered-component-mixin';
+import { translate } from '../lib/i18n';
+import Overlay from './overlay';
+import Styles from './styles';
+import sections from './sections';
 
 export default React.createClass({
+  displayName: 'Ship',
+
   mixins: [
     LayeredComponentMixin
   ],
 
-  getInitialState: function() {
+  getInitialState() {
     return this.props.engine.getState();
   },
 
-  componentWillMount: function() {
-    style.use();
+  componentWillMount() {
     this.props.engine.addChangeListener(this._onChange);
   },
 
-  componentWillUnmount: function() {
-    style.unuse();
+  componentWillUnmount() {
     this.props.engine.removeChangeListener(this._onChange);
   },
 
-  _onChange: function() {
+  _onChange() {
     this.setState(this.props.engine.getState());
   },
 
-  renderDialog: function() {
-    var Section = SECTIONS[this.state.activeSection];
+  getScope() {
+    return `ship-${this.state.ship.id}`;
+  },
+
+  renderOverlay() {
+    if (!this.state.dialogIsVisible) { return; }
+
+    const Section = sections[this.state.activeSection];
     return (
-      <div className="reveal-modal-container open">
-        <div className="reveal-modal-bg">
-        </div>
-        <div className="reveal-modal">
-          <a href='#' className='close-reveal-modal' onClick={this.props.actions.hideDialog}>×</a>
-          <Section {...this.state} {...this.props.actions} />
-        </div>
-      </div>
+      <Overlay className={this.getScope()} onClose={this.props.actions.hideDialog}>
+        <Section {...this.state} {...this.props.actions} />
+      </Overlay>
     );
   },
 
-  renderLayer: function() {
-    if (this.state.dialogIsVisible) {
-      return this.renderDialog();
-    } else {
-      // renderLayer does not know how to render `null`.
-      return <noscript />;
-    }
+  renderLayer() {
+    return (
+      <ReactTransitionGroup>{this.renderOverlay()}</ReactTransitionGroup>
+    );
   },
 
-  render: function() {
-    if(this.state.dialogIsVisible){
-      return <span></span>;
+  render() {
+    const u = this.props.user;
+
+    let l1, l2;
+    if (this.props.user) {
+      if (this.props.formIsSubmitted) {
+        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateEditProfileSection()}>{translate('Complete your profile')}</a>
+      } else {
+        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateShowProfileSection()}>{u.name || u.username || u.email}</a>
+      }
+
+      l2 = <a href='javascript: void 0;' onClick={this.props.actions.logOut()}>{translate('Log out')}</a>
+    } else {
+      l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>
+      l2 = <a href='javascript: void 0;' onClick={this.props.actions.activateSignUpSection}>{translate('Sign up')}</a>
     }
-    if(this.state.user){
-      var logout = <a href='#' className='tiny button radius' onClick={this.props.actions.logOut}><strong>{translate('log_out')}</strong></a>
-    }
-    var m = this.state.user ? 'Show Profile' : 'Login';
-    return <div>
-      <a href='#' className='tiny button radius' onClick={this.props.actions.showDialog}><strong>{translate(m)}</strong></a>
-      &nbsp;
-      {logout}
-    </div>
+
+    let s = this.getScope();
+    return (
+      <div>
+        <Styles scope={s} />
+        {l1} | {l2}
+      </div>
+    );
   }
 });
 

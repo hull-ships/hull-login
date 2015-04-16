@@ -1,6 +1,6 @@
 {
   "name": "Hull Login",
-  "description": "A social + email login modal",
+  "description": "A simple login overlay",
   "picture": "picture.png",
   "version": "0.0.1",
   "index": "ship.html",
@@ -11,27 +11,6 @@
       "title": "Redirect URL",
       "description": "Where to redirect when login has succeeded.",
       "type": "string"
-    }
-  ],
-  "settings": [
-    {
-      "name":"appearance",
-      "title":"Appearance",
-      "type":"object",
-      "properties":{
-        "show_labels": {
-          "title": "Show Button Labels",
-          "description": "",
-          "type": "boolean",
-          "default": true
-        },
-        "social_only": {
-          "title": "Social Login only",
-          "description": "",
-          "type": "boolean",
-          "default": false
-        }
-      }
     }
   ],
   "resources": [

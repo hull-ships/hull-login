@@ -1,21 +1,6 @@
-import App from './components/app';
+'use strict';
 
-// This is the entry point for the Ship when it's used as an HTML Import.
-// It's standalone and boots when Hull exists and calls onEmbed
+import bootstrap from './bootstrap';
 
-// Yes. You can do this with Webpack.
-// import MainStyles from './styles/main.scss';
+Hull.onEmbed(document, bootstrap);
 
-//// Now you can embed CSS like this.
-//// Gives you reference-counted files;
-// MainStyles.use(document.getElementsByTagName('head')[0]);
-
-//// To remove the style: 
-// MainStyles.unuse();
-
-if (Hull){
-  // This is called when the ship has been embedded in the page.
-  Hull.onEmbed(document, App);
-}
-
-module.exports=App

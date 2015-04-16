@@ -1,11 +1,11 @@
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import IntlMessageFormat from 'intl-messageformat';
-import constants from './constants';
 
 const USER_SECTIONS = [
   'showProfile',
-  'editProfile'
+  'editProfile',
+  'thanks'
 ];
 
 const VISITOR_SECTIONS = [
@@ -19,18 +19,31 @@ const SECTIONS = USER_SECTIONS.concat(VISITOR_SECTIONS);
 const ACTIONS = [
   'showDialog',
   'hideDialog',
+
   'signUp',
   'logIn',
   'logOut',
   'linkIdentity',
   'unlinkIdentity',
+
   'resetPassword',
+  'updateProfile',
+
   'activateLogInSection',
   'activateSignUpSection',
   'activateResetPasswordSection',
   'activateShowProfileSection',
   'activateEditProfileSection'
 ];
+
+const STATUS = {
+  login: 'isLogingIn',
+  logout: 'isLogingOut',
+  logIn: 'isLogingIn',
+  logOut: 'isLogingOut',
+  linkIdentity: 'isLinking',
+  unlinkIdentity: 'isUnlinking'
+};
 
 const EVENT = 'CHANGE';
 
@@ -39,10 +52,11 @@ function Engine(deployment, organization) {
   this._platform = deployment.platform;
   this._settings = deployment.settings;
   this._organization = organization;
+  this._form = this._ship.resources.profile_form;
 
   this.resetState();
-
   this.resetUser();
+
   Hull.on('hull.user.*', function() {
     this.resetUser()
     this.emitChange();
@@ -72,6 +86,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
       organization: this._organization,
       platform: this._platform,
       ship: this._ship,
+      form: this._form,
+      formIsSubmitted: this.formIsSubmitted(),
       identities: this._identities,
       providers: this.getProviders(),
       error: this._error,
@@ -126,6 +142,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     var providers = [];
 
     var services = Hull.config().services.auth;
+
     for (var k in services) {
       if (services.hasOwnProperty(k) && k !== 'hull') {
         var provider = { name: k };
@@ -140,29 +157,38 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   getActiveSection: function() {
-    var sections = this._user ? USER_SECTIONS : VISITOR_SECTIONS;
+    let sections;
+    let defaultSection;
 
-    return sections.indexOf(this._activeSection) > -1 ? this._activeSection : sections[0];
+    if (this._user) {
+      if (!this.formIsSubmitted()) { return 'editProfile'; }
+
+      sections = USER_SECTIONS;
+      defaultSection = 'showProfile';
+    } else {
+      sections = VISITOR_SECTIONS;
+      defaultSection = sections[0];
+    }
+
+    return sections.indexOf(this._activeSection) > -1 ? this._activeSection : defaultSection;
   },
 
   showDialog: function() {
     this._dialogIsVisible = true;
-    this.showFullScreenModal();
     this.emitChange();
   },
 
   hideDialog: function() {
     this._dialogIsVisible = false;
-    this.hideFullScreenModal();
     this.emitChange();
   },
 
   signUp: function(credentials) {
-    this.performAndRedirect('signup', credentials);
+    return this.performAndRedirect('signup', credentials);
   },
 
   logIn: function(providerOrCredentials) {
-    this.performAndRedirect('login', providerOrCredentials);
+    return this.performAndRedirect('login', providerOrCredentials);
   },
 
   logOut: function() {
@@ -170,16 +196,11 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   linkIdentity: function(provider) {
-    this.perform('linkIdentity', provider);
+    return this.perform('linkIdentity', provider);
   },
 
   unlinkIdentity: function(provider) {
-    this.perform('unlinkIdentity', provider);
-  },
-
-  resetPassword: function(email) {
-    // TODO : Jimmy -> Make this real
-    console.log('RESET PASSWORD FOR ', email);
+    return this.perform('unlinkIdentity', provider);
   },
 
   performAndRedirect: function(action, provider) {
@@ -197,66 +218,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return p;
   },
 
-  setShipSize: function(){
-    var self=this;
-    // Automatically resize the frame to match the Ship Content
-    // Call the method once to know if we're in a sandbox or not
-    if(Hull.setShipSize()){
-      setInterval(function(){
-        if(!this._dialogIsVisible){
-          var height = document.getElementById('ship').offsetHeight
-          Hull.setShipSize({height:height});
-        }
-      } , 500)
-    }
-  },
-  showFullScreenModal:function(){
-    if(Hull && Hull.setShipStyle){
-      Hull.setShipStyle({
-        position:'fixed',
-        top:0,
-        left:0,
-        right:0,
-        bottom:0,
-        zIndex: 1000
-      });
-    }
-  },
-  hideFullScreenModal: function(){
-    if(Hull && Hull.setShipStyle){
-      Hull.setShipStyle({
-        position:"static",
-        top:'auto',
-        left:'auto',
-        right:'auto',
-        bottom:'auto',
-        zIndex: 1
-      });
-    }
-  },
-
-  activateLogInSection: function() {
-    this.activateSection('logIn');
-  },
-
-  activateSignUpSection: function() {
-    this.activateSection('signUp');
-  },
-
-  activateResetPasswordSection: function() {
-    this.activateSection('resetPassword');
-  },
-
-  activateShowProfileSection: function() {
-    this.activateSection('showProfile');
-  },
-
-  activateEditProfileSection: function() {
-    this.activateSection('editProfile');
-  },
-
   perform: function(method, provider) {
-    var s = constants.STATUS[method];
+    // TODO clenaup
+
+    var s = STATUS[method];
     var options;
 
     if (typeof provider === 'string') {
@@ -302,13 +267,64 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return promise;
   },
 
+  resetPassword: function(email) {
+    return Hull.api('/users/request_password_reset', 'post', { email });
+  },
+
+  updateProfile: function(profile) {
+    let r = Hull.api(this._form.id + '/submit' ,'put', { data: profile });
+    const showThanksSection = !this.formIsSubmitted();
+
+    r.then((form) => {
+      this._form = form;
+
+      // TODO show thanks section after complete registration flow
+      //this._activeSection = showThanksSection ? 'thanks' : 'showProfile';
+      if (showThanksSection) {
+        this._dialogIsVisible = false;
+        this._activeSection = null;
+      } else {
+        this._activeSection = 'showProfile';
+      }
+
+      this.emitChange();
+    });
+
+    return r;
+  },
+
+  activateLogInSection: function() {
+    this.activateSection('logIn');
+  },
+
+  activateSignUpSection: function() {
+    this.activateSection('signUp');
+  },
+
+  activateResetPasswordSection: function() {
+    this.activateSection('resetPassword');
+  },
+
+  activateShowProfileSection: function() {
+    this.activateSection('showProfile');
+  },
+
+  activateEditProfileSection: function() {
+    this.activateSection('editProfile');
+  },
+
   activateSection: function(name) {
     if (SECTIONS.indexOf(name) > -1) {
+      this._dialogIsVisible = true;
       this._activeSection = name;
       this.emitChange();
     } else {
       throw new Error('"' + name + '" is not a valid section name');
     }
+  },
+
+  formIsSubmitted() {
+    return this._form.user_data && !!this._form.user_data.created_at;
   },
 
   isShopify: function() {
