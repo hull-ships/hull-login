@@ -62,7 +62,7 @@ export default React.createClass({
       button = translate('Edit profile');
     } else {
       title = translate('Complate your profile');
-      subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Skip this step')}</a>
+      subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>{translate('Skip this step')}</a>
       button = translate('Complete profile');
     }
 
