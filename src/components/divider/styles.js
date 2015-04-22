@@ -1,6 +1,8 @@
 'use strict';
 
-import settings from '../../styles/settings';
+import { getSettings } from '../../styles/settings';
+
+const settings = getSettings();
 
 const divider = {
   marginTop: 25,

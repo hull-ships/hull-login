@@ -1,6 +1,8 @@
 'use strict';
 
-import settings from './settings';
+import { getSettings } from './settings';
+
+const settings = getSettings();
 
 const reset = {
   WebkitBoxSizing: 'content-box',

@@ -1,7 +1,9 @@
 'use strict';
 
-import settings from '../../styles/settings';
 import assign from 'object-assign';
+import { getSettings } from '../../styles/settings';
+
+const settings = getSettings();
 
 const formButton = {
   marginTop: 10

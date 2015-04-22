@@ -6,7 +6,9 @@ import styles from './styles';
 import { toType } from 'tcomb-json-schema';
 import Form from '../form';
 import _ from 'underscore';
-import settings from '../../styles/settings';
+import { getSettings } from '../../styles/settings';
+
+const settings = getSettings();
 
 export default React.createClass({
   displayName: 'ShowProfileSection',

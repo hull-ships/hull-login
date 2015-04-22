@@ -1,9 +1,10 @@
-'use strict'
+'use strict';
 
-export default {
+import assign from 'object-assign';
+import _ from 'underscore';
+
+let _settings = {
   primaryColor: '#fa5400',
-  secondaryColor: 'green',
-  tertiaryColor: 'blue',
 
   blackColor: '#222222',
   grayDarkerColor: '#555555',
@@ -31,5 +32,20 @@ export default {
   defaultFontFamily: '"Helvetica Neue", Helvetica, Roboto, Arial, sans-serif',
   defaultLineHeight: 1.6,
   defaultBorderRadius: 3
+};
+
+function setSettings(settings) {
+  _.each(settings, function(v, k) {
+    if (v) { _settings[k] = v; }
+  });
+}
+
+function getSettings() {
+  return _settings;
+}
+
+export default {
+  setSettings,
+  getSettings
 };
 

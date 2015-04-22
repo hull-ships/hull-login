@@ -1,7 +1,9 @@
 'use strict';
 
 import color from 'color';
-import settings from '../../styles/settings';
+import { getSettings } from '../../styles/settings';
+
+const settings = getSettings();
 
 const KINDS = [
   'primary',
