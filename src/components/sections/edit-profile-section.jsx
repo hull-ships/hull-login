@@ -72,7 +72,7 @@ export default React.createClass({
     }
 
     const u = this.props.user;
-    const value = this.props.form.user_data.data;
+    const value = this.props.form.user_data && this.props.form.user_data.data;
 
     return (
       <div>

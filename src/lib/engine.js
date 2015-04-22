@@ -219,8 +219,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   perform: function(method, provider) {
-    // TODO clenaup
-
     var s = STATUS[method];
     var options;
 
