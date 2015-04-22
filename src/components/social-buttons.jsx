@@ -33,7 +33,6 @@ export default React.createClass({
 
     var m = this.props[status] === provider.name ? t[1] : t[0];
     var providerName = capitalize(provider.name)
-    var socialOnly = this.props.shipSettings.appearance.social_only;
     var providerLength = this.props.providers.length;
     var wording = translate(m, { provider: providerName });
 

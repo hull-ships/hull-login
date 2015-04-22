@@ -48,6 +48,15 @@ export default React.createClass({
     this.getAsyncAction('logIn')(value);
   },
 
+  renderSocialButtons() {
+    if (this.props.providers.length === 0) { return; }
+
+    return [
+      <SocialButtons {...this.props} />,
+      <Divider>or</Divider>
+    ];
+  },
+
   render() {
     let m, d;
     if (this.state.logInState === 'pending') {
@@ -65,9 +74,7 @@ export default React.createClass({
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate('Don’t have an account? Sign up!')}</a></p>
         </div>
 
-        <SocialButtons {...this.props} />
-
-        <Divider>or</Divider>
+        {this.renderSocialButtons()}
 
         <Form kind='compact' type={this.getType()} fields={this.getFields()} submitMessage={m} onSubmit={this.handleSubmit} disabled={d} />
 
