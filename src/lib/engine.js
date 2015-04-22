@@ -59,8 +59,18 @@ function Engine(deployment, organization) {
 
   Hull.on('hull.user.*', function() {
     this.resetUser()
+
+    // TODO quick fix this blink a bit
+    Hull.api(this._ship.id, (ship) => {
+      this._ship = ship;
+      this._form = this._ship.resources.profile_form;
+
+      this.emitChange();
+    });
+
     this.emitChange();
   }.bind(this));
+
 
   this.emitChange();
 }
