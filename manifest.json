@@ -42,7 +42,7 @@
       "format": "range",
       "default": 3,
       "minimum": 0,
-      "maximun": 100,
+      "maximun": 100
     },
     {
       "name": "overlay_border_radius",
@@ -51,8 +51,8 @@
       "format": "range",
       "default": 6,
       "minimum": 0,
-      "maximun": 100,
-    },
+      "maximun": 100
+    }
   ],
   "resources": [
     {
