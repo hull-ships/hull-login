@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { translate } from '../../lib/i18n';
-import styles from './styles';
+import { getStyles } from './styles';
 import { toType } from 'tcomb-json-schema';
 import Form from '../form';
 import AsyncActionsMixin from '../../mixins/async-actions';
@@ -39,7 +39,7 @@ export default React.createClass({
     }, {});
   },
 
-  handleLogOut: function(e) {
+  handleLogOut(e) {
     e.preventDefault();
 
     this.props.logOut();
@@ -73,6 +73,8 @@ export default React.createClass({
 
     const u = this.props.user;
     const value = this.props.form.user_data && this.props.form.user_data.data;
+
+    const styles = getStyles();
 
     return (
       <div>

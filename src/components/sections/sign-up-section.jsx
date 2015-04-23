@@ -7,7 +7,7 @@ import { Name, Email, Password } from '../../lib/types';
 import SocialButtons from '../social-buttons';
 import Form from '../form';
 import Divider from '../divider';
-import styles from './styles';
+import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 
 export default React.createClass({
@@ -73,8 +73,10 @@ export default React.createClass({
       d = false;
     }
 
+    const styles = getStyles();
+
     return (
-      <div style={styles.section}>
+      <div>
         <div style={styles.sectionHeader}>
           <h1 style={styles.sectionTitle}>{translate('Join {organization}!', { organization: this.props.organization.name })}</h1>
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Already have an account? Log in.')}</a></p>

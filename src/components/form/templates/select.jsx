@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import styles from '../styles';
+import { getStyles } from '../styles';
 import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 
 export default React.createClass({
@@ -27,7 +27,7 @@ export default React.createClass({
   },
 
   render() {
-    const s = this.buildStyles(styles.formSelect);
+    const s = this.buildStyles(getStyles().formSelect);
 
     const options = this.props.options.map((o) => {
       return o.label ? this.renderOptionsGroup(o) : this.renderOption(o);

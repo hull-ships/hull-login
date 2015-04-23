@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import styles from './styles';
+import { getStyles } from './styles';
 
 export default React.createClass({
   displayName: 'Overlay',
@@ -38,6 +38,8 @@ export default React.createClass({
   },
 
   render() {
+    const styles = getStyles();
+
     return (
       <div style={styles.overlayBackground} className={this.props.className}>
         <div style={styles.overlay} tabIndex='-1'>

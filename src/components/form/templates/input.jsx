@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import styles from '../styles';
+import { getStyles } from '../styles';
 import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 
 export default React.createClass({
@@ -17,7 +17,7 @@ export default React.createClass({
   },
 
   render() {
-    var s = this.buildStyles(styles.formInput);
+    var s = this.buildStyles(getStyles().formInput);
 
     return (
       <input style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />

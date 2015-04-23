@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import styles from '../styles';
+import { getStyles } from '../styles';
 import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 
 export default React.createClass({
@@ -17,7 +17,7 @@ export default React.createClass({
   },
 
   render() {
-    const s = this.buildStyles(styles.formTextarea);
+    const s = this.buildStyles(getStyles().formTextarea);
 
     return (
       <textarea style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />

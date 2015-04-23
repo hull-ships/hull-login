@@ -13,6 +13,47 @@
       "type": "string"
     }
   ],
+  "settings": [
+    {
+      "name": "primary_color",
+      "title": "Primary color",
+      "type": "string",
+      "format": "color",
+      "default": ""
+    },
+    {
+      "name": "text_color",
+      "title": "Text color",
+      "type": "string",
+      "format": "color",
+      "default": ""
+    },
+    {
+      "name": "link_color",
+      "title": "Link color",
+      "type": "string",
+      "format": "color",
+      "default": ""
+    },
+    {
+      "name": "button_border_radius",
+      "title": "Button border radius",
+      "type": "number",
+      "format": "range",
+      "default": 3,
+      "minimum": 0,
+      "maximun": 100,
+    },
+    {
+      "name": "overlay_border_radius",
+      "title": "Overlay border radius",
+      "type": "number",
+      "format": "range",
+      "default": 6,
+      "minimum": 0,
+      "maximun": 100,
+    },
+  ],
   "resources": [
     {
       "name": "profile_form",
@@ -20,4 +61,3 @@
     }
   ]
 }
-

@@ -7,7 +7,7 @@ import { Login, Password } from '../../lib/types';
 import SocialButtons from '../social-buttons';
 import Form from '../form';
 import Divider from '../divider';
-import styles from './styles';
+import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 
 export default React.createClass({
@@ -66,6 +66,8 @@ export default React.createClass({
       m = translate('Log in');
       d = false;
     }
+
+    const styles = getStyles();
 
     return (
       <div>

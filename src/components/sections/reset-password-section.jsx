@@ -5,7 +5,7 @@ import t from 'tcomb-form';
 import { translate } from '../../lib/i18n';
 import { Email } from '../../lib/types';
 import Form from '../form';
-import styles from './styles';
+import { getStyles } from './styles';
 
 export default React.createClass({
   getType() {
@@ -24,12 +24,14 @@ export default React.createClass({
   },
 
   handleSubmit(value) {
-    this.props.resetPassword(value && value.email);
+    this.props.resetPassword(value.email);
   },
 
   render() {
+    const styles = getStyles();
+
     return (
-      <div style={styles.section}>
+      <div>
         <div style={styles.sectionHeader}>
           <h1 style={styles.sectionTitle}>{translate('Reset your password')}</h1>
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Know your password? Log in!')}</a></p>
