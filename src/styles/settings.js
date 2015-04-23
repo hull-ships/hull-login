@@ -31,12 +31,13 @@ let _settings = {
   defaultFontSize: 14,
   defaultFontFamily: '"Helvetica Neue", Helvetica, Roboto, Arial, sans-serif',
   defaultLineHeight: 1.6,
-  defaultBorderRadius: 3
+  defaultBorderRadius: 3,
+  mediumBorderRadius: 6
 };
 
 function setSettings(settings) {
   _.each(settings, function(v, k) {
-    if (v) { _settings[k] = v; }
+    if (v != null) { _settings[k] = v; }
   });
 }
 

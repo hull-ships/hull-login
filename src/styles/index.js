@@ -2,99 +2,104 @@
 
 import { getSettings } from './settings';
 
-const settings = getSettings();
+function getStyles() {
+  const settings = getSettings();
 
-const reset = {
-  WebkitBoxSizing: 'content-box',
-  MozBoxSizing: 'content-box',
-  boxSizing: 'content-box',
+  const reset = {
+    WebkitBoxSizing: 'content-box',
+    MozBoxSizing: 'content-box',
+    boxSizing: 'content-box',
 
-  width: 'auto',
-  minWidth: 0,
-  maxWidth: 'none',
-  height: 'auto',
-  minHeight: 0,
-  maxHeight: 'none',
-  margin: 0,
-  padding: 0,
-  border: 0,
-  outline: 0,
+    width: 'auto',
+    minWidth: 0,
+    maxWidth: 'none',
+    height: 'auto',
+    minHeight: 0,
+    maxHeight: 'none',
+    margin: 0,
+    padding: 0,
+    border: 0,
+    outline: 0,
 
-  position: 'static',
-  right: 'auto',
-  top: 'auto',
-  left: 'auto',
-  bottom: 'auto',
-  zIndex: 'auto',
+    position: 'static',
+    right: 'auto',
+    top: 'auto',
+    left: 'auto',
+    bottom: 'auto',
+    zIndex: 'auto',
 
-  clear: 'none',
-  float: 'none',
-  overflow: 'visible',
+    clear: 'none',
+    float: 'none',
+    overflow: 'visible',
 
-  opacity: 1,
+    opacity: 1,
 
-  whiteSpace: 'normal',
+    whiteSpace: 'normal',
 
-  cursor: 'auto',
+    cursor: 'auto',
 
-  letterSpacing: 'normal',
+    letterSpacing: 'normal',
 
-  verticalAlign: 'baseline',
+    verticalAlign: 'baseline',
 
-  borderRadius: 0,
+    borderRadius: 0,
 
-  boxShadow: 'none',
+    boxShadow: 'none',
 
-  color: settings.textColor,
+    color: settings.textColor,
 
-  background: 'none',
-  backgroundColor: 'transparent',
-  backgroundImage: 'none',
+    background: 'none',
+    backgroundColor: 'transparent',
+    backgroundImage: 'none',
 
-  fontFamily: settings.defaultFontFamily,
-  fontSize: settings.defaultFontSize,
-  fontSizeAjust: 'none',
-  fontStyle: 'normal',
-  fontVariant: 'normal',
-  fontWeight: 'normal',
+    fontFamily: settings.defaultFontFamily,
+    fontSize: settings.defaultFontSize,
+    fontSizeAjust: 'none',
+    fontStyle: 'normal',
+    fontVariant: 'normal',
+    fontWeight: 'normal',
 
-  lineHeight: settings.defaultLineHeight,
+    lineHeight: settings.defaultLineHeight,
 
-  textAlign: 'left',
-  textDecoration: 'none',
-  textShadow: 'none',
-  textTransform: 'none',
+    textAlign: 'left',
+    textDecoration: 'none',
+    textShadow: 'none',
+    textTransform: 'none',
 
-  WebkitAnimation: 'none',
-  MozAnimation: 'none',
-  MsAnimation: 'none',
-  animation: 'none',
+    WebkitAnimation: 'none',
+    MozAnimation: 'none',
+    MsAnimation: 'none',
+    animation: 'none',
 
-  WebkitTranstion: 'none',
-  MozTranstion: 'none',
-  MsTranstion: 'none',
-  transtion: 'none',
+    WebkitTranstion: 'none',
+    MozTranstion: 'none',
+    MsTranstion: 'none',
+    transtion: 'none',
 
-  WebkitAppearance: 'none',
-  MozAppearance: 'none',
+    WebkitAppearance: 'none',
+    MozAppearance: 'none',
 
-  WebkitFontSmoothing: 'antialiased',
-  MozOsxFontSmoothing: 'grayscale'
-};
+    WebkitFontSmoothing: 'antialiased',
+    MozOsxFontSmoothing: 'grayscale'
+  };
 
-const link = {
-  color: settings.linkColor,
-  background: 'transparent',
-  textDecoration: 'underline'
-};
+  const link = {
+    color: settings.linkColor,
+    background: 'transparent',
+    textDecoration: 'underline'
+  };
 
-const placeholder = {
-  color: settings.grayColor
-};
+  const placeholder = {
+    color: settings.grayColor
+  };
+
+  return {
+    reset,
+    link,
+    placeholder
+  };
+}
 
 export default {
-  reset,
-  link,
-  placeholder
-};
-
+  getStyles
+}

@@ -4,16 +4,22 @@ import { setTranslations } from './lib/i18n';
 import { setSettings, getSettings } from './styles/settings';
 import Ship from './components/ship';
 
+
 export default function(element, deployment, organization) {
-  var engine = new Engine(deployment, organization);
+  let engine = new Engine(deployment, organization);
 
   setTranslations(deployment.ship.translations);
-  setSettings({
-    primaryColor: 'red'
-  });
-  console.log(getSettings());
 
-  var actions = engine.getActions();
-  React.render(<Ship engine={engine} actions={actions} />, element);
-}
+  const shipSettings = deployment.ship.settings;
+  console.log(shipSettings);
+  setSettings({
+    primaryColor: shipSettings.primary_color,
+    textColor: shipSettings.text_color,
+    linkColor: shipSettings.link_color,
+    defaultBorderRadius: shipSettings.button_border_radius,
+    mediumBorderRadius: shipSettings.overlay_border_radius
+  });
+
+  React.render(<Ship engine={engine} actions={engine.getActions()} />, element);
+};
 

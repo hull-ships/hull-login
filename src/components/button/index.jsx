@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react';
-import styles from './styles';
+import { getStyles } from './styles';
 import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 
 export default React.createClass({
@@ -17,6 +17,7 @@ export default React.createClass({
   },
 
   render() {
+    const styles = getStyles();
     var s = this.buildStyles(styles.button);
 
     var icon = this.renderIcon();

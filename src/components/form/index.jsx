@@ -3,7 +3,6 @@
 import React from 'react';
 import t from './t';
 import Button from '../button';
-import styles from './styles';
 
 const TCombForm = t.form.Form;
 

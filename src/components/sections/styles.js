@@ -2,35 +2,37 @@
 
 import { getSettings } from '../../styles/settings';
 
-const settings = getSettings();
+function getStyles() {
+  const settings = getSettings();
 
-const section = {
-};
+  const sectionHeader = {
+    marginBottom: 30
+  };
 
-const sectionHeader = {
-  marginBottom: 30
-};
+  const sectionTitle = {
+    color: settings.primaryColor,
+    fontSize: 24,
+    fontWeight: 300,
+    textAlign: 'center'
+  };
 
-const sectionTitle = {
-  color: settings.primaryColor,
-  fontSize: 24,
-  fontWeight: 300,
-  textAlign: 'center'
-};
+  const sectionText = {
+    textAlign: 'center'
+  };
 
-const sectionText = {
-  textAlign: 'center'
-};
+  const sectionFooter = {
+    marginTop: 30
+  };
 
-const sectionFooter = {
-  marginTop: 30
-};
+  return {
+    sectionHeader,
+    sectionTitle,
+    sectionText,
+    sectionFooter
+  };
+}
 
 export default {
-  section,
-  sectionHeader,
-  sectionTitle,
-  sectionText,
-  sectionFooter
+  getStyles
 };
 

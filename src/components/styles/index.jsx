@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Style } from 'radium';
-import styles from '../../styles';
+import { getStyles } from '../../styles';
 
 export default React.createClass({
   displayName: 'Styles',
@@ -16,6 +16,8 @@ export default React.createClass({
   },
 
   getRules() {
+    const styles = getStyles();
+
     return [
       { '*': styles.reset },
 
