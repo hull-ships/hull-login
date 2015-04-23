@@ -4,14 +4,12 @@ import { setTranslations } from './lib/i18n';
 import { setSettings, getSettings } from './styles/settings';
 import Ship from './components/ship';
 
-
-export default function(element, deployment, organization) {
-  let engine = new Engine(deployment, organization);
+export default function(element, deployment) {
+  let engine = new Engine(deployment);
 
   setTranslations(deployment.ship.translations);
 
   const shipSettings = deployment.ship.settings;
-  console.log(shipSettings);
   setSettings({
     primaryColor: shipSettings.primary_color,
     textColor: shipSettings.text_color,

@@ -47,11 +47,11 @@ const STATUS = {
 
 const EVENT = 'CHANGE';
 
-function Engine(deployment, organization) {
+function Engine(deployment) {
   this._ship = deployment.ship;
   this._platform = deployment.platform;
   this._settings = deployment.settings;
-  this._organization = organization;
+  this._organization = deployment.organization;
   this._form = this._ship.resources.profile_form;
 
   this.resetState();
