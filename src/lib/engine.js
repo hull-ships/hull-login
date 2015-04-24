@@ -277,6 +277,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
       instance.emitChange();
     }
+    promise.then(onSuccess, onFailure);
 
     return promise;
   },
