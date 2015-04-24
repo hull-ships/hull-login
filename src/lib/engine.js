@@ -57,20 +57,12 @@ function Engine(deployment) {
   this.resetState();
   this.resetUser();
 
-  Hull.on('hull.user.*', function() {
-    this.resetUser()
+  Hull.on('hull.user.*', () => {
+    //this.resetShip();
 
-    // TODO quick fix this blink a bit
-    Hull.api(this._ship.id, (ship) => {
-      this._ship = ship;
-      this._form = this._ship.resources.profile_form;
-
-      this.emitChange();
-    });
-
-    this.emitChange();
-  }.bind(this));
-
+    //this.resetUser();
+    //this.emitChange();
+  });
 
   this.emitChange();
 }
@@ -148,6 +140,17 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this._identities = identities;
   },
 
+  resetShip() {
+    return Hull.api(this._ship.id).then((ship) => {
+      this._ship = ship;
+      this._form = this._ship.resources.profile_form;
+
+      this.resetUser();
+
+      this.emitChange();
+    });
+  },
+
   getProviders: function() {
     var providers = [];
 
@@ -202,7 +205,12 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   logOut: function() {
-    Hull.logout();
+    return Hull.logout().then(() => {
+      this.resetUser();
+      this.emitChange();
+
+      this.resetShip()
+    });
   },
 
   linkIdentity: function(provider) {
@@ -214,18 +222,17 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   performAndRedirect: function(action, provider) {
-    var p = this.perform(action, provider);
+    let p = this.perform(action, provider);
 
-    var location = this._settings.redirect_url;
+    let location = this._settings.redirect_url;
     if (this.isShopify()) {
       location = location || '/account';
     }
-
     if (location) {
       p.done(function() { document.location = location; });
     }
 
-    return p;
+    return p.then((user) => { return this.resetShip(); });
   },
 
   perform: function(method, provider) {
@@ -270,7 +277,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
       instance.emitChange();
     }
-    promise.then(onSuccess, onFailure);
 
     return promise;
   },
