@@ -147,13 +147,19 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   fetchShip() {
-    return Hull.api(this._ship.id).then((ship) => {
-      this._ship = ship;
-      this._form = this._ship.resources.profile_form;
+    if (this._fetchShipPromise == null) {
+      this._fetchShipPromise = Hull.api(this._ship.id).then((ship) => {
+        this._fetchShipPromise = null;
 
-      this.resetUser();
-      this.emitChange();
-    });
+        this._ship = ship;
+        this._form = this._ship.resources.profile_form;
+
+        this.resetUser();
+        this.emitChange();
+      });
+    }
+
+    return this._fetchShipPromise;
   },
 
   getProviders() {
