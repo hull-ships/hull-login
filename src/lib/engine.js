@@ -68,19 +68,18 @@ function Engine(deployment) {
 }
 
 assign(Engine.prototype, EventEmitter.prototype, {
-  getActions: function() {
+  getActions() {
     if (this._actions) { return this._actions; }
 
-    var instance = this;
-    this._actions = ACTIONS.reduce(function(m, a) {
-      m[a] = instance[a].bind(instance);
+    this._actions = ACTIONS.reduce((m, a) => {
+      m[a] = this[a].bind(this);
       return m;
     }, {});
 
     return this._actions;
   },
 
-  getState: function() {
+  getState() {
     return {
       user: this._user,
       settings: this._settings,
@@ -103,19 +102,19 @@ assign(Engine.prototype, EventEmitter.prototype, {
     };
   },
 
-  addChangeListener: function(listener) {
+  addChangeListener(listener) {
     this.addListener(EVENT, listener)
   },
 
-  removeChangeListener: function(listener) {
+  removeChangeListener(listener) {
     this.removeListener(EVENT, listener);
   },
 
-  emitChange: function() {
+  emitChange() {
     this.emit(EVENT);
   },
 
-  resetState: function() {
+  resetState() {
     this.resetUser();
 
     this._error = null;
@@ -127,10 +126,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this._activeSection = 'logIn';
   },
 
-  resetUser: function() {
+  resetUser() {
     this._user = Hull.currentUser();
 
-    var identities = {}
+    let identities = {}
     if (this._user != null) {
       this._user.identities.forEach(function(identity) {
         identities[identity.provider] = true;
@@ -157,14 +156,14 @@ assign(Engine.prototype, EventEmitter.prototype, {
     });
   },
 
-  getProviders: function() {
-    var providers = [];
+  getProviders() {
+    let providers = [];
 
-    var services = Hull.config().services.auth;
+    const services = Hull.config().services.auth;
 
-    for (var k in services) {
+    for (let k in services) {
       if (services.hasOwnProperty(k) && k !== 'hull') {
-        var provider = { name: k };
+        let provider = { name: k };
         provider.isLinked = !!this._identities[k];
         provider.isUnlinkable = provider.isLinked && this._user.main_identity !== k;
 
@@ -175,7 +174,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return providers;
   },
 
-  getActiveSection: function() {
+  getActiveSection() {
     let sections;
     let defaultSection;
 
@@ -192,37 +191,37 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return sections.indexOf(this._activeSection) > -1 ? this._activeSection : defaultSection;
   },
 
-  showDialog: function() {
+  showDialog() {
     this._dialogIsVisible = true;
     this.emitChange();
   },
 
-  hideDialog: function() {
+  hideDialog() {
     this._dialogIsVisible = false;
     this.emitChange();
   },
 
-  signUp: function(credentials) {
+  signUp(credentials) {
     return this.performAndRedirect('signup', credentials);
   },
 
-  logIn: function(providerOrCredentials) {
+  logIn(providerOrCredentials) {
     return this.performAndRedirect('login', providerOrCredentials);
   },
 
-  logOut: function() {
+  logOut() {
     return Hull.logout().then(() => { this.reset(); });
   },
 
-  linkIdentity: function(provider) {
+  linkIdentity(provider) {
     return this.perform('linkIdentity', provider);
   },
 
-  unlinkIdentity: function(provider) {
+  unlinkIdentity(provider) {
     return this.perform('unlinkIdentity', provider);
   },
 
-  performAndRedirect: function(action, provider) {
+  performAndRedirect(action, provider) {
     let p = this.perform(action, provider);
 
     let location = this._settings.redirect_url;
@@ -230,16 +229,16 @@ assign(Engine.prototype, EventEmitter.prototype, {
       location = location || '/account';
     }
     if (location) {
-      p.done(function() { document.location = location; });
+      p.done(() => { document.location = location; });
     }
 
     return p.then((user) => { return this.fetchShip(); });
   },
 
-  perform: function(method, provider) {
-    var s = STATUS[method];
-    var options;
+  perform(method, provider) {
+    const s = STATUS[method];
 
+    let options;
     if (typeof provider === 'string') {
       options = { provider: provider };
     } else {
@@ -253,32 +252,29 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.emitChange();
 
     if (this.isShopify()) {
-      var proxy = document.location.origin + '/a/hull-callback';
+      let proxy = document.location.origin + '/a/hull-callback';
       proxy += this._settings.redirect_url ? '?redirect_url=' + this._settings.redirect_url : '';
 
       options.redirect_url = proxy;
     }
 
-    var promise = Hull[method](options);
+    let promise = Hull[method](options);
 
-    var instance = this;
-    function onSuccess() {
-      instance.resetUser();
+    promise.then(() => {
+      this.resetUser();
 
-      instance['_' + s] = false;
-      instance._error = null;
+      this['_' + s] = false;
+      this._error = null;
 
-      instance.emitChange();
-    }
-    function onFailure(error) {
-      instance['_' + s] = false;
+      this.emitChange();
+    }, (error) => {
+      this['_' + s] = false;
 
       error.provider = provider;
-      instance._error = error;
+      this._error = error;
 
-      instance.emitChange();
-    }
-    promise.then(onSuccess, onFailure);
+      this.emitChange();
+    });
 
     return promise;
   },
