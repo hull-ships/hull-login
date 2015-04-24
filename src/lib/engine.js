@@ -57,11 +57,11 @@ function Engine(deployment) {
   this.resetState();
   this.resetUser();
 
-  Hull.on('hull.user.*', () => {
-    //this.resetShip();
+  Hull.on('hull.user.**', (user) => {
+    let nextUser = user || {};
+    let previousUser = this._user || {};
 
-    //this.resetUser();
-    //this.emitChange();
+    if (nextUser.id !== previousUser.id) { this.reboot(); }
   });
 
   this.emitChange();
@@ -146,9 +146,14 @@ assign(Engine.prototype, EventEmitter.prototype, {
       this._form = this._ship.resources.profile_form;
 
       this.resetUser();
-
       this.emitChange();
     });
+  },
+
+  reboot() {
+    this.resetUser();
+    this.emitChange();
+    this.resetShip()
   },
 
   getProviders: function() {
@@ -205,12 +210,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   logOut: function() {
-    return Hull.logout().then(() => {
-      this.resetUser();
-      this.emitChange();
-
-      this.resetShip()
-    });
+    return Hull.logout().then(() => { this.reboot(); });
   },
 
   linkIdentity: function(provider) {
