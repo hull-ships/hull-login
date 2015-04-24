@@ -61,7 +61,7 @@ function Engine(deployment) {
     let nextUser = user || {};
     let previousUser = this._user || {};
 
-    if (nextUser.id !== previousUser.id) { this.reboot(); }
+    if (nextUser.id !== previousUser.id) { this.reset(); }
   });
 
   this.emitChange();
@@ -140,7 +140,14 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this._identities = identities;
   },
 
-  resetShip() {
+  reset() {
+    this.resetUser();
+    this.emitChange();
+
+    this.fetchShip()
+  },
+
+  fetchShip() {
     return Hull.api(this._ship.id).then((ship) => {
       this._ship = ship;
       this._form = this._ship.resources.profile_form;
@@ -148,12 +155,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
       this.resetUser();
       this.emitChange();
     });
-  },
-
-  reboot() {
-    this.resetUser();
-    this.emitChange();
-    this.resetShip()
   },
 
   getProviders: function() {
@@ -210,7 +211,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   logOut: function() {
-    return Hull.logout().then(() => { this.reboot(); });
+    return Hull.logout().then(() => { this.reset(); });
   },
 
   linkIdentity: function(provider) {
@@ -232,7 +233,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       p.done(function() { document.location = location; });
     }
 
-    return p.then((user) => { return this.resetShip(); });
+    return p.then((user) => { return this.fetchShip(); });
   },
 
   perform: function(method, provider) {
