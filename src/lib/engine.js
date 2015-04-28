@@ -37,10 +37,10 @@ const ACTIONS = [
 ];
 
 const STATUS = {
-  login: 'isLogingIn',
-  logout: 'isLogingOut',
-  logIn: 'isLogingIn',
-  logOut: 'isLogingOut',
+  login: 'isLoggingIn',
+  logout: 'isLoggingOut',
+  logIn: 'isLoggingIn',
+  logOut: 'isLoggingOut',
   linkIdentity: 'isLinking',
   unlinkIdentity: 'isUnlinking'
 };
@@ -96,8 +96,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
       providers: this.getProviders(),
       error: this._error,
       isWorking: this.isWorking(),
-      isLogingIn: this._isLogingIn,
-      isLogingOut: this._isLogingOut,
+      isLoggingIn: this._isLoggingIn,
+      isLoggingOut: this._isLoggingOut,
       isLinking: this._isLinking,
       isUnlinking: this._isUnlinking,
       dialogIsVisible: this._dialogIsVisible,
@@ -121,8 +121,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.resetUser();
 
     this._error = null;
-    this._isLogingIn = false;
-    this._isLogingOut = false;
+    this._isLoggingIn = false;
+    this._isLoggingOut = false;
     this._isLinking = false;
     this._isUnlinking = false;
     this._dialogIsVisible = false;
@@ -353,7 +353,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   isWorking() {
-    return this._isLogingIn || this._isLogingOut || this._isLinking || this._isUnlinking;
+    return this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking;
   },
 
   isShopify: function() {

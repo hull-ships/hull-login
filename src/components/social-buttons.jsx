@@ -10,10 +10,9 @@ export default React.createClass({
     var status;
     var t;
 
-    // TODO @jimmy clean up
     if (this.props.user == null) {
       actionName = 'logIn';
-      status = 'isLogingIn';
+      status = 'isLoggingIn';
       if (this.props.activeSection === 'signUp') {
         t = ['Sign up with {provider}', 'Signing up with {provider}']
       } else {
