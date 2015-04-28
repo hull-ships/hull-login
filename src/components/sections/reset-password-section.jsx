@@ -37,7 +37,7 @@ export default React.createClass({
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Know your password? Log in!')}</a></p>
         </div>
 
-        <Form type={this.getType()} fields={this.getFields()} submitMessage={translate('Send reset instructions')} onSubmit={this.handleSubmit} />
+        <Form kind='compact' type={this.getType()} fields={this.getFields()} submitMessage={translate('Send reset instructions')} onSubmit={this.handleSubmit} />
       </div>
     );
   }
