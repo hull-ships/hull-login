@@ -58,10 +58,13 @@ function Engine(deployment) {
   this.resetUser();
 
   Hull.on('hull.user.**', (user) => {
+    // Ignore the events that come from actions.
+    if (this.isWorking()) { return; }
+
     let nextUser = user || {};
     let previousUser = this._user || {};
 
-    if (nextUser.id !== previousUser.id) { this.reset(); }
+    if (nextUser.id !== previousUser.id) { this.fetchShip(); }
   });
 
   this.emitChange();
@@ -92,7 +95,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       identities: this._identities,
       providers: this.getProviders(),
       error: this._error,
-      isWorking: this._isLogingIn || this._isLogingOut || this._isLinking || this._isUnlinking,
+      isWorking: this.isWorking(),
       isLogingIn: this._isLogingIn,
       isLogingOut: this._isLogingOut,
       isLinking: this._isLinking,
@@ -139,27 +142,22 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this._identities = identities;
   },
 
-  reset() {
-    this.resetUser();
-    this.emitChange();
-
-    this.fetchShip()
-  },
-
   fetchShip() {
-    if (this._fetchShipPromise == null) {
-      this._fetchShipPromise = Hull.api(this._ship.id).then((ship) => {
-        this._fetchShipPromise = null;
+    // As today Hull.api calls cannot be aborted... So I set an ID to every
+    // fetchShip calls to be sure to execute the callback only when the last
+    // Hull.api call is resolved.
+    let id = (this._fetchShipPromiseId || 0) + 1;
+    this._fetchShipPromiseId = id;
 
-        this._ship = ship;
-        this._form = this._ship.resources.profile_form;
+    return Hull.api(this._ship.id).then((ship) => {
+      if (id !== this._fetchShipPromiseId) { return; }
 
-        this.resetUser();
-        this.emitChange();
-      });
-    }
+      this._ship = ship;
+      this._form = this._ship.resources.profile_form;
 
-    return this._fetchShipPromise;
+      this.resetUser();
+      this.emitChange();
+    });
   },
 
   getProviders() {
@@ -216,15 +214,26 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   logOut() {
-    return Hull.logout().then(() => { this.reset(); });
+    return Hull.logout().then(() => {
+      this.resetUser();
+      this.emitChange();
+
+      this.fetchShip()
+    });
   },
 
   linkIdentity(provider) {
-    return this.perform('linkIdentity', provider);
+    return this.perform('linkIdentity', provider).then(() => {
+      this.resetUser();
+      this.emitChange();
+    });
   },
 
   unlinkIdentity(provider) {
-    return this.perform('unlinkIdentity', provider);
+    return this.perform('unlinkIdentity', provider).then(() => {
+      this.resetUser();
+      this.emitChange();
+    });
   },
 
   performAndRedirect(action, provider) {
@@ -267,8 +276,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
     let promise = Hull[method](options);
 
     promise.then(() => {
-      this.resetUser();
-
       this['_' + s] = false;
       this._error = null;
 
@@ -343,6 +350,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
   formIsSubmitted() {
     return this._form.user_data && !!this._form.user_data.created_at;
+  },
+
+  isWorking() {
+    return this._isLogingIn || this._isLogingOut || this._isLinking || this._isUnlinking;
   },
 
   isShopify: function() {
