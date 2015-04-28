@@ -48,7 +48,15 @@ function getStyles() {
           color: '#FF6262',
           borderColor: '#FF6262',
           borderTopColor: '#FF6262',
-          boxShadow: 'none'
+          boxShadow: 'none',
+
+          states: [
+            {
+              focus: {
+                borderColor: '#FF6262'
+              }
+            }
+          ]
         }
       }
     ]

@@ -32,20 +32,23 @@ export default React.createClass({
   },
 
   getFields() {
+    let errors = (this.props.errors.signUp || {}).errors || {};
+
     return {
       name: {
         placeholder: translate('Your name'),
-        spellCheck: false,
-        type: 'text'
+        type: 'text',
+        hasError: !!errors.name
       },
       email: {
         placeholder: translate('Your email'),
-        spellCheck: false,
-        type: 'email'
+        type: 'email',
+        hasError: !!errors.email
       },
       password: {
         placeholder: translate('Your password'),
-        type: 'password'
+        type: 'password',
+        hasError: !!errors.password
       }
     };
   },

@@ -31,15 +31,18 @@ export default React.createClass({
   },
 
   getFields() {
+    let hasError = this.props.errors.logIn != null;
+
     return {
       login: {
         placeholder: translate('Your email or username'),
-        spellCheck: false,
-        type: 'text'
+        type: 'text',
+        hasError
       },
       password: {
         placeholder: translate('Your password'),
-        type: 'password'
+        type: 'password',
+        hasError
       }
     };
   },

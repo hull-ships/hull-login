@@ -36,9 +36,13 @@ const ACTIONS = [
   'activateEditProfileSection'
 ];
 
+const METHODS = {
+  login: 'logIn',
+  logout: 'logOut',
+  signup: 'signUp'
+};
+
 const STATUS = {
-  login: 'isLoggingIn',
-  logout: 'isLoggingOut',
   logIn: 'isLoggingIn',
   logOut: 'isLoggingOut',
   linkIdentity: 'isLinking',
@@ -94,7 +98,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       formIsSubmitted: this.formIsSubmitted(),
       identities: this._identities,
       providers: this.getProviders(),
-      error: this._error,
+      errors: this._errors,
       isWorking: this.isWorking(),
       isLoggingIn: this._isLoggingIn,
       isLoggingOut: this._isLoggingOut,
@@ -120,7 +124,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   resetState() {
     this.resetUser();
 
-    this._error = null;
+    this._errors = {};
     this._isLoggingIn = false;
     this._isLoggingOut = false;
     this._isLinking = false;
@@ -262,7 +266,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     }
 
     this['_' + s] = provider;
-    this._error = null;
+    this._errors = {};
 
     this.emitChange();
 
@@ -277,14 +281,15 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
     promise.then(() => {
       this['_' + s] = false;
-      this._error = null;
+      this._errors = {};
 
       this.emitChange();
     }, (error) => {
       this['_' + s] = false;
 
       error.provider = provider;
-      this._error = error;
+      let m = METHODS[method] || method;
+      this._errors[m] = error;
 
       this.emitChange();
     });
@@ -293,7 +298,13 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   resetPassword: function(email) {
-    return Hull.api('/users/request_password_reset', 'post', { email });
+    let r = Hull.api('/users/request_password_reset', 'post', { email });
+
+    r.fail((error) => {
+      this._errors.resetPassword = error;
+    });
+
+    return r;
   },
 
   updateProfile: function(profile) {
