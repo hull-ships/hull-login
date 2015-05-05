@@ -167,8 +167,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   getProviders() {
     let providers = [];
 
-    //const services = Hull.config().services.auth;
-    const services = { facebook: {} };
+    const services = Hull.config().services.auth;
 
     for (let k in services) {
       if (services.hasOwnProperty(k) && k !== 'hull') {
