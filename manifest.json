@@ -60,7 +60,7 @@
       "maximun": 100
     },
     {
-      "name": "show_classic_login"
+      "name": "show_classic_login",
       "title": "Show classic login form",
       "type": "boolean",
       "default": "true"
