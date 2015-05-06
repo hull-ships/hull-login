@@ -11,7 +11,7 @@ export default React.createClass({
 
     return (
       <fieldset style={styles.divider}>
-        <legend style={styles.dividerContent}>{this.props.children}</legend>
+        <legend align='center' style={styles.dividerContent}>{this.props.children}</legend>
       </fieldset>
     );
   }
