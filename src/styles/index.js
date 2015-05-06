@@ -84,6 +84,7 @@ function getStyles() {
   };
 
   const link = {
+    cursor: 'pointer',
     color: settings.linkColor,
     background: 'transparent',
     textDecoration: 'underline'
