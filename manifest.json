@@ -15,25 +15,31 @@
   ],
   "settings": [
     {
+      "name": "logo_image",
+      "title": "logo image",
+      "type": "string",
+      "format": "image"
+    },
+    {
       "name": "primary_color",
       "title": "Primary color",
       "type": "string",
       "format": "color",
-      "default": ""
+      "default": "#fa5400"
     },
     {
       "name": "text_color",
       "title": "Text color",
       "type": "string",
       "format": "color",
-      "default": ""
+      "default": "#aaaaaa"
     },
     {
       "name": "link_color",
       "title": "Link color",
       "type": "string",
       "format": "color",
-      "default": ""
+      "default": "#aaaaaa"
     },
     {
       "name": "button_border_radius",
@@ -52,6 +58,26 @@
       "default": 6,
       "minimum": 0,
       "maximun": 100
+    },
+    {
+      "name": "show_classic_login",
+      "title": "Show classic login form",
+      "type": "boolean",
+      "default": "true"
+    },
+    {
+      "name": "show_sign_up_section_after",
+      "title": "Show sign up section",
+      "type": "number",
+      "minimum": 0,
+      "default": 2000
+    },
+    {
+      "name": "hide_thanks_section_after",
+      "title": "Hide thanks section",
+      "type": "number",
+      "minimum": 0,
+      "default": 2000
     }
   ],
   "resources": [
