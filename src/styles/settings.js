@@ -30,7 +30,7 @@ let _settings = {
 
   defaultFontSize: 14,
   defaultFontFamily: '"Helvetica Neue", Helvetica, Roboto, Arial, sans-serif',
-  defaultLineHeight: 1.6,
+  defaultLineHeight: '22px',
   defaultBorderRadius: 3,
   mediumBorderRadius: 6
 };

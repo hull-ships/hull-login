@@ -4,6 +4,8 @@ import React from 'react';
 import { Style } from 'radium';
 import { getStyles } from '../../styles';
 
+const s = { border: 0, padding: 0 };
+
 export default React.createClass({
   displayName: 'Styles',
 
@@ -29,7 +31,9 @@ export default React.createClass({
 
       { '::-moz-placeholder': styles.placeholder },
       { ':-ms-input-placeholder': styles.placeholder },
-      { '::-webkit-input-placeholder': styles.placeholder }
+      { '::-webkit-input-placeholder': styles.placeholder },
+
+      { '::-moz-focus-inner': s }
     ];
   },
 
