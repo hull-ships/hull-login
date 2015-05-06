@@ -77,7 +77,7 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
-          <OrganizationImage style={styles.sectionImage} src={this.props.shipSettings.logo_image} />
+          <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
           <h1 style={styles.sectionTitle}>{translate('Welcome back!')}</h1>
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate('Don’t have an account? Sign up!')}</a></p>
         </div>

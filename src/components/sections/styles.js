@@ -6,7 +6,11 @@ const sectionHeader = {
   marginBottom: 30
 };
 
-const sectionImage = {
+const sectionOrganizationImage = {
+  marginBottom: 20
+};
+
+const sectionUserImage = {
   marginBottom: 10
 };
 
@@ -30,7 +34,8 @@ function getStyles() {
 
   return {
     sectionHeader,
-    sectionImage,
+    sectionOrganizationImage,
+    sectionUserImage,
     sectionTitle,
     sectionText,
     sectionFooter

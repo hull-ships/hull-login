@@ -18,7 +18,7 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
-          <OrganizationImage style={styles.sectionImage} src={this.props.shipSettings.logo_image} />
+          <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
           <h1 style={styles.sectionTitle}>{translate('Thanks')}</h1>
         </div>
         <p style={styles.sectionText}>{w}</p>
