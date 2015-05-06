@@ -6,6 +6,12 @@ import Button from '../button';
 
 const TCombForm = t.form.Form;
 
+function testPlaceholder() {
+  let element = document.createElement('input');
+
+  return ('placeholder' in element);
+}
+
 export default React.createClass({
   displayName: 'Form',
 
@@ -19,11 +25,19 @@ export default React.createClass({
   getOptions() {
     return {
       config: {
-        kind: this.props.kind,
+        kind: this.getKind(),
         submitState: this.state.submitState
       },
       fields: this.props.fields
     };
+  },
+
+  getKind() {
+    if (this.props.kind === 'compact' && testPlaceholder()) {
+      return 'compact';
+    } else {
+      return 'default';
+    }
   },
 
   handleChange(value) {
