@@ -72,9 +72,17 @@ function Engine(deployment) {
   });
 
   this.emitChange();
+
+  const showSignUpSection = Hull.utils.cookies(this.getCookieKey('shown')) !== 'true';
+  const t = this._ship.settings.show_sign_up_section_after;
+  if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
 }
 
 assign(Engine.prototype, EventEmitter.prototype, {
+  getCookieKey(key) {
+    return this._ship.id + key;
+  },
+
   getActions() {
     if (this._actions) { return this._actions; }
 
@@ -200,11 +208,17 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   showDialog() {
+    this.clearTimers();
+
     this._dialogIsVisible = true;
     this.emitChange();
   },
 
   hideDialog() {
+    Hull.utils.cookies(this.getCookieKey('shown'), true);
+
+    this.clearTimers();
+
     this._dialogIsVisible = false;
     this.emitChange();
   },
@@ -314,11 +328,11 @@ assign(Engine.prototype, EventEmitter.prototype, {
     r.then((form) => {
       this._form = form;
 
-      // TODO show thanks section after complete registration flow
-      //this._activeSection = showThanksSection ? 'thanks' : 'showProfile';
       if (showThanksSection) {
-        this._dialogIsVisible = false;
-        this._activeSection = null;
+        this._activeSection = 'thanks';
+
+        const t = this._ship.settings.hide_thanks_section_after;
+        if (t > 0) { this.hideLater(t); }
       } else {
         this._activeSection = 'showProfile';
       }
@@ -350,6 +364,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   activateSection: function(name) {
+    this.clearTimers();
+
     if (SECTIONS.indexOf(name) > -1) {
       this._dialogIsVisible = true;
       this._activeSection = name;
@@ -357,6 +373,33 @@ assign(Engine.prototype, EventEmitter.prototype, {
     } else {
       throw new Error('"' + name + '" is not a valid section name');
     }
+  },
+
+  showLater(time, name) {
+    this.clearTimers();
+
+    this._showLaterTimer = setTimeout(() => {
+      this._dialogIsVisible = true;
+      this._activeSection = name;
+
+      this.emitChange();
+    }, time);
+  },
+
+  hideLater(time) {
+    this.clearTimers();
+
+    this._hideLaterTimer = setTimeout(() => {
+      this._dialogIsVisible = false;
+      this._activeSection = null;
+
+      this.emitChange();
+    }, time);
+  },
+
+  clearTimers() {
+    clearTimeout(this._hideLaterTimer);
+    clearTimeout(this._showLaterTimer);
   },
 
   formIsSubmitted() {

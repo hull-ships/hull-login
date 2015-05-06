@@ -7,6 +7,7 @@ import { toType } from 'tcomb-json-schema';
 import Form from '../form';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import _ from 'underscore';
+import UserImage from './user-image';
 
 export default React.createClass({
   displayName: 'LogInSection',
@@ -79,6 +80,7 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
+          <UserImage style={styles.sectionImage} src={u.picture} />
           <h1 style={styles.sectionTitle}>{title}</h1>
           <p style={styles.sectionText}>{subtitle}</p>
         </div>

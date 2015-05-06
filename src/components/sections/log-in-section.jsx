@@ -9,6 +9,7 @@ import Form from '../form';
 import Divider from '../divider';
 import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
+import OrganizationImage from './organization-image';
 
 export default React.createClass({
   displayName: 'LogInSection',
@@ -75,6 +76,7 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
+          <OrganizationImage style={styles.sectionImage} src={this.props.shipSettings.logo_image} />
           <h1 style={styles.sectionTitle}>{translate('Welcome back!')}</h1>
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate('Don’t have an account? Sign up!')}</a></p>
         </div>

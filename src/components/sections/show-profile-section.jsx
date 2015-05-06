@@ -7,6 +7,7 @@ import { toType } from 'tcomb-json-schema';
 import Form from '../form';
 import _ from 'underscore';
 import { getSettings } from '../../styles/settings';
+import UserImage from './user-image';
 
 const settings = getSettings();
 
@@ -65,6 +66,7 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
+          <UserImage style={styles.sectionImage} src={u.picture} />
           <h1 style={styles.sectionTitle}>{u.name || u.username || u.email}</h1>
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateEditProfileSection}>{translate('Edit profile')}</a></p>
         </div>

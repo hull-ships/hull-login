@@ -2,12 +2,24 @@
 
 import { getSettings } from '../../styles/settings';
 
+const sectionHeader = {
+  marginBottom: 30
+};
+
+const sectionImage = {
+  marginBottom: 10
+};
+
+const sectionText = {
+  textAlign: 'center'
+};
+
+const sectionFooter = {
+  marginTop: 30
+};
+
 function getStyles() {
   const settings = getSettings();
-
-  const sectionHeader = {
-    marginBottom: 30
-  };
 
   const sectionTitle = {
     color: settings.primaryColor,
@@ -16,16 +28,9 @@ function getStyles() {
     textAlign: 'center'
   };
 
-  const sectionText = {
-    textAlign: 'center'
-  };
-
-  const sectionFooter = {
-    marginTop: 30
-  };
-
   return {
     sectionHeader,
+    sectionImage,
     sectionTitle,
     sectionText,
     sectionFooter
