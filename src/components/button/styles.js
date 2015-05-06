@@ -37,7 +37,7 @@ function getStyles() {
     textDecoration: 'none',
     verticalAlign: 'middle',
     whiteSpace: 'nowrap',
-    lineHeight: settings.defaultLineHeight,
+    lineHeight: '22px',
     paddingTop: 7,
     paddingRight: 14,
     paddingBottom: 7,
