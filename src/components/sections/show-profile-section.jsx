@@ -18,33 +18,27 @@ export default React.createClass({
     let fields = this.props.form.fields_list.map(function(f, i) {
       const isFirst = i === 0;
 
-      let fieldStyle = {
-        padding: 10
-      };
-
+      let fieldStyle = { padding: 10 };
       if (!isFirst) {
         fieldStyle.borderTopWidth = 1;
         fieldStyle.borderTopStyle = 'solid';
         fieldStyle.borderTopColor = settings.grayLightColor;
       }
 
-      let labelStyle = {
+      const labelStyle = {
         color: settings.grayDarkerColor,
         fontWeight: 'bold'
-      };
-
-      let valueStyle = {
       };
 
       return (
         <div style={fieldStyle}>
           <p style={labelStyle}>{f.title}</p>
-          <p style={valueStyle}>{f.value}</p>
+          <p>{f.value}</p>
         </div>
       );
     }, this);
 
-    let fieldsStyle = {
+    const fieldsStyle = {
       borderWidth: 1,
       borderStyle: 'solid',
       borderColor: settings.grayLightColor,

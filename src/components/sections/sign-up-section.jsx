@@ -4,12 +4,10 @@ import React from 'react';
 import t from 'tcomb-form';
 import { translate } from '../../lib/i18n';
 import { Name, Email, Password } from '../../lib/types';
-import SocialButtons from '../social-buttons';
-import Form from '../form';
-import Divider from '../divider';
 import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
+import renderSectionContent from './render-section-content';
 
 export default React.createClass({
   displayName: 'SignUpSection',
@@ -58,15 +56,6 @@ export default React.createClass({
     this.getAsyncAction('signUp')(value);
   },
 
-  renderSocialButtons() {
-    if (this.props.providers.length === 0) { return; }
-
-    return [
-      <SocialButtons {...this.props} />,
-      <Divider>or</Divider>
-    ];
-  },
-
   render() {
     let m, d;
     if (this.state.signUpState === 'pending') {
@@ -76,6 +65,15 @@ export default React.createClass({
       m = translate('Sign up');
       d = false;
     }
+
+    let content = renderSectionContent(this.props, {
+      kind: 'compact',
+      type: this.getType(),
+      fields: this.getFields(),
+      submitMessage: m,
+      onSubmit: this.handleSubmit,
+      disabled: d
+    });
 
     const styles = getStyles();
 
@@ -87,9 +85,7 @@ export default React.createClass({
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Already have an account? Log in.')}</a></p>
         </div>
 
-        {this.renderSocialButtons()}
-
-        <Form kind='compact' type={this.getType()} fields={this.getFields()} submitMessage={m} onSubmit={this.handleSubmit} disabled={d} />
+        {content}
 
         <div style={styles.sectionFooter}>
           <p style={styles.sectionText}>{translate("By signing up, you agree to {organization}'s Terms of Service.", { organization: this.props.organization.name })}</p>
