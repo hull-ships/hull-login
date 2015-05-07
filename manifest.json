@@ -63,7 +63,7 @@
       "name": "show_classic_login",
       "title": "Show classic login form",
       "type": "boolean",
-      "default": "true"
+      "default": true
     },
     {
       "name": "show_sign_up_section_after",
