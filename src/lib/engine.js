@@ -350,27 +350,27 @@ assign(Engine.prototype, EventEmitter.prototype, {
     document.location = location;
   },
 
-  activateLogInSection: function() {
+  activateLogInSection() {
     this.activateSection('logIn');
   },
 
-  activateSignUpSection: function() {
+  activateSignUpSection() {
     this.activateSection('signUp');
   },
 
-  activateResetPasswordSection: function() {
+  activateResetPasswordSection() {
     this.activateSection('resetPassword');
   },
 
-  activateShowProfileSection: function() {
+  activateShowProfileSection() {
     this.activateSection('showProfile');
   },
 
-  activateEditProfileSection: function() {
+  activateEditProfileSection() {
     this.activateSection('editProfile');
   },
 
-  activateSection: function(name) {
+  activateSection(name) {
     this.clearTimers();
 
     if (SECTIONS.indexOf(name) > -1) {
@@ -414,7 +414,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking;
   },
 
-  isShopify: function() {
+  isShopify() {
     return this._platform.type === 'platforms/shopify_shop';
   }
 });
