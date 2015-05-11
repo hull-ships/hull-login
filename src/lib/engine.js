@@ -268,8 +268,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   perform(method, provider) {
-    const s = STATUS[method];
-
     let options;
     if (typeof provider === 'string') {
       options = { provider: provider };
@@ -277,6 +275,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
       options = provider;
       provider = 'classic';
     }
+
+    const s = STATUS[METHODS[method]];
 
     this['_' + s] = provider;
     this._errors = {};
