@@ -272,7 +272,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     if (typeof provider === 'string') {
       options = { provider: provider };
     } else {
-      options = provider;
+      options = assign({}, provider);
       provider = 'classic';
     }
 
