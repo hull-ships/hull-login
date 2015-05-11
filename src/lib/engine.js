@@ -1,6 +1,5 @@
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
-import IntlMessageFormat from 'intl-messageformat';
 
 const USER_SECTIONS = [
   'showProfile',
@@ -219,16 +218,30 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
     this.clearTimers();
 
+    if (this._redirectLater) {
+      this.redirect();
+    }
+
     this._dialogIsVisible = false;
+    this._activeSection = null;
+
     this.emitChange();
   },
 
   signUp(credentials) {
-    return this.performAndRedirect('signup', credentials);
+    return this.perform('signup', credentials).then((user) => { return this.fetchShip(); });
   },
 
   logIn(providerOrCredentials) {
-    return this.performAndRedirect('login', providerOrCredentials);
+    return this.perform('login', providerOrCredentials).then((user) => {
+      this.fetchShip().then(() => {
+        if (this.formIsSubmitted()) {
+          this.redirect();
+        } else {
+          this._redirectLater = true;
+        }
+      });
+    });
   },
 
   logOut() {
@@ -254,20 +267,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
     });
   },
 
-  performAndRedirect(action, provider) {
-    let p = this.perform(action, provider);
-
-    let location = this._settings.redirect_url;
-    if (this.isShopify()) {
-      location = location || '/account';
-    }
-    if (location) {
-      p.done(() => { document.location = location; });
-    }
-
-    return p.then((user) => { return this.fetchShip(); });
-  },
-
   perform(method, provider) {
     const s = STATUS[method];
 
@@ -285,10 +284,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.emitChange();
 
     if (this.isShopify()) {
-      let proxy = document.location.origin + '/a/hull-callback';
-      proxy += this._settings.redirect_url ? '?redirect_url=' + this._settings.redirect_url : '';
-
-      options.redirect_url = proxy;
+      options.redirect_url = document.location.origin + '/a/hull-callback';
     }
 
     let promise = Hull[method](options);
@@ -311,7 +307,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return promise;
   },
 
-  resetPassword: function(email) {
+  resetPassword(email) {
     let r = Hull.api('/users/request_password_reset', 'post', { email });
 
     r.fail((error) => {
@@ -321,14 +317,14 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return r;
   },
 
-  updateProfile: function(profile) {
+  updateProfile(profile) {
     let r = Hull.api(this._form.id + '/submit' ,'put', { data: profile });
-    const showThanksSection = !this.formIsSubmitted();
+    const isCompleted = !this.formIsSubmitted();
 
     r.then((form) => {
       this._form = form;
 
-      if (showThanksSection) {
+      if (isCompleted) {
         this._activeSection = 'thanks';
 
         const t = this._ship.settings.hide_thanks_section_after;
@@ -341,6 +337,17 @@ assign(Engine.prototype, EventEmitter.prototype, {
     });
 
     return r;
+  },
+
+  redirect() {
+    let location = this._settings.redirect_url;
+    if (this.isShopify()) {
+      location = location || document.location.href;
+    }
+
+    if (location == null) { return; }
+
+    document.location = location;
   },
 
   activateLogInSection: function() {
@@ -390,10 +397,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.clearTimers();
 
     this._hideLaterTimer = setTimeout(() => {
-      this._dialogIsVisible = false;
-      this._activeSection = null;
-
-      this.emitChange();
+      this.hideDialog();
     }, time);
   },
 
@@ -411,7 +415,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   isShopify: function() {
-    return this._platform.type === 'platforms/shopify';
+    return this._platform.type === 'platforms/shopify_shop';
   }
 });
 
