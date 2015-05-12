@@ -57,14 +57,12 @@ export default React.createClass({
   getStyles() {
     const settings = getSettings();
 
-    const overlayBackground = {
-      position: 'fixed',
+    let overlayBackground = {
+      position: 'absolute',
       left: 0,
       top: 0,
       width: '100%',
       height: '100%',
-      overflowX: 'hidden',
-      overflowY: 'auto',
       zIndex: 20000,
       backgroundColor: 'rgba(0,0,0,.15)'
     };
@@ -74,7 +72,14 @@ export default React.createClass({
       padding: 30,
       position: 'relative'
     };
+
     if (this.state.viewport === 'normal') {
+      assign(overlayBackground, {
+        position: 'fixed',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+      });
+
       assign(overlay, {
         boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.15)',
         borderRadius: settings.mediumBorderRadius,
