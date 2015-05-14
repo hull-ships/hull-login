@@ -20,17 +20,17 @@ export default React.createClass({
     // TODO
   },
 
-  renderOption(o) {
+  renderOption(o, i) {
     return (
-      <option value={o.value}>{o.text}</option>
+      <option key={o.value + o.text + i} value={o.value}>{o.text}</option>
     );
   },
 
   render() {
     const s = this.buildStyles(getStyles().formSelect);
 
-    const options = this.props.options.map((o) => {
-      return o.label ? this.renderOptionsGroup(o) : this.renderOption(o);
+    const options = this.props.options.map((o, i) => {
+      return o.label ? this.renderOptionsGroup(o, i) : this.renderOption(o, i);
     });
 
     return (

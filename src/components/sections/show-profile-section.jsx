@@ -31,7 +31,7 @@ export default React.createClass({
       };
 
       return (
-        <div style={fieldStyle}>
+        <div key={f.name} style={fieldStyle}>
           <p style={labelStyle}>{f.title}</p>
           <p>{f.value}</p>
         </div>
