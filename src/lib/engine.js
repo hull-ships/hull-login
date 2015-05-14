@@ -229,15 +229,26 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   signUp(credentials) {
-    return this.perform('signup', credentials).then((user) => { return this.fetchShip(); });
+    return this.perform('signup', credentials).then((user) => {
+      return this.fetchShip().then(() => {
+        if (!this.hasForm()) {
+          this._redirectLater = true;
+          this.activateThanksSectionAndHideLater();
+        }
+      });
+    });
   },
 
   logIn(providerOrCredentials) {
     return this.perform('login', providerOrCredentials).then((user) => {
-      this.fetchShip().then(() => {
-        if (!this.hasForm()) {
+      return this.fetchShip().then(() => {
+        const userIsNew = user.created_at === user.updated_at && user.stats.sign_in_count <= 1;
+        const hasForm = this.hasForm();
+
+        if (!hasForm && userIsNew) {
+          this._redirectLater = true;
           this.activateThanksSectionAndHideLater();
-        } else if (this.formIsSubmitted()) {
+        } else if (!hasForm || this.formIsSubmitted()) {
           this.redirect();
         } else {
           this._redirectLater = true;
@@ -339,8 +350,9 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   redirect() {
-    let location = this._settings.redirect_url;
+    this._redirectLater = false;
 
+    let location = this._settings.redirect_url;
     if (this.isShopifyCustomer()) {
       location = location || document.location.href;
     }
