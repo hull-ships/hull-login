@@ -9,8 +9,10 @@ function render(Component, locals) {
   if (locals.config.kind === 'compact') {
     return <Component {...locals} />;
   } else {
+    const s = { width: '100%' }
+
     return (
-      <label>
+      <label style={s}>
         {locals.label}
         <Component {...locals} />
       </label>
