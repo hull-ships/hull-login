@@ -235,7 +235,9 @@ assign(Engine.prototype, EventEmitter.prototype, {
   logIn(providerOrCredentials) {
     return this.perform('login', providerOrCredentials).then((user) => {
       this.fetchShip().then(() => {
-        if (this.formIsSubmitted()) {
+        if (!this.hasForm()) {
+          this.activateThanksSectionAndHideLater();
+        } else if (this.formIsSubmitted()) {
           this.redirect();
         } else {
           this._redirectLater = true;
@@ -325,10 +327,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       this._form = form;
 
       if (isCompleted) {
-        this._activeSection = 'thanks';
-
-        const t = this._ship.settings.hide_thanks_section_after;
-        if (t > 0) { this.hideLater(t); }
+        this.activateThanksSectionAndHideLater();
       } else {
         this._activeSection = 'showProfile';
       }
@@ -382,6 +381,13 @@ assign(Engine.prototype, EventEmitter.prototype, {
     }
   },
 
+  activateThanksSectionAndHideLater() {
+    this._activeSection = 'thanks';
+
+    const t = this._ship.settings.hide_thanks_section_after;
+    if (t > 0) { this.hideLater(t); }
+  },
+
   showLater(time, name) {
     this.clearTimers();
 
@@ -404,6 +410,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
   clearTimers() {
     clearTimeout(this._hideLaterTimer);
     clearTimeout(this._showLaterTimer);
+  },
+
+  hasForm() {
+    return this._form && this._form.fields_list.length > 0;
   },
 
   formIsSubmitted() {
