@@ -86,7 +86,7 @@ export default React.createClass({
         {content}
 
         <div style={styles.sectionFooter}>
-          <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateResetPasswordSection}>{translate('Forgot Password?')}</a></p>
+          <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateResetPasswordSection}>{translate('Forgot password?')}</a></p>
         </div>
       </div>
     );
