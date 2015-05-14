@@ -285,7 +285,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
     this.emitChange();
 
-    if (this.isShopify()) {
+    if (this.isShopifyCustomer()) {
       options.redirect_url = document.location.origin + '/a/hull-callback';
     }
 
@@ -340,13 +340,12 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
   redirect() {
     let location = this._settings.redirect_url;
-    if (this.isShopify()) {
+
+    if (this.isShopifyCustomer()) {
       location = location || document.location.href;
     }
 
-    if (location == null) { return; }
-
-    document.location = location;
+    if (location) { document.location = location; }
   },
 
   activateLogInSection() {
@@ -424,8 +423,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking;
   },
 
-  isShopify() {
-    return this._platform.type === 'platforms/shopify_shop';
+  isShopifyCustomer() {
+    return this._platform.type === 'platforms/shopify_shop' && Hull.config().customerId !== 'disabled';
   }
 });
 
