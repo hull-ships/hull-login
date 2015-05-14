@@ -33,7 +33,7 @@ export default React.createClass({
       return (
         <div key={f.name} style={fieldStyle}>
           <p style={labelStyle}>{f.title}</p>
-          <p>{f.value}</p>
+          <p>{f.value || '-'}</p>
         </div>
       );
     }, this);
