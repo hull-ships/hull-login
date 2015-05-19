@@ -87,8 +87,12 @@ function getStyles() {
     cursor: 'pointer',
     color: settings.linkColor,
     background: 'transparent',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
   };
+
+  const linkHover = {
+    color: settings.linkHoverColor
+  }
 
   const placeholder = {
     color: settings.grayColor
@@ -97,6 +101,7 @@ function getStyles() {
   return {
     reset,
     link,
+    linkHover,
     placeholder
   };
 }

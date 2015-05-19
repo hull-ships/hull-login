@@ -27,6 +27,7 @@ let _settings = {
 
   textColor: '#aaaaaa',
   linkColor: '#aaaaaa',
+  linkHoverColor: '#666666',
 
   defaultFontSize: 14,
   defaultFontFamily: '"Helvetica Neue", Helvetica, Roboto, Arial, sans-serif',
