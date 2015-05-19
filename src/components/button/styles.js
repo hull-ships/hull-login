@@ -60,9 +60,14 @@ function getStyles() {
             states: [
               {
                 active: {
-                  backgroundColor: normal.darken(.1).hexString(),
+                  backgroundColor: normal.darken(.3).hexString(),
                   backgroundImage: 'none',
                   boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.04), inset 0 1px 0 0 rgba(0,0,0,.08)',
+                }
+              },
+              {
+                hover: {
+                  backgroundColor: normal.darken(.1).hexString()
                 }
               }
             ],

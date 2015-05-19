@@ -2,6 +2,8 @@
 
 import React from 'react';
 import assign from 'object-assign';
+import color from 'color';
+import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 import { getSettings } from '../../styles/settings';
 
 let mediaQuery = window.matchMedia('(min-width: 460px)');
@@ -12,6 +14,11 @@ function getViewport() {
 
 export default React.createClass({
   displayName: 'Overlay',
+
+  mixins: [
+    StyleResolverMixin,
+    BrowserStateMixin
+  ],
 
   propTypes: {
     className: React.PropTypes.string,
@@ -98,7 +105,20 @@ export default React.createClass({
       textDecoration: 'none',
       top: 15,
       right: 15,
-      color: settings.grayColor
+      color: settings.grayColor,
+
+      states: [
+        {
+          hover: {
+            color: color(settings.grayColor).darken(.2).hexString()
+          }
+        },
+        {
+          active: {
+            color: color(settings.grayColor).darken(.4).hexString()
+          }
+        }
+      ]
     };
 
     return {
@@ -114,7 +134,7 @@ export default React.createClass({
     return (
       <div style={styles.overlayBackground} className={this.props.className}>
         <div style={styles.overlay} tabIndex='-1'>
-          <a style={styles.overlayCloseButton} href='javascript: void 0;' onClick={this.handleClick}>×</a>
+          <a {...this.getBrowserStateEvents()} style={this.buildStyles(styles.overlayCloseButton)} href='javascript: void 0;' onClick={this.handleClick}>×</a>
           {this.props.children}
         </div>
       </div>
