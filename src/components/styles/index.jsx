@@ -25,9 +25,9 @@ export default React.createClass({
 
       { 'a': styles.link },
       { 'a:active': styles.link },
-      { 'a:hover': styles.link },
       { 'a:link': styles.link },
       { 'a:visited': styles.link },
+      { 'a:hover': styles.linkHover },
 
       { '::-moz-placeholder': styles.placeholder },
       { ':-ms-input-placeholder': styles.placeholder },
