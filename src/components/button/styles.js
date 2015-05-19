@@ -59,15 +59,16 @@ function getStyles() {
 
             states: [
               {
-                active: {
-                  backgroundColor: normal.darken(.3).hexString(),
-                  backgroundImage: 'none',
-                  boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.04), inset 0 1px 0 0 rgba(0,0,0,.08)',
+                hover: {
+                  backgroundColor: color(normalHex).lighten(0.2).hexString(),
+                  backgroundImage: `linear-gradient(rgba(255,255,255,.03), rgba(255,255,255,0))`,
                 }
               },
               {
-                hover: {
-                  backgroundColor: normal.darken(.1).hexString()
+                active: {
+                  backgroundColor: color(normalHex).darken(0.2).hexString(),
+                  backgroundImage: 'none',
+                  boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.04), inset 0 1px 0 0 rgba(0,0,0,.08)',
                 }
               }
             ],
