@@ -7,15 +7,23 @@ import Select from './select';
 
 function render(Component, locals) {
   if (locals.config.kind === 'compact') {
-    return <Component {...locals} />;
+    return (
+      <div>
+        <Component {...locals} />
+        {locals.error ? <span><strong>Error:</strong> {locals.error}</span> : null}
+      </div>
+    );
   } else {
     const s = { width: '100%' }
 
     return (
-      <label style={s}>
-        {locals.label}
-        <Component {...locals} />
-      </label>
+      <div>
+        <label style={s}>
+          {locals.label}
+          <Component {...locals} />
+        </label>
+        {locals.error ? <span><strong>Error:</strong> {locals.error}</span> : null}
+      </div>
     );
   }
 }

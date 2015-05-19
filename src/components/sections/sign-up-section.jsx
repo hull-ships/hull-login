@@ -4,6 +4,7 @@ import React from 'react';
 import t from 'tcomb-form';
 import { translate } from '../../lib/i18n';
 import { Name, Email, Password } from '../../lib/types';
+import capitalize from '../../lib/capitalize';
 import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
@@ -31,23 +32,41 @@ export default React.createClass({
   },
 
   getFields() {
-    let errors = (this.props.errors.signUp || {}).errors || {};
+    let errors = ((this.props.errors.signUp || {}).response || {}).errors || {};
+
+    function createMessage(errors, type) {
+      var errs = errors[type] || [];
+
+      if(errs.length < 1)
+        return '';
+
+      var rtn = capitalize(type) + ' ';
+      errs.forEach(function(error, index) {
+        rtn += (index === 0) ? ' ' : ' and ';
+        rtn += error;
+      });
+
+      return rtn;
+    }
 
     return {
       name: {
         placeholder: translate('Your name'),
         type: 'text',
-        hasError: !!errors.name
+        hasError: !!errors.name,
+        error: createMessage(errors, 'name')
       },
       email: {
         placeholder: translate('Your email'),
         type: 'email',
-        hasError: !!errors.email
+        hasError: !!errors.email,
+        error: createMessage(errors, 'email')
       },
       password: {
         placeholder: translate('Your password'),
         type: 'password',
-        hasError: !!errors.password
+        hasError: !!errors.password,
+        error: createMessage(errors, 'password')
       }
     };
   },
