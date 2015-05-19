@@ -60,7 +60,7 @@ export default React.createClass({
     if (this.props.formIsSubmitted) {
       title = translate('Edit your profile');
       subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>
-      button = translate('Edit profile');
+      button = translate('Save changes');
     } else {
       title = translate('Complete your profile');
       subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>{translate('Skip this step')}</a>
