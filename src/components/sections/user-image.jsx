@@ -8,8 +8,7 @@ const style = {
   width: 100,
   height: 100,
   overflow: 'hidden',
-  backgroundPosition: 'center center',
-  backgroundSize: 'cover',
+  display: 'block',
   marginRight: 'auto',
   marginLeft: 'auto',
   borderRadius: 100
@@ -24,14 +23,10 @@ export default React.createClass({
     if (!url) { return <noscript />; }
 
     const settings = getSettings();
-    const s = assign({
-      backgroundColor: settings.grayLighterColor,
-      backgroundImage: 'url(' + url + ')'
-    }, style);
 
     return (
       <div style={this.props.style}>
-        <div style={s}/>
+        <img src={url} style={style} alt={'Your profile picture'} />
       </div>
     );
   }
