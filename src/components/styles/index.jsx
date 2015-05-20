@@ -28,6 +28,7 @@ export default React.createClass({
       { 'a:link': styles.link },
       { 'a:visited': styles.link },
       { 'a:hover': styles.linkHover },
+      { 'a:focus': styles.linkFocus },
 
       { '::-moz-placeholder': styles.placeholder },
       { ':-ms-input-placeholder': styles.placeholder },

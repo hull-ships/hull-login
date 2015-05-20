@@ -26,7 +26,7 @@ function getStyles() {
     display: 'inline-block',
     boxSizing: 'border-box',
     border: 'none',
-    outline: 'none',
+    outlineWidth: 0,
     borderRadius: settings.defaultBorderRadius,
     color: settings.whiteColor,
     cursor: 'pointer',
@@ -61,6 +61,12 @@ function getStyles() {
               {
                 hover: {
                   backgroundColor: color(normalHex).lighten(0.1).hexString()
+                }
+              },
+              {
+                focus: {
+                  backgroundColor: color(normalHex).lighten(0.1).hexString(),
+                  outlineWidth: 5
                 }
               },
               {

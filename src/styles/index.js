@@ -20,7 +20,7 @@ function getStyles() {
     margin: 0,
     padding: 0,
     border: 0,
-    outline: 0,
+    outlineWidth: 0,
 
     position: 'static',
     right: 'auto',
@@ -88,10 +88,15 @@ function getStyles() {
     cursor: 'pointer',
     color: settings.linkColor,
     background: 'transparent',
-    textDecoration: 'underline'
+    textDecoration: 'underline',
+    outlineWidth: 5
   };
 
   const linkHover = {
+    color: color(settings.linkColor).darken(0.2).hexString()
+  };
+
+  const linkFocus = {
     color: color(settings.linkColor).darken(0.2).hexString()
   };
 
