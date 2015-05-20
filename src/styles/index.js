@@ -1,5 +1,6 @@
 'use strict';
 
+import color from 'color';
 import { getSettings } from './settings';
 
 function getStyles() {
@@ -90,6 +91,10 @@ function getStyles() {
     textDecoration: 'underline'
   };
 
+  const linkHover = {
+    color: color(settings.linkColor).darken(0.2).hexString()
+  };
+
   const placeholder = {
     color: settings.grayColor
   };
@@ -97,6 +102,7 @@ function getStyles() {
   return {
     reset,
     link,
+    linkHover,
     placeholder
   };
 }
