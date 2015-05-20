@@ -97,8 +97,7 @@ export default React.createClass({
       lineHeight: '18px',
       textDecoration: 'none',
       top: 15,
-      right: 15,
-      color: settings.grayColor
+      right: 15
     };
 
     return {
