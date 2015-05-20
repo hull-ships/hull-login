@@ -80,7 +80,7 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
-          <UserImage style={styles.sectionUserImage} src={u.picture} />
+          <UserImage style={styles.sectionUserImage} src={u.picture} editable={true} />
           <h1 style={styles.sectionTitle}>{title}</h1>
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
