@@ -47,7 +47,13 @@ export default React.createClass({
   handleClick(e) {
     e.preventDefault();
 
-    this.props.onClose();
+    // Determine source of the event!
+    console.log(e);
+
+    if(e.target === React.findDOMNode(this.refs['background']) ||
+       e.target === React.findDOMNode(this.refs['close'])) {
+      this.props.onClose();
+    }
   },
 
   handleKeydown(e) {
@@ -111,9 +117,9 @@ export default React.createClass({
     const styles = this.getStyles();
 
     return (
-      <div style={styles.overlayBackground} className={this.props.className}>
-        <div style={styles.overlay} tabIndex='-1'>
-          <a style={styles.overlayCloseButton} href='javascript: void 0;' onClick={this.handleClick}>×</a>
+      <div ref='background' style={styles.overlayBackground} className={this.props.className} onClick={this.handleClick} >
+        <div ref='overlay' style={styles.overlay} tabIndex='-1'>
+          <a ref='close' style={styles.overlayCloseButton} href='javascript: void 0;' onClick={this.handleClick} >×</a>
           {this.props.children}
         </div>
       </div>
