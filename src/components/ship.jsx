@@ -38,19 +38,20 @@ export default React.createClass({
   renderOverlay() {
     if (!this.state.dialogIsVisible) { return; }
 
+    const d = { organization: this.state.organization.name };
     const titles = {
-      logIn: 'Log in to ' + this.state.organization.name,
-      signUp: 'Sign up for ' + this.state.organization.name,
-      resetPassword: 'Reset your password',
-      showProfile: 'View your profile',
-      editProfile: 'Edit your profile',
-      thanks: 'Thanks for signing up!'
+      logIn: translate('Log in to {organization}', d),
+      signUp: translate('Sign up for {organization}', d),
+      resetPassword: translate('Reset your password'),
+      showProfile: translate('View your profile'),
+      editProfile: translate('Edit your profile'),
+      thanks: translate('Thanks for signing up!')
     };
 
     const Section = sections[this.state.activeSection];
-    const OverlayTitle = titles[this.state.activeSection];
+    const t = titles[this.state.activeSection];
     return (
-      <Overlay className={this.getScope()} onClose={this.props.actions.hideDialog} title={OverlayTitle} visible={true}>
+      <Overlay className={this.getScope()} onClose={this.props.actions.hideDialog} title={t} visible={true}>
         <Section {...this.state} {...this.props.actions} />
       </Overlay>
     );
