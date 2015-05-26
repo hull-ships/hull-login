@@ -44,8 +44,6 @@ function getStyles() {
     paddingLeft: 14,
     WebkitAppearance: 'none',
     WebkitFontSmoothing: 'antialiased',
-    textShadow: '0 -1px 0 rgba(0,0,0,.15)',
-    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.04), inset 0 -1px 0 0 rgba(0,0,0,.08), 0 1px 1px 0 rgba(0,0,0,.1)',
 
     modifiers: [
       {
