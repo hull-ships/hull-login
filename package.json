@@ -28,6 +28,7 @@
     "react"
   ],
   "dependencies": {
+    "bounce.js": "citelao/bounce.js#master",
     "color": "^0.8.0",
     "intl-messageformat": "^1.1.0",
     "json-svg-icons": "hull/json-svg-icons#master",
