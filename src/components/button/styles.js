@@ -26,7 +26,7 @@ function getStyles() {
     display: 'inline-block',
     boxSizing: 'border-box',
     border: 'none',
-    outline: 'none',
+    outlineWidth: 0,
     borderRadius: settings.defaultBorderRadius,
     color: settings.whiteColor,
     cursor: 'pointer',
@@ -44,8 +44,6 @@ function getStyles() {
     paddingLeft: 14,
     WebkitAppearance: 'none',
     WebkitFontSmoothing: 'antialiased',
-    textShadow: '0 -1px 0 rgba(0,0,0,.15)',
-    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.04), inset 0 -1px 0 0 rgba(0,0,0,.08), 0 1px 1px 0 rgba(0,0,0,.1)',
 
     modifiers: [
       {
@@ -61,6 +59,12 @@ function getStyles() {
               {
                 hover: {
                   backgroundColor: color(normalHex).lighten(0.1).hexString()
+                }
+              },
+              {
+                focus: {
+                  backgroundColor: color(normalHex).lighten(0.1).hexString(),
+                  outlineWidth: 5
                 }
               },
               {
