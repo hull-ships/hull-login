@@ -18,7 +18,8 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
-      updateProfile: this.props.updateProfile
+      updateProfile: this.props.updateProfile,
+      updatePicture: this.props.updatePicture
     };
   },
 
@@ -27,16 +28,16 @@ export default React.createClass({
   },
 
   getFields() {
-    return _.reduce(this.props.form.fields_schema.properties, function(m, v, k) {
-      let f = { label: v.title };
+    return _.reduce(this.props.form.fields_schema.properties, function(memo, value, key) {
+      let f = { label: value.title };
 
-      if (v.type === 'string') {
-        f.type = v.format === 'uri' ? 'url' : (v.format || 'text');
+      if (value.type === 'string') {
+        f.type = value.format === 'uri' ? 'url' : (value.format || 'text');
       }
 
-      m[k] = f;
+      memo[key] = f;
 
-      return m;
+      return memo;
     }, {});
   },
 
@@ -49,6 +50,10 @@ export default React.createClass({
 
   handleSubmit(value) {
     this.getAsyncAction('updateProfile')(value);
+  },
+
+  handleDrop(file) {
+    this.getAsyncAction('updatePicture')(file);
   },
 
   render() {
@@ -80,12 +85,22 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
-          <UserImage style={styles.sectionUserImage} src={u.picture} editable={true} />
+          <UserImage
+            style={styles.sectionUserImage}
+            initialSrc={u.picture}
+            editable={true}
+            onDrop={this.handleDrop} />
           <h1 style={styles.sectionTitle}>{title}</h1>
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
 
-        <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />
+        <Form
+          type={this.getType()}
+          fields={this.getFields()}
+          value={value}
+          submitMessage={button}
+          onSubmit={this.handleSubmit}
+          disabled={disabled} />
       </div>
     );
   }

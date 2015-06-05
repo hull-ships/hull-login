@@ -1,5 +1,6 @@
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
+import FileAPI from 'fileApi';
 
 const USER_SECTIONS = [
   'showProfile',
@@ -27,6 +28,7 @@ const ACTIONS = [
 
   'resetPassword',
   'updateProfile',
+  'updatePicture',
 
   'activateLogInSection',
   'activateSignUpSection',
@@ -347,6 +349,35 @@ assign(Engine.prototype, EventEmitter.prototype, {
     });
 
     return r;
+  },
+
+  updatePicture(file) {
+    let s3config = Hull.config().services.storage.hull;
+    let url = s3config.url;
+
+    console.log(s3config);
+
+    let xhr = FileAPI.upload({
+      url: url,
+      files: { file },
+      data: {
+        Filename: file.name,
+        'Content-type': file.type,
+        AWSAccessKeyId: s3config.params.AWSAccessKeyId,
+        acl: s3config.params.acl,
+        key: s3config.params.key,
+        policy: s3config.params.policy,
+        signature: s3config.params.signature,
+        success_action_status: s3config.params.success_action_status
+      },
+      complete: function(err, xhr) {
+        debugger;
+        console.error(err);
+      }
+    });
+
+    // debugger;
+    return xhr;
   },
 
   redirect() {

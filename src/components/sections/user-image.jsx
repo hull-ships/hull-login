@@ -11,7 +11,7 @@ const dropzoneStyle = {
   width: 100,
   height: 100,
   marginRight: 'auto',
-  marginLeft: 'auto',
+  marginLeft: 'auto'
 };
 
 const linkStyle = {
@@ -45,18 +45,18 @@ const overlayStyle = {
 };
 
 const editableImgStyle = {
-  width: 100, 
-  height: 100,
+  width: 100,
+  height: 100
 };
 
 const imgStyle = {
-  width: 100, 
+  width: 100,
   height: 100,
   overflow: 'hidden',
   display: 'block',
   marginRight: 'auto',
   marginLeft: 'auto',
-  borderRadius: 100,
+  borderRadius: 100
 };
 
 export default React.createClass({
@@ -67,16 +67,31 @@ export default React.createClass({
     BrowserStateMixin
   ],
 
-  render() {
-    const url = this.props.src;
+  getInitialState: function() {
+    return {
+      url: this.props.initialSrc
+    };
+  },
 
-    if (!url) { return <noscript />; }
+  handleDrop(files) {
+    let file = files[0];
+
+    if(!/^image/.test(file.type)) {
+      return;
+    }
+
+    this.setState({ url: file.preview });
+    this.props.onDrop(file);
+  },
+
+  render() {
+    if (!this.state.url) { return <noscript />; }
 
     const settings = getSettings();
 
     let image = (
-      <img {...this.getBrowserStateEvents()} 
-        src={url} 
+      <img {...this.getBrowserStateEvents()}
+        src={this.state.url}
         style={this.buildStyles((this.props.editable) ? editableImgStyle : imgStyle)} 
         alt={translate('Your profile picture')} />
     );
@@ -84,7 +99,7 @@ export default React.createClass({
     let output;
     if(this.props.editable) {
       output = (
-        <Dropzone size={100} style={this.buildStyles(dropzoneStyle)}>
+        <Dropzone size={100} style={this.buildStyles(dropzoneStyle)} onDrop={this.handleDrop}>
           <a {...this.getBrowserStateEvents()} style={this.buildStyles(linkStyle)} href={'#'} title={translate('Edit your profile picture')}>
             {image}
             <div style={overlayStyle}></div>
