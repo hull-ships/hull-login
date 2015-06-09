@@ -1,6 +1,6 @@
 {
-  "name": "Hull Login",
-  "description": "A simple login overlay",
+  "name": "Login",
+  "description": "A complete user registration and social login modal",
   "picture": "picture.png",
   "version": "0.0.1",
   "index": "ship.html",
