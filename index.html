@@ -1,15 +1,55 @@
-<html>
 <head>
   <title>Hull Login Ship</title>
   <meta charset="utf-8" />
-
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
   <script id="hull-js-sdk" platform-id="5509842467ef6ce876000242" org-url="https://hull-demos.hullapp.io" src="https://d3f5pyioow99x0.cloudfront.net/fe201cdafa0f43dde1d7b11690782f97bdb28316/hull.js"></script>
+  <style>
+    /*Host Styles*/
+    body{
+      /*-webkit-font-smoothing: antialiased;*/
+      background-color: white;
+      color: #444;
+      font-family: "Helvetica Neue", arial, sans-serif;
+      font-size: 15px;
+      padding: 24px;
+      text-align: center;
+    }
+    hr{
+      height: 2px;
+      background-color: #E75F45;
+      border:0;
+    }
+    p{
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    h1{
+      font-weight: 200;
+      margin-bottom: 24px;
+    }
+    .container{
+      max-width: 970px;
+      margin: 0 auto;
+    }
+    .log{
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #CCC;
+      padding: 5px;
+      height: 100vh;
+      overflow: scroll;
+      opacity: .9;
+      text-align:left;
+    }
+  </style>
 </head>
 <body>
-  <div class="main" id="ship"></div>
-  <script src="index.js"></script>
+  <div class="container">
+    <h1>Login Ship</h1>
+    <hr>
+    <div class="main" id="ship"></div>
+  </div>
 </body>
 </html>
