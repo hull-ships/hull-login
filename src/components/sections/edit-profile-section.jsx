@@ -53,6 +53,7 @@ export default React.createClass({
   },
 
   handleDrop(file) {
+    this.setState({ pendingPicture: file });
     this.getAsyncAction('updatePicture')(file);
   },
 
@@ -80,6 +81,13 @@ export default React.createClass({
     const u = this.props.user;
     const value = this.props.form.user_data && this.props.form.user_data.data;
 
+    let image = '';
+    if (this.state.updatePictureState === 'pending') {
+      image = this.state.pendingPicture.preview;
+    } else {
+      image = u.picture;
+    }
+
     const styles = getStyles();
 
     return (
@@ -87,9 +95,10 @@ export default React.createClass({
         <div style={styles.sectionHeader}>
           <UserImage
             style={styles.sectionUserImage}
-            initialSrc={u.picture}
+            src={image}
             editable={true}
-            onDrop={this.handleDrop} />
+            onDrop={this.handleDrop}
+            />
           <h1 style={styles.sectionTitle}>{title}</h1>
           <p style={styles.sectionText}>{subtitle}</p>
         </div>

@@ -352,41 +352,41 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   updatePicture(file) {
-    let s3config = Hull.config().services.storage.hull;
+    return new Promise((resolve, reject) => {
+      let s3config = Hull.config().services.storage.hull;
 
-    let url = s3config.url;
-    let type = file.type;
-    let name = file.name;
+      let url = s3config.url;
+      let type = file.type;
+      let name = file.name;
 
-    let form = new FormData();
-    form.append('Content-Type', type);
-    form.append('Filename', name);
-    form.append('name', name);
-    _.each(s3config.params, function(value, key) {
-      form.append(key, value);
-    });
-    form.append('file', file);
+      let form = new FormData();
+      form.append('Content-Type', type);
+      form.append('Filename', name);
+      form.append('name', name);
+      _.each(s3config.params, function(value, key) {
+        form.append(key, value);
+      });
+      form.append('file', file);
 
-    var req = new XMLHttpRequest();
-    req.onreadystatechange = () => {
-      if(req.readyState === 4) {
-        if(req.status === 201) {
-          let store = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
-          let r = Hull.api('me', 'put', {  picture: store }).then((resp) => {
-            // TODO handle success
-          }, (err) => {
-            // TODO handle error
-          });
-        } else {
-          console.error('Couldn\'t upload!');
-          // TODO recover.
+      var req = new XMLHttpRequest();
+      req.onreadystatechange = () => {
+        if(req.readyState === 4) {
+          if(req.status === 201) {
+            let store = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
+            Hull.api('me', 'put', {  picture: store }).then((resp) => {
+              resolve(resp);
+            }, (err) => {
+              reject(err);
+            });
+          } else {
+            console.error('Couldn\'t upload!');
+            reject('Couldn\'t upload image, status ' + req.status);
+          }
         }
-      }
-    };
-    req.open('post', url);
-    req.send(form);
-
-    return req;
+      };
+      req.open('post', url);
+      req.send(form);
+    });
   },
 
   redirect() {

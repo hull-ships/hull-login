@@ -60,7 +60,7 @@ export default React.createClass({
     return (
       <div>
         <div style={styles.sectionHeader}>
-          <UserImage style={styles.sectionUserImage} initialSrc={u.picture} onClick={this.props.activateEditProfileSection} />
+          <UserImage style={styles.sectionUserImage} src={u.picture} onClick={this.props.activateEditProfileSection} />
           <h1 style={styles.sectionTitle}>{u.name || u.username || u.email}</h1>
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateEditProfileSection}>{translate('Edit profile')}</a></p>
         </div>

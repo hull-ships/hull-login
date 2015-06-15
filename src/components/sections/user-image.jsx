@@ -70,15 +70,9 @@ export default React.createClass({
   propTypes: {
     onDrop: React.PropTypes.func,
     onClick: React.PropTypes.func,
-    initialSrc: React.PropTypes.string.isRequired,
+    src: React.PropTypes.string.isRequired,
     editable: React.PropTypes.bool,
     style: React.PropTypes.any
-  },
-
-  getInitialState: function() {
-    return {
-      url: this.props.initialSrc
-    };
   },
 
   handleDrop(files) {
@@ -88,18 +82,17 @@ export default React.createClass({
       return;
     }
 
-    this.setState({ url: file.preview });
     if(this.props.onDrop) {
       this.props.onDrop(file);
     }
   },
 
   render() {
-    if (!this.state.url) { return <noscript />; }
+    if (!this.props.src) { return <noscript />; }
 
     let image = (
       <img {...this.getBrowserStateEvents()}
-        src={this.state.url}
+        src={this.props.src}
         style={this.buildStyles((this.props.editable) ? editableImgStyle : imgStyle)}
         alt={translate('Your profile picture')} />
     );
