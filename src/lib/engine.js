@@ -1,6 +1,6 @@
+import _ from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
-import FileAPI from 'fileApi';
 
 const USER_SECTIONS = [
   'showProfile',
@@ -353,31 +353,66 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
   updatePicture(file) {
     let s3config = Hull.config().services.storage.hull;
+
     let url = s3config.url;
+    let type = file.type;
+    let name = file.name;
+
+    let form = new FormData();
+    form.append('Content-Type', type);
+    form.append('Filename', name);
+    form.append('name', name);
+    _.each(s3config.params, function(value, key) {
+      form.append(key, value);
+    });
+    form.append('file', file);
 
     console.log(s3config);
 
-    let xhr = FileAPI.upload({
-      url: url,
-      files: { file },
-      data: {
-        Filename: file.name,
-        'Content-type': file.type,
-        AWSAccessKeyId: s3config.params.AWSAccessKeyId,
-        acl: s3config.params.acl,
-        key: s3config.params.key,
-        policy: s3config.params.policy,
-        signature: s3config.params.signature,
-        success_action_status: s3config.params.success_action_status
-      },
-      complete: function(err, xhr) {
+    // debugger;
+
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+      if(req.readyState === 4) {
         debugger;
-        console.error(err);
       }
-    });
+    };
+    req.open('post', url);
+    req.send(form);
+
+    // let xhr = FileAPI.upload({
+    //   url: host,
+    //   headers: {
+    //     'x-amz-date': Date(),
+    //     'Content-type': 'text/plain',
+    //     Authentication: 'AWS ' + s3config.AWSAccessKeyId + ':' + s3config.signature
+    //   },
+    //   files: { aTestFile: file },
+    //   complete: function(err, xhr) {
+    //     debugger;
+    //     console.error(err);
+    //   }
+    // });
+    //   url: url,
+    //   files: { file },
+    //   data: {
+    //     Filename: file.name,
+    //     'Content-type': file.type,
+    //     key: s3config.params.key,
+    //     AWSAccessKeyId: s3config.params.AWSAccessKeyId,
+    //     acl: s3config.params.acl,
+    //     success_action_status: s3config.params.success_action_status
+    //     policy: s3config.params.policy,
+    //     signature: s3config.params.signature,
+    //   },
+    //   complete: function(err, xhr) {
+    //     debugger;
+    //     console.error(err);
+    //   }
+    // });
 
     // debugger;
-    return xhr;
+    return req;
   },
 
   redirect() {
