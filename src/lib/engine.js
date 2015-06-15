@@ -367,51 +367,25 @@ assign(Engine.prototype, EventEmitter.prototype, {
     });
     form.append('file', file);
 
-    console.log(s3config);
-
-    // debugger;
-
     var req = new XMLHttpRequest();
-    req.onreadystatechange = function() {
+    req.onreadystatechange = () => {
       if(req.readyState === 4) {
-        debugger;
+        if(req.status === 201) {
+          let store = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
+          let r = Hull.api('me', 'put', {  picture: store }).then((resp) => {
+            // TODO handle success
+          }, (err) => {
+            // TODO handle error
+          });
+        } else {
+          console.error('Couldn\'t upload!');
+          // TODO recover.
+        }
       }
     };
     req.open('post', url);
     req.send(form);
 
-    // let xhr = FileAPI.upload({
-    //   url: host,
-    //   headers: {
-    //     'x-amz-date': Date(),
-    //     'Content-type': 'text/plain',
-    //     Authentication: 'AWS ' + s3config.AWSAccessKeyId + ':' + s3config.signature
-    //   },
-    //   files: { aTestFile: file },
-    //   complete: function(err, xhr) {
-    //     debugger;
-    //     console.error(err);
-    //   }
-    // });
-    //   url: url,
-    //   files: { file },
-    //   data: {
-    //     Filename: file.name,
-    //     'Content-type': file.type,
-    //     key: s3config.params.key,
-    //     AWSAccessKeyId: s3config.params.AWSAccessKeyId,
-    //     acl: s3config.params.acl,
-    //     success_action_status: s3config.params.success_action_status
-    //     policy: s3config.params.policy,
-    //     signature: s3config.params.signature,
-    //   },
-    //   complete: function(err, xhr) {
-    //     debugger;
-    //     console.error(err);
-    //   }
-    // });
-
-    // debugger;
     return req;
   },
 
