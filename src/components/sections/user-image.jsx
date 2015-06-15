@@ -7,7 +7,7 @@ import assign from 'object-assign';
 import { getSettings } from '../../styles/settings';
 import { translate } from '../../lib/i18n';
 
-const dropzoneStyle = {
+const blockStyle = {
   width: 100,
   height: 100,
   marginRight: 'auto',
@@ -27,8 +27,8 @@ const linkStyle = {
   states: [
     {
       hover: {
+        // borderRadius: 50,
         transform: 'scale(1.1)'
-        // borderRadius: 25,
       }
     }
   ]
@@ -67,6 +67,14 @@ export default React.createClass({
     BrowserStateMixin
   ],
 
+  propTypes: {
+    onDrop: React.PropTypes.func,
+    onClick: React.PropTypes.func,
+    initialSrc: React.PropTypes.string.isRequired,
+    editable: React.PropTypes.bool,
+    style: React.PropTypes.any
+  },
+
   getInitialState: function() {
     return {
       url: this.props.initialSrc
@@ -81,31 +89,33 @@ export default React.createClass({
     }
 
     this.setState({ url: file.preview });
-    this.props.onDrop(file);
+    if(this.props.onDrop) {
+      this.props.onDrop(file);
+    }
   },
 
   render() {
     if (!this.state.url) { return <noscript />; }
 
-    const settings = getSettings();
-
     let image = (
       <img {...this.getBrowserStateEvents()}
         src={this.state.url}
-        style={this.buildStyles((this.props.editable) ? editableImgStyle : imgStyle)} 
+        style={this.buildStyles((this.props.editable) ? editableImgStyle : imgStyle)}
         alt={translate('Your profile picture')} />
     );
 
     let output;
     if(this.props.editable) {
       output = (
-        <Dropzone size={100} style={this.buildStyles(dropzoneStyle)} onDrop={this.handleDrop}>
+        <Dropzone size={100} style={this.buildStyles(blockStyle)} onDrop={this.handleDrop}>
           <a {...this.getBrowserStateEvents()} style={this.buildStyles(linkStyle)} href={'#'} title={translate('Edit your profile picture')}>
             {image}
             <div style={overlayStyle}></div>
           </a>
         </Dropzone>
       );
+    } else if(this.props.onClick != null) {
+      output = <a href="#" onClick={this.props.onClick} style={this.buildStyles(assign({}, linkStyle, blockStyle))} >{ image }</a>;
     } else {
       output = image;
     }
