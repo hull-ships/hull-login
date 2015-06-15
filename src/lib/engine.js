@@ -374,6 +374,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
           if(req.status === 201) {
             let store = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
             Hull.api('me', 'put', {  picture: store }).then((resp) => {
+              this.emitChange();
+
               resolve(resp);
             }, (err) => {
               reject(err);

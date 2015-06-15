@@ -10,7 +10,7 @@ import _ from 'underscore';
 import UserImage from './user-image';
 
 export default React.createClass({
-  displayName: 'LogInSection',
+  displayName: 'EditProfileSection',
 
   mixins: [
     AsyncActionsMixin
