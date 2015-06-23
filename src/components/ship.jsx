@@ -68,7 +68,7 @@ export default React.createClass({
 
     let l1, l2;
     if (u) {
-      if (!this.state.formIsSubmitted) {
+      if (this.state.formIsExtant && !this.state.formIsSubmitted) {
         l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>
       } else {
         l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>

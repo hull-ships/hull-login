@@ -103,6 +103,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       ship: this._ship,
       form: this._form,
       formIsSubmitted: this.formIsSubmitted(),
+      formIsExtant: this.hasForm(),
       identities: this._identities,
       providers: this.getProviders(),
       errors: this._errors,
@@ -194,7 +195,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     let defaultSection;
 
     if (this._user) {
-      if (!this.formIsSubmitted()) { return 'editProfile'; }
+      if (this.hasForm() && !this.formIsSubmitted()) { return 'editProfile'; }
 
       sections = USER_SECTIONS;
       defaultSection = 'showProfile';
@@ -202,6 +203,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
       sections = VISITOR_SECTIONS;
       defaultSection = sections[0];
     }
+
+    console.log(this._activeSection, defaultSection, sections);
 
     return sections.indexOf(this._activeSection) > -1 ? this._activeSection : defaultSection;
   },
@@ -394,8 +397,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
   activateThanksSectionAndHideLater() {
     this._activeSection = 'thanks';
+    this.emitChange();
 
     const t = this._ship.settings.hide_thanks_section_after;
+
     if (t > 0) { this.hideLater(t); }
   },
 
