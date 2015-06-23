@@ -1,13 +1,48 @@
 'use strict';
 
+import _ from 'underscore';
 import React from 'react';
+import assign from 'object-assign';
+
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
 import { toType } from 'tcomb-json-schema';
-import Form from '../form';
 import AsyncActionsMixin from '../../mixins/async-actions';
-import _ from 'underscore';
+
+import Form from '../form';
 import UserImage from './user-image';
+
+/* eslint-disable quotes */
+const DEFAULT_SCHEMA = {
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Name",
+      "scope": "app",
+      "format": "string"
+    },
+    "password": {
+      "type": "string",
+      "title": "Password",
+      "scope": "app",
+      "format": "password",
+      "help": "Leave blank for help"
+    },
+    "email": {
+      "type": "string",
+      "title": "Email",
+      "scope": "app",
+      "format": "email"
+    }
+  },
+  "required": [
+    "name",
+    "password"
+  ]
+};
+/* eslint-enable quotes */
 
 export default React.createClass({
   displayName: 'LogInSection',
@@ -23,11 +58,25 @@ export default React.createClass({
   },
 
   getType() {
-    return toType(this.props.form.fields_schema);
+    let type;
+    if(this.props.formIsSubmitted || !this.props.formIsExistent) {
+      let props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
+      type = toType(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props }));
+    } else {
+      type = toType(this.props.form.fields_schema);
+    }
+
+    return type;
   },
 
   getFields() {
-    return _.reduce(this.props.form.fields_schema.properties, function(m, v, k) {
+    let props;
+    if(this.props.formIsSubmitted || !this.props.formIsExistent) {
+      props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
+    } else {
+      props = this.props.form.fields_schema.properties;
+    }
+    return _.reduce(props, function(m, v, k) {
       let f = { label: v.title };
 
       if (v.type === 'string') {
@@ -57,7 +106,7 @@ export default React.createClass({
     let button = '';
     let disabled = false;
 
-    if (this.props.formIsSubmitted ||!this.props.formIsExistent) {
+    if (this.props.formIsSubmitted || !this.props.formIsExistent) {
       title = translate('Edit your profile');
       subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>
       button = translate('Edit profile');
@@ -73,7 +122,7 @@ export default React.createClass({
     }
 
     const u = this.props.user;
-    const value = this.props.form.user_data && this.props.form.user_data.data;
+    const value = assign({}, this.props.user, this.props.form.user_data && this.props.form.user_data.data);
 
     const styles = getStyles();
 
