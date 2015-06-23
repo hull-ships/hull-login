@@ -1,12 +1,13 @@
 'use strict';
 
+import _ from 'underscore';
 import React from 'react';
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
 import { toType } from 'tcomb-json-schema';
-import Form from '../form';
 import AsyncActionsMixin from '../../mixins/async-actions';
-import _ from 'underscore';
+
+import Form from '../form';
 import UserImage from './user-image';
 
 export default React.createClass({

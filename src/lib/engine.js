@@ -1,3 +1,6 @@
+/* global Hull */
+'use strict';
+
 import _ from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
@@ -119,7 +122,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   addChangeListener(listener) {
-    this.addListener(EVENT, listener)
+    this.addListener(EVENT, listener);
   },
 
   removeChangeListener(listener) {
@@ -145,7 +148,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   resetUser() {
     this._user = Hull.currentUser();
 
-    let identities = {}
+    let identities = {};
     if (this._user != null) {
       this._user.identities.forEach(function(identity) {
         identities[identity.provider] = true;
@@ -264,7 +267,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       this.resetUser();
       this.emitChange();
 
-      this.fetchShip()
+      this.fetchShip();
     });
   },
 
@@ -333,7 +336,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   updateProfile(profile) {
-    let r = Hull.api(this._form.id + '/submit' ,'put', { data: profile });
+    let r = Hull.api(this._form.id + '/submit', 'put', { data: profile });
     const isCompleted = !this.formIsSubmitted();
 
     r.then((form) => {
@@ -372,8 +375,11 @@ assign(Engine.prototype, EventEmitter.prototype, {
       req.onreadystatechange = () => {
         if(req.readyState === 4) {
           if(req.status === 201) {
-            let store = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
-            Hull.api('me', 'put', {  picture: store }).then((resp) => {
+            let picUrl = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
+            Hull.api(this._user.id, 'put', {  picture: picUrl }).then((resp) => {
+              this.resetUser();
+              // TODO Workaround currentUser not updating.
+              this._user.picture = picUrl;
               this.emitChange();
 
               resolve(resp);
