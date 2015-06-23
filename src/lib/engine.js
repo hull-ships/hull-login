@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 
@@ -26,7 +27,7 @@ const ACTIONS = [
   'unlinkIdentity',
 
   'resetPassword',
-  'updateProfile',
+  'updateUser',
 
   'activateLogInSection',
   'activateSignUpSection',
@@ -331,17 +332,34 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return r;
   },
 
-  updateProfile(profile) {
-    let r = Hull.api(this._form.id + '/submit', 'put', { data: profile });
+  updateUser(user, extra) {
     const isCompleted = !this.formIsSubmitted();
 
-    r.then((form) => {
-      this._form = form;
+    let promises = [];
+    if(_.size(user)) {
+      let _user = assign({}, user);
+      if(!_user.password || _user.password.trim === '') {
+        delete _user.password;
+      }
 
+      let promise = Hull.api(this._user.id, 'put', _user).then((response) => {
+        this._user = response;
+      });
+      promises.push(promise);
+    }
+
+    if(_.size(extra)) {
+      let promise = Hull.api(this._form.id + '/submit', 'put', { data: extra }).then((response) => {
+        this._form = response;
+      });
+      promises.push(promise);
+    }
+
+    let r = Promise.all(promises).then(() => {
       if (isCompleted) {
         this.activateThanksSectionAndHideLater();
       } else {
-        this._activeSection = 'showProfile';
+        this.activateShowProfileSection();
       }
 
       this.emitChange();

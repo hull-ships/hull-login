@@ -53,7 +53,7 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
-      updateProfile: this.props.updateProfile
+      updateUser: this.props.updateUser
     };
   },
 
@@ -107,10 +107,11 @@ export default React.createClass({
 
   handleSubmit(value) {
     let userValue = { name: value.name, password: value.password, email: value.email };
-    let extraValue = _.without(value, 'name', 'password', 'email');
-    console.log(userValue);
-    debugger;
-    this.getAsyncAction('updateProfile')(extraValue);
+    let extraValue = assign({}, value);
+    delete extraValue.name;
+    delete extraValue.password;
+    delete extraValue.email;
+    this.getAsyncAction('updateUser')(userValue, extraValue);
   },
 
   render() {
