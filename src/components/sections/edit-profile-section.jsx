@@ -57,7 +57,7 @@ export default React.createClass({
     let button = '';
     let disabled = false;
 
-    if (this.props.formIsSubmitted) {
+    if (this.props.formIsSubmitted ||!this.props.formIsExistent) {
       title = translate('Edit your profile');
       subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>
       button = translate('Edit profile');
@@ -77,6 +77,15 @@ export default React.createClass({
 
     const styles = getStyles();
 
+    let form;
+    if(this.props.formIsExistent) {
+      form = <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />;
+    } else {
+      form = <h2>
+        No form exists. This should not happen: you should be able to edit your data.
+      </h2>;
+    }
+
     return (
       <div>
         <div style={styles.sectionHeader}>
@@ -85,7 +94,7 @@ export default React.createClass({
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
 
-        <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />
+        {form}
       </div>
     );
   }

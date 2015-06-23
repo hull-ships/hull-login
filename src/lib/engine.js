@@ -103,7 +103,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       ship: this._ship,
       form: this._form,
       formIsSubmitted: this.formIsSubmitted(),
-      formIsExtant: this.hasForm(),
+      formIsExistent: this.hasForm(),
       identities: this._identities,
       providers: this.getProviders(),
       errors: this._errors,
@@ -203,8 +203,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
       sections = VISITOR_SECTIONS;
       defaultSection = sections[0];
     }
-
-    console.log(this._activeSection, defaultSection, sections);
 
     return sections.indexOf(this._activeSection) > -1 ? this._activeSection : defaultSection;
   },
@@ -334,7 +332,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   updateProfile(profile) {
-    let r = Hull.api(this._form.id + '/submit' ,'put', { data: profile });
+    let r = Hull.api(this._form.id + '/submit', 'put', { data: profile });
     const isCompleted = !this.formIsSubmitted();
 
     r.then((form) => {
