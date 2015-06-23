@@ -28,7 +28,7 @@ const DEFAULT_SCHEMA = {
       "title": "Password",
       "scope": "app",
       "format": "password",
-      "help": "Leave blank for help"
+      "help": "Leave blank to keep your old password"
     },
     "email": {
       "type": "string",
@@ -43,6 +43,7 @@ const DEFAULT_SCHEMA = {
   ]
 };
 /* eslint-enable quotes */
+
 
 export default React.createClass({
   displayName: 'LogInSection',
@@ -77,7 +78,7 @@ export default React.createClass({
       props = this.props.form.fields_schema.properties;
     }
     return _.reduce(props, function(m, v, k) {
-      let f = { label: v.title };
+      let f = { label: v.title, help: v.help };
 
       if (v.type === 'string') {
         f.type = v.format === 'uri' ? 'url' : (v.format || 'text');
@@ -97,7 +98,11 @@ export default React.createClass({
   },
 
   handleSubmit(value) {
-    this.getAsyncAction('updateProfile')(value);
+    let userValue = { name: value.name, password: value.password, email: value.email };
+    let extraValue = _.without(value, 'name', 'password', 'email');
+    console.log(userValue);
+    debugger;
+    this.getAsyncAction('updateProfile')(extraValue);
   },
 
   render() {
@@ -122,8 +127,7 @@ export default React.createClass({
     }
 
     const u = this.props.user;
-    const value = assign({}, this.props.user, this.props.form.user_data && this.props.form.user_data.data);
-
+    const value = assign({}, u, this.props.form.user_data && this.props.form.user_data.data);
     const styles = getStyles();
 
     let form;

@@ -15,6 +15,7 @@ function render(Component, locals) {
       <label style={s}>
         {locals.label}
         <Component {...locals} />
+        {locals.help}
       </label>
     );
   }
