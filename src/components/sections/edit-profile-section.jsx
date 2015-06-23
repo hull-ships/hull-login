@@ -38,8 +38,7 @@ const DEFAULT_SCHEMA = {
     }
   },
   "required": [
-    "name",
-    "password"
+    "name"
   ]
 };
 /* eslint-enable quotes */
@@ -60,11 +59,15 @@ export default React.createClass({
 
   getType() {
     let type;
-    if(this.props.formIsSubmitted || !this.props.formIsExistent) {
-      let props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
-      type = toType(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props }));
+    if (this.props.formIsExistent) {
+      if (this.props.formIsSubmitted) {
+        let props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
+        type = toType(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props }));
+      } else {
+        type = toType(this.props.form.fields_schema);
+      }
     } else {
-      type = toType(this.props.form.fields_schema);
+      type = toType(DEFAULT_SCHEMA);
     }
 
     return type;
@@ -72,11 +75,16 @@ export default React.createClass({
 
   getFields() {
     let props;
-    if(this.props.formIsSubmitted || !this.props.formIsExistent) {
-      props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
+    if (this.props.formIsExistent) {
+      if (this.props.formIsSubmitted) {
+        props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
+      } else {
+        props = this.props.form.fields_schema.properties;
+      }
     } else {
-      props = this.props.form.fields_schema.properties;
+      props = DEFAULT_SCHEMA.properties;
     }
+
     return _.reduce(props, function(m, v, k) {
       let f = { label: v.title, help: v.help };
 
@@ -129,15 +137,7 @@ export default React.createClass({
     const u = this.props.user;
     const value = assign({}, u, this.props.form.user_data && this.props.form.user_data.data);
     const styles = getStyles();
-
-    let form;
-    if(this.props.formIsExistent) {
-      form = <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />;
-    } else {
-      form = <h2>
-        No form exists. This should not happen: you should be able to edit your data.
-      </h2>;
-    }
+    const form = <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />;
 
     return (
       <div>
