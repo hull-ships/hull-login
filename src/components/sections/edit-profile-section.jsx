@@ -6,7 +6,7 @@ import assign from 'object-assign';
 
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
-import { toType } from 'tcomb-json-schema';
+import transform from 'tcomb-json-schema';
 import AsyncActionsMixin from '../../mixins/async-actions';
 
 import Form from '../form';
@@ -62,12 +62,12 @@ export default React.createClass({
     if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
         let props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
-        type = toType(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props }));
+        type = transform(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props }));
       } else {
-        type = toType(this.props.form.fields_schema);
+        type = transform(this.props.form.fields_schema);
       }
     } else {
-      type = toType(DEFAULT_SCHEMA);
+      type = transform(DEFAULT_SCHEMA);
     }
 
     return type;

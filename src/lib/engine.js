@@ -333,39 +333,43 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   updateUser(value) {
-    const isCompleted = !this.formIsSubmitted();
+    let user = _.reduce(['name', 'email', 'password'], (m, k) => {
+      let v = value[k];
+      if (typeof v === 'string' && v.trim() !== '') { m[k] = v; }
 
-    let user = { name: value.name, password: value.password, email: value.email };
-    let extra = assign({}, value);
-    delete extra.name;
-    delete extra.password;
-    delete extra.email;
+      return m;
+    }, {});
+
+    let data = _.reduce(this._form.fields_list, (m, { name }) => {
+      let v = value[name];
+      if (v != null) { m[name] = v; }
+
+      return m;
+    }, {});
 
     let promises = [];
     if(_.size(user)) {
-      let _user = assign({}, user);
-      if(!_user.password || _user.password.trim() === '') {
-        delete _user.password;
-      }
-
-      let promise = Hull.api(this._user.id, 'put', _user).then((response) => {
-        this._user = response;
+      let promise = Hull.api(this._user.id, 'put', user).then((r) => {
+        this._user = r;
+      }, (error) => {
+         console.error(error);
       });
       promises.push(promise);
     }
-
-    if(_.size(extra)) {
-      let promise = Hull.api(this._form.id + '/submit', 'put', { data: extra }).then((response) => {
-        this._form = response;
+    if(_.size(data)) {
+      let promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
+        this._form = r;
+      }, (error) => {
+         console.error(error);
       });
       promises.push(promise);
     }
 
     let r = Promise.all(promises).then(() => {
-      if (isCompleted) {
-        this.activateThanksSectionAndHideLater();
-      } else {
+      if (this.formIsSubmitted()) {
         this.activateShowProfileSection();
+      } else {
+        this.activateThanksSectionAndHideLater();
       }
 
       this.emitChange();
