@@ -351,7 +351,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       let promise = Hull.api(this._user.id, 'put', _user).then((response) => {
         this._user = response;
       });
-      promises.push(promise);   
+      promises.push(promise);
     }
 
     if(_.size(extra)) {
