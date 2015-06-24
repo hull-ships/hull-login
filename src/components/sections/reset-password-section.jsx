@@ -24,7 +24,7 @@ export default React.createClass({
 
   getType() {
     return t.struct({
-      email: Email,
+      email: Email
     });
   },
 
@@ -45,7 +45,8 @@ export default React.createClass({
   },
 
   render() {
-    let m, d;
+    let m;
+    let d;
     if (this.state.resetPasswordState === 'done') {
       m = translate('Sent');
       d = true;

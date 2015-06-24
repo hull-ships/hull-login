@@ -4,9 +4,6 @@ import React from 'react';
 import t from 'tcomb-form';
 import { translate } from '../../lib/i18n';
 import { Login, Password } from '../../lib/types';
-import SocialButtons from '../social-buttons';
-import Form from '../form';
-import Divider from '../divider';
 import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
@@ -55,7 +52,8 @@ export default React.createClass({
   },
 
   render() {
-    let m, d;
+    let m;
+    let d;
     if (this.state.logInState === 'pending') {
       m = translate('Logging in');
       d = true;

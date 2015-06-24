@@ -119,7 +119,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   addChangeListener(listener) {
-    this.addListener(EVENT, listener)
+    this.addListener(EVENT, listener);
   },
 
   removeChangeListener(listener) {
@@ -145,7 +145,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   resetUser() {
     this._user = Hull.currentUser();
 
-    let identities = {}
+    let identities = {};
     if (this._user != null) {
       this._user.identities.forEach(function(identity) {
         identities[identity.provider] = true;
@@ -231,7 +231,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   signUp(credentials) {
-    return this.perform('signup', credentials).then((user) => {
+    return this.perform('signup', credentials).then(() => {
       return this.fetchShip().then(() => {
         if (!this.hasForm()) {
           this._redirectLater = true;
@@ -264,7 +264,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       this.resetUser();
       this.emitChange();
 
-      this.fetchShip()
+      this.fetchShip();
     });
   },
 
