@@ -348,19 +348,19 @@ assign(Engine.prototype, EventEmitter.prototype, {
     }, {});
 
     let promises = [];
-    if(_.size(user)) {
+    if (_.size(user)) {
       let promise = Hull.api(this._user.id, 'put', user).then((r) => {
         this._user = r;
       }, (error) => {
-         console.error(error);
+        console.error(error);
       });
       promises.push(promise);
     }
-    if(_.size(data)) {
+    if (_.size(data)) {
       let promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
         this._form = r;
       }, (error) => {
-         console.error(error);
+        console.error(error);
       });
       promises.push(promise);
     }

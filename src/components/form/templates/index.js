@@ -10,7 +10,7 @@ function render(Component, locals) {
     return <Component {...locals} />;
   }
 
-  const s = { width: '100%' }
+  const s = { width: '100%' };
   return (
     <label style={s}>
       {locals.label}
