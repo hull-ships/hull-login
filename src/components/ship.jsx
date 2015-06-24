@@ -91,8 +91,8 @@ export default React.createClass({
         for (var i = 0; i < this.state.shipSettings.custom_buttons.length; i++) {
           let button_def = this.state.shipSettings.custom_buttons[i]
           let b = <a href={button_def.url} target={button_def.popup ? "_blank" : ""} className="hull-login__button hull-login__button">{button_def.text}</a>
+          buttons.push(b);
         };
-        buttons.push(b);
       }
 
       let b = <a href='javascript: void 0;' className='hull-login__button hull-login__button--log-out' onClick={this.props.actions.logOut}>{translate('Log out')}</a>
