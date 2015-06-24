@@ -59,7 +59,7 @@ export default React.createClass({
 
   getType() {
     let type;
-    if (this.props.formIsExistent) {
+    if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
         let props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
         type = toType(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props }));
@@ -75,7 +75,7 @@ export default React.createClass({
 
   getFields() {
     let props;
-    if (this.props.formIsExistent) {
+    if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
         props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
       } else {
@@ -120,7 +120,7 @@ export default React.createClass({
     let button = '';
     let disabled = false;
 
-    if (this.props.formIsSubmitted || !this.props.formIsExistent) {
+    if (this.props.formIsSubmitted || !this.props.hasForm) {
       title = translate('Edit your profile');
       subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>
       button = translate('Edit profile');

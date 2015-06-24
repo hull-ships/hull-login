@@ -104,7 +104,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       ship: this._ship,
       form: this._form,
       formIsSubmitted: this.formIsSubmitted(),
-      formIsExistent: this.hasForm(),
+      hasForm: this.hasForm(),
       identities: this._identities,
       providers: this.getProviders(),
       errors: this._errors,
@@ -338,14 +338,14 @@ assign(Engine.prototype, EventEmitter.prototype, {
     let promises = [];
     if(_.size(user)) {
       let _user = assign({}, user);
-      if(!_user.password || _user.password.trim === '') {
+      if(!_user.password || _user.password.trim() === '') {
         delete _user.password;
       }
 
       let promise = Hull.api(this._user.id, 'put', _user).then((response) => {
         this._user = response;
       });
-      promises.push(promise);
+      promises.push(promise);   
     }
 
     if(_.size(extra)) {
