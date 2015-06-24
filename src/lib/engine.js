@@ -73,7 +73,7 @@ function Engine(deployment) {
   this.emitChange();
 
   const showSignUpSection = Hull.utils.cookies(this.getCookieKey('shown')) !== 'true';
-  const t = this._ship.settings.show_sign_up_section_after;
+  const t = this._ship.settings.behaviour.show_sign_up_section_after;
   if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
 }
 
@@ -395,7 +395,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   activateThanksSectionAndHideLater() {
     this._activeSection = 'thanks';
 
-    const t = this._ship.settings.hide_thanks_section_after;
+    const t = this._ship.settings.appearance.hide_thanks_section_after;
     if (t > 0) { this.hideLater(t); }
   },
 
@@ -407,7 +407,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       this._activeSection = name;
 
       this.emitChange();
-    }, time);
+    }, time*1000);
   },
 
   hideLater(time) {
@@ -415,7 +415,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
     this._hideLaterTimer = setTimeout(() => {
       this.hideDialog();
-    }, time);
+    }, time*1000);
   },
 
   clearTimers() {

@@ -2,9 +2,83 @@
   "name": "Login",
   "description": "A complete user registration and social login modal",
   "picture": "picture.png",
-  "version": "0.0.1",
   "index": "ship.html",
-  "locales": ["en"],
+  "version": "0.0.1",
+  "settings": [
+    {
+      "name":"appearance",
+      "type":"object",
+      "properties":{
+        "logo_image": {
+          "title": "logo image",
+          "type": "string",
+          "format": "image"
+        },
+        "primary_color": {
+          "title": "Primary color",
+          "type": "string",
+          "format": "color",
+          "default": "#fa5400"
+        },
+        "text_color": {
+          "title": "Text color",
+          "type": "string",
+          "format": "color",
+          "default": "#aaaaaa"
+        },
+        "link_color": {
+          "title": "Link color",
+          "type": "string",
+          "format": "color",
+          "default": "#aaaaaa"
+        },
+        "button_border_radius": {
+          "title": "Button border radius",
+          "type": "number",
+          "format": "range",
+          "default": 3,
+          "minimum": 0,
+          "maximun": 100
+        },
+        "overlay_border_radius": {
+          "title": "Overlay border radius",
+          "type": "number",
+          "format": "range",
+          "default": 6,
+          "minimum": 0,
+          "maximun": 100
+        }        
+      }
+    },
+    {
+      "name":"behaviour",
+      "type":"object",
+      "properties":{
+        "show_classic_login": {
+          "title": "Email + password registration",
+          "description": "Show email + password fields for user registration",
+          "type": "boolean",
+          "default": true
+        },
+        "show_sign_up_section_after": {
+          "title": "Show sign up section delay",
+          "description": "Wait time before showing signup section in seconds (0 to disable)",
+          "type": "number",
+          "format": "number",
+          "minimum": 0,
+          "default": 2
+        },
+        "hide_thanks_section_after": {
+          "title": "Hide thanks section delay",
+          "description": "Wait time before hiding thanks section in seconds (0 to disable)",
+          "type": "number",
+          "format": "number",
+          "default": 2
+        }
+
+      }
+    }
+  ],
   "deployment_settings": [
     {
       "name": "redirect_url",
@@ -13,77 +87,13 @@
       "type": "string"
     }
   ],
-  "settings": [
-    {
-      "name": "logo_image",
-      "title": "logo image",
-      "type": "string",
-      "format": "image"
-    },
-    {
-      "name": "primary_color",
-      "title": "Primary color",
-      "type": "string",
-      "format": "color",
-      "default": "#fa5400"
-    },
-    {
-      "name": "text_color",
-      "title": "Text color",
-      "type": "string",
-      "format": "color",
-      "default": "#aaaaaa"
-    },
-    {
-      "name": "link_color",
-      "title": "Link color",
-      "type": "string",
-      "format": "color",
-      "default": "#aaaaaa"
-    },
-    {
-      "name": "button_border_radius",
-      "title": "Button border radius",
-      "type": "number",
-      "format": "range",
-      "default": 3,
-      "minimum": 0,
-      "maximun": 100
-    },
-    {
-      "name": "overlay_border_radius",
-      "title": "Overlay border radius",
-      "type": "number",
-      "format": "range",
-      "default": 6,
-      "minimum": 0,
-      "maximun": 100
-    },
-    {
-      "name": "show_classic_login",
-      "title": "Show classic login form",
-      "type": "boolean",
-      "default": true
-    },
-    {
-      "name": "show_sign_up_section_after",
-      "title": "Show sign up section",
-      "type": "number",
-      "minimum": 0,
-      "default": 2000
-    },
-    {
-      "name": "hide_thanks_section_after",
-      "title": "Hide thanks section",
-      "type": "number",
-      "minimum": 0,
-      "default": 2000
-    }
-  ],
   "resources": [
     {
       "name": "profile_form",
       "type": "form"
     }
+  ],
+  "locales": [
+    "en"
   ]
 }
