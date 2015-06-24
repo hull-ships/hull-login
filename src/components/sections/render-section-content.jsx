@@ -12,7 +12,7 @@ function renderSectionContent(props, formProps) {
   }
 
   let form;
-  if (props.shipSettings.behaviour.show_classic_login) {
+  if (props.shipSettings.show_classic_login) {
     form = <Form key='form' {...formProps} />
   }
 

@@ -1,0 +1,180 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '--save', 'classnames' ]
+2 info using npm@2.1.14
+3 info using node@v0.10.35
+4 verbose node symlink /usr/local/bin/node
+5 warn package.json babel@4.7.16 No README data
+6 warn package.json react-social-icons@1.1.0 No repository field.
+7 silly cache add args [ 'classnames', null ]
+8 verbose cache add spec classnames
+9 silly cache add parsed spec { raw: 'classnames',
+9 silly cache add   scope: null,
+9 silly cache add   name: 'classnames',
+9 silly cache add   rawSpec: '',
+9 silly cache add   spec: '*',
+9 silly cache add   type: 'range' }
+10 verbose addNamed classnames@*
+11 silly addNamed semver.valid null
+12 silly addNamed semver.validRange *
+13 silly addNameRange { name: 'classnames', range: '*', hasData: false }
+14 silly mapToRegistry name classnames
+15 silly mapToRegistry using default registry
+16 silly mapToRegistry registry https://registry.npmjs.org/
+17 silly mapToRegistry uri https://registry.npmjs.org/classnames
+18 verbose addNameRange registry:https://registry.npmjs.org/classnames not in flight; fetching
+19 verbose request uri https://registry.npmjs.org/classnames
+20 verbose request no auth needed
+21 info attempt registry request try #1 at 13:03:15
+22 verbose request id 34fe2fddf220478c
+23 verbose etag "DVYLCKN3VOHJIFA9GIWX7CZNH"
+24 http request GET https://registry.npmjs.org/classnames
+25 http 200 https://registry.npmjs.org/classnames
+26 silly get cb [ 200,
+26 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly get     etag: '"46XXDUOUR7PXEJU725UEJFTTJ"',
+26 silly get     'content-type': 'application/json',
+26 silly get     'cache-control': 'max-age=60',
+26 silly get     'content-length': '18185',
+26 silly get     'accept-ranges': 'bytes',
+26 silly get     date: 'Wed, 24 Jun 2015 11:03:16 GMT',
+26 silly get     via: '1.1 varnish',
+26 silly get     age: '54',
+26 silly get     connection: 'keep-alive',
+26 silly get     'x-served-by': 'cache-ams4128-AMS',
+26 silly get     'x-cache': 'HIT',
+26 silly get     'x-cache-hits': '1',
+26 silly get     'x-timer': 'S1435143796.044490,VS0,VE0',
+26 silly get     vary: 'Accept' } ]
+27 silly addNameRange number 2 { name: 'classnames', range: '*', hasData: true }
+28 silly addNameRange versions [ 'classnames',
+28 silly addNameRange   [ '1.0.0',
+28 silly addNameRange     '1.1.0',
+28 silly addNameRange     '1.1.1',
+28 silly addNameRange     '1.1.2',
+28 silly addNameRange     '1.1.3',
+28 silly addNameRange     '1.1.4',
+28 silly addNameRange     '1.2.0',
+28 silly addNameRange     '1.2.1',
+28 silly addNameRange     '1.2.2',
+28 silly addNameRange     '2.0.0',
+28 silly addNameRange     '2.1.0',
+28 silly addNameRange     '2.1.1',
+28 silly addNameRange     '2.1.2' ] ]
+29 verbose addNamed classnames@2.1.2
+30 silly addNamed semver.valid 2.1.2
+31 silly addNamed semver.validRange 2.1.2
+32 silly mapToRegistry name classnames
+33 silly mapToRegistry using default registry
+34 silly mapToRegistry registry https://registry.npmjs.org/
+35 silly mapToRegistry uri https://registry.npmjs.org/classnames
+36 verbose addRemoteTarball https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz not in flight; adding
+37 verbose addRemoteTarball [ 'https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz',
+37 verbose addRemoteTarball   'd32fbfcf2bb2004db03d0307255ccb8c7de75f25' ]
+38 info retry fetch attempt 1 at 13:03:16
+39 info attempt registry request try #1 at 13:03:16
+40 http fetch GET https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz
+41 http fetch 200 https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz
+42 silly fetchAndShaCheck shasum d32fbfcf2bb2004db03d0307255ccb8c7de75f25
+43 verbose addTmpTarball /var/folders/2m/tkcvx1g930s0fx9h42zwbzrr0000gn/T/npm-66791-c0c2628b/registry.npmjs.org/classnames/-/classnames-2.1.2.tgz not in flight; adding
+44 verbose addTmpTarball already have metadata; skipping unpack for classnames@2.1.2
+45 silly cache afterAdd classnames@2.1.2
+46 verbose afterAdd /Users/romain/.npm/classnames/2.1.2/package/package.json not in flight; writing
+47 verbose afterAdd /Users/romain/.npm/classnames/2.1.2/package/package.json written
+48 silly install resolved [ { name: 'classnames',
+48 silly install resolved     version: '2.1.2',
+48 silly install resolved     description: 'A simple utility for conditionally joining classNames together',
+48 silly install resolved     main: 'index.js',
+48 silly install resolved     author: { name: 'Jed Watson' },
+48 silly install resolved     license: 'MIT',
+48 silly install resolved     repository:
+48 silly install resolved      { type: 'git',
+48 silly install resolved        url: 'https://github.com/JedWatson/classnames.git' },
+48 silly install resolved     scripts: { test: 'mocha tests.js', benchmarks: 'node ./benchmarks/run' },
+48 silly install resolved     keywords:
+48 silly install resolved      [ 'react',
+48 silly install resolved        'css',
+48 silly install resolved        'classes',
+48 silly install resolved        'classname',
+48 silly install resolved        'classnames',
+48 silly install resolved        'util',
+48 silly install resolved        'utility' ],
+48 silly install resolved     devDependencies: { benchmark: '^1.0.0', mocha: '^2.1.0' },
+48 silly install resolved     gitHead: '2348b01572896f9ed1c16098f77361e56e5660c2',
+48 silly install resolved     bugs: { url: 'https://github.com/JedWatson/classnames/issues' },
+48 silly install resolved     homepage: 'https://github.com/JedWatson/classnames',
+48 silly install resolved     _id: 'classnames@2.1.2',
+48 silly install resolved     _shasum: 'd32fbfcf2bb2004db03d0307255ccb8c7de75f25',
+48 silly install resolved     _from: 'classnames@*',
+48 silly install resolved     _npmVersion: '2.7.5',
+48 silly install resolved     _nodeVersion: '0.12.2',
+48 silly install resolved     _npmUser: { name: 'jedwatson', email: 'jed.watson@me.com' },
+48 silly install resolved     dist:
+48 silly install resolved      { shasum: 'd32fbfcf2bb2004db03d0307255ccb8c7de75f25',
+48 silly install resolved        tarball: 'http://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz' },
+48 silly install resolved     maintainers: [ [Object] ],
+48 silly install resolved     directories: {},
+48 silly install resolved     _resolved: 'https://registry.npmjs.org/classnames/-/classnames-2.1.2.tgz' } ]
+49 info install classnames@2.1.2 into /Users/romain/Sites/Ships/hull-login
+50 info installOne classnames@2.1.2
+51 verbose installOne of classnames to /Users/romain/Sites/Ships/hull-login not in flight; installing
+52 verbose lock using /Users/romain/.npm/_locks/classnames-c869cfbb874fb267.lock for /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+53 silly install write writing classnames 2.1.2 to /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+54 silly cache addNamed cb classnames@2.1.2
+55 verbose unbuild node_modules/classnames
+56 verbose gentlyRm vacuuming /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+57 verbose tar unpack /Users/romain/.npm/classnames/2.1.2/package.tgz
+58 verbose tar unpacking to /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+59 verbose gentlyRm vacuuming /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+60 silly gunzTarPerm modes [ '755', '644' ]
+61 silly gunzTarPerm extractEntry package.json
+62 silly gunzTarPerm extractEntry .npmignore
+63 silly gunzTarPerm extractEntry README.md
+64 silly gunzTarPerm extractEntry LICENSE
+65 silly gunzTarPerm extractEntry index.js
+66 silly gunzTarPerm extractEntry dedupe.js
+67 silly gunzTarPerm extractEntry tests.js
+68 silly gunzTarPerm extractEntry benchmarks/package.json
+69 silly gunzTarPerm extractEntry benchmarks/run.js
+70 silly gunzTarPerm extractEntry bower.json
+71 silly gunzTarPerm extractEntry HISTORY.md
+72 silly gunzTarPerm extractEntry CONTRIBUTING.md
+73 silly gunzTarPerm extractEntry .travis.yml
+74 silly gunzTarPerm extractEntry .editorconfig
+75 info preinstall classnames@2.1.2
+76 silly install resolved []
+77 verbose about to build /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+78 info build /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+79 verbose linkStuff [ false,
+79 verbose linkStuff   false,
+79 verbose linkStuff   false,
+79 verbose linkStuff   '/Users/romain/Sites/Ships/hull-login/node_modules' ]
+80 info linkStuff classnames@2.1.2
+81 verbose linkBins classnames@2.1.2
+82 verbose linkMans classnames@2.1.2
+83 verbose rebuildBundles classnames@2.1.2
+84 info install classnames@2.1.2
+85 info postinstall classnames@2.1.2
+86 verbose unlock done using /Users/romain/.npm/_locks/classnames-c869cfbb874fb267.lock for /Users/romain/Sites/Ships/hull-login/node_modules/classnames
+87 verbose stack Error: The package react does not satisfy its siblings' peerDependencies requirements!
+87 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:103:32
+87 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:225:5
+87 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:138:5
+87 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+87 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+87 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+87 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+87 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+87 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+87 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:251:14
+88 verbose cwd /Users/romain/Sites/Ships/hull-login
+89 error Darwin 14.3.0
+90 error argv "node" "/usr/local/bin/npm" "install" "--save" "classnames"
+91 error node v0.10.35
+92 error npm  v2.1.14
+93 error code EPEERINVALID
+94 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
+94 error peerinvalid Peer radium@0.10.3 wants react@>=0.12.0 <0.14.0
+94 error peerinvalid Peer tcomb-form@0.4.11 wants react@>=0.12.0
+94 error peerinvalid Peer react-hot-loader@1.2.3 wants react@>=0.11.0
+94 error peerinvalid Peer react-evil-icons@0.3.0 wants react@^0.12.2
+95 verbose exit [ 1, true ]

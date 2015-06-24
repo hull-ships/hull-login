@@ -2,6 +2,7 @@
 
 import Bounce from 'bounce';
 import React from 'react';
+import cx from 'react/lib/cx';
 import assign from 'object-assign';
 import { getSettings } from '../../styles/settings';
 
@@ -54,23 +55,12 @@ export default React.createClass({
     let overlay = React.findDOMNode(this.refs.overlay);
 
     let enterTransition = new Bounce();
-    enterTransition.translate({
-      from: { x: 0, y: 100 },
-      to: { x: 0, y: 0 },
-      duration: 500
-    }).scale({
-      from: { x: 1, y: 0.5 },
+    enterTransition.scale({
+      from: { x: .8, y: .8 },
       to: { x: 1, y: 1 },
-      duration: 500
-    }).scale({
-      from: { x: 0.5, y: 1 },
-      to: { x: 0.5, y: 1 },
-      duration: 100
-    }).scale({
-      from: { x: 1, y: 1 },
-      to: { x: 2, y: 1 },
-      delay: 100,
-      duration: 500
+      bounces: 3,
+      duration:200,
+      stiffness:1
     });
 
     enterTransition.applyTo(overlay, {
@@ -94,17 +84,9 @@ export default React.createClass({
     let exitTransition = new Bounce();
     exitTransition.scale({
       from: { x: 1, y: 1 },
-      to: { x: 1, y: 0.1 },
-      duration: 500
-    }).scale({
-      from: { x: 1, y: 1 },
-      to: { x: 1.2, y: 1 },
-      duration: 100
-    }).scale({
-      from: { x: 1, y: 1 },
-      to: { x: 0.1, y: 1 },
-      delay: 100,
-      duration: 500
+      to: { x: .9, y: .9 },
+      bounces: 1,
+      duration:500
     });
 
     exitTransition.applyTo(overlay, {
@@ -175,10 +157,10 @@ export default React.createClass({
       zIndex: 20000,
       backgroundColor: 'rgba(0,0,0,.15)',
       opacity: 0,
-      WebkitTransition: 'opacity 250ms ease-out',
-      MsTransition: 'opacity 250ms ease-out',
-      MozTransition: 'opacity 250ms ease-out',
-      transition: 'opacity 250ms ease-out',
+      WebkitTransition: 'opacity 150ms ease-out',
+      MsTransition: 'opacity 150ms ease-out',
+      MozTransition: 'opacity 150ms ease-out',
+      transition: 'opacity 150ms ease-out',
       WebkitUserSelect: 'none',
       MozUserSelect: 'none',
       MsUserSelect: 'none',
@@ -189,11 +171,14 @@ export default React.createClass({
       backgroundColor: settings.whiteColor,
       padding: 30,
       zIndex: 20001,
+      outline: 'none',
       position: 'relative',
       WebkitTransition: 'opacity 300ms ease-out',
       msTransition: 'opacity 300ms ease-out',
       MozTransition: 'opacity 300ms ease-out',
-      transition: 'opacity 300ms ease-out'
+      transition: 'opacity 300ms ease-out',
+      maxHeight: '100vh',
+      overflow: 'scroll'
     };
 
     if (this.state.viewport === 'normal') {
@@ -231,12 +216,17 @@ export default React.createClass({
     };
   },
 
+  getClassName(){
+    return cx({[this.props.className]:true, 'hull-login__modal':true});
+  },
+
   render() {
     const styles = this.getStyles();
 
     return (
-      <div className={this.props.className} style={styles.overlayContainer}>
+      <div className={this.getClassName()} style={styles.overlayContainer}>
         <div
+          className='hull-login__modal__dialog'
           aria-hidden={!this.props.visible}
           aria-label={this.props.title}
           role='dialog'
@@ -244,11 +234,11 @@ export default React.createClass({
           tabIndex={0}
           ref='overlay'>
 
-          <a style={styles.overlayCloseButton} href='javascript: void 0;' aria-label='Close' title='Close this dialog' onClick={this.handleClose} >×</a>
+          <a className='hull-login__modal_close-button' style={styles.overlayCloseButton} href='javascript: void 0;' aria-label='Close' title='Close this dialog' onClick={this.handleClose} >×</a>
 
           {this.props.children}
         </div>
-        <div ref='background' style={styles.overlayBackground} onClick={this.handleClose} />
+        <div ref='background' className='hull-login__modal__overlay' style={styles.overlayBackground} onClick={this.handleClose} />
       </div>
     );
   }

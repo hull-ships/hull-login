@@ -11,11 +11,11 @@ export default function(element, deployment) {
 
   const shipSettings = deployment.ship.settings;
   setSettings({
-    primaryColor: shipSettings.appearance.primary_color,
-    textColor: shipSettings.appearance.text_color,
-    linkColor: shipSettings.appearance.link_color,
-    defaultBorderRadius: shipSettings.appearance.button_border_radius,
-    mediumBorderRadius: shipSettings.appearance.overlay_border_radius
+    primaryColor: shipSettings.primary_color,
+    textColor: shipSettings.text_color,
+    linkColor: shipSettings.link_color,
+    defaultBorderRadius: shipSettings.button_border_radius,
+    mediumBorderRadius: shipSettings.overlay_border_radius
   });
 
   React.render(<Ship engine={engine} actions={engine.getActions()} />, element);
