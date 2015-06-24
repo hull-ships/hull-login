@@ -75,9 +75,9 @@ export default React.createClass({
 
     const styles = getStyles();
 
-    let signup_link;
+    let signupLink;
     if(this.props.shipSettings.show_signup) {
-       signup_link =  <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>
+       signupLink =  <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>
     }
 
     return (
@@ -85,7 +85,7 @@ export default React.createClass({
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
           <h1 style={styles.sectionTitle}>{translate('Log in to {organization}', { organization: this.props.organization.name })}</h1>
-          {signup_link}
+          {signupLink}
         </div>
 
         {content}
