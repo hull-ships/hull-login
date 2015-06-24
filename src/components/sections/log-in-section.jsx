@@ -74,8 +74,8 @@ export default React.createClass({
     const styles = getStyles();
 
     let signupLink;
-    if(this.props.shipSettings.show_signup) {
-       signupLink =  <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>
+    if (this.props.shipSettings.show_signup) {
+      signupLink = <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>;
     }
 
     return (

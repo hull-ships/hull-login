@@ -57,11 +57,11 @@ export default React.createClass({
 
     let enterTransition = new Bounce();
     enterTransition.scale({
-      from: { x: .8, y: .8 },
+      from: { x: 0.8, y: 0.8 },
       to: { x: 1, y: 1 },
       bounces: 3,
-      duration:200,
-      stiffness:1
+      duration: 200,
+      stiffness: 1
     });
 
     enterTransition.applyTo(overlay, {
@@ -86,9 +86,9 @@ export default React.createClass({
     let exitTransition = new Bounce();
     exitTransition.scale({
       from: { x: 1, y: 1 },
-      to: { x: .9, y: .9 },
+      to: { x: 0.9, y: 0.9 },
       bounces: 1,
-      duration:500
+      duration: 500
     });
 
     exitTransition.applyTo(overlay, {
@@ -218,8 +218,11 @@ export default React.createClass({
     };
   },
 
-  getClassName(){
-    return cx({[this.props.className]:true, 'hull-login__modal':true});
+  getClassName() {
+    return cx({
+      [this.props.className]: true,
+      'hull-login__modal': true
+    });
   },
 
   render() {

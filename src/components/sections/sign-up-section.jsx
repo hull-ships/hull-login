@@ -78,8 +78,8 @@ export default React.createClass({
 
     const styles = getStyles();
     let loginLink;
-    if(this.props.shipSettings.show_login) {
-       loginLink =  <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Already have an account? Log in.')}</a></p>
+    if (this.props.shipSettings.show_login) {
+      loginLink = <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Already have an account? Log in.')}</a></p>;
     }
 
     return (

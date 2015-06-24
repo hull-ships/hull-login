@@ -34,7 +34,8 @@ export default React.createClass({
 
       { '::-moz-focus-inner': s }
     ];
-    if(this.props.reset){
+
+    if (this.props.reset) {
       rules.unshift({ '*': styles.reset });
     }
 
