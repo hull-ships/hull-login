@@ -3,9 +3,6 @@
 import React from 'react';
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
-import { toType } from 'tcomb-json-schema';
-import Form from '../form';
-import _ from 'underscore';
 import { getSettings } from '../../styles/settings';
 import UserImage from './user-image';
 
@@ -46,11 +43,9 @@ export default React.createClass({
       boxShadow: 'inset 0 1px 0 rgba(0, 0, 0, 0.02)',
       borderTopColor: settings.grayColor,
       background: settings.grayLighterColor
-    }
+    };
 
-    return (
-      <div style={fieldsStyle}>{fields}</div>
-    );
+    return <div style={fieldsStyle}>{fields}</div>;
   },
 
   render() {

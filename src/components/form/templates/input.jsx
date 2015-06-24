@@ -17,7 +17,7 @@ export default React.createClass({
   },
 
   render() {
-    var s = this.buildStyles(getStyles().formInput);
+    let s = this.buildStyles(getStyles().formInput);
 
     return (
       <input style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />

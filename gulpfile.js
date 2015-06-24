@@ -27,7 +27,7 @@ gulp.task("default", ["server"]);
 gulp.task("serve",   ["server"]);
 
 gulp.task("server",  function(callback) {runSequence("clean", "copy-files:watch", "webpack:server", callback); });
-gulp.task("build",   function(callback) {runSequence("clean", "copy-files", "webpack:build", callback); });
+gulp.task("build",   function(callback) {runSequence("lint", "clean", "copy-files", "webpack:build", callback); });
 gulp.task("deploy",  function(callback) {runSequence("build", "gh:deploy", callback); });
 
 
@@ -159,10 +159,17 @@ gulp.task("webpack:server", function() {
   });
 });
 
-
 // Deploy production bundle to gh-pages.
 gulp.task("gh:deploy", function (callback) {
   notify("Deploying "+config.outputFolder+" to Github Pages");
   ghpages.publish(path.join(process.cwd(), config.outputFolder), callback);
+});
+
+gulp.task("lint", function() {
+  var eslint = require("gulp-eslint");
+  return gulp.src(['src/**/*.js', 'src/**/*.jsx'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 

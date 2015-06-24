@@ -13,7 +13,11 @@ function renderSectionContent(props, formProps) {
 
   let form;
   if (props.shipSettings.show_classic_login) {
-    form = <Form key='form' {...formProps} />
+    form = <Form key='form' {...formProps} />;
+  }
+
+  if (buttons == null || form == null) {
+    throw new Error('There is no provider and classic login is disabled.');
   }
 
   if (buttons && form) {
@@ -22,11 +26,10 @@ function renderSectionContent(props, formProps) {
       <Divider key='divider'>or</Divider>,
       form
     ];
-  } else if (buttons || form) {
-    return buttons || form;
-  } else {
-    throw new Error('There is no provider and classic login is disabled.');
   }
+
+  return buttons || form;
 }
 
 export default renderSectionContent;
+

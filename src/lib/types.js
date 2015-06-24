@@ -11,7 +11,7 @@ function isUsername(value) {
 function minLength(length) {
   return function(value) {
     return value && value.length >= length;
-  }
+  };
 }
 
 const Email = t.subtype(t.Str, isEmail);
@@ -32,5 +32,5 @@ export default {
   Login,
   Password,
   Name
-}
+};
 

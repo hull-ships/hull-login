@@ -20,6 +20,12 @@ npm install
 gulp
 ```
 
+## Linting
+
+```
+gulp lint
+```
+
 ## Building
 
 ```

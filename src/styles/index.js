@@ -30,7 +30,7 @@ function getStyles() {
     zIndex: 'auto',
 
     clear: 'none',
-    float: 'none',
+    'float': 'none',
     overflow: 'visible',
 
     opacity: 1,
@@ -108,10 +108,11 @@ function getStyles() {
     reset,
     link,
     linkHover,
+    linkFocus,
     placeholder
   };
 }
 
 export default {
   getStyles
-}
+};

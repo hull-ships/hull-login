@@ -47,8 +47,9 @@ export default React.createClass({
   componentWillEnter(done) {
     let b = React.findDOMNode(this.refs.background);
     b.style.opacity = '0';
-    // Force browser write of opacity state.
-    window.getComputedStyle(b).opacity;
+    /*eslint-disable */
+    window.getComputedStyle(b).opacity; // Force browser write of opacity state.
+    /*eslint-enable */
     b.style.opacity = '1';
 
     let overlay = React.findDOMNode(this.refs.overlay);
@@ -84,8 +85,9 @@ export default React.createClass({
   componentWillLeave(done) {
     let b = React.findDOMNode(this.refs.background);
     b.style.opacity = '1';
-    // Force browser write of opacity state.
-    window.getComputedStyle(b).opacity;
+    /*eslint-disable */
+    window.getComputedStyle(b).opacity; // Force browser write of opacity state.
+    /*eslint-enable */
     b.style.opacity = '0';
 
     let overlay = React.findDOMNode(this.refs.overlay);

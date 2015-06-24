@@ -36,7 +36,7 @@ export default React.createClass({
   },
 
   renderOverlay() {
-    if (!this.state.dialogIsVisible) { return; }
+    if (!this.state.dialogIsVisible) { return null; }
 
     const d = { organization: this.state.organization.name };
     const titles = {
@@ -66,18 +66,19 @@ export default React.createClass({
   render() {
     const u = this.state.user;
 
-    let l1, l2;
+    let l1;
+    let l2;
     if (u) {
       if (!this.state.formIsSubmitted) {
-        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>
+        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>;
       } else {
-        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>
+        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
       }
 
-      l2 = <a href='javascript: void 0;' onClick={this.props.actions.logOut}>{translate('Log out')}</a>
+      l2 = <a href='javascript: void 0;' onClick={this.props.actions.logOut}>{translate('Log out')}</a>;
     } else {
-      l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>
-      l2 = <a href='javascript: void 0;' onClick={this.props.actions.activateSignUpSection}>{translate('Sign up')}</a>
+      l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>;
+      l2 = <a href='javascript: void 0;' onClick={this.props.actions.activateSignUpSection}>{translate('Sign up')}</a>;
     }
 
     let s = this.getScope();

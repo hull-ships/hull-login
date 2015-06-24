@@ -16,7 +16,7 @@ export default React.createClass({
     this.props.onChange(e.target.value);
   },
 
-  renderOptionsGroup(o) {
+  renderOptionsGroup() {
     // TODO
   },
 
