@@ -57,7 +57,8 @@ export default React.createClass({
   },
 
   render() {
-    let m, d;
+    let m;
+    let d;
     if (this.state.signUpState === 'pending') {
       m = translate('Signing up');
       d = true;

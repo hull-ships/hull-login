@@ -31,7 +31,7 @@ function getStyles() {
   return {
     divider,
     dividerContent
-  }
+  };
 }
 
 export default {

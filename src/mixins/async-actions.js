@@ -34,9 +34,9 @@ export default {
       instance.setState(h);
 
       if (resetInitial) {
-        timer = setTimeout(function() { setActionState(null, null) }, 3000);
+        timer = setTimeout(function() { setActionState(null, null); }, 3000);
       }
-    };
+    }
 
     return function() {
       let p = action.apply(null, arguments);

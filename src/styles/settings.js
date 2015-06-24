@@ -1,6 +1,5 @@
 'use strict';
 
-import assign from 'object-assign';
 import _ from 'underscore';
 
 let _settings = {

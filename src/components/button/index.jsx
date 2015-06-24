@@ -17,11 +17,10 @@ export default React.createClass({
   },
 
   render() {
-    const styles = getStyles();
-    var s = this.buildStyles(styles.button);
-
-    var icon = this.renderIcon();
-    var children = icon == null ? this.props.children : [icon, this.props.children];
+    let styles = getStyles();
+    let s = this.buildStyles(styles.button);
+    let icon = this.renderIcon();
+    let children = icon == null ? this.props.children : [icon, this.props.children];
 
     return (
       <button {...this.getBrowserStateEvents()} {...this.props} style={s}>{children}</button>

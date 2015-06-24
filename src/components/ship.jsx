@@ -39,7 +39,7 @@ export default React.createClass({
   },
 
   renderOverlay() {
-    if (!this.state.dialogIsVisible) { return; }
+    if (!this.state.dialogIsVisible) { return null; }
 
     const d = { organization: this.state.organization.name };
     const titles = {
@@ -71,42 +71,34 @@ export default React.createClass({
 
     let buttons = [];
     if (u) {
-      
-      if(this.state.shipSettings.show_profile){
-
+      if (this.state.shipSettings.show_profile) {
         if (!this.state.formIsSubmitted) {
           let b = <a href='#' key='complete-profile' className='hull-login__button hull-login__button--edit-profile' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>
           buttons.push(b);
-
         } else {
-
           let b = <a href='#' key='show-profile' className='hull-login__button hull-login__button--show-profile' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>
           buttons.push(b);
-
         }
+      }
 
-      } 
-
-      if(this.state.shipSettings.custom_buttons.length){
-        for (var i = 0; i < this.state.shipSettings.custom_buttons.length; i++) {
+      if (this.state.shipSettings.custom_buttons.length) {
+        for (let i = 0; i < this.state.shipSettings.custom_buttons.length; i++) {
           let button_def = this.state.shipSettings.custom_buttons[i]
           let b = <a href={button_def.url} key={`custom-action-${i}`} target={button_def.popup ? "_blank" : ""} className="hull-login__button hull-login__button">{button_def.text}</a>
           buttons.push(b);
-        };
+        }
       }
 
       let b = <a href='#' className='hull-login__button hull-login__button--log-out' onClick={this.props.actions.logOut}>{translate('Log out')}</a>
       buttons.push(b);
-
-
     } else {
 
-      if(this.state.shipSettings.show_login){
-        let b= <a href='#' key='log-in' className='hull-login__button hull-login__button--log-in' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>
+      if (this.state.shipSettings.show_login) {
+        let b = <a href='#' key='log-in' className='hull-login__button hull-login__button--log-in' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>
         buttons.push(b);
       }
 
-      if(this.state.shipSettings.show_signup){
+      if (this.state.shipSettings.show_signup) {
         let b = <a href='#' key='sign-up' className='hull-login__button hull-login__button--sign-up' onClick={this.props.actions.activateSignUpSection}>{translate('Sign up')}</a>
         buttons.push(b);
       }
