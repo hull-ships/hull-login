@@ -106,12 +106,7 @@ export default React.createClass({
   },
 
   handleSubmit(value) {
-    let userValue = { name: value.name, password: value.password, email: value.email };
-    let extraValue = assign({}, value);
-    delete extraValue.name;
-    delete extraValue.password;
-    delete extraValue.email;
-    this.getAsyncAction('updateUser')(userValue, extraValue);
+    this.getAsyncAction('updateUser')(value);
   },
 
   render() {

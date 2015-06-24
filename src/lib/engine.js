@@ -332,8 +332,14 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return r;
   },
 
-  updateUser(user, extra) {
+  updateUser(value) {
     const isCompleted = !this.formIsSubmitted();
+
+    let user = { name: value.name, password: value.password, email: value.email };
+    let extra = assign({}, value);
+    delete extra.name;
+    delete extra.password;
+    delete extra.email;
 
     let promises = [];
     if(_.size(user)) {
