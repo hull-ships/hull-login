@@ -36,7 +36,7 @@ export default React.createClass({
   },
 
   getResetStyles() {
-    return this.state.shipSettings && this.state.shipSettings.appearance && this.state.shipSettings.reset_styles;
+    return this.state.shipSettings && this.state.shipSettings.reset_styles;
   },
 
   renderOverlay() {
