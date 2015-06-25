@@ -3,12 +3,10 @@
 import _ from 'underscore';
 import React from 'react';
 import assign from 'object-assign';
-
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
 import transform from 'tcomb-json-schema';
 import AsyncActionsMixin from '../../mixins/async-actions';
-
 import Form from '../form';
 import UserImage from './user-image';
 
@@ -44,7 +42,6 @@ const DEFAULT_SCHEMA = {
 };
 /* eslint-enable quotes */
 
-
 export default React.createClass({
   displayName: 'LogInSection',
 
@@ -59,20 +56,22 @@ export default React.createClass({
   },
 
   getType() {
-    let type;
     if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
-        let props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
-        let required = DEFAULT_SCHEMA.required.concat(this.props.form.fields_schema.required);
-        type = transform(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props, required: required }));
-      } else {
-        type = transform(this.props.form.fields_schema);
+        return transform({
+          type: 'object',
+          properties: {
+            ...DEFAULT_SCHEMA.properties,
+            ...this.props.form.fields_schema.properties
+          },
+          required: DEFAULT_SCHEMA.required.concat(this.props.form.fields_schema.required)
+        });
       }
-    } else {
-      type = transform(DEFAULT_SCHEMA);
+
+      return transform(this.props.form.fields_schema);
     }
 
-    return type;
+    return transform(DEFAULT_SCHEMA);
   },
 
   getFields() {
@@ -156,4 +155,3 @@ export default React.createClass({
     );
   }
 });
-

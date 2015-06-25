@@ -368,7 +368,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
         this.activateThanksSectionAndHideLater();
       }
 
-      this._errors.updateUser = undefined;
+      this._errors.updateUser = null;
       this.emitChange();
     }, (error) => {
       this._errors.updateUser = error;
@@ -473,4 +473,3 @@ assign(Engine.prototype, EventEmitter.prototype, {
 });
 
 module.exports = Engine;
-
