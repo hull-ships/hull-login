@@ -189,7 +189,7 @@ export default React.createClass({
       });
 
       assign(overlay, {
-        boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.15)',
+        boxShadow: '0px 0px 15px 0px rgba(0,0,0,0.05)',
         borderRadius: settings.mediumBorderRadius,
         width: 340,
         margin: '50px auto'
