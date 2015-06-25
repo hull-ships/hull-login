@@ -415,6 +415,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     if (SECTIONS.indexOf(name) > -1) {
       this._dialogIsVisible = true;
       this._activeSection = name;
+      this._errors = {};
       this.emitChange();
     } else {
       throw new Error('"' + name + '" is not a valid section name');
