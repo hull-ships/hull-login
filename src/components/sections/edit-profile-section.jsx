@@ -10,37 +10,35 @@ import AsyncActionsMixin from '../../mixins/async-actions';
 import Form from '../form';
 import UserImage from './user-image';
 
-/* eslint-disable quotes */
 const DEFAULT_SCHEMA = {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "type": "object",
-  "properties": {
-    "name": {
-      "type": "string",
-      "title": "Name",
-      "field_type": "text"
+  '$schema': 'http://json-schema.org/draft-04/schema#',
+  'type': 'object',
+  'properties': {
+    'name': {
+      'type': 'string',
+      'title': 'Name',
+      'field_type': 'text'
     },
-    "password": {
-      "type": "string",
-      "title": "Password",
-      "field_type": "password",
-      "format": "password",
-      "help": "Leave blank to keep your old password"
+    'password': {
+      'type': 'string',
+      'title': 'Password',
+      'field_type': 'password',
+      'format': 'password',
+      'help': 'Leave blank to keep your old password'
     },
-    "email": {
-      "type": "string",
-      "title": "Email",
-      "field_type": "email",
-      "format": "email",
-      "minLength": 1
+    'email': {
+      'type': 'string',
+      'title': 'Email',
+      'field_type': 'email',
+      'format': 'email',
+      'minLength': 1
     }
   },
-  "required": [
-    "name",
-    "email"
+  'required': [
+    'name',
+    'email'
   ]
 };
-/* eslint-enable quotes */
 
 export default React.createClass({
   displayName: 'LogInSection',
