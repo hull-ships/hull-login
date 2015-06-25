@@ -3,7 +3,7 @@
 import React from 'react';
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
-import { toType } from 'tcomb-json-schema';
+import transform from 'tcomb-json-schema';
 import Form from '../form';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import _ from 'underscore';
@@ -23,7 +23,7 @@ export default React.createClass({
   },
 
   getType() {
-    return toType(this.props.form.fields_schema);
+    return transform(this.props.form.fields_schema);
   },
 
   getFields() {
