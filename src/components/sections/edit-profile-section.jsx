@@ -2,7 +2,6 @@
 
 import _ from 'underscore';
 import React from 'react';
-import assign from 'object-assign';
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
 import transform from 'tcomb-json-schema';
@@ -50,40 +49,33 @@ export default React.createClass({
     };
   },
 
-  getType() {
+  getSchema() {
     if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
-        return transform({
+        return {
           type: 'object',
           properties: {
             ...DEFAULT_SCHEMA.properties,
             ...this.props.form.fields_schema.properties
           },
           required: DEFAULT_SCHEMA.required.concat(this.props.form.fields_schema.required)
-        });
+        };
       }
 
-      return transform(this.props.form.fields_schema);
+      return this.props.form.fields_schema;
     }
 
-    return transform(DEFAULT_SCHEMA);
+    return DEFAULT_SCHEMA;
+  },
+
+  getType() {
+    return transform(this.getSchema());
   },
 
   getFields() {
-    let props;
-    if (this.props.hasForm) {
-      if (this.props.formIsSubmitted) {
-        props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
-      } else {
-        props = this.props.form.fields_schema.properties;
-      }
-    } else {
-      props = DEFAULT_SCHEMA.properties;
-    }
-
     let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return _.reduce(props, function(m, v, k) {
+    return _.reduce(this.getSchema().properties, function(m, v, k) {
       let f = {
         label: v.title,
         help: v.help,
