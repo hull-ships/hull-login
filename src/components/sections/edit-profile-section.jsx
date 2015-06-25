@@ -16,20 +16,17 @@ const DEFAULT_SCHEMA = {
   'properties': {
     'name': {
       'type': 'string',
-      'title': 'Name',
-      'field_type': 'text'
+      'title': 'Name'
     },
     'password': {
       'type': 'string',
       'title': 'Password',
-      'field_type': 'password',
       'format': 'password',
       'help': 'Leave blank to keep your old password'
     },
     'email': {
       'type': 'string',
       'title': 'Email',
-      'field_type': 'email',
       'format': 'email',
       'minLength': 1
     }
