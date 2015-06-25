@@ -1,3 +1,4 @@
+import _ from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 
@@ -26,7 +27,7 @@ const ACTIONS = [
   'unlinkIdentity',
 
   'resetPassword',
-  'updateProfile',
+  'updateUser',
 
   'activateLogInSection',
   'activateSignUpSection',
@@ -103,6 +104,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       ship: this._ship,
       form: this._form,
       formIsSubmitted: this.formIsSubmitted(),
+      hasForm: this.hasForm(),
       identities: this._identities,
       providers: this.getProviders(),
       errors: this._errors,
@@ -194,7 +196,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     let defaultSection;
 
     if (this._user) {
-      if (!this.formIsSubmitted()) { return 'editProfile'; }
+      if (this.hasForm() && !this.formIsSubmitted()) { return 'editProfile'; }
 
       sections = USER_SECTIONS;
       defaultSection = 'showProfile';
@@ -330,19 +332,46 @@ assign(Engine.prototype, EventEmitter.prototype, {
     return r;
   },
 
-  updateProfile(profile) {
-    let r = Hull.api(this._form.id + '/submit', 'put', { data: profile });
-    const isCompleted = !this.formIsSubmitted();
+  updateUser(value) {
+    let user = _.reduce(['name', 'email', 'password'], (m, k) => {
+      let v = value[k];
+      if (typeof v === 'string' && v.trim() !== '') { m[k] = v; }
 
-    r.then((form) => {
-      this._form = form;
+      return m;
+    }, {});
 
-      if (isCompleted) {
-        this.activateThanksSectionAndHideLater();
+    let data = _.reduce(this._form.fields_list, (m, { name }) => {
+      let v = value[name];
+      if (v != null) { m[name] = v; }
+
+      return m;
+    }, {});
+
+    let promises = [];
+    if (_.size(user)) {
+      let promise = Hull.api(this._user.id, 'put', user).then((r) => {
+        this._user = r;
+      });
+      promises.push(promise);
+    }
+    if (_.size(data)) {
+      let promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
+        this._form = r;
+      });
+      promises.push(promise);
+    }
+
+    let r = Promise.all(promises).then(() => {
+      if (this.formIsSubmitted()) {
+        this.activateShowProfileSection();
       } else {
-        this._activeSection = 'showProfile';
+        this.activateThanksSectionAndHideLater();
       }
 
+      this._errors.updateUser = null;
+      this.emitChange();
+    }, (error) => {
+      this._errors.updateUser = error;
       this.emitChange();
     });
 
@@ -386,6 +415,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     if (SECTIONS.indexOf(name) > -1) {
       this._dialogIsVisible = true;
       this._activeSection = name;
+      this._errors = {};
       this.emitChange();
     } else {
       throw new Error('"' + name + '" is not a valid section name');
@@ -394,8 +424,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
   activateThanksSectionAndHideLater() {
     this._activeSection = 'thanks';
+    this.emitChange();
 
     const t = this._ship.settings.hide_thanks_section_after;
+
     if (t > 0) { this.hideLater(t); }
   },
 
@@ -441,4 +473,3 @@ assign(Engine.prototype, EventEmitter.prototype, {
 });
 
 module.exports = Engine;
-

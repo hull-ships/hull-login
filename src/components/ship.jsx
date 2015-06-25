@@ -73,7 +73,7 @@ export default React.createClass({
     let buttons = [];
     if (u) {
       if (this.state.shipSettings.show_profile) {
-        if (!this.state.formIsSubmitted) {
+        if (this.state.hasForm && !this.state.formIsSubmitted) {
           let b = <a href='#' key='complete-profile' className='hull-login__button hull-login__button--edit-profile' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>;
           buttons.push(b);
         } else {
@@ -114,4 +114,3 @@ export default React.createClass({
     );
   }
 });
-
