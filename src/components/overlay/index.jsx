@@ -2,7 +2,6 @@
 
 import Bounce from 'bounce';
 import React from 'react';
-import cx from 'react/lib/cx';
 import assign from 'object-assign';
 import { getSettings } from '../../styles/settings';
 
@@ -218,18 +217,12 @@ export default React.createClass({
     };
   },
 
-  getClassName() {
-    return cx({
-      [this.props.className]: true,
-      'hull-login__modal': true
-    });
-  },
-
   render() {
-    const styles = this.getStyles();
+    let styles = this.getStyles();
+    let className = this.props.className + ' hull-login__modal';
 
     return (
-      <div className={this.getClassName()} style={styles.overlayContainer}>
+      <div className={className} style={styles.overlayContainer}>
         <div
           className='hull-login__modal__dialog'
           aria-hidden={!this.props.visible}
