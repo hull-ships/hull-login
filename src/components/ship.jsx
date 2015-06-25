@@ -35,6 +35,10 @@ export default React.createClass({
     return `ship-${this.state.ship.id}`;
   },
 
+  getResetStyles() {
+    return this.state.shipSettings && this.state.shipSettings.reset_styles;
+  },
+
   renderOverlay() {
     if (!this.state.dialogIsVisible) { return null; }
 
@@ -66,28 +70,47 @@ export default React.createClass({
   render() {
     const u = this.state.user;
 
-    let l1;
-    let l2;
+    let buttons = [];
     if (u) {
-      if (this.state.hasForm && !this.state.formIsSubmitted) {
-        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>;
-      } else {
-        l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
+      if (this.state.shipSettings.show_profile) {
+        if (this.state.hasForm && !this.state.formIsSubmitted) {
+          let b = <a href='#' key='complete-profile' className='hull-login__button hull-login__button--edit-profile' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>;
+          buttons.push(b);
+        } else {
+          let b = <a href='#' key='show-profile' className='hull-login__button hull-login__button--show-profile' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
+          buttons.push(b);
+        }
       }
 
-      l2 = <a href='javascript: void 0;' onClick={this.props.actions.logOut}>{translate('Log out')}</a>;
+      if (this.state.shipSettings.custom_buttons.length) {
+        for (let i = 0; i < this.state.shipSettings.custom_buttons.length; i++) {
+          let { url, popup, text } = this.state.shipSettings.custom_buttons[i];
+          let b = <a href={url} key={`custom-action-${i}`} target={popup ? '_blank' : ''} className='hull-login__button hull-login__button'>{text}</a>;
+          buttons.push(b);
+        }
+      }
+
+      let b = <a href='#' className='hull-login__button hull-login__button--log-out' onClick={this.props.actions.logOut}>{translate('Log out')}</a>;
+      buttons.push(b);
     } else {
-      l1 = <a href='javascript: void 0;' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>;
-      l2 = <a href='javascript: void 0;' onClick={this.props.actions.activateSignUpSection}>{translate('Sign up')}</a>;
+      if (this.state.shipSettings.show_login) {
+        let b = <a href='#' key='log-in' className='hull-login__button hull-login__button--log-in' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>;
+        buttons.push(b);
+      }
+
+      if (this.state.shipSettings.show_signup) {
+        let b = <a href='#' key='sign-up' className='hull-login__button hull-login__button--sign-up' onClick={this.props.actions.activateSignUpSection}>{translate('Sign up')}</a>;
+        buttons.push(b);
+      }
     }
 
     let s = this.getScope();
+    let r = this.getResetStyles();
     return (
-      <div>
-        <Styles scope={s} />
-        {l1} | {l2}
+      <div className='hull-login'>
+        <Styles scope={s} reset={r} />
+        {buttons}
       </div>
     );
   }
 });
-

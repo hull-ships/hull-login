@@ -439,7 +439,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
       this._activeSection = name;
 
       this.emitChange();
-    }, time);
+    }, time * 1000);
   },
 
   hideLater(time) {
@@ -447,7 +447,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
     this._hideLaterTimer = setTimeout(() => {
       this.hideDialog();
-    }, time);
+    }, time * 1000);
   },
 
   clearTimers() {
