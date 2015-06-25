@@ -351,16 +351,12 @@ assign(Engine.prototype, EventEmitter.prototype, {
     if (_.size(user)) {
       let promise = Hull.api(this._user.id, 'put', user).then((r) => {
         this._user = r;
-      }, (error) => {
-        console.error(error);
       });
       promises.push(promise);
     }
     if (_.size(data)) {
       let promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
         this._form = r;
-      }, (error) => {
-        console.error(error);
       });
       promises.push(promise);
     }
@@ -372,6 +368,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
         this.activateThanksSectionAndHideLater();
       }
 
+      this._errors.updateUser = undefined;
+      this.emitChange();
+    }, (error) => {
+      this._errors.updateUser = error;
       this.emitChange();
     });
 

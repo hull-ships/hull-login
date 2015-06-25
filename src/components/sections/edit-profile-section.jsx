@@ -20,25 +20,26 @@ const DEFAULT_SCHEMA = {
     "name": {
       "type": "string",
       "title": "Name",
-      "scope": "app",
-      "format": "string"
+      "field_type": "text"
     },
     "password": {
       "type": "string",
       "title": "Password",
-      "scope": "app",
+      "field_type": "password",
       "format": "password",
       "help": "Leave blank to keep your old password"
     },
     "email": {
       "type": "string",
       "title": "Email",
-      "scope": "app",
-      "format": "email"
+      "field_type": "email",
+      "format": "email",
+      "minLength": 1
     }
   },
   "required": [
-    "name"
+    "name",
+    "email"
   ]
 };
 /* eslint-enable quotes */
@@ -62,7 +63,8 @@ export default React.createClass({
     if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
         let props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
-        type = transform(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props }));
+        let required = DEFAULT_SCHEMA.required.concat(this.props.form.fields_schema.required);
+        type = transform(assign({}, DEFAULT_SCHEMA, this.props.form.fields_schema, { properties: props, required: required }));
       } else {
         type = transform(this.props.form.fields_schema);
       }
@@ -85,8 +87,14 @@ export default React.createClass({
       props = DEFAULT_SCHEMA.properties;
     }
 
+    let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
+
     return _.reduce(props, function(m, v, k) {
-      let f = { label: v.title, help: v.help };
+      let f = {
+        label: v.title,
+        help: v.help,
+        hasError: !!errors[k]
+      };
 
       if (v.type === 'string') {
         f.type = v.format === 'uri' ? 'url' : (v.format || 'text');
