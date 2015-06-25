@@ -130,15 +130,14 @@ export default React.createClass({
       button = translate('Complete profile');
     }
 
-    if (this.state.updateProfileState === 'pending') {
+    if (this.state.updateUserState === 'pending') {
       button = translate('Saving...');
       disabled = true;
     }
 
-    const u = this.props.user;
-    const value = assign({}, u, this.props.form.user_data && this.props.form.user_data.data);
-    const styles = getStyles();
-    const form = <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />;
+    let u = this.props.user;
+    let value = { ...u, ...(this.props.form.user_data && this.props.form.user_data.data) };
+    let styles = getStyles();
 
     return (
       <div>
@@ -148,7 +147,7 @@ export default React.createClass({
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
 
-        {form}
+        <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />
       </div>
     );
   }
