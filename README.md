@@ -20,21 +20,8 @@ npm install
 gulp
 ```
 
-## Linting
+## Grunt tasks
 
-```
-gulp lint
-```
-
-## Building
-
-```
-gulp build
-```
-
-## Deploying
-
-```
-gulp deploy
-```
-
+- Linting: `gulp lint`
+- Building: `gulp build`
+- Deploying: `gulp deploy`
