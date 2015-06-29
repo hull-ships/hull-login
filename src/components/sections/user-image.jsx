@@ -98,7 +98,7 @@ export default React.createClass({
     );
 
     let output;
-    if(this.props.editable) {
+    if (this.props.editable) {
       output = (
         <Dropzone size={100} style={this.buildStyles(blockStyle)} onDrop={this.handleDrop}>
           <a {...this.getBrowserStateEvents()} style={this.buildStyles(linkStyle)} href={'#'} title={translate('Edit your profile picture')}>
@@ -107,7 +107,7 @@ export default React.createClass({
           </a>
         </Dropzone>
       );
-    } else if(this.props.onClick != null) {
+    } else if (this.props.onClick != null) {
       output = <a href="#" onClick={this.props.onClick} style={this.buildStyles(assign({}, linkStyle, blockStyle))} >{ image }</a>;
     } else {
       output = image;

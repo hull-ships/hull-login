@@ -89,11 +89,11 @@ export default React.createClass({
 
     let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return _.reduce(props, function(m, v, k) {
+    return _.reduce(props, function(memo, value, key) {
       let f = {
-        label: v.title,
-        help: v.help,
-        hasError: !!errors[k]
+        label: value.title,
+        help: value.help,
+        hasError: !!errors[key]
       };
 
       if (value.type === 'string') {
@@ -145,7 +145,7 @@ export default React.createClass({
 
     const u = this.props.user;
     const value = assign({}, u, this.props.form.user_data && this.props.form.user_data.data);
-    const image = '';
+    let image = '';
     if (this.state.updatePictureState === 'pending') {
       image = this.state.pendingPicture.preview;
     } else {
