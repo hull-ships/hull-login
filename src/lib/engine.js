@@ -340,7 +340,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     let user = _.reduce(['name', 'email', 'password'], (m, k) => {
       let v = value[k];
       if (typeof v === 'string' && v.trim() !== '') { m[k] = v; }
-      
+
       return m;
     }, {});
 
@@ -399,12 +399,12 @@ assign(Engine.prototype, EventEmitter.prototype, {
       });
       form.append('file', file);
 
-      var req = new XMLHttpRequest();
+      let req = new XMLHttpRequest();
       req.onreadystatechange = () => {
-        if(req.readyState === 4) {
-          if(req.status === 201) {
+        if (req.readyState === 4) {
+          if (req.status === 201) {
             let picUrl = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
-            Hull.api(this._user.id, 'put', {  picture: picUrl }).then((resp) => {
+            Hull.api(this._user.id, 'put', { picture: picUrl }).then((resp) => {
               this.resetUser();
               // TODO Workaround currentUser not updating.
               this._user.picture = picUrl;
@@ -415,7 +415,9 @@ assign(Engine.prototype, EventEmitter.prototype, {
               reject(err);
             });
           } else {
+            /* eslint-disable no-console */
             console.error('Couldn\'t upload!');
+            /* eslint-enable no-console */
             reject('Couldn\'t upload image, status ' + req.status);
           }
         }

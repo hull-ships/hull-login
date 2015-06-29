@@ -4,7 +4,6 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 import assign from 'object-assign';
-import { getSettings } from '../../styles/settings';
 import { translate } from '../../lib/i18n';
 
 const blockStyle = {
@@ -78,11 +77,11 @@ export default React.createClass({
   handleDrop(files) {
     let file = files[0];
 
-    if(!/^image/.test(file.type)) {
+    if (!/^image/.test(file.type)) {
       return;
     }
 
-    if(this.props.onDrop) {
+    if (this.props.onDrop) {
       this.props.onDrop(file);
     }
   },
