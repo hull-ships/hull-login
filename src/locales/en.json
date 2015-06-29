@@ -4,7 +4,7 @@
   "Cancel": "Cancel",
   "Complete profile": "Complete profile",
   "Complete your profile": "Complete your profile",
-  "Dont't have an account? Sign up!": "Dont't have an account? Sign up!",
+  "Don't have an account? Sign up!": "Don't have an account? Sign up!"
   "Edit profile": "Edit profile",
   "Edit your profile": "Edit your profile",
   "Forgot password?": "Forgot password?",
@@ -12,6 +12,7 @@
   "Know your password? Log in!": "Know your password? Log in!",
   "Link your {provider} account": "Link your {provider} account",
   "Linking {provider} account": "Linking {provider} account",
+  "Log in to {organization}": "log in to {organization}",
   "Log in with {provider}": "Log in with {provider}",
   "Log in": "Log in",
   "Log out": "Log out",
@@ -28,12 +29,12 @@
   "Signing up with {provider}": "Signing up with {provider}",
   "Signing up": "Signing up",
   "Skip this step": "Skip this step",
-  "Thanks!": "Thanks!",
+  "Thanks for signing up!": "Thanks for signing up!",
   "Unlink your {provider} account": "Unlink your {provider} account",
   "Unlinking {provider} account": "Unlinking {provider} account",
+  "View your profile": "View your profile",
   "Your email or username": "Your email or username",
   "Your email": "Your email",
   "Your name": "Your name",
-  "Your password": "Your password",
-  "Log in to {organization}": "log in to {organization}"
+  "Your password": "Your password"
 }

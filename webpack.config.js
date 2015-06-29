@@ -22,7 +22,7 @@ module.exports = {
   development:{
    browser: {
       name     : 'browser',
-      devtool  : '#inline-source-map',
+      devtool  : '#source-map',
       devServer: true,
       entry    : devEntry,
       output   : devOutput,

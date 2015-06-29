@@ -11,7 +11,11 @@ function getStyles() {
     borderTopWidth: 1,
     borderTopStyle: 'solid',
     borderTopColor: settings.grayLightColor,
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: 0,
+    borderBottom: 'none',
+    borderLeft: 'none',
+    borderRight: 'none'
   };
 
   const dividerContent = {
@@ -27,7 +31,7 @@ function getStyles() {
   return {
     divider,
     dividerContent
-  }
+  };
 }
 
 export default {

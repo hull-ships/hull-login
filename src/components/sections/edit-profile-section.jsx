@@ -2,13 +2,45 @@
 
 import _ from 'underscore';
 import React from 'react';
+import assign from 'object-assign';
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
-import { toType } from 'tcomb-json-schema';
+
+import transform from 'tcomb-json-schema';
 import AsyncActionsMixin from '../../mixins/async-actions';
 
 import Form from '../form';
 import UserImage from './user-image';
+
+const DEFAULT_SCHEMA = {
+  '$schema': 'http://json-schema.org/draft-04/schema#',
+  'type': 'object',
+  'properties': {
+    'name': {
+      'type': 'string',
+      'title': 'Name',
+      'field_type': 'text'
+    },
+    'password': {
+      'type': 'string',
+      'title': 'Password',
+      'field_type': 'password',
+      'format': 'password',
+      'help': 'Leave blank to keep your old password'
+    },
+    'email': {
+      'type': 'string',
+      'title': 'Email',
+      'field_type': 'email',
+      'format': 'email',
+      'minLength': 1
+    }
+  },
+  'required': [
+    'name',
+    'email'
+  ]
+};
 
 export default React.createClass({
   displayName: 'EditProfileSection',
@@ -19,18 +51,50 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
-      updateProfile: this.props.updateProfile,
-      updatePicture: this.props.updatePicture
+      updatePicture: this.props.updatePicture,
+      updateUser: this.props.updateUser
     };
   },
 
   getType() {
-    return toType(this.props.form.fields_schema);
+    if (this.props.hasForm) {
+      if (this.props.formIsSubmitted) {
+        return transform({
+          type: 'object',
+          properties: {
+            ...DEFAULT_SCHEMA.properties,
+            ...this.props.form.fields_schema.properties
+          },
+          required: DEFAULT_SCHEMA.required.concat(this.props.form.fields_schema.required)
+        });
+      }
+
+      return transform(this.props.form.fields_schema);
+    }
+
+    return transform(DEFAULT_SCHEMA);
   },
 
   getFields() {
-    return _.reduce(this.props.form.fields_schema.properties, function(memo, value, key) {
-      let f = { label: value.title };
+    let props;
+    if (this.props.hasForm) {
+      if (this.props.formIsSubmitted) {
+        props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
+      } else {
+        props = this.props.form.fields_schema.properties;
+      }
+    } else {
+      props = DEFAULT_SCHEMA.properties;
+    }
+
+    let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
+
+    return _.reduce(props, function(m, v, k) {
+      let f = {
+        label: v.title,
+        help: v.help,
+        hasError: !!errors[k]
+      };
 
       if (value.type === 'string') {
         f.type = value.format === 'uri' ? 'url' : (value.format || 'text');
@@ -50,7 +114,7 @@ export default React.createClass({
   },
 
   handleSubmit(value) {
-    this.getAsyncAction('updateProfile')(value);
+    this.getAsyncAction('updateUser')(value);
   },
 
   handleDrop(file) {
@@ -64,13 +128,13 @@ export default React.createClass({
     let button = '';
     let disabled = false;
 
-    if (this.props.formIsSubmitted) {
+    if (this.props.formIsSubmitted || !this.props.hasForm) {
       title = translate('Edit your profile');
-      subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>
+      subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>;
       button = translate('Save changes');
     } else {
       title = translate('Complete your profile');
-      subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>{translate('Skip this step')}</a>
+      subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>{translate('Skip this step')}</a>;
       button = translate('Complete profile');
     }
 
@@ -80,9 +144,8 @@ export default React.createClass({
     }
 
     const u = this.props.user;
-    const value = this.props.form.user_data && this.props.form.user_data.data;
-
-    let image = '';
+    const value = assign({}, u, this.props.form.user_data && this.props.form.user_data.data);
+    const image = '';
     if (this.state.updatePictureState === 'pending') {
       image = this.state.pendingPicture.preview;
     } else {
@@ -90,6 +153,7 @@ export default React.createClass({
     }
 
     const styles = getStyles();
+    const form = <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />;
 
     return (
       <div>
@@ -103,16 +167,8 @@ export default React.createClass({
           <h1 style={styles.sectionTitle}>{title}</h1>
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
-
-        <Form
-          type={this.getType()}
-          fields={this.getFields()}
-          value={value}
-          submitMessage={button}
-          onSubmit={this.handleSubmit}
-          disabled={disabled} />
+        {form}
       </div>
     );
   }
 });
-

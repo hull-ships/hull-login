@@ -20,9 +20,7 @@ export default React.createClass({
   getRules() {
     const styles = getStyles();
 
-    return [
-      { '*': styles.reset },
-
+    let rules = [
       { 'a': styles.link },
       { 'a:active': styles.link },
       { 'a:link': styles.link },
@@ -36,6 +34,12 @@ export default React.createClass({
 
       { '::-moz-focus-inner': s }
     ];
+
+    if (this.props.reset) {
+      rules.unshift({ '*': styles.reset });
+    }
+
+    return rules;
   },
 
   render() {

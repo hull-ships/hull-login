@@ -8,35 +8,29 @@ import Select from './select';
 function render(Component, locals) {
   if (locals.config.kind === 'compact') {
     return <Component {...locals} />;
-  } else {
-    const s = { width: '100%' }
-
-    return (
-      <label style={s}>
-        {locals.label}
-        <Component {...locals} />
-      </label>
-    );
   }
+
+  const s = { width: '100%' };
+  return (
+    <label style={s}>
+      {locals.label}
+      <Component {...locals} />
+      {locals.help}
+    </label>
+  );
 }
 
 export default {
-  checkbox(locals) {
-    console.log('CHECKBOX');
-
-    return <h1>CHECKBOX</h1>;
+  checkbox() {
+    // TODO
   },
 
-  list(locals) {
-    console.log('LIST');
-
-    return <h1>LIST</h1>;
+  list() {
+    // TODO
   },
 
-  radio(locals) {
-    console.log('RADIO');
-
-    return <h1>RADIO</h1>;
+  radio() {
+    // TODO
   },
 
   select(locals) {

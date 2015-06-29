@@ -4,9 +4,6 @@ import React from 'react';
 import t from 'tcomb-form';
 import { translate } from '../../lib/i18n';
 import { Login, Password } from '../../lib/types';
-import SocialButtons from '../social-buttons';
-import Form from '../form';
-import Divider from '../divider';
 import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
@@ -55,7 +52,8 @@ export default React.createClass({
   },
 
   render() {
-    let m, d;
+    let m;
+    let d;
     if (this.state.logInState === 'pending') {
       m = translate('Logging in');
       d = true;
@@ -75,12 +73,17 @@ export default React.createClass({
 
     const styles = getStyles();
 
+    let signupLink;
+    if (this.props.shipSettings.show_signup) {
+      signupLink = <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>;
+    }
+
     return (
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
           <h1 style={styles.sectionTitle}>{translate('Log in to {organization}', { organization: this.props.organization.name })}</h1>
-          <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>
+          {signupLink}
         </div>
 
         {content}

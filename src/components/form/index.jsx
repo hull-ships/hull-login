@@ -19,7 +19,7 @@ export default React.createClass({
     return {
       value: this.props.value || {},
       submitState: 'initial'
-    }
+    };
   },
 
   getOptions() {
@@ -35,9 +35,9 @@ export default React.createClass({
   getKind() {
     if (this.props.kind === 'compact' && testPlaceholder()) {
       return 'compact';
-    } else {
-      return 'default';
     }
+
+    return 'default';
   },
 
   handleChange(value) {
