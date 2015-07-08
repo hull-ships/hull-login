@@ -2,7 +2,6 @@
 
 import _ from 'underscore';
 import React from 'react';
-import assign from 'object-assign';
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
 
@@ -18,20 +17,17 @@ const DEFAULT_SCHEMA = {
   'properties': {
     'name': {
       'type': 'string',
-      'title': 'Name',
-      'field_type': 'text'
+      'title': 'Name'
     },
     'password': {
       'type': 'string',
       'title': 'Password',
-      'field_type': 'password',
       'format': 'password',
       'help': 'Leave blank to keep your old password'
     },
     'email': {
       'type': 'string',
       'title': 'Email',
-      'field_type': 'email',
       'format': 'email',
       'minLength': 1
     }
@@ -56,40 +52,33 @@ export default React.createClass({
     };
   },
 
-  getType() {
+  getSchema() {
     if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
-        return transform({
+        return {
           type: 'object',
           properties: {
             ...DEFAULT_SCHEMA.properties,
             ...this.props.form.fields_schema.properties
           },
           required: DEFAULT_SCHEMA.required.concat(this.props.form.fields_schema.required)
-        });
+        };
       }
 
-      return transform(this.props.form.fields_schema);
+      return this.props.form.fields_schema;
     }
 
-    return transform(DEFAULT_SCHEMA);
+    return DEFAULT_SCHEMA;
+  },
+
+  getType() {
+    return transform(this.getSchema());
   },
 
   getFields() {
-    let props;
-    if (this.props.hasForm) {
-      if (this.props.formIsSubmitted) {
-        props = assign({}, DEFAULT_SCHEMA.properties, this.props.form.fields_schema.properties);
-      } else {
-        props = this.props.form.fields_schema.properties;
-      }
-    } else {
-      props = DEFAULT_SCHEMA.properties;
-    }
-
     let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return _.reduce(props, function(memo, value, key) {
+    return _.reduce(this.getSchema().properties, function(memo, value, key) {
       let f = {
         label: value.title,
         help: value.help,
@@ -138,13 +127,13 @@ export default React.createClass({
       button = translate('Complete profile');
     }
 
-    if (this.state.updateProfileState === 'pending') {
+    if (this.state.updateUserState === 'pending') {
       button = translate('Saving...');
       disabled = true;
     }
 
     const u = this.props.user;
-    const value = assign({}, u, this.props.form.user_data && this.props.form.user_data.data);
+    const value = { ...u, ...(this.props.form.user_data && this.props.form.user_data.data) };
     let image = '';
     if (this.state.updatePictureState === 'pending') {
       image = this.state.pendingPicture.preview;
@@ -167,6 +156,7 @@ export default React.createClass({
           <h1 style={styles.sectionTitle}>{title}</h1>
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
+        
         {form}
       </div>
     );

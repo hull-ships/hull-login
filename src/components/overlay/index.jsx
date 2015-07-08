@@ -56,11 +56,10 @@ export default React.createClass({
 
     let enterTransition = new Bounce();
     enterTransition.scale({
-      from: { x: 0.8, y: 0.8 },
+      from: { x: 0.9, y: 0.9 },
       to: { x: 1, y: 1 },
-      bounces: 3,
-      duration: 200,
-      stiffness: 1
+      bounces: 1,
+      duration: 400
     });
 
     enterTransition.applyTo(overlay, {
@@ -87,7 +86,7 @@ export default React.createClass({
       from: { x: 1, y: 1 },
       to: { x: 0.9, y: 0.9 },
       bounces: 1,
-      duration: 500
+      duration: 400
     });
 
     exitTransition.applyTo(overlay, {
@@ -190,7 +189,7 @@ export default React.createClass({
       });
 
       assign(overlay, {
-        boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.15)',
+        boxShadow: '0px 0px 15px 0px rgba(0,0,0,0.05)',
         borderRadius: settings.mediumBorderRadius,
         width: 340,
         margin: '50px auto'
@@ -241,4 +240,3 @@ export default React.createClass({
     );
   }
 });
-
