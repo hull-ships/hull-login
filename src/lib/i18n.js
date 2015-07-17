@@ -1,4 +1,4 @@
-import IntlMessageFormat from 'intl-messageformat';
+import MessageFormat from 'messageformat';
 
 let _translations = {};
 let _locale = 'en';
@@ -7,9 +7,10 @@ let _messages = {};
 function compileMessages() {
   _messages = {};
 
+  let mf = new MessageFormat(_locale);
   for (let k in _translations[_locale]) {
     if (_translations[_locale].hasOwnProperty(k)) {
-      _messages[k] = new IntlMessageFormat(_translations[_locale][k], _locale);
+      _messages[k] = mf.compile(_translations[_locale][k]);
     }
   }
 }
@@ -30,12 +31,14 @@ function translate(message, data) {
   let m = _messages[message];
 
   if (m == null) {
-    console.warn('[i18n] "' + message + '". is missing in "' + _locale + '.json".'); // eslint-disable-line
-    m = _messages[message] = new IntlMessageFormat(message, _locale);
+    console.warn('[i18n] "' + message + '". is missing in "' + _locale + '".'); // eslint-disable-line
+
+    let mf = new MessageFormat(_locale);
+    m = _messages[message] = mf.compile(message);
   }
 
   try {
-    return m.format(data);
+    return m(data);
   } catch (e) {
     console.error('[i18n] Cannot translate "' + message + '". ' + e.message); // eslint-disable-line
 
@@ -43,9 +46,4 @@ function translate(message, data) {
   }
 }
 
-export default {
-  setTranslations: setTranslations,
-  setLocale: setLocale,
-  translate: translate
-};
-
+export default { setTranslations, setLocale, translate };

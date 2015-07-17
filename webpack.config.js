@@ -30,6 +30,9 @@ module.exports = {
         root: [path.join(__dirname, "bower_components")],
         extensions: config.extensions
       },
+      node: {
+        fs: "empty"
+      },
       module   : {loaders: config.loaders},
       plugins:  config.plugins.concat([
         new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('development') } })
@@ -44,6 +47,9 @@ module.exports = {
       resolve : {
         root: [path.join(__dirname, "bower_components")],
         extensions: config.extensions
+      },
+      node: {
+        fs: "empty"
       },
       module  : {loaders: config.loaders},
       plugins : config.plugins.concat([
