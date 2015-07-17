@@ -325,8 +325,10 @@ assign(Engine.prototype, EventEmitter.prototype, {
   resetPassword(email) {
     let r = Hull.api('/users/request_password_reset', 'post', { email });
 
-    r.fail((error) => {
+    r.catch((error) => {
       this._errors.resetPassword = error;
+
+      this.emitChange();
     });
 
     return r;
