@@ -148,7 +148,8 @@ gulp.task("webpack:server", function() {
     publicPath: "/"+config.assetsFolder,
     headers: { "Access-Control-Allow-Origin": "*" },
     hot: config.hotReload,
-    stats: {colors: true }
+    stats: {colors: true },
+    node: { fs: "empty" }
   }).listen(config.serverPort, function(err) {
     handleError(err, taskName);
     // Dump the preview URL in the console, and open Chrome when launched for convenience.

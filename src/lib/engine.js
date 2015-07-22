@@ -1,3 +1,6 @@
+/* global Hull */
+'use strict';
+
 import _ from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
@@ -27,6 +30,7 @@ const ACTIONS = [
   'unlinkIdentity',
 
   'resetPassword',
+  'updatePicture',
   'updateUser',
 
   'activateLogInSection',
@@ -378,6 +382,51 @@ assign(Engine.prototype, EventEmitter.prototype, {
     });
 
     return r;
+  },
+
+  updatePicture(file) {
+    return new Promise((resolve, reject) => {
+      let s3config = Hull.config().services.storage.hull;
+
+      let url = s3config.url;
+      let type = file.type;
+      let name = file.name;
+
+      let form = new FormData();
+      form.append('Content-Type', type);
+      form.append('Filename', name);
+      form.append('name', name);
+      _.each(s3config.params, function(value, key) {
+        form.append(key, value);
+      });
+      form.append('file', file);
+
+      let req = new XMLHttpRequest();
+      req.onreadystatechange = () => {
+        if (req.readyState === 4) {
+          if (req.status === 201) {
+            let picUrl = req.responseXML.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
+            Hull.api(this._user.id, 'put', { picture: picUrl }).then((resp) => {
+              this.resetUser();
+              // TODO Workaround currentUser not updating.
+              this._user.picture = picUrl;
+              this.emitChange();
+
+              resolve(resp);
+            }, (err) => {
+              reject(err);
+            });
+          } else {
+            /* eslint-disable no-console */
+            console.error('Couldn\'t upload!');
+            /* eslint-enable no-console */
+            reject('Couldn\'t upload image, status ' + req.status);
+          }
+        }
+      };
+      req.open('post', url);
+      req.send(form);
+    });
   },
 
   redirect() {

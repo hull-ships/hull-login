@@ -4,8 +4,10 @@ import _ from 'underscore';
 import React from 'react';
 import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
+
 import transform from 'tcomb-json-schema';
 import AsyncActionsMixin from '../../mixins/async-actions';
+
 import Form from '../form';
 import UserImage from './user-image';
 
@@ -37,7 +39,7 @@ const DEFAULT_SCHEMA = {
 };
 
 export default React.createClass({
-  displayName: 'LogInSection',
+  displayName: 'EditProfileSection',
 
   mixins: [
     AsyncActionsMixin
@@ -45,6 +47,7 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
+      updatePicture: this.props.updatePicture,
       updateUser: this.props.updateUser
     };
   },
@@ -75,20 +78,20 @@ export default React.createClass({
   getFields() {
     let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return _.reduce(this.getSchema().properties, function(m, v, k) {
+    return _.reduce(this.getSchema().properties, function(memo, value, key) {
       let f = {
-        label: v.title,
-        help: v.help,
-        hasError: !!errors[k]
+        label: value.title,
+        help: value.help,
+        hasError: !!errors[key]
       };
 
-      if (v.type === 'string') {
-        f.type = v.format === 'uri' ? 'url' : (v.format || 'text');
+      if (value.type === 'string') {
+        f.type = value.format === 'uri' ? 'url' : (value.format || 'text');
       }
 
-      m[k] = f;
+      memo[key] = f;
 
-      return m;
+      return memo;
     }, {});
   },
 
@@ -103,6 +106,11 @@ export default React.createClass({
     this.getAsyncAction('updateUser')(value);
   },
 
+  handleDrop(file) {
+    this.setState({ pendingPicture: file });
+    this.getAsyncAction('updatePicture')(file);
+  },
+
   render() {
     let title = '';
     let subtitle = '';
@@ -112,7 +120,7 @@ export default React.createClass({
     if (this.props.formIsSubmitted || !this.props.hasForm) {
       title = translate('Edit your profile');
       subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>;
-      button = translate('Edit profile');
+      button = translate('Save changes');
     } else {
       title = translate('Complete your profile');
       subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>{translate('Skip this step')}</a>;
@@ -124,19 +132,32 @@ export default React.createClass({
       disabled = true;
     }
 
-    let u = this.props.user;
-    let value = { ...u, ...(this.props.form.user_data && this.props.form.user_data.data) };
-    let styles = getStyles();
+    const u = this.props.user;
+    const value = { ...u, ...(this.props.form.user_data && this.props.form.user_data.data) };
+    let image = '';
+    if (this.state.updatePictureState === 'pending') {
+      image = this.state.pendingPicture.preview;
+    } else {
+      image = u.picture;
+    }
+
+    const styles = getStyles();
+    const form = <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />;
 
     return (
       <div>
         <div style={styles.sectionHeader}>
-          <UserImage style={styles.sectionUserImage} src={u.picture} />
+          <UserImage
+            style={styles.sectionUserImage}
+            src={image}
+            editable={true}
+            onDrop={this.handleDrop}
+            />
           <h1 style={styles.sectionTitle}>{title}</h1>
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
-
-        <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />
+        
+        {form}
       </div>
     );
   }
