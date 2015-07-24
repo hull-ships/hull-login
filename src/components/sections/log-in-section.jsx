@@ -37,6 +37,7 @@ export default React.createClass({
       login: {
         placeholder: translate('Your email or username'),
         type: 'text',
+        help: 'We won\'t share your email, promise.',
         hasError
       },
       password: {

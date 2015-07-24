@@ -43,11 +43,11 @@ export default React.createClass({
     let s = isLast ? {} : { marginBottom: 10 };
 
     return (
-      <span>
-        <Button key={provider.name} kind={provider.name} block={true} disabled={this.props.isWorking} style={s} onClick={handler}>
+      <span key={provider.name}>
+        <Button kind={provider.name} block={true} disabled={this.props.isWorking} onClick={handler}>
           {wording}
         </Button>
-        <Help>
+        <Help style={s}>
           {helpText}
         </Help>
       </span>

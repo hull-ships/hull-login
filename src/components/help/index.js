@@ -13,7 +13,7 @@ export default React.createClass({
   ],
 
   render() {
-    return <span style={{display: 'block', 'text-align': 'center', 'marginBottom': '10px'}}>
+    return <span style={{display: 'block', 'textAlign': 'center', 'marginBottom': '10px'}}>
         {this.props.children}
     </span>;
   }
