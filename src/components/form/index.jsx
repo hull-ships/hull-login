@@ -18,7 +18,8 @@ export default React.createClass({
   getInitialState() {
     return {
       value: this.props.value || {},
-      submitState: 'initial'
+      submitState: 'initial',
+      valid: false
     };
   },
 
@@ -42,6 +43,7 @@ export default React.createClass({
 
   handleChange(value) {
     this.setState({ value });
+    this.setState({ valid: this.refs.form.getValue() !== null });
   },
 
   handleSubmit(e) {
@@ -58,7 +60,7 @@ export default React.createClass({
     return (
       <form onSubmit={this.handleSubmit}>
         <TCombForm ref='form' type={this.props.type} options={options} value={this.state.value} onChange={this.handleChange} />
-        <Button style={s} type='submit' kind='primary' block={true} disabled={!!this.props.disabled}>{this.props.submitMessage}</Button>
+        <Button style={s} type='submit' kind='primary' block={true} disabled={!!this.props.disabled || !this.state.valid}>{this.props.submitMessage}</Button>
       </form>
     );
   }
