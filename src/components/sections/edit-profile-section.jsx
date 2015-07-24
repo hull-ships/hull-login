@@ -136,7 +136,7 @@ export default React.createClass({
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
 
-        <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />
+        <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
       </div>
     );
   }

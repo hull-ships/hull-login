@@ -60,7 +60,7 @@ export default React.createClass({
     return (
       <form onSubmit={this.handleSubmit}>
         <TCombForm ref='form' type={this.props.type} options={options} value={this.state.value} onChange={this.handleChange} />
-        <Button style={s} type='submit' kind='primary' block={true} disabled={!!this.props.disabled || !this.state.valid}>{this.props.submitMessage}</Button>
+        <Button style={s} type='submit' kind='primary' block={true} disabled={!!this.props.disabled || (this.props.autoDisableSubmit && !this.state.valid)}>{this.props.submitMessage}</Button>
       </form>
     );
   }

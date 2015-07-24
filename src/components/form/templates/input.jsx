@@ -27,6 +27,7 @@ export default React.createClass({
         {this.props.help}
       </Help>;
     }
+    help = null;
 
     return (
       <span>

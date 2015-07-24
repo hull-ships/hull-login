@@ -68,7 +68,7 @@ export default React.createClass({
           <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Know your password? Log in!')}</a></p>
         </div>
 
-        <Form kind='compact' type={this.getType()} fields={this.getFields()} submitMessage={m} onSubmit={this.handleSubmit} disabled={d} />
+        <Form kind='compact' type={this.getType()} fields={this.getFields()} submitMessage={m} onSubmit={this.handleSubmit} disabled={d} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
       </div>
     );
   }

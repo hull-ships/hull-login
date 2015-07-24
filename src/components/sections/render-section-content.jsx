@@ -13,7 +13,7 @@ function renderSectionContent(props, formProps) {
 
   let form;
   if (props.shipSettings.show_classic_login) {
-    form = <Form key='form' {...formProps} />;
+    form = <Form key='form' {...formProps} autoDisableSubmit={props.shipSettings.disable_buttons_automatically} />;
   }
 
   if (buttons == null || form == null) {
