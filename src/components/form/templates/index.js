@@ -8,7 +8,10 @@ import Help from '../../help';
 
 function render(Component, locals) {
   if (locals.config.kind === 'compact') {
-    return <Component {...locals} />;
+    return <label style={s}>
+      <Component {...locals} />
+      <Help>{locals.help}</Help>
+    </label>;
   }
 
   const s = { width: '100%' };
