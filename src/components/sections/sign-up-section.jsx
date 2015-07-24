@@ -37,16 +37,19 @@ export default React.createClass({
       name: {
         placeholder: translate('Your name'),
         type: 'text',
+        help: translate('sign-up name help text'),
         hasError: !!errors.name
       },
       email: {
         placeholder: translate('Your email'),
         type: 'email',
+        help: translate('sign-up email help text'),
         hasError: !!errors.email
       },
       password: {
         placeholder: translate('Your password'),
         type: 'password',
+        help: translate('sign-up password help text'),
         hasError: !!errors.password
       }
     };

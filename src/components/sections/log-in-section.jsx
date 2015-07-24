@@ -37,12 +37,13 @@ export default React.createClass({
       login: {
         placeholder: translate('Your email or username'),
         type: 'text',
-        help: 'We won\'t share your email, promise.',
+        help: translate('log-in email help text'),
         hasError
       },
       password: {
         placeholder: translate('Your password'),
         type: 'password',
+        help: translate('log-in password help text'),
         hasError
       }
     };

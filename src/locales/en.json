@@ -37,5 +37,36 @@
   "Your email or username": "Your email or username",
   "Your email": "Your email",
   "Your name": "Your name",
-  "Your password": "Your password"
+  "Your password": "Your password",
+
+  "log-in email help text": "",
+  "log-in password help text": "",
+
+  "sign-up name help text": "",
+  "sign-up email help text": "",
+  "sign-up password help text": "",
+
+  "log-in help text for Angellist": "",
+  "log-in help text for Facebook": "",
+  "log-in help text for Foursquare": "",
+  "log-in help text for Github": "",
+  "log-in help text for Google": "",
+  "log-in help text for Instagram": "",
+  "log-in help text for Linkedin": "",
+  "log-in help text for Soundcloud": "",
+  "log-in help text for Tumblr": "",
+  "log-in help text for Twitter": "",
+  "log-in help text for Vkontakte": "",
+
+  "sign-up help text for Angellist": "",
+  "sign-up help text for Facebook": "",
+  "sign-up help text for Foursquare": "",
+  "sign-up help text for Github": "",
+  "sign-up help text for Google": "",
+  "sign-up help text for Instagram": "",
+  "sign-up help text for Linkedin": "",
+  "sign-up help text for Soundcloud": "",
+  "sign-up help text for Tumblr": "",
+  "sign-up help text for Twitter": "",
+  "sign-up help text for Vkontakte": ""
 }
