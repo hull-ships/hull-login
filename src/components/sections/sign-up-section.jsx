@@ -8,6 +8,7 @@ import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
 import renderSectionContent from './render-section-content';
+import { TranslatedMessage } from '../i18n';
 
 export default React.createClass({
   displayName: 'SignUpSection',
@@ -96,6 +97,7 @@ export default React.createClass({
         {content}
 
         <div style={styles.sectionFooter}>
+          <TranslatedMessage tag='p' style={styles.sectionText} message="By signing up, you agree to {organization}'s Terms of Service." variables={{ organization: this.props.organization.name }} />
           <p style={styles.sectionText}>{translate("By signing up, you agree to {organization}'s Terms of Service.", { organization: this.props.organization.name })}</p>
         </div>
       </div>

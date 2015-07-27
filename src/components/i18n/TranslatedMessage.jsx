@@ -27,12 +27,13 @@ export default React.createClass({
   render() {
     let rtn;
     if (this.props.allowHTML) {
-      // TODO splat props
-      rtn = React.createElement(this.props.tag, {
+      let props = assign({
+        'class': this.props.className,
         dangerouslySetInnerHTML: {
           __html: translate(this.props.message, this.props.variables) // TODO DOMPurify
         }
-      });
+      }, this.props);
+      rtn = React.createElement(this.props.tag, props);
     } else {
       let props = assign({ 'class': this.props.className }, this.props);
       rtn = React.createElement(this.props.tag, props, translate(this.props.message, this.props.variables));
