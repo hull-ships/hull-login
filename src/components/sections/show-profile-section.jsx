@@ -1,10 +1,10 @@
 'use strict';
 
 import React from 'react';
-import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
 import { getSettings } from '../../styles/settings';
 import UserImage from './user-image';
+import { TranslatedMessage } from '../i18n';
 
 const settings = getSettings();
 
@@ -59,7 +59,12 @@ export default React.createClass({
         <div style={styles.sectionHeader} className='hull-login__profile-header'>
           <UserImage style={styles.sectionUserImage} src={u.picture} />
           <h1 style={styles.sectionTitle}>{u.name || u.username || u.email}</h1>
-          <p style={styles.sectionText} className='hull-login__profile-edit-link'><a href='javascript: void 0;' onClick={this.props.activateEditProfileSection}>{translate('Edit profile')}</a></p>
+          <p style={styles.sectionText} className='hull-login__profile-edit-link'>
+            <TranslatedMessage tag='a'
+              href='#'
+              onClick={this.props.activateEditProfileSection}
+              message='Edit profile' />
+          </p>
         </div>
 
         {this.renderProfile()}
