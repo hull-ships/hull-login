@@ -8,6 +8,7 @@ import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
 import renderSectionContent from './render-section-content';
+import { TranslatedMessage } from '../i18n';
 
 export default React.createClass({
   displayName: 'LogInSection',
@@ -77,21 +78,34 @@ export default React.createClass({
 
     let signupLink;
     if (this.props.shipSettings.show_signup) {
-      signupLink = <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>;
+      signupLink = <p style={styles.sectionText}>
+        <TranslatedMessage tag='a'
+          href='#'
+          onClick={this.props.activateSignUpSection}
+          message="Don't have an account? Sign up!" />
+      </p>;
     }
 
     return (
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <h1 style={styles.sectionTitle}>{translate('Log in to {organization}', { organization: this.props.organization.name })}</h1>
+          <TranslatedMessage tag='h1'
+            style={styles.sectionTitle}
+            message='Log in to {organization}'
+            variables={{ organization: this.props.organization.name }} />
           {signupLink}
         </div>
 
         {content}
 
         <div style={styles.sectionFooter}>
-          <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateResetPasswordSection}>{translate('Forgot password?')}</a></p>
+          <p style={styles.sectionText}>
+            <TranslatedMessage tag='a'
+              href='javascript: void 0;'
+              onClick={this.props.activateResetPasswordSection}
+              messsage='Forgot password?' />
+          </p>
         </div>
       </div>
     );

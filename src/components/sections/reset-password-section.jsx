@@ -8,6 +8,7 @@ import Form from '../form';
 import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
+import { TranslatedMessage } from '../i18n';
 
 export default React.createClass({
   displayName: 'ResetPasswordSection',
@@ -64,11 +65,24 @@ export default React.createClass({
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <h1 style={styles.sectionTitle}>{translate('Reset your password')}</h1>
-          <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Know your password? Log in!')}</a></p>
+          <TranslatedMessage tag='h1'
+            style={styles.sectionTitle}
+            message='Reset your password' />
+          <p style={styles.sectionText}>
+            <TranslatedMessage tag='a'
+              href='#'
+              onClick={this.props.activateLogInSection}
+              message='Know your password? Log in!' />
+          </p>
         </div>
 
-        <Form kind='compact' type={this.getType()} fields={this.getFields()} submitMessage={m} onSubmit={this.handleSubmit} disabled={d} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
+        <Form kind='compact'
+          type={this.getType()}
+          fields={this.getFields()}
+          submitMessage={m}
+          onSubmit={this.handleSubmit}
+          disabled={d}
+          autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
       </div>
     );
   }
