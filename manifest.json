@@ -59,13 +59,6 @@
       "default": true
     },
     {
-      "name":"allow_markup",
-      "title": "Allow markup in wording",
-      "description":"Allow HTML markup in your custom wording. This makes it easy to break your site, so only do this if you know what you're doing.",
-      "type": "boolean",
-      "default": false
-    },
-    {
       "name":"show_classic_login",
       "title": "Allow email & password registration",
       "description": "Enable email-based sign ups on your website, i.e. sign ups that don't require social login.",

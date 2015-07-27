@@ -20,23 +20,29 @@ export default React.createClass({
     return {
       variables: {},
       tag: 'span',
-      allowHTML: false // TODO read from settings
+      allowHTML: true // TODO read from settings
     };
   },
 
   render() {
+    const translation = translate(this.props.message, this.props.variables);
+
+    if (!translation) {
+      return null;
+    }
+
     let rtn;
     if (this.props.allowHTML) {
       let props = assign({
         'class': this.props.className,
         dangerouslySetInnerHTML: {
-          __html: translate(this.props.message, this.props.variables) // TODO DOMPurify
+          __html: translation // TODO DOMPurify
         }
       }, this.props);
       rtn = React.createElement(this.props.tag, props);
     } else {
       let props = assign({ 'class': this.props.className }, this.props);
-      rtn = React.createElement(this.props.tag, props, translate(this.props.message, this.props.variables));
+      rtn = React.createElement(this.props.tag, props, translation);
     }
 
     return rtn;

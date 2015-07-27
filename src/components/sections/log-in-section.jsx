@@ -61,7 +61,8 @@ export default React.createClass({
       m = translate('Logging in');
       d = true;
     } else {
-      m = translate('Log in');
+      // m = translate('Log in');
+      m = <span>hi </span>;
       d = false;
     }
 
@@ -104,7 +105,7 @@ export default React.createClass({
             <TranslatedMessage tag='a'
               href='javascript: void 0;'
               onClick={this.props.activateResetPasswordSection}
-              messsage='Forgot password?' />
+              message='Forgot password?' />
           </p>
         </div>
       </div>
