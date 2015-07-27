@@ -83,14 +83,16 @@ export default React.createClass({
     const styles = getStyles();
     let loginLink;
     if (this.props.shipSettings.show_login) {
-      loginLink = <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Already have an account? Log in.')}</a></p>;
+      loginLink = <p style={styles.sectionText}>
+        <TranslatedMessage tag='a' href='#' onClick={this.props.activateLogInSection} message='Already have an account? Log in.' />
+      </p>;
     }
 
     return (
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <h1 style={styles.sectionTitle}>{translate('Sign up for {organization}', { organization: this.props.organization.name })}</h1>
+          <TranslatedMessage tag='h1' style={styles.sectionTitle} message="Sign up for {organization}" variables={{ organization: this.props.organization.name }} />
           {loginLink}
         </div>
 
@@ -98,7 +100,6 @@ export default React.createClass({
 
         <div style={styles.sectionFooter}>
           <TranslatedMessage tag='p' style={styles.sectionText} message="By signing up, you agree to {organization}'s Terms of Service." variables={{ organization: this.props.organization.name }} />
-          <p style={styles.sectionText}>{translate("By signing up, you agree to {organization}'s Terms of Service.", { organization: this.props.organization.name })}</p>
         </div>
       </div>
     );
