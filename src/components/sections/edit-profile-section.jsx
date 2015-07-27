@@ -8,6 +8,7 @@ import transform from 'tcomb-json-schema';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import Form from '../form';
 import UserImage from './user-image';
+import { TranslatedMessage } from '../i18n';
 
 const DEFAULT_SCHEMA = {
   '$schema': 'http://json-schema.org/draft-04/schema#',
@@ -21,7 +22,7 @@ const DEFAULT_SCHEMA = {
       'type': 'string',
       'title': 'Password',
       'format': 'password',
-      'help': 'Leave blank to keep your old password'
+      'help': <TranslatedMessage message='Leave blank to keep your old password' />
     },
     'email': {
       'type': 'string',

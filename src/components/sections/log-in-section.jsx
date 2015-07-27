@@ -38,13 +38,13 @@ export default React.createClass({
       login: {
         placeholder: translate('Your email or username'),
         type: 'text',
-        help: translate('log-in email help text'),
+        help: <TranslatedMessage message='log-in email help text' />,
         hasError
       },
       password: {
         placeholder: translate('Your password'),
         type: 'password',
-        help: translate('log-in password help text'),
+        help: <TranslatedMessage message='log-in password help text' />,
         hasError
       }
     };
@@ -61,8 +61,7 @@ export default React.createClass({
       m = translate('Logging in');
       d = true;
     } else {
-      // m = translate('Log in');
-      m = <span>hi </span>;
+      m = translate('Log in');
       d = false;
     }
 

@@ -3,6 +3,7 @@ import capitalize from '../lib/capitalize';
 import { translate } from '../lib/i18n';
 import Button from './button';
 import Help from './help';
+import { TranslatedMessage } from './i18n';
 
 export default React.createClass({
   renderButton: function(provider, index) {
@@ -37,7 +38,7 @@ export default React.createClass({
     let m = this.props[status] === provider.name ? button[1] : button[0];
     let providerName = capitalize(provider.name);
     let wording = translate(m, { provider: providerName });
-    let helpText = translate(help + ' for ' + providerName);
+    let helpText = <TranslatedMessage message={help + ' for ' + providerName} />;
     let handler = this.props[actionName].bind(null, provider.name);
     let isLast = this.props.providers.length === index + 1;
     let s = isLast ? {} : { marginBottom: 10 };
