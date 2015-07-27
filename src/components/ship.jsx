@@ -8,6 +8,8 @@ import Overlay from './overlay';
 import Styles from './styles';
 import sections from './sections';
 
+import TranslatedMessage from './i18n/TranslatedMessage';
+
 export default React.createClass({
   displayName: 'Ship',
 
