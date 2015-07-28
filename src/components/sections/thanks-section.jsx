@@ -1,9 +1,9 @@
 'use strict';
 
 import React from 'react';
-import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
 import OrganizationImage from './organization-image';
+import { TranslatedMessage } from '../i18n';
 
 export default React.createClass({
   displayName: 'ThanksSection',
@@ -11,17 +11,18 @@ export default React.createClass({
   render() {
     const styles = getStyles();
 
-    const w = translate("Hi {name}, your registration is now complete and so we'll keep you up to date.", {
-      name: this.props.user.name
-    });
-
     return (
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <h1 style={styles.sectionTitle}>{translate('Thanks for signing up!')}</h1>
+          <TranslatedMessage tag='h1'
+            style={styles.sectionTitle}
+            message='thanks header' />
         </div>
-        <p style={styles.sectionText}>{w}</p>
+        <TranslatedMessage tag='p'
+          style={styles.sectionText}
+          message='thanks message'
+          variables={{ name: this.props.user.name }} />
       </div>
     );
   }

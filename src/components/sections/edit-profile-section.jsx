@@ -8,6 +8,7 @@ import transform from 'tcomb-json-schema';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import Form from '../form';
 import UserImage from './user-image';
+import { TranslatedMessage } from '../i18n';
 
 const DEFAULT_SCHEMA = {
   '$schema': 'http://json-schema.org/draft-04/schema#',
@@ -15,17 +16,17 @@ const DEFAULT_SCHEMA = {
   'properties': {
     'name': {
       'type': 'string',
-      'title': 'Name'
+      'title': translate('edit profile name field')
     },
     'password': {
       'type': 'string',
-      'title': 'Password',
+      'title': translate('edit profile password field'),
       'format': 'password',
-      'help': 'Leave blank to keep your old password'
+      'help': <TranslatedMessage message='edit profile password help text' />
     },
     'email': {
       'type': 'string',
-      'title': 'Email',
+      'title': translate('edit profile email field'),
       'format': 'email',
       'minLength': 1
     }
@@ -110,17 +111,21 @@ export default React.createClass({
     let disabled = false;
 
     if (this.props.formIsSubmitted || !this.props.hasForm) {
-      title = translate('Edit your profile');
-      subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>{translate('Cancel')}</a>;
-      button = translate('Edit profile');
+      title = translate('edit profile header');
+      subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>
+        {translate('edit profile cancel button')}
+      </a>;
+      button = translate('edit profile button text');
     } else {
-      title = translate('Complete your profile');
-      subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>{translate('Skip this step')}</a>;
-      button = translate('Complete profile');
+      title = translate('edit profile header when profile incomplete');
+      subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>
+        {translate('edit profile cancel button when profile incomplete')}
+      </a>;
+      button = translate('edit profile button text when profile incomplete');
     }
 
     if (this.state.updateUserState === 'pending') {
-      button = translate('Saving...');
+      button = translate('edit profile button text when attempting edit');
       disabled = true;
     }
 
@@ -136,7 +141,13 @@ export default React.createClass({
           <p style={styles.sectionText}>{subtitle}</p>
         </div>
 
-        <Form type={this.getType()} fields={this.getFields()} value={value} submitMessage={button} onSubmit={this.handleSubmit} disabled={disabled} />
+        <Form type={this.getType()}
+          fields={this.getFields()}
+          value={value}
+          submitMessage={button}
+          onSubmit={this.handleSubmit}
+          disabled={disabled}
+          autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
       </div>
     );
   }

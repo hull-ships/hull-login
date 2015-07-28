@@ -7,6 +7,7 @@ import { translate } from '../lib/i18n';
 import Overlay from './overlay';
 import Styles from './styles';
 import sections from './sections';
+import { TranslatedMessage } from './i18n';
 
 export default React.createClass({
   displayName: 'Ship',
@@ -44,12 +45,12 @@ export default React.createClass({
 
     const d = { organization: this.state.organization.name };
     const titles = {
-      logIn: translate('Log in to {organization}', d),
-      signUp: translate('Sign up for {organization}', d),
-      resetPassword: translate('Reset your password'),
-      showProfile: translate('View your profile'),
-      editProfile: translate('Edit your profile'),
-      thanks: translate('Thanks for signing up!')
+      logIn: translate('log-in header', d),
+      signUp: translate('sign-up header', d),
+      resetPassword: translate('reset password header'),
+      showProfile: translate('view profile header'),
+      editProfile: translate('edit profile header'),
+      thanks: translate('thanks header')
     };
 
     const Section = sections[this.state.activeSection];
@@ -74,10 +75,18 @@ export default React.createClass({
     if (u) {
       if (this.state.shipSettings.show_profile) {
         if (this.state.hasForm && !this.state.formIsSubmitted) {
-          let b = <a href='#' key='complete-profile' className='hull-login__button hull-login__button--edit-profile' onClick={this.props.actions.activateEditProfileSection}>{translate('Complete your profile')}</a>;
+          let b = <TranslatedMessage tag='a'
+            href='#'
+            key='complete-profile'
+            className='hull-login__button hull-login__button--edit-profile'
+            onClick={this.props.actions.activateEditProfileSection}
+            message='nav complete profile link' />;
           buttons.push(b);
         } else {
-          let b = <a href='#' key='show-profile' className='hull-login__button hull-login__button--show-profile' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
+          let b = <a href='#'
+            key='show-profile'
+            className='hull-login__button hull-login__button--show-profile'
+            onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
           buttons.push(b);
         }
       }
@@ -85,21 +94,38 @@ export default React.createClass({
       if (this.state.shipSettings.custom_buttons.length) {
         for (let i = 0; i < this.state.shipSettings.custom_buttons.length; i++) {
           let { url, popup, text } = this.state.shipSettings.custom_buttons[i];
-          let b = <a href={url} key={`custom-action-${i}`} target={popup ? '_blank' : ''} className='hull-login__button hull-login__button'>{text}</a>;
+          let b = <a href={url}
+            key={`custom-action-${i}`}
+            target={popup ? '_blank' : ''}
+            className='hull-login__button hull-login__button'>{text}</a>;
           buttons.push(b);
         }
       }
 
-      let b = <a href='#' className='hull-login__button hull-login__button--log-out' onClick={this.props.actions.logOut}>{translate('Log out')}</a>;
+      let b = <TranslatedMessage tag='a'
+        href='#'
+        className='hull-login__button hull-login__button--log-out'
+        onClick={this.props.actions.logOut}
+        message='nav logout link' />;
       buttons.push(b);
     } else {
       if (this.state.shipSettings.show_login) {
-        let b = <a href='#' key='log-in' className='hull-login__button hull-login__button--log-in' onClick={this.props.actions.activateLogInSection}>{translate('Log in')}</a>;
+        let b = <TranslatedMessage tag='a'
+          href='#'
+          key='log-in'
+          className='hull-login__button hull-login__button--log-in'
+          onClick={this.props.actions.activateLogInSection}
+          message='nav login link' />;
         buttons.push(b);
       }
 
       if (this.state.shipSettings.show_signup) {
-        let b = <a href='#' key='sign-up' className='hull-login__button hull-login__button--sign-up' onClick={this.props.actions.activateSignUpSection}>{translate('Sign up')}</a>;
+        let b = <TranslatedMessage tag='a'
+          href='#'
+          key='sign-up'
+          className='hull-login__button hull-login__button--sign-up'
+          onClick={this.props.actions.activateSignUpSection}
+          message='nav sign-up link' />;
         buttons.push(b);
       }
     }

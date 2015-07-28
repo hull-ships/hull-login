@@ -8,6 +8,7 @@ import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
 import renderSectionContent from './render-section-content';
+import { TranslatedMessage } from '../i18n';
 
 export default React.createClass({
   displayName: 'SignUpSection',
@@ -35,18 +36,21 @@ export default React.createClass({
 
     return {
       name: {
-        placeholder: translate('Your name'),
+        placeholder: translate('sign-up name placeholder'),
         type: 'text',
+        help: <TranslatedMessage message='sign-up name help text' />,
         hasError: !!errors.name
       },
       email: {
-        placeholder: translate('Your email'),
+        placeholder: translate('sign-up email placeholder'),
         type: 'email',
+        help: <TranslatedMessage message='sign-up email help text' />,
         hasError: !!errors.email
       },
       password: {
-        placeholder: translate('Your password'),
+        placeholder: translate('sign-up password placeholder'),
         type: 'password',
+        help: <TranslatedMessage message='sign-up password help text' />,
         hasError: !!errors.password
       }
     };
@@ -60,10 +64,10 @@ export default React.createClass({
     let m;
     let d;
     if (this.state.signUpState === 'pending') {
-      m = translate('Signing up');
+      m = translate('sign-up button text when attempting sign-up');
       d = true;
     } else {
-      m = translate('Sign up');
+      m = translate('sign-up button text');
       d = false;
     }
 
@@ -79,21 +83,32 @@ export default React.createClass({
     const styles = getStyles();
     let loginLink;
     if (this.props.shipSettings.show_login) {
-      loginLink = <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateLogInSection}>{translate('Already have an account? Log in.')}</a></p>;
+      loginLink = <p style={styles.sectionText}>
+        <TranslatedMessage tag='a'
+          href='#'
+          onClick={this.props.activateLogInSection}
+          message='sign-up switch to log-in link' />
+      </p>;
     }
 
     return (
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <h1 style={styles.sectionTitle}>{translate('Sign up for {organization}', { organization: this.props.organization.name })}</h1>
+          <TranslatedMessage tag='h1'
+            style={styles.sectionTitle}
+            message="sign-up header"
+            variables={{ organization: this.props.organization.name }} />
           {loginLink}
         </div>
 
         {content}
 
         <div style={styles.sectionFooter}>
-          <p style={styles.sectionText}>{translate("By signing up, you agree to {organization}'s Terms of Service.", { organization: this.props.organization.name })}</p>
+          <TranslatedMessage tag='p'
+            style={styles.sectionText}
+            message="sign-up fine print" 
+            variables={{ organization: this.props.organization.name }} />
         </div>
       </div>
     );

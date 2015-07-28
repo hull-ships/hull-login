@@ -7,7 +7,8 @@
   "settings": [
     {
       "name":"logo_image",
-      "title": "logo image",
+      "title": "Logo image",
+      "description": "Show this image as your logo on the sign-up and login pages.",
       "type": "string",
       "format": "image"
     },
@@ -53,42 +54,35 @@
     {
       "name":"reset_styles",
       "title": "Reset styles",
-      "description":"Isolate ship design from rest of the page by resetting everything inside it",
-      "type": "boolean",
-      "default": true
-    },
-    {
-      "name":"show_login",
-      "title": "Display Login",
-      "description": "When logged out, display a Login button",
-      "type": "boolean",
-      "default": true
-    },
-    {
-      "name":"show_signup",
-      "title": "Display Signup",
-      "description": "When logged out, display a Signup button",
-      "type": "boolean",
-      "default": true
-    },
-    {
-      "name":"show_profile",
-      "title": "Display User profile button",
-      "description": "When logged in, show a button to display user profile",
+      "description":"Isolate ship design from rest of the page by resetting the CSS styles within. Uncheck this if you want to style the ship yourself.",
       "type": "boolean",
       "default": true
     },
     {
       "name":"show_classic_login",
-      "title": "Email + password registration",
-      "description": "Show email + password fields for user registration",
+      "title": "Allow email & password registration",
+      "description": "Enable email-based sign ups on your website, i.e. sign ups that don't require social login.",
       "type": "boolean",
       "default": true
     },
     {
+      "name":"show_classic_login_as_button",
+      "title": "Show email registration as button",
+      "description": "Make email registration ",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name":"disable_buttons_automatically",
+      "title": "Visually disable submit buttons for incomplete forms",
+      "description": "If checked, disable the 'log in' and 'sign up' buttons when their forms are incomplete. Incomplete submissions will not be allowed regardless of the state of this option.",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "name":"show_sign_up_section_after",
       "title": "Show sign up section delay",
-      "description": "Wait time before showing signup section in seconds (0 to disable)",
+      "description": "This is the wait time (in seconds) before automatically showing the sign-up section to unregistered visitors (once per user). 0 seconds disables the pop-up.",
       "type": "number",
       "format": "number",
       "minimum": 0,
@@ -97,15 +91,36 @@
     {
       "name":"hide_thanks_section_after",
       "title": "Hide thanks section delay",
-      "description": "Wait time before hiding thanks section in seconds (0 to disable)",
+      "description": "This is the wait time (in seconds) before automatically hiding the thanks section (i.e. 'thanks for signing up!') once users finish registration (0 to disable).",
       "type": "number",
       "format": "number",
       "default": 2
     },
     {
+      "name":"show_login",
+      "title": "Display log in link",
+      "description": "When logged out, show a 'log in' link.",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name":"show_signup",
+      "title": "Display sign up link",
+      "description": "When logged out, show a 'sign up' link.",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name":"show_profile",
+      "title": "Display user profile link",
+      "description": "When logged in, show a link to view and edit their profile.",
+      "type": "boolean",
+      "default": true
+    },
+    {
       "name":"custom_buttons",
-      "title": "Custom buttons",
-      "description": "Show custom buttons only when logged in",
+      "title": "Custom links",
+      "description": "Add custom links to show when a user is logged in.",
       "type": "array",
       "format": "table",
       "items": {

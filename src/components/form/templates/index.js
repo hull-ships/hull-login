@@ -4,10 +4,14 @@ import React from 'react';
 import Input from './input';
 import Textarea from './textarea';
 import Select from './select';
+import Help from '../../help';
 
 function render(Component, locals) {
   if (locals.config.kind === 'compact') {
-    return <Component {...locals} />;
+    return <label style={s}>
+      <Component {...locals} />
+      <Help>{locals.help}</Help>
+    </label>;
   }
 
   const s = { width: '100%' };
@@ -15,7 +19,7 @@ function render(Component, locals) {
     <label style={s}>
       {locals.label}
       <Component {...locals} />
-      {locals.help}
+      <Help>{locals.help}</Help>
     </label>
   );
 }

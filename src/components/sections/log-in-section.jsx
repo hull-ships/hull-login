@@ -8,6 +8,7 @@ import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
 import renderSectionContent from './render-section-content';
+import { TranslatedMessage } from '../i18n';
 
 export default React.createClass({
   displayName: 'LogInSection',
@@ -35,13 +36,15 @@ export default React.createClass({
 
     return {
       login: {
-        placeholder: translate('Your email or username'),
+        placeholder: translate('log-in email placeholder'),
         type: 'text',
+        help: <TranslatedMessage message='log-in email help text' />,
         hasError
       },
       password: {
-        placeholder: translate('Your password'),
+        placeholder: translate('log-in password placeholder'),
         type: 'password',
+        help: <TranslatedMessage message='log-in password help text' />,
         hasError
       }
     };
@@ -55,10 +58,10 @@ export default React.createClass({
     let m;
     let d;
     if (this.state.logInState === 'pending') {
-      m = translate('Logging in');
+      m = translate('log-in button text when attempting login');
       d = true;
     } else {
-      m = translate('Log in');
+      m = translate('log-in button text');
       d = false;
     }
 
@@ -75,21 +78,34 @@ export default React.createClass({
 
     let signupLink;
     if (this.props.shipSettings.show_signup) {
-      signupLink = <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateSignUpSection}>{translate("Don't have an account? Sign up!")}</a></p>;
+      signupLink = <p style={styles.sectionText}>
+        <TranslatedMessage tag='a'
+          href='#'
+          onClick={this.props.activateSignUpSection}
+          message="log-in switch to sign-up link" />
+      </p>;
     }
 
     return (
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <h1 style={styles.sectionTitle}>{translate('Log in to {organization}', { organization: this.props.organization.name })}</h1>
+          <TranslatedMessage tag='h1'
+            style={styles.sectionTitle}
+            message='log-in header'
+            variables={{ organization: this.props.organization.name }} />
           {signupLink}
         </div>
 
         {content}
 
         <div style={styles.sectionFooter}>
-          <p style={styles.sectionText}><a href='javascript: void 0;' onClick={this.props.activateResetPasswordSection}>{translate('Forgot password?')}</a></p>
+          <p style={styles.sectionText}>
+            <TranslatedMessage tag='a'
+              href='javascript: void 0;'
+              onClick={this.props.activateResetPasswordSection}
+              message='log-in forgot password link' />
+          </p>
         </div>
       </div>
     );
