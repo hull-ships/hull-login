@@ -107,7 +107,7 @@ export default React.createClass({
         <div style={styles.sectionFooter}>
           <TranslatedMessage tag='p'
             style={styles.sectionText}
-            message="sign-up fine print" 
+            message="sign-up fine print"
             variables={{ organization: this.props.organization.name }} />
         </div>
       </div>

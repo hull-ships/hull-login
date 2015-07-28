@@ -231,11 +231,11 @@ export default React.createClass({
           tabIndex={0}
           ref='overlay'>
 
-          <a className='hull-login__modal_close-button' 
-            style={styles.overlayCloseButton} 
-            href='javascript: void 0;' 
-            aria-label='Close' 
-            title='Close this dialog' 
+          <a className='hull-login__modal_close-button'
+            style={styles.overlayCloseButton}
+            href='javascript: void 0;'
+            aria-label='Close'
+            title='Close this dialog'
             onClick={this.handleClose} >×</a>
 
           {this.props.children}
