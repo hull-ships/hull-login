@@ -16,17 +16,17 @@ const DEFAULT_SCHEMA = {
   'properties': {
     'name': {
       'type': 'string',
-      'title': 'Name'
+      'title': translate('edit profile name field')
     },
     'password': {
       'type': 'string',
-      'title': 'Password',
+      'title': translate('edit profile password field'),
       'format': 'password',
-      'help': <TranslatedMessage message='Leave blank to keep your old password' />
+      'help': <TranslatedMessage message='edit profile password help text' />
     },
     'email': {
       'type': 'string',
-      'title': 'Email',
+      'title': translate('edit profile email field'),
       'format': 'email',
       'minLength': 1
     }

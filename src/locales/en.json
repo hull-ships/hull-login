@@ -1,13 +1,5 @@
 {
-  "Complete profile": "Complete profile",
-  "Unlink your {provider} account": "Unlink your {provider} account",
-  "Unlinking {provider} account": "Unlinking {provider} account",
-  "Link your {provider} account": "Link your {provider} account",
-  "Linking {provider} account": "Linking {provider} account",
-
-  "Leave blank to keep your old password": "Leave blank to keep your old password",
-
-  "nav sign-up link"
+  "nav sign-up link": "Sign up",
   "nav login link": "Log in",
   "nav logout link": "Log out",
   "nav complete profile link": "Complete your profile",
@@ -19,6 +11,10 @@
   "edit profile button text when attempting edit": "Saving...",
   "edit profile cancel button": "Cancel",
   "edit profile cancel button when profile incomplete": "Skip this step",
+  "edit profile name field": "Your name",
+  "edit profile password field": "Your password",
+  "edit profile password help text": "Leave blank to keep your old password",
+  "edit profile email field": "Your email",
 
   "view profile header": "View your profile",
   "view profile switch to edit profile link": "Edit profile",
@@ -81,5 +77,10 @@
   "sign-up help text for Soundcloud": "",
   "sign-up help text for Tumblr": "",
   "sign-up help text for Twitter": "",
-  "sign-up help text for Vkontakte": ""
+  "sign-up help text for Vkontakte": "",
+
+  "Unlink your {provider} account": "Unlink your {provider} account",
+  "Unlinking {provider} account": "Unlinking {provider} account",
+  "Link your {provider} account": "Link your {provider} account",
+  "Linking {provider} account": "Linking {provider} account"
 }
