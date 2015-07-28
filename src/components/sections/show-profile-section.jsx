@@ -63,7 +63,7 @@ export default React.createClass({
             <TranslatedMessage tag='a'
               href='#'
               onClick={this.props.activateEditProfileSection}
-              message='Edit profile' />
+              message='view profile switch to edit profile link' />
           </p>
         </div>
 

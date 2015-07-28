@@ -45,12 +45,12 @@ export default React.createClass({
 
     const d = { organization: this.state.organization.name };
     const titles = {
-      logIn: translate('Log in to {organization}', d),
-      signUp: translate('Sign up for {organization}', d),
-      resetPassword: translate('Reset your password'),
-      showProfile: translate('View your profile'),
-      editProfile: translate('Edit your profile'),
-      thanks: translate('Thanks for signing up!')
+      logIn: translate('log-in header', d),
+      signUp: translate('sign-up header', d),
+      resetPassword: translate('reset password header'),
+      showProfile: translate('view profile header'),
+      editProfile: translate('edit profile header'),
+      thanks: translate('thanks header')
     };
 
     const Section = sections[this.state.activeSection];
@@ -80,10 +80,13 @@ export default React.createClass({
             key='complete-profile'
             className='hull-login__button hull-login__button--edit-profile'
             onClick={this.props.actions.activateEditProfileSection}
-            message='Complete your profile' />;
+            message='nav complete profile link' />;
           buttons.push(b);
         } else {
-          let b = <a href='#' key='show-profile' className='hull-login__button hull-login__button--show-profile' onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
+          let b = <a href='#'
+            key='show-profile'
+            className='hull-login__button hull-login__button--show-profile'
+            onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
           buttons.push(b);
         }
       }
@@ -103,7 +106,7 @@ export default React.createClass({
         href='#'
         className='hull-login__button hull-login__button--log-out'
         onClick={this.props.actions.logOut}
-        message='Log out' />;
+        message='nav logout link' />;
       buttons.push(b);
     } else {
       if (this.state.shipSettings.show_login) {
@@ -112,7 +115,7 @@ export default React.createClass({
           key='log-in'
           className='hull-login__button hull-login__button--log-in'
           onClick={this.props.actions.activateLogInSection}
-          message='Log in' />;
+          message='nav login link' />;
         buttons.push(b);
       }
 
@@ -122,7 +125,7 @@ export default React.createClass({
           key='sign-up'
           className='hull-login__button hull-login__button--sign-up'
           onClick={this.props.actions.activateSignUpSection}
-          message='Sign up' />;
+          message='nav sign-up link' />;
         buttons.push(b);
       }
     }

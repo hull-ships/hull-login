@@ -17,11 +17,11 @@ export default React.createClass({
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
           <TranslatedMessage tag='h1'
             style={styles.sectionTitle}
-            message='Thanks for signing up!' />
+            message='thanks header' />
         </div>
         <TranslatedMessage tag='p'
           style={styles.sectionText}
-          message="Hi {name}, your registration is now complete and so we'll keep you up to date."
+          message='thanks message'
           variables={{ name: this.props.user.name }} />
       </div>
     );

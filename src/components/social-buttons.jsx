@@ -15,10 +15,10 @@ export default React.createClass({
       actionName = 'logIn';
       status = 'isLoggingIn';
       if (this.props.activeSection === 'signUp') {
-        button = ['Sign up with {provider}', 'Signing up with {provider}'];
+        button = ['sign-up social button text', 'sign-up social button text when attempting sign-up'];
         help = 'sign-up help text';
       } else {
-        button = ['Log in with {provider}', 'Logging in with {provider}'];
+        button = ['log-in social button text', 'log-in social button text when attempting login'];
         help = 'log-in help text';
       }
     } else if (provider.isLinked && provider.isUnlinkable) {

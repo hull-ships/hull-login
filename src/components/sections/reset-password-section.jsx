@@ -34,7 +34,7 @@ export default React.createClass({
 
     return {
       email: {
-        placeholder: translate('Your email'),
+        placeholder: translate('reset password email placeholder'),
         type: 'email',
         hasError
       }
@@ -49,13 +49,13 @@ export default React.createClass({
     let m;
     let d;
     if (this.state.resetPasswordState === 'done') {
-      m = translate('Sent');
+      m = translate('reset password button text when completed reset');
       d = true;
     } else if (this.state.resetPasswordState === 'pending') {
-      m = translate('Sending...');
+      m = translate('reset password button text when attempting reset');
       d = true;
     } else {
-      m = translate('Send reset instructions');
+      m = translate('reset password button text');
       d = false;
     }
 
@@ -67,12 +67,12 @@ export default React.createClass({
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
           <TranslatedMessage tag='h1'
             style={styles.sectionTitle}
-            message='Reset your password' />
+            message='reset password header' />
           <p style={styles.sectionText}>
             <TranslatedMessage tag='a'
               href='#'
               onClick={this.props.activateLogInSection}
-              message='Know your password? Log in!' />
+              message='reset password switch to log-in link' />
           </p>
         </div>
 

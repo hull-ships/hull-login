@@ -1,42 +1,41 @@
 {
-  "Cancel": "Cancel",
   "Complete profile": "Complete profile",
-  "Complete your profile": "Complete your profile",
-
-  "Know your password? Log in!": "Know your password? Log in!",
-
-  "Edit profile": "Edit profile",
-  "Edit your profile": "Edit your profile",
-
-  "Hi {name}, your registration is now complete and so we'll keep you up to date.": "Hi {name}, your registration is now complete and so we'll keep you up to date.",
-  "Leave blank to keep your old password": "Leave blank to keep your old password",
-  "Link your {provider} account": "Link your {provider} account",
-  "Linking {provider} account": "Linking {provider} account",
-  "Log in with {provider}": "Log in with {provider}",
-
-  "Log in": "Log in",
-  "Log out": "Log out",
-
-  "Logging in with {provider}": "Logging in with {provider}",
-
-  "Send reset instructions": "Send reset instructions",
-  "Sending...": "Sending...",
-  "Sent": "Sent",
-
-  "Sign up with {provider}": "Sign up with {provider}",
-  "Signing up with {provider}": "Signing up with {provider}",
-
-
-  "Reset your password": "Reset your password",
-  "Saving...": "Saving...",
   "Unlink your {provider} account": "Unlink your {provider} account",
   "Unlinking {provider} account": "Unlinking {provider} account",
+  "Link your {provider} account": "Link your {provider} account",
+  "Linking {provider} account": "Linking {provider} account",
 
-  "Skip this step": "Skip this step",
-  "Thanks for signing up!": "Thanks for signing up!",
-  "View your profile": "View your profile",
+  "Leave blank to keep your old password": "Leave blank to keep your old password",
+
+  "nav sign-up link"
+  "nav login link": "Log in",
+  "nav logout link": "Log out",
+  "nav complete profile link": "Complete your profile",
+
+  "edit profile header": "Edit your profile",
+  "edit profile header when profile incomplete": "Complete your profile",
+  "edit profile button text": "Update profile",
+  "edit profile button text when profile incomplete": "Complete profile",
+  "edit profile button text when attempting edit": "Saving...",
+  "edit profile cancel button": "Cancel",
+  "edit profile cancel button when profile incomplete": "Skip this step",
+
+  "view profile header": "View your profile",
+  "view profile switch to edit profile link": "Edit profile",
+
+  "reset password header": "Reset your password",
+  "reset password switch to log-in link": "Know your password? Log in!",
+  "reset password button text": "Send reset instructions",
+  "reset password button text when attempting reset": "Sending...",
+  "reset password button text when completed reset": "Sent",
+  "reset password email placeholder": "Your email",
+
+  "thanks header": "Thanks for signing up!",
+  "thanks message": "Hi {name}, your registration is now complete and so we'll keep you up to date.",
 
   "log-in header": "Log in to {organization}",
+  "log-in social button text": "Log in with {provider}",
+  "log-in social button text when attempting login": "Logging in with {provider}",
   "log-in email placeholder": "Your email or username",
   "log-in email help text": "",
   "log-in password placeholder": "log-in password placeholder",
@@ -48,6 +47,8 @@
 
   "sign-up header": "Sign up for {organization}",
   "sign-up fine print": "By signing up, you agree to {organization}'s Terms of Service.",
+  "sign-up social button text": "Sign up with {provider}",
+  "sign-up social button text when attempting sign-up": "Signing up with {provider}",
   "sign-up button text": "Sign up",
   "sign-up button text when attempting sign-up": "Signing up",
   "sign-up name placeholder": "Your name",
