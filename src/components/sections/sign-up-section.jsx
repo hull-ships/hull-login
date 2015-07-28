@@ -36,19 +36,19 @@ export default React.createClass({
 
     return {
       name: {
-        placeholder: translate('Your name'),
+        placeholder: translate('sign-up name placeholder'),
         type: 'text',
         help: <TranslatedMessage message='sign-up name help text' />,
         hasError: !!errors.name
       },
       email: {
-        placeholder: translate('Your email'),
+        placeholder: translate('sign-up email placeholder'),
         type: 'email',
         help: <TranslatedMessage message='sign-up email help text' />,
         hasError: !!errors.email
       },
       password: {
-        placeholder: translate('Your password'),
+        placeholder: translate('sign-up password placeholder'),
         type: 'password',
         help: <TranslatedMessage message='sign-up password help text' />,
         hasError: !!errors.password
@@ -64,10 +64,10 @@ export default React.createClass({
     let m;
     let d;
     if (this.state.signUpState === 'pending') {
-      m = translate('Signing up');
+      m = translate('sign-up button text when attempting sign-up');
       d = true;
     } else {
-      m = translate('Sign up');
+      m = translate('sign-up button text');
       d = false;
     }
 
@@ -84,7 +84,10 @@ export default React.createClass({
     let loginLink;
     if (this.props.shipSettings.show_login) {
       loginLink = <p style={styles.sectionText}>
-        <TranslatedMessage tag='a' href='#' onClick={this.props.activateLogInSection} message='Already have an account? Log in.' />
+        <TranslatedMessage tag='a'
+          href='#'
+          onClick={this.props.activateLogInSection}
+          message='sign-up switch to log-in link' />
       </p>;
     }
 
@@ -92,14 +95,20 @@ export default React.createClass({
       <div>
         <div style={styles.sectionHeader}>
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <TranslatedMessage tag='h1' style={styles.sectionTitle} message="Sign up for {organization}" variables={{ organization: this.props.organization.name }} />
+          <TranslatedMessage tag='h1'
+            style={styles.sectionTitle}
+            message="sign-up header"
+            variables={{ organization: this.props.organization.name }} />
           {loginLink}
         </div>
 
         {content}
 
         <div style={styles.sectionFooter}>
-          <TranslatedMessage tag='p' style={styles.sectionText} message="By signing up, you agree to {organization}'s Terms of Service." variables={{ organization: this.props.organization.name }} />
+          <TranslatedMessage tag='p'
+            style={styles.sectionText}
+            message="sign-up fine print" 
+            variables={{ organization: this.props.organization.name }} />
         </div>
       </div>
     );

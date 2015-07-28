@@ -58,7 +58,7 @@ export default React.createClass({
     let m;
     let d;
     if (this.state.logInState === 'pending') {
-      m = translate('log-in button text when logging in');
+      m = translate('log-in button text when attempting login');
       d = true;
     } else {
       m = translate('log-in button text');
