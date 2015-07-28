@@ -66,6 +66,13 @@
       "default": true
     },
     {
+      "name":"show_classic_login_as_button",
+      "title": "Show email registration as button",
+      "description": "Make email registration ",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "name":"disable_buttons_automatically",
       "title": "Visually disable submit buttons for incomplete forms",
       "description": "If checked, disable the 'log in' and 'sign up' buttons when their forms are incomplete. Incomplete submissions will not be allowed regardless of the state of this option.",

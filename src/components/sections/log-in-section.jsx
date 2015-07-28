@@ -36,13 +36,13 @@ export default React.createClass({
 
     return {
       login: {
-        placeholder: translate('Your email or username'),
+        placeholder: translate('log-in email placeholder'),
         type: 'text',
         help: <TranslatedMessage message='log-in email help text' />,
         hasError
       },
       password: {
-        placeholder: translate('Your password'),
+        placeholder: translate('log-in password placeholder'),
         type: 'password',
         help: <TranslatedMessage message='log-in password help text' />,
         hasError
@@ -58,10 +58,10 @@ export default React.createClass({
     let m;
     let d;
     if (this.state.logInState === 'pending') {
-      m = translate('Logging in');
+      m = translate('log-in button text when logging in');
       d = true;
     } else {
-      m = translate('Log in');
+      m = translate('log-in button text');
       d = false;
     }
 
@@ -82,7 +82,7 @@ export default React.createClass({
         <TranslatedMessage tag='a'
           href='#'
           onClick={this.props.activateSignUpSection}
-          message="Don't have an account? Sign up!" />
+          message="log-in switch to sign-up link" />
       </p>;
     }
 
@@ -92,7 +92,7 @@ export default React.createClass({
           <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
           <TranslatedMessage tag='h1'
             style={styles.sectionTitle}
-            message='Log in to {organization}'
+            message='log-in header'
             variables={{ organization: this.props.organization.name }} />
           {signupLink}
         </div>
@@ -104,7 +104,7 @@ export default React.createClass({
             <TranslatedMessage tag='a'
               href='javascript: void 0;'
               onClick={this.props.activateResetPasswordSection}
-              message='Forgot password?' />
+              message='log-in forgot password link' />
           </p>
         </div>
       </div>

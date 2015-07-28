@@ -1,46 +1,58 @@
 {
-  "Already have an account? Log in.": "Already have an account? Log in.",
-  "By signing up, you agree to {organization}'s Terms of Service.": "By signing up, you agree to {organization}'s Terms of Service.",
   "Cancel": "Cancel",
   "Complete profile": "Complete profile",
   "Complete your profile": "Complete your profile",
-  "Don't have an account? Sign up!": "Don't have an account? Sign up!",
+
+  "Already have an account? Log in.": "Already have an account? Log in.",
+  "Know your password? Log in!": "Know your password? Log in!",
+  "By signing up, you agree to {organization}'s Terms of Service.": "By signing up, you agree to {organization}'s Terms of Service.",
+
   "Edit profile": "Edit profile",
   "Edit your profile": "Edit your profile",
-  "Forgot password?": "Forgot password?",
+
   "Hi {name}, your registration is now complete and so we'll keep you up to date.": "Hi {name}, your registration is now complete and so we'll keep you up to date.",
-  "Know your password? Log in!": "Know your password? Log in!",
   "Leave blank to keep your old password": "Leave blank to keep your old password",
   "Link your {provider} account": "Link your {provider} account",
   "Linking {provider} account": "Linking {provider} account",
-  "Log in to {organization}": "log in to {organization}",
   "Log in with {provider}": "Log in with {provider}",
+
+  "Sign up": "Sign up",
   "Log in": "Log in",
   "Log out": "Log out",
-  "Logging in": "Logging in",
+
   "Logging in with {provider}": "Logging in with {provider}",
-  "Reset your password": "Reset your password",
-  "Saving...": "Saving...",
+
   "Send reset instructions": "Send reset instructions",
   "Sending...": "Sending...",
   "Sent": "Sent",
+
   "Sign up for {organization}": "Sign up for {organization}",
   "Sign up with {provider}": "Sign up with {provider}",
-  "Sign up": "Sign up",
   "Signing up with {provider}": "Signing up with {provider}",
   "Signing up": "Signing up",
-  "Skip this step": "Skip this step",
-  "Thanks for signing up!": "Thanks for signing up!",
+
+
+  "Reset your password": "Reset your password",
+  "Saving...": "Saving...",
   "Unlink your {provider} account": "Unlink your {provider} account",
   "Unlinking {provider} account": "Unlinking {provider} account",
+
+  "Skip this step": "Skip this step",
+  "Thanks for signing up!": "Thanks for signing up!",
   "View your profile": "View your profile",
-  "Your email or username": "Your email or username",
+
   "Your email": "Your email",
   "Your name": "Your name",
-  "Your password": "Your password",
 
+  "log-in header": "Log in to {organization}",
+  "log-in email placeholder": "Your email or username",
   "log-in email help text": "",
+  "log-in password placeholder": "log-in password placeholder",
   "log-in password help text": "",
+  "log-in button text": "Log in",
+  "log-in button text when logging in": "Logging in",
+  "log-in switch to sign-up link": "Don't have an account? Sign up!",
+  "log-in forgot password link": "Forgot password?",
 
   "sign-up name help text": "",
   "sign-up email help text": "",
