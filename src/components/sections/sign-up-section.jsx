@@ -72,7 +72,7 @@ export default React.createClass({
     }
 
     let content = renderSectionContent(this.props, {
-      kind: 'compact',
+      kind: (this.props.shipSettings.show_classic_login_as_button) ? 'expand' : 'compact',
       type: this.getType(),
       fields: this.getFields(),
       submitMessage: m,
