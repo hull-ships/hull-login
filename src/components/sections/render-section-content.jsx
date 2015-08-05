@@ -16,7 +16,7 @@ function renderSectionContent(props, formProps) {
     form = <Form key='form' {...formProps} autoDisableSubmit={props.shipSettings.disable_buttons_automatically} />;
   }
 
-  if (buttons == null || form == null) {
+  if (buttons == null && form == null) {
     throw new Error('There is no provider and classic login is disabled.');
   }
 
