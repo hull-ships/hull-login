@@ -68,6 +68,11 @@ export default React.createClass({
     );
   },
 
+  renderUserStyles(){
+    if(!this.state.shipSettings.custom_styles){return}
+    return <style dangerouslySetInnerHTML={{__html:this.state.shipSettings.custom_styles}}></style>
+  },
+
   render() {
     const u = this.state.user;
 
@@ -135,6 +140,7 @@ export default React.createClass({
     return (
       <div className='hull-login'>
         <Styles scope={s} reset={r} />
+        {this.renderUserStyles()}
         {buttons}
       </div>
     );
