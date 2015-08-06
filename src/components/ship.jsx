@@ -68,9 +68,8 @@ export default React.createClass({
     );
   },
 
-  renderUserStyles(){
-    if(!this.state.shipSettings.custom_styles){return}
-    return <style dangerouslySetInnerHTML={{__html:this.state.shipSettings.custom_styles}}></style>
+  renderUserStyles() {
+    return !this.state.shipSettings.custom_styles ? null : <style dangerouslySetInnerHTML={{__html: this.state.shipSettings.custom_styles}}></style>;
   },
 
   render() {
