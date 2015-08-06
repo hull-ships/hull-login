@@ -7,6 +7,8 @@ import Select from './select';
 import Help from '../../help';
 
 function render(Component, locals) {
+  const s = { width: '100%' };
+
   if (locals.config.kind === 'compact') {
     return <label style={s}>
       <Component {...locals} />
@@ -14,7 +16,6 @@ function render(Component, locals) {
     </label>;
   }
 
-  const s = { width: '100%' };
   return (
     <label style={s}>
       {locals.label}
