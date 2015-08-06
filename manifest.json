@@ -68,7 +68,7 @@
     {
       "name":"show_classic_login_as_button",
       "title": "Show email registration as button",
-      "description": "Make email registration ",
+      "description": "Make email registration appear as a button just like social login. Clicking this button will expand the traditional sign-up form.",
       "type": "boolean",
       "default": false
     },
@@ -116,6 +116,13 @@
       "description": "When logged in, show a link to view and edit their profile.",
       "type": "boolean",
       "default": true
+    },
+    {
+      "name": "custom_styles",
+      "title": "Custom CSS",
+      "description": "Custom CSS to fine-tune Styles.",
+      "type": "string",
+      "format":"textarea"
     },
     {
       "name":"custom_buttons",
