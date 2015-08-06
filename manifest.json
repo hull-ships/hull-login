@@ -118,6 +118,13 @@
       "default": true
     },
     {
+      "name": "custom_styles",
+      "title": "Custom CSS",
+      "description": "Custom CSS to fine-tune Styles.",
+      "type": "string",
+      "format":"textarea"
+    },
+    {
       "name":"custom_buttons",
       "title": "Custom links",
       "description": "Add custom links to show when a user is logged in.",
