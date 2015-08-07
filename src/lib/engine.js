@@ -71,6 +71,11 @@ function Engine(deployment) {
     if (nextUser.id !== previousUser.id) { this.fetchShip(); }
   });
 
+  // This is not perfect, but this is useful.
+  _.each(this.getActions(), function(a, k) {
+    Hull.on('hull.ship.login.' + k, a);
+  });
+
   this.emitChange();
 
   const showSignUpSection = Hull.utils.cookies(this.getCookieKey('shown')) !== 'true';
@@ -474,4 +479,4 @@ assign(Engine.prototype, EventEmitter.prototype, {
   }
 });
 
-module.exports = Engine;
+export default Engine;
