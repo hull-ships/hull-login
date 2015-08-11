@@ -70,7 +70,7 @@ function Engine(deployment) {
   });
 
   _.each(this.getActions(), function(a, k) {
-    Hull.on('hull.login.' + k, a);
+    Hull.on('hull.ship.login.' + k, a);
   });
 
   this.emitChange();
