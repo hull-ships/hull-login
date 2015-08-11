@@ -1,6 +1,7 @@
 import _ from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
+import * as shopiform from './shopiform';
 
 const USER_SECTIONS = [
   'showProfile',
@@ -19,16 +20,13 @@ const SECTIONS = USER_SECTIONS.concat(VISITOR_SECTIONS);
 const ACTIONS = [
   'showDialog',
   'hideDialog',
-
   'signUp',
   'logIn',
   'logOut',
   'linkIdentity',
   'unlinkIdentity',
-
   'resetPassword',
   'updateUser',
-
   'activateLogInSection',
   'activateSignUpSection',
   'activateResetPasswordSection',
@@ -71,9 +69,8 @@ function Engine(deployment) {
     if (nextUser.id !== previousUser.id) { this.fetchShip(); }
   });
 
-  // This is not perfect, but this is useful.
   _.each(this.getActions(), function(a, k) {
-    Hull.on('hull.ship.login.' + k, a);
+    Hull.on('hull.login.' + k, a);
   });
 
   this.emitChange();
@@ -238,8 +235,9 @@ assign(Engine.prototype, EventEmitter.prototype, {
   signUp(credentials) {
     return this.perform('signup', credentials).then(() => {
       return this.fetchShip().then(() => {
+        this._redirectLater = true;
+
         if (!this.hasForm()) {
-          this._redirectLater = true;
           this.activateThanksSectionAndHideLater();
         }
       });
@@ -249,8 +247,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
   logIn(providerOrCredentials) {
     return this.perform('login', providerOrCredentials).then((user) => {
       return this.fetchShip().then(() => {
-        const userIsNew = user.created_at === user.updated_at && user.stats.sign_in_count <= 1;
-        const hasForm = this.hasForm();
+        let userIsNew = user.created_at === user.updated_at && user.stats.sign_in_count <= 1;
+        let hasForm = this.hasForm();
 
         if (!hasForm && userIsNew) {
           this._redirectLater = true;
@@ -303,11 +301,26 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
     this.emitChange();
 
+    let promise;
     if (this.isShopifyCustomer()) {
-      options.redirect_url = document.location.origin + '/a/hull-callback';
+      if (provider === 'classic') {
+        // For shopify platforms we use a custom endpoints that create a user
+        // and a customer at the same time.
+        let url = 'services/shopify/customers';
+        if (method === 'login') { url += '/login'; }
+
+        let c = { email: options.email || options.login, password: options.password };
+        promise = Hull.api(url, c, 'post').then((user) => {
+          return shopiform.logIn(c).then(() => { return user; });
+        });
+      } else {
+        options.redirect_url = document.location.origin + '/a/hull-callback';
+      }
     }
 
-    let promise = Hull[method](options);
+    if (promise == null) {
+      promise = Hull[method](options);
+    }
 
     promise.then(() => {
       this['_' + s] = false;
@@ -328,7 +341,12 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   resetPassword(email) {
-    let r = Hull.api('/users/request_password_reset', 'post', { email });
+    let r;
+    if (this.isShopifyCustomer()) {
+      r = shopiform.resetPassword({ email });
+    } else {
+      r = Hull.api('/users/request_password_reset', 'post', { email });
+    }
 
     r.catch((error) => {
       this._errors.resetPassword = error;
@@ -340,6 +358,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   updateUser(value) {
+    let formWasSubmitted = this.formIsSubmitted();
+
     let user = _.reduce(['name', 'email', 'password'], (m, k) => {
       let v = value[k];
       if (typeof v === 'string' && v.trim() !== '') { m[k] = v; }
@@ -369,7 +389,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     }
 
     let r = Promise.all(promises).then(() => {
-      if (this.formIsSubmitted()) {
+      if (formWasSubmitted) {
         this.activateShowProfileSection();
       } else {
         this.activateThanksSectionAndHideLater();
@@ -393,7 +413,13 @@ assign(Engine.prototype, EventEmitter.prototype, {
       location = location || document.location.href;
     }
 
-    if (location) { document.location = location; }
+    if (location == null) { return; }
+
+    if (document.location.href === location) {
+      window.location.reload();
+    } else {
+      document.location.href = location;
+    }
   },
 
   activateLogInSection() {
@@ -430,10 +456,14 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   activateThanksSectionAndHideLater() {
+    if (!this._ship.settings.show_thanks_section_after_sign_up) {
+      return this.hideDialog();
+    }
+
     this._activeSection = 'thanks';
     this.emitChange();
 
-    const t = this._ship.settings.hide_thanks_section_after;
+    let t = this._ship.settings.hide_thanks_section_after;
 
     if (t > 0) { this.hideLater(t); }
   },
