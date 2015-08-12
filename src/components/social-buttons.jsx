@@ -11,7 +11,7 @@ export default React.createClass({
     let status;
     let button;
     let help;
-    if (this.props.user == null) {
+    if (!this.props.user) {
       actionName = 'logIn';
       status = 'isLoggingIn';
       if (this.props.activeSection === 'signUp') {
