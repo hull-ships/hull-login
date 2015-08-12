@@ -148,7 +148,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this._user = Hull.currentUser();
 
     let identities = {};
-    if (this._user != null) {
+    if (this._user) {
       this._user.identities.forEach(function(identity) {
         identities[identity.provider] = true;
       });
