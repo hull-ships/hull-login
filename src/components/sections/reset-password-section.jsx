@@ -30,13 +30,14 @@ export default React.createClass({
   },
 
   getFields() {
-    let hasError = this.props.errors.resetPassword != null;
+    let error = this.props.errors && this.props.errors.resetPassword;
 
     return {
       email: {
         placeholder: translate('reset password email placeholder'),
         type: 'email',
-        hasError
+        error: error,
+        hasError: !!error
       }
     };
   },
@@ -48,7 +49,10 @@ export default React.createClass({
   render() {
     let m;
     let d;
-    if (this.state.resetPasswordState === 'done') {
+    if (this.state.resetPasswordError) {
+      m = this.state.resetPasswordError;
+      d = true;
+    } else if (this.state.resetPasswordState === 'done') {
       m = translate('reset password button text when completed reset');
       d = true;
     } else if (this.state.resetPasswordState === 'pending') {
