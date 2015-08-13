@@ -350,7 +350,6 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
     r.catch((error) => {
       this._errors.resetPassword = error;
-
       this.emitChange();
     });
 
