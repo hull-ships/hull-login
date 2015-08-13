@@ -14,7 +14,7 @@ function wrap(data) {
   return h;
 }
 
-const INEXISTANT_URL = '/___RETURN_TO___';
+const NONEXISTENT_URL = '/___RETURN_TO___';
 
 export function logIn(data) {
   let url = document.location.origin + '/account/login';
@@ -22,7 +22,7 @@ export function logIn(data) {
   return new Promise((resolve, reject) => {
     superagent.post(url).type('form').send({
       'form_types': 'customer_login',
-      'return_to': INEXISTANT_URL,
+      'return_to': NONEXISTENT_URL,
       ...wrap(data)
     }).end((error) => {
       // When log in succeeds, the user is redirected to `return_to` value
