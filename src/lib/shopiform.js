@@ -38,14 +38,13 @@ export function logIn(data) {
 
 export function signUp(data) {
   let url = document.location.origin + '/account';
-
   return new Promise((resolve, reject) => {
     superagent.post(url).type('form').send({
       'form_types': 'create_customer',
       ...wrap(data)
     }).end((error, response) => {
       // When sign up succeeds, the user is redirected to the account page.
-      if (url === response.xhr.responseURL) {
+      if (response && response.xhr && response.xhr.responseURL === url) {
         resolve();
       } else {
         reject();
@@ -57,17 +56,21 @@ export function signUp(data) {
 export function resetPassword(data) {
   let o = document.location.origin;
   let url = o + '/account/recover';
-
   return new Promise((resolve, reject) => {
     superagent.post(url).type('form').send({
       'form_types': 'recover_customer_password',
       ...data
     }).end((error, response) => {
       // When reset succeeds, the user is redirected to the log in page.
-      if (o + '/account/login' === response.xhr.responseURL) {
+      if (response && response.xhr && response.xhr.responseURL === o + '/account/login') {
         resolve();
       } else {
-        reject();
+        let message;
+        // Don't use "error" here : we don't want to surface system errors, just Reset password messages
+        if (response && response.xhr) {
+          message = (response.xhr.status > 400) ? response.xhr.statusText : null;
+        }
+        reject(message);
       }
     });
   });
