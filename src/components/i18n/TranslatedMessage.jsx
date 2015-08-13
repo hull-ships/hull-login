@@ -34,14 +34,14 @@ export default React.createClass({
     let rtn;
     if (this.props.allowHTML) {
       let props = assign({
-        'class': this.props.className,
+        'className': this.props.className,
         dangerouslySetInnerHTML: {
           __html: translation // TODO DOMPurify
         }
       }, this.props);
       rtn = React.createElement(this.props.tag, props);
     } else {
-      let props = assign({ 'class': this.props.className }, this.props);
+      let props = assign({ 'className': this.props.className }, this.props);
       rtn = React.createElement(this.props.tag, props, translation);
     }
 
