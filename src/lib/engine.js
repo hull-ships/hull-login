@@ -75,9 +75,15 @@ function Engine(deployment) {
 
   this.emitChange();
 
-  const showSignUpSection = Hull.utils.cookies(this.getCookieKey('shown')) !== 'true';
-  const t = this._ship.settings.show_sign_up_section_after;
-  if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
+  // Show the popup after a delay, only for unregistered users
+  if (!this._user){
+    const showSignUpSection = Hull.utils.cookies(this.getCookieKey('shown')) !== 'true';
+    const t = this._ship.settings.show_sign_up_section_after;
+    if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
+  } else {
+    // If user is logged in, never show the popup again (Set the "shown" cookie)
+    this.setDialogShown()
+  }
 }
 
 assign(Engine.prototype, EventEmitter.prototype, {
@@ -217,8 +223,13 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.emitChange();
   },
 
+  setDialogShown(){
+    let year = new Date().getFullYear() + 10;
+    Hull.utils.cookies(this.getCookieKey('shown'), true, { expires: new Date(year, 0, 1) });
+  },
+
   hideDialog() {
-    Hull.utils.cookies(this.getCookieKey('shown'), true);
+    this.setDialogShown()
 
     this.clearTimers();
 
