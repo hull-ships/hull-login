@@ -62,7 +62,8 @@ export function resetPassword(data) {
       ...data
     }).end((error, response) => {
       // When reset succeeds, the user is redirected to the log in page.
-      if (response && response.xhr && response.xhr.responseURL === o + '/account/login') {
+      // Or a CrossDomain error happens. Handle it in a hackish way for now.
+      if ((response && response.xhr && response.xhr.responseURL === o + '/account/login') || ( error && error.toString().indexOf('Access-Control-Allow-Origin') > 0 )) {
         resolve();
       } else {
         let message;
