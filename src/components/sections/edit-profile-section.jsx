@@ -10,31 +10,33 @@ import Form from '../form';
 import UserImage from './user-image';
 import { TranslatedMessage } from '../i18n';
 
-const DEFAULT_SCHEMA = {
-  '$schema': 'http://json-schema.org/draft-04/schema#',
-  'type': 'object',
-  'properties': {
-    'name': {
-      'type': 'string',
-      'title': translate('edit profile name field')
+function buildSchema() {
+  return {
+    '$schema': 'http://json-schema.org/draft-04/schema#',
+    'type': 'object',
+    'properties': {
+      'name': {
+        'type': 'string',
+        'title': translate('edit profile name field')
+      },
+      'password': {
+        'type': 'string',
+        'title': translate('edit profile password field'),
+        'format': 'password',
+        'help': <TranslatedMessage message='edit profile password help text' />
+      },
+      'email': {
+        'type': 'string',
+        'title': translate('edit profile email field'),
+        'format': 'email',
+        'minLength': 1
+      }
     },
-    'password': {
-      'type': 'string',
-      'title': translate('edit profile password field'),
-      'format': 'password',
-      'help': <TranslatedMessage message='edit profile password help text' />
-    },
-    'email': {
-      'type': 'string',
-      'title': translate('edit profile email field'),
-      'format': 'email',
-      'minLength': 1
-    }
-  },
-  'required': [
-    'name',
-    'email'
-  ]
+    'required': [
+      'name',
+      'email'
+    ]
+  };
 };
 
 export default React.createClass({
@@ -51,22 +53,23 @@ export default React.createClass({
   },
 
   getSchema() {
+    let SCHEMA = buildSchema();
     if (this.props.hasForm) {
       if (this.props.formIsSubmitted) {
         return {
           type: 'object',
           properties: {
-            ...DEFAULT_SCHEMA.properties,
+            ...SCHEMA.properties,
             ...this.props.form.fields_schema.properties
           },
-          required: DEFAULT_SCHEMA.required.concat(this.props.form.fields_schema.required)
+          required: SCHEMA.required.concat(this.props.form.fields_schema.required)
         };
       }
 
       return this.props.form.fields_schema;
     }
 
-    return DEFAULT_SCHEMA;
+    return SCHEMA;
   },
 
   getType() {
