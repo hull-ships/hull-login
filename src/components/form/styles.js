@@ -74,11 +74,19 @@ function getStyles() {
     backgroundRepeat: 'no-repeat'
   });
 
+  const errorMessage = {
+    color: '#FF6262',
+    fontSize: 12,
+    marginTop: 5
+  };
+
+
   return {
     formButton,
     formInput,
     formTextarea,
-    formSelect
+    formSelect,
+    errorMessage
   };
 }
 

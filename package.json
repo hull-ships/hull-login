@@ -36,7 +36,6 @@
     "object-assign": "^2.0.0",
     "radium": "^0.10.1",
     "react": ">=0.12.2",
-    "react-components": "^0.2.0",
     "tcomb-form": "^0.4.9",
     "tcomb-json-schema": "oliger/tcomb-json-schema#master",
     "underscore": "^1.8.2",

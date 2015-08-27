@@ -5,13 +5,22 @@ import Input from './input';
 import Textarea from './textarea';
 import Select from './select';
 import Help from '../../help';
+import { getStyles } from '../styles';
 
 function render(Component, locals) {
+  const styles = getStyles();
   const s = { width: '100%' };
 
   if (locals.config.kind === 'compact') {
+    let error;
+    
+    if (locals.error) {
+      error = locals.error && <p style={styles.errorMessage}>{locals.error}</p>;  
+    }
+    
     return <label style={s}>
       <Component {...locals} />
+      {error}
       <Help>{locals.help}</Help>
     </label>;
   }

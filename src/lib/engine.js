@@ -31,7 +31,8 @@ const ACTIONS = [
   'activateSignUpSection',
   'activateResetPasswordSection',
   'activateShowProfileSection',
-  'activateEditProfileSection'
+  'activateEditProfileSection',
+  'updateCurrentEmail'
 ];
 
 const METHODS = {
@@ -49,6 +50,8 @@ const STATUS = {
 
 const EVENT = 'CHANGE';
 
+const STORAGE_KEY = 'hull-login';
+
 function Engine(deployment) {
   this._ship = deployment.ship;
   this._platform = deployment.platform;
@@ -58,7 +61,6 @@ function Engine(deployment) {
 
   this.resetState();
   this.resetUser();
-
   Hull.on('hull.user.**', (user) => {
     // Ignore the events that come from actions.
     if (this.isWorking()) { return; }
@@ -70,26 +72,18 @@ function Engine(deployment) {
   });
 
   _.each(this.getActions(), function(a, k) {
-    Hull.on('hull.ship.login.' + k, a);
+    Hull.on('hull.login.' + k, a);
   });
 
   this.emitChange();
 
-  // Show the popup after a delay, only for unregistered users
-  if (!this._user) {
-    const showSignUpSection = Hull.utils.cookies(this.getCookieKey('shown')) !== 'true';
-    const t = this._ship.settings.show_sign_up_section_after;
-    if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
-  } else {
-    // If user is logged in, never show the popup again (Set the "shown" cookie)
-    this.setDialogShown();
-  }
+  let savedState = this.getSavedState();
+  const showSignUpSection = !savedState.returningUser && !savedState.dialogHidden;
+  const t = this._ship.settings.show_sign_up_section_after;
+  if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
 }
 
-assign(Engine.prototype, EventEmitter.prototype, {
-  getCookieKey(key) {
-    return this._ship.id + key;
-  },
+Engine.prototype = assign({}, EventEmitter.prototype, {
 
   getActions() {
     if (this._actions) { return this._actions; }
@@ -122,7 +116,8 @@ assign(Engine.prototype, EventEmitter.prototype, {
       isLinking: this._isLinking,
       isUnlinking: this._isUnlinking,
       dialogIsVisible: this._dialogIsVisible,
-      activeSection: this.getActiveSection()
+      activeSection: this.getActiveSection(),
+      currentEmail: this._currentEmail
     };
   },
 
@@ -138,6 +133,28 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this.emit(EVENT);
   },
 
+  saveState(attrs) {
+    let state = assign({}, this.getSavedState(), attrs);
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    return state;
+  },
+
+  getSavedState() {
+    let state = {};
+    let val = window.localStorage.getItem(STORAGE_KEY);
+    if (val) {
+      try {
+        state = JSON.parse(val);
+      } catch(err) {
+        state = {};
+      }
+      if (!state || (typeof state !== 'object')) {
+        state = {};
+      }
+    }
+    return state || {};
+  },
+
   resetState() {
     this.resetUser();
 
@@ -148,13 +165,19 @@ assign(Engine.prototype, EventEmitter.prototype, {
     this._isUnlinking = false;
     this._dialogIsVisible = false;
     this._activeSection = 'logIn';
+
+    let savedState = this.getSavedState();
+    this._currentEmail = savedState.currentEmail;
+    this._returningUser = savedState.returningUser;
   },
 
   resetUser() {
     this._user = Hull.currentUser();
 
     let identities = {};
-    if (this._user) {
+    if (this._user != null) {
+      this.saveState({ returningUser: true });
+      this.updateCurrentEmail(this._user.email);
       this._user.identities.forEach(function(identity) {
         identities[identity.provider] = true;
       });
@@ -217,19 +240,12 @@ assign(Engine.prototype, EventEmitter.prototype, {
   },
 
   showDialog() {
-    this.clearTimers();
-
-    this._dialogIsVisible = true;
-    this.emitChange();
-  },
-
-  setDialogShown() {
-    let year = new Date().getFullYear() + 10;
-    Hull.utils.cookies(this.getCookieKey('shown'), true, { expires: new Date(year, 0, 1) });
+    let section = this._returningUser ? 'logIn' : 'signUp';
+    return this.activateSection(section);
   },
 
   hideDialog() {
-    this.setDialogShown();
+    this.saveState({ dialogHidden: true });
 
     this.clearTimers();
 
@@ -353,16 +369,39 @@ assign(Engine.prototype, EventEmitter.prototype, {
 
   resetPassword(email) {
     let r;
+    this._errors.resetPassword = null;
+    this.emitChange();
+
     if (this.isShopifyCustomer()) {
       r = shopiform.resetPassword({ email });
+      r.catch((err)=> {
+        this._errors.resetPassword = err;
+        this.emitChange();
+      });
     } else {
       r = Hull.api('/users/request_password_reset', 'post', { email });
+      r.catch((error) => {
+        let err;
+        if (error && error.status) {
+          switch (error.status) {
+            case 429:
+              err = new Error('reset password too many requests error');
+              break;
+            case 404:
+              err = new Error('reset password invalid email error');
+              break;
+            default:
+              err = new Error('reset password invalid email error');
+              break;
+          }
+          this._errors.resetPassword = err;
+        } else {
+          this._errors.resetPassword = error;
+        }
+        this.emitChange();
+      });
     }
 
-    r.catch((error) => {
-      this._errors.resetPassword = error;
-      this.emitChange();
-    });
 
     return r;
   },
@@ -370,7 +409,7 @@ assign(Engine.prototype, EventEmitter.prototype, {
   updateUser(value) {
     let formWasSubmitted = this.formIsSubmitted();
 
-    let user = _.reduce(['name', 'email', 'password'], (m, k) => {
+    let user = _.reduce(['name', 'email', 'password', 'first_name', 'last_name'], (m, k) => {
       let v = value[k];
       if (typeof v === 'string' && v.trim() !== '') { m[k] = v; }
 
@@ -429,6 +468,13 @@ assign(Engine.prototype, EventEmitter.prototype, {
       window.location.reload();
     } else {
       document.location.href = location;
+    }
+  },
+
+  updateCurrentEmail(value) {
+    if (/@/.test(value)) {
+      this._currentEmail = value;
+      this.saveState({ currentEmail: value });
     }
   },
 

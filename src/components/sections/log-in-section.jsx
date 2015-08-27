@@ -9,6 +9,7 @@ import AsyncActionsMixin from '../../mixins/async-actions';
 import OrganizationImage from './organization-image';
 import renderSectionContent from './render-section-content';
 import { TranslatedMessage } from '../i18n';
+import SocialLoginErrors from '../social-login-errors';
 
 export default React.createClass({
   displayName: 'LogInSection',
@@ -16,6 +17,10 @@ export default React.createClass({
   mixins: [
     AsyncActionsMixin
   ],
+
+  getInitialState() {
+    return { displayErrors: false };
+  },
 
   getAsyncActions() {
     return {
@@ -32,14 +37,17 @@ export default React.createClass({
 
   getFields() {
     const e = this.props.errors.logIn;
-    const hasError = e && e.provider === 'classic';
+    const { displayErrors } = this.state;
+    const hasError = displayErrors && e && e.provider === 'classic';
 
     return {
       login: {
         placeholder: translate('log-in email placeholder'),
         type: 'text',
         help: <TranslatedMessage message='log-in email help text' />,
-        hasError
+        hasError,
+        error: hasError && translate('log-in invalid credentials error'),
+        autoFocus: true
       },
       password: {
         placeholder: translate('log-in password placeholder'),
@@ -51,8 +59,19 @@ export default React.createClass({
   },
 
   handleSubmit(value) {
+    this.setState({ displayErrors: true });
     this.getAsyncAction('logIn')(value);
   },
+
+  handleChange(changes) {
+    this.setState({ displayErrors: false });
+    let { login } = changes.value;
+    if (login) {
+      this.props.updateCurrentEmail(login);
+    }
+  },
+
+
 
   render() {
     let m;
@@ -71,7 +90,9 @@ export default React.createClass({
       fields: this.getFields(),
       submitMessage: m,
       onSubmit: this.handleSubmit,
-      disabled: d
+      onChange: this.handleChange,
+      disabled: d,
+      value: { login: this.props.currentEmail }
     });
 
     const styles = getStyles();
@@ -96,6 +117,8 @@ export default React.createClass({
             variables={{ organization: this.props.organization.name }} />
           {signupLink}
         </div>
+
+        <SocialLoginErrors {...this.props} />
 
         {content}
 

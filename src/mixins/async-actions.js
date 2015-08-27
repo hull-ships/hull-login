@@ -34,7 +34,7 @@ export default {
       instance.setState(h);
 
       if (resetInitial) {
-        timer = setTimeout(function() { setActionState(null, null); }, 3000);
+        timer = setTimeout(function() { setActionState(null, null); }, 5000);
       }
     }
 

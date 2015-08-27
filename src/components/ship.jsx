@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
-import LayeredComponentMixin from 'react-components/layered-component-mixin';
+import LayeredComponentMixin from '../lib/layered-component-mixin';
 import { translate } from '../lib/i18n';
 import Overlay from './overlay';
 import Styles from './styles';

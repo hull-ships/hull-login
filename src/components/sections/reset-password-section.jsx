@@ -23,6 +23,11 @@ export default React.createClass({
     };
   },
 
+  getInitialState() {
+    return { displayErrors: false };
+  },
+
+
   getType() {
     return t.struct({
       email: Email
@@ -30,14 +35,24 @@ export default React.createClass({
   },
 
   getFields() {
-    let error = this.props.errors && this.props.errors.resetPassword;
+    let hasError = this.state.displayErrors && this.props.errors.resetPassword != null;
+    let errorMessage = this.props.errors.resetPassword && this.props.errors.resetPassword.message;
+
+    let help;
+    if (this.state.resetPasswordState === 'done') {
+      help = <TranslatedMessage message='reset password message when completed reset' />;
+    } else if (this.state.resetPasswordError) {
+      help = <TranslatedMessage message={errorMessage} />;
+    }
 
     return {
       email: {
         placeholder: translate('reset password email placeholder'),
         type: 'email',
-        error: error,
-        hasError: !!error
+        hasError,
+        error: hasError && <TranslatedMessage message={errorMessage} />,
+        help,
+        autoFocus: true
       }
     };
   },
@@ -46,13 +61,18 @@ export default React.createClass({
     this.getAsyncAction('resetPassword')(value.email);
   },
 
+  handleChange(changes) {
+    let { email } = changes.value;
+    if (email) {
+      this.props.updateCurrentEmail(email);
+    }
+    this.setState({ displayErrors: false });
+  },
+
   render() {
     let m;
     let d;
-    if (this.state.resetPasswordError) {
-      m = this.state.resetPasswordError;
-      d = true;
-    } else if (this.state.resetPasswordState === 'done') {
+    if (this.state.resetPasswordState === 'done') {
       m = translate('reset password button text when completed reset');
       d = true;
     } else if (this.state.resetPasswordState === 'pending') {
@@ -60,7 +80,7 @@ export default React.createClass({
       d = true;
     } else {
       m = translate('reset password button text');
-      d = false;
+      d = !!this.state.resetPasswordError;
     }
 
     const styles = getStyles();
@@ -82,9 +102,11 @@ export default React.createClass({
 
         <Form kind='compact'
           type={this.getType()}
+          value={{ email: this.props.currentEmail }}
           fields={this.getFields()}
           submitMessage={m}
           onSubmit={this.handleSubmit}
+          onChange={this.handleChange}
           disabled={d}
           autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
       </div>

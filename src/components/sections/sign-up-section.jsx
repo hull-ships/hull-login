@@ -6,9 +6,10 @@ import { translate } from '../../lib/i18n';
 import { Name, Email, Password } from '../../lib/types';
 import { getStyles } from './styles';
 import AsyncActionsMixin from '../../mixins/async-actions';
-import OrganizationImage from './organization-image';
 import renderSectionContent from './render-section-content';
+import SocialLoginErrors from '../social-login-errors';
 import { TranslatedMessage } from '../i18n';
+import OrganizationImage from './organization-image';
 
 export default React.createClass({
   displayName: 'SignUpSection',
@@ -16,6 +17,10 @@ export default React.createClass({
   mixins: [
     AsyncActionsMixin
   ],
+
+  getInitialState() {
+    return { displayErrors: false };
+  },
 
   getAsyncActions() {
     return {
@@ -25,39 +30,45 @@ export default React.createClass({
 
   getType() {
     return t.struct({
-      name: Name,
       email: Email,
       password: Password
     });
   },
 
   getFields() {
-    let errors = (this.props.errors.signUp || {}).errors || {};
+    let { displayErrors } = this.state;
+    let errors = ((this.props.errors.signUp || {}).errors || {});
 
     return {
-      name: {
-        placeholder: translate('sign-up name placeholder'),
-        type: 'text',
-        help: <TranslatedMessage message='sign-up name help text' />,
-        hasError: !!errors.name
-      },
       email: {
         placeholder: translate('sign-up email placeholder'),
         type: 'email',
         help: <TranslatedMessage message='sign-up email help text' />,
-        hasError: !!errors.email
+        hasError: displayErrors && !!errors.email,
+        error: displayErrors && errors.email && translate(['sign-up email', errors.email, 'error'].join(' ')),
+        autoFocus: true
       },
       password: {
         placeholder: translate('sign-up password placeholder'),
         type: 'password',
         help: <TranslatedMessage message='sign-up password help text' />,
-        hasError: !!errors.password
+        hasError: displayErrors && !!errors.password,
+        error: displayErrors && errors.password && translate('sign-up password too short error')
       }
     };
   },
 
   handleSubmit(value) {
+    this.setState({ displayErrors: true });
     this.getAsyncAction('signUp')(value);
+  },
+
+  handleChange(changes) {
+    this.setState({ displayErrors: false });
+    let { email } = changes.value;
+    if (email) {
+      this.props.updateCurrentEmail(email);
+    }
   },
 
   render() {
@@ -77,7 +88,9 @@ export default React.createClass({
       fields: this.getFields(),
       submitMessage: m,
       onSubmit: this.handleSubmit,
-      disabled: d
+      onChange: this.handleChange,
+      disabled: d,
+      value: { email: this.props.currentEmail }
     });
 
     const styles = getStyles();
@@ -102,6 +115,8 @@ export default React.createClass({
           {loginLink}
         </div>
 
+        <SocialLoginErrors {...this.props} />
+        
         {content}
 
         <div style={styles.sectionFooter}>
