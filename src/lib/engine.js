@@ -1,7 +1,7 @@
 import _ from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
-import * as shopiform from './shopiform';
+import * as Backends from './backends';
 
 const USER_SECTIONS = [
   'showProfile',
@@ -35,14 +35,9 @@ const ACTIONS = [
   'updateCurrentEmail'
 ];
 
-const METHODS = {
-  login: 'logIn',
-  logout: 'logOut',
-  signup: 'signUp'
-};
-
 const STATUS = {
   logIn: 'isLoggingIn',
+  signUp: 'isLoggingIn',
   logOut: 'isLoggingOut',
   linkIdentity: 'isLinking',
   unlinkIdentity: 'isUnlinking'
@@ -133,15 +128,19 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     this.emit(EVENT);
   },
 
+  getStorageKey() {
+    return [STORAGE_KEY, this._ship.id].join('-')
+  },
+
   saveState(attrs) {
     let state = assign({}, this.getSavedState(), attrs);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    window.localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
     return state;
   },
 
   getSavedState() {
     let state = {};
-    let val = window.localStorage.getItem(STORAGE_KEY);
+    let val = window.localStorage.getItem(this.getStorageKey());
     if (val) {
       try {
         state = JSON.parse(val);
@@ -260,7 +259,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
   },
 
   signUp(credentials) {
-    return this.perform('signup', credentials).then(() => {
+    return this.perform('signUp', credentials).then(() => {
       return this.fetchShip().then(() => {
         this._redirectLater = true;
 
@@ -272,7 +271,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
   },
 
   logIn(providerOrCredentials) {
-    return this.perform('login', providerOrCredentials).then((user) => {
+    return this.perform('logIn', providerOrCredentials).then((user) => {
       return this.fetchShip().then(() => {
         let userIsNew = user.created_at === user.updated_at && user.stats.sign_in_count <= 1;
         let hasForm = this.hasForm();
@@ -312,8 +311,32 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     });
   },
 
+  getBackend() {
+    let backend;
+    switch (this._platform && this._platform.type) {
+      case 'platforms/shopify_shop':
+        backend = Backends.shopify;
+        break;
+      default:
+        backend = Backends.hull;
+        break;
+    }
+    return backend;
+  },
+
+  getBackendMethod(method) {
+    return this.getBackend()[method] || Hull[method] || (()=> { throw new Error('Unknow method ' + method); });
+  },
+
   perform(method, provider) {
+    const statusKey = !!STATUS[method] && ('_' + STATUS[method]);
+    const { Promise } = Hull.utils;
     let options;
+
+    if (!statusKey) {
+      return Promise.reject('Unknown method ' + method);
+    }
+
     if (typeof provider === 'string') {
       options = { provider: provider };
     } else {
@@ -321,89 +344,56 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
       provider = 'classic';
     }
 
-    const s = STATUS[METHODS[method]];
-
-    this['_' + s] = provider;
+    this[statusKey] = provider;
     this._errors = {};
 
     this.emitChange();
 
-    let promise;
-    if (this.isShopifyCustomer()) {
-      if (provider === 'classic') {
-        // For shopify platforms we use a custom endpoints that create a user
-        // and a customer at the same time.
-        let url = 'services/shopify/customers';
-        if (method === 'login') { url += '/login'; }
+    let fn = this.getBackendMethod(method);
 
-        let c = { email: options.email || options.login, password: options.password };
-        promise = Hull.api(url, c, 'post').then((user) => {
-          return shopiform.logIn(c).then(() => { return user; });
-        });
-      } else {
-        options.redirect_url = document.location.origin + '/a/hull-callback';
-      }
-    }
-
-    if (promise == null) {
-      promise = Hull[method](options);
-    }
-
-    promise.then(() => {
-      this['_' + s] = false;
+    return fn(options).then(() => {
+      this[statusKey] = false;
       this._errors = {};
 
       this.emitChange();
     }, (error) => {
-      this['_' + s] = false;
+      this[statusKey] = false;
 
       error.provider = provider;
-      let m = METHODS[method] || method;
-      this._errors[m] = error;
+      this._errors[method] = error;
 
       this.emitChange();
     });
-
-    return promise;
   },
 
   resetPassword(email) {
-    let r;
     this._errors.resetPassword = null;
     this.emitChange();
 
-    if (this.isShopifyCustomer()) {
-      r = shopiform.resetPassword({ email });
-      r.catch((err)=> {
-        this._errors.resetPassword = err;
-        this.emitChange();
-      });
-    } else {
-      r = Hull.api('/users/request_password_reset', 'post', { email });
-      r.catch((error) => {
-        let err;
-        if (error && error.status) {
-          switch (error.status) {
-            case 429:
-              err = new Error('reset password too many requests error');
-              break;
-            case 404:
-              err = new Error('reset password invalid email error');
-              break;
-            default:
-              err = new Error('reset password invalid email error');
-              break;
-          }
-          this._errors.resetPassword = err;
-        } else {
-          this._errors.resetPassword = error;
+    const fn = this.getBackendMethod('resetPassword');
+    let ret = fn(email);
+
+    ret.catch((error)=> {
+      let err;
+      if (error && error.status) {
+        switch (error.status) {
+          case 429:
+            err = new Error('reset password too many requests error');
+            break;
+          case 404:
+            err = new Error('reset password invalid email error');
+            break;
+          default:
+            err = new Error('reset password invalid email error');
+            break;
         }
-        this.emitChange();
-      });
-    }
-
-
-    return r;
+        this._errors.resetPassword = err;
+      } else {
+        this._errors.resetPassword = error;
+      }
+      this.emitChange();
+    });
+    return ret;
   },
 
   updateUser(value) {
