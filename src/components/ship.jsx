@@ -72,6 +72,18 @@ export default React.createClass({
     return !this.state.shipSettings.custom_styles ? null : <style dangerouslySetInnerHTML={{__html: this.state.shipSettings.custom_styles}}></style>;
   },
 
+  callAction(action) {
+    return (e)=> {
+      if (e && e.preventDefault) {
+        e.preventDefault();
+      }
+      let fn = this.props.actions[action];
+      if (fn) {
+        return fn.call(this);
+      }
+    };
+  },
+
   render() {
     const u = this.state.user;
 
@@ -83,14 +95,14 @@ export default React.createClass({
             href='#'
             key='complete-profile'
             className='hull-login__button hull-login__button--edit-profile'
-            onClick={this.props.actions.activateEditProfileSection}
+            onClick={this.callAction('activateEditProfileSection')}
             message='nav complete profile link' />;
           buttons.push(b);
         } else {
           let b = <a href='#'
             key='show-profile'
             className='hull-login__button hull-login__button--show-profile'
-            onClick={this.props.actions.activateShowProfileSection}>{u.name || u.username || u.email}</a>;
+            onClick={this.callAction('activateShowProfileSection')}>{u.name || u.username || u.email}</a>;
           buttons.push(b);
         }
       }
@@ -109,7 +121,7 @@ export default React.createClass({
       let b = <TranslatedMessage tag='a'
         href='#'
         className='hull-login__button hull-login__button--log-out'
-        onClick={this.props.actions.logOut}
+        onClick={this.callAction('logOut')}
         message='nav logout link' />;
       buttons.push(b);
     } else {
@@ -118,7 +130,7 @@ export default React.createClass({
           href='#'
           key='log-in'
           className='hull-login__button hull-login__button--log-in'
-          onClick={this.props.actions.activateLogInSection}
+          onClick={this.callAction('activateLogInSection')}
           message='nav login link' />;
         buttons.push(b);
       }
@@ -128,7 +140,7 @@ export default React.createClass({
           href='#'
           key='sign-up'
           className='hull-login__button hull-login__button--sign-up'
-          onClick={this.props.actions.activateSignUpSection}
+          onClick={this.callAction('activateSignUpSection')}
           message='nav sign-up link' />;
         buttons.push(b);
       }
