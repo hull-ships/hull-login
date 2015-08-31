@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import { UserImage, TranslatedMessage } from '../components';
 import BaseSection from './base-section';

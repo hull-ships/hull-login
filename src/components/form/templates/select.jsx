@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import { getStyles } from '../styles';
 import { StyleResolverMixin, BrowserStateMixin } from 'radium';

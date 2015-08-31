@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import Bounce from 'bounce';
 import t from 'tcomb-form/lib';

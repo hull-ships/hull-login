@@ -1,5 +1,3 @@
-'use strict';
-
 import Bounce from 'bounce';
 import React from 'react';
 import assign from 'object-assign';

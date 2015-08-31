@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
 import { Mixins, I18n } from './lib';
@@ -8,7 +6,6 @@ import { Overlay, Styles, TranslatedMessage } from './components';
 
 
 let { translate } = I18n;
-
 
 export default React.createClass({
   displayName: 'HullLoginShip',
