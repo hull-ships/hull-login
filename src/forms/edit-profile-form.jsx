@@ -118,13 +118,9 @@ export default React.createClass({
       disabled = true;
     }
 
-    let u = this.props.user;
-    let value = { ...u, ...(this.props.form.user_data && this.props.form.user_data.data) };
-
-
     return <Form type={this.getType()}
       fields={this.getFields()}
-      value={value}
+      value={this.props.profileData}
       submitMessage={button}
       onSubmit={this.handleSubmit}
       disabled={disabled}

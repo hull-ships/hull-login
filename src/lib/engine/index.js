@@ -95,6 +95,7 @@ export default class Engine extends EventEmitter {
   getState() {
     return {
       user: this._user,
+      profileData: this.getProfileData(),
       settings: this._settings,
       shipSettings: this._ship.settings,
       organization: this._organization,
@@ -549,6 +550,17 @@ export default class Engine extends EventEmitter {
 
   isWorking() {
     return this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking;
+  }
+
+  getProfileData() {
+    let user = this._user;
+    let formData = user && this._form && this._form.user_data && this._form.user_data.data;
+    if (!user) return false;
+    return assign(
+      user.extra,
+      formData,
+      _.pick(this._user, 'id', 'name', 'first_name', 'last_name', 'email', 'address')
+    );
   }
 
   isShopifyCustomer() {

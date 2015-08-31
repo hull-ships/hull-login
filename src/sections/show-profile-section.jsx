@@ -7,7 +7,8 @@ export default class ShopProfileSection extends BaseSection {
 
   renderContent() {
     let settings = this.getStylesSettings();
-    let fields = this.props.form.fields_list.map(function(f, i) {
+    let profileData = this.props.profileData;
+    let fields = this.props.form.fields_list.map((f, i)=> {
       const isFirst = i === 0;
 
       let fieldStyle = { padding: 10 };
@@ -22,10 +23,12 @@ export default class ShopProfileSection extends BaseSection {
         fontWeight: 'bold'
       };
 
+      let value = profileData[f.name] || f.value || '-';
+
       return (
         <div className='hull-login__profile-field' key={f.name} style={fieldStyle}>
           <p className='hull-login__profile-field__title' style={labelStyle}>{f.title}</p>
-          <p className='hull-login__profile-field__value'>{f.value || '-'}</p>
+          <p className='hull-login__profile-field__value'>{value}</p>
         </div>
       );
     }, this);
