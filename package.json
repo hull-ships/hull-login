@@ -1,7 +1,7 @@
 {
   "name": "hull-login",
   "description": "A Login Ship",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "homepage": "https://github.com/hull-ships/hull-login",
   "license": "MIT",
   "main": "build/index.js",
@@ -29,7 +29,9 @@
   ],
   "peerDependencies": {
     "react": ">=0.12.2",
-    "underscore": ">= 1.8.2"
+    "underscore": ">= 1.8.2",
+    "tcomb-form": "^0.4.9",
+    "tcomb-json-schema": "oliger/tcomb-json-schema#master"
   },
   "dependencies": {
     "babel-runtime": "^5.6.5",
@@ -39,8 +41,6 @@
     "messageformat": "^0.2.2",
     "object-assign": "^2.0.0",
     "radium": "^0.10.1",
-    "tcomb-form": "^0.4.9",
-    "tcomb-json-schema": "oliger/tcomb-json-schema#master",
     "underscore-contrib": "^0.3.0",
     "underscore.inflections": "^0.2.1",
     "underscore.string": "^3.0.3"

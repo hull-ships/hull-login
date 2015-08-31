@@ -8,6 +8,7 @@ import Help from '../../help';
 import { getStyles } from '../styles';
 
 function render(Component, locals) {
+
   const styles = getStyles();
   const s = { width: '100%' };
 

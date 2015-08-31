@@ -2,9 +2,9 @@ import React from 'react';
 import { bind } from 'underscore';
 import { TranslatedMessage, UserImage } from '../components';
 import { EditProfileForm } from '../forms';
-import { getStyles } from './styles';
+import BaseSection from './base-section'
 
-export default class SignUpSection extends React.Component {
+export default class SignUpSection extends BaseSection {
 
   handleSubtitleClick(e) {
     if (e && e.preventDefault) e.preventDefault();
@@ -36,24 +36,7 @@ export default class SignUpSection extends React.Component {
     </div>;
   }
 
-  renderFooter(styles) {
-    return <div style={styles.sectionFooter}></div>;
-  }
-
-  renderForm() {
+  renderContent() {
     return <EditProfileForm {...this.props} />;
   }
-
-  render() {
-    const styles = getStyles();
-    return (
-      <div>
-        {this.renderHeader(styles)}
-        {this.renderForm(styles)}
-        {this.renderFooter(styles)}
-      </div>
-    );
-  }
 }
-
-

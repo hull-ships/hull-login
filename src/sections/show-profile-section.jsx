@@ -1,16 +1,14 @@
 'use strict';
 
 import React from 'react';
-import { getStyles } from './styles';
-import { getSettings } from '../styles/settings';
 import { UserImage, TranslatedMessage } from '../components';
+import BaseSection from './base-section';
 
-const settings = getSettings();
 
-export default React.createClass({
-  displayName: 'ShowProfileSection',
+export default class ShopProfileSection extends BaseSection {
 
-  renderProfile() {
+  renderContent() {
+    let settings = this.getStylesSettings();
     let fields = this.props.form.fields_list.map(function(f, i) {
       const isFirst = i === 0;
 
@@ -47,28 +45,21 @@ export default React.createClass({
     return (
       <div className='hull-login__profile-summary' style={fieldsStyle}>{fields}</div>
     );
-  },
-
-  render() {
-    const u = this.props.user;
-    const styles = getStyles();
-
-    return (
-      <div>
-        <div style={styles.sectionHeader} className='hull-login__profile-header'>
-          <UserImage style={styles.sectionUserImage} src={u.picture} />
-          <h1 style={styles.sectionTitle}>{u.name || u.username || u.email}</h1>
-          <p style={styles.sectionText} className='hull-login__profile-edit-link'>
-            <TranslatedMessage tag='a'
-              href='#'
-              onClick={this.props.activateEditProfileSection}
-              message='view profile switch to edit profile link' />
-          </p>
-        </div>
-
-        {this.renderProfile()}
-      </div>
-    );
   }
-});
+
+  renderHeader(styles) {
+    const u = this.props.user;
+    return <div style={styles.sectionHeader} className='hull-login__profile-header'>
+      <UserImage style={styles.sectionUserImage} src={u.picture} />
+      <h1 style={styles.sectionTitle}>{u.name || u.username || u.email}</h1>
+      <p style={styles.sectionText} className='hull-login__profile-edit-link'>
+        <TranslatedMessage tag='a'
+          href='#'
+          onClick={this.props.activateEditProfileSection}
+          message='view profile switch to edit profile link' />
+      </p>
+    </div>;
+  }
+
+}
 

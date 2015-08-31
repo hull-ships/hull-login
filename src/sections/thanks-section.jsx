@@ -1,27 +1,23 @@
 import React from 'react';
-import { getStyles } from './styles';
 import { OrganizationImage, TranslatedMessage } from '../components';
+import BaseSection from './base-section';
 
-export default React.createClass({
-  displayName: 'ThanksSection',
+export default class ThanksSection extends BaseSection {
 
-  render() {
-    const styles = getStyles();
+  renderHeader(styles) {
+    return <div style={styles.sectionHeader}>
+      <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
+      <TranslatedMessage tag='h1'
+        style={styles.sectionTitle}
+        message='thanks header' />
+    </div>;
+  }
 
-    return (
-      <div>
-        <div style={styles.sectionHeader}>
-          <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-          <TranslatedMessage tag='h1'
-            style={styles.sectionTitle}
-            message='thanks header' />
-        </div>
-        <TranslatedMessage tag='p'
+  renderContent(styles) {
+    return <TranslatedMessage tag='p'
           style={styles.sectionText}
           message='thanks message'
-          variables={{ name: this.props.user.name }} />
-      </div>
-    );
+          variables={{ name: this.props.user.name }} />;
   }
-});
+}
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { SocialButtons, TranslatedMessage, OrganizationImage, Divider } from '../components';
 import { SignUpForm } from '../forms';
-import { getStyles } from './styles';
+import BaseSection from './base-section';
 
-export default class SignUpSection extends React.Component {
+export default class SignUpSection extends BaseSection {
 
   renderHeader(styles) {
     let loginLink;
@@ -34,22 +34,11 @@ export default class SignUpSection extends React.Component {
     </div>;
   }
 
-  renderForm() {
+  renderContent() {
     return <div>
       <SocialButtons {...this.props} />
       <Divider>or</Divider>
       <SignUpForm {...this.props} />
     </div>;
-  }
-
- render() {
-    const styles = getStyles();
-    return (
-      <div>
-        {this.renderHeader(styles)}
-        {this.renderForm(styles)}
-        {this.renderFooter(styles)}
-      </div>
-    );
   }
 }

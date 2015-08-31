@@ -1,9 +1,9 @@
 import React from 'react';
 import { TranslatedMessage, OrganizationImage } from '../components';
 import { ResetPasswordForm } from '../forms';
-import { getStyles } from './styles';
+import BaseSection from './base-section';
 
-export default class ResetPasswordSection extends React.Component {
+export default class ResetPasswordSection extends BaseSection {
 
   renderHeader(styles) {
     return <div style={styles.sectionHeader}>
@@ -20,23 +20,8 @@ export default class ResetPasswordSection extends React.Component {
     </div>;
   }
 
-  renderFooter(styles) {
-    return <div style={styles.sectionFooter}></div>;
-  }
-
-  renderForm() {
+  renderContent() {
     return <ResetPasswordForm {...this.props} />;
-  }
-
-  render() {
-    const styles = getStyles();
-    return (
-      <div>
-        {this.renderHeader(styles)}
-        {this.renderForm()}
-        {this.renderFooter(styles)}
-      </div>
-    );
   }
 }
 

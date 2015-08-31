@@ -2,8 +2,10 @@
 
 import React from 'react';
 import Bounce from 'bounce';
-import t from './t';
+import t from 'tcomb-form/lib';
 import Button from '../button';
+
+import Templates from './templates';
 
 const TCombForm = t.form.Form;
 
@@ -39,7 +41,8 @@ export default React.createClass({
         kind: this.getKind(),
         submitState: this.state.submitState
       },
-      fields: this.props.fields
+      fields: this.props.fields,
+      templates: Templates
     };
   },
 
