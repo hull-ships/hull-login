@@ -3,13 +3,35 @@ import { translate } from '../../lib/i18n';
 import Button from '../button';
 import Help from '../help';
 import TranslatedMessage from '../translated-message';
+import { hasTranslation } from '../../lib/i18n';
+import { getStyles } from './styles';
 
 export default function capitalize(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
 
 export default React.createClass({
-  renderButton: function(provider, index) {
+
+  getErrorMessage() {
+    let error = this.props.errors.signUp || this.props.errors.logIn;
+    if (error && error.provider && error.provider !== 'classic') {
+      let { reason, message } = error;
+      let errorMessage;
+      if (reason) {
+        let msg = 'social-login error ' + reason;
+        if (hasTranslation(msg)) {
+          errorMessage = <TranslatedMessage message={msg} variables={error} />;
+        } else {
+          errorMessage = message || reason;
+        }
+      } else {
+        errorMessage = message;
+      }
+      return errorMessage;
+    }
+  },
+
+  renderButton(provider, index) {
     let actionName;
     let status;
     let button;
@@ -58,9 +80,22 @@ export default React.createClass({
     );
   },
 
+  renderErrors() {
+    let styles = getStyles();
+    let errorMessage = this.getErrorMessage();
+    if (errorMessage) {
+      return <div style={styles.socialLoginErrors}>{errorMessage}</div>;
+    }
+  },
+
   render: function() {
+    let { providers } = this.props;
+    let buttons = providers && providers.map(this.renderButton, this);
     return (
-      <div>{this.props.providers.map(this.renderButton, this)}</div>
+      <div>
+        {this.renderErrors()}
+        {buttons}
+      </div>
     );
   }
 });

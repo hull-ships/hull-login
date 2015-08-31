@@ -1,154 +1,59 @@
-import { reduce } from 'underscore';
 import React from 'react';
+import { bind } from 'underscore';
+import { TranslatedMessage, UserImage } from '../components';
+import { EditProfileForm } from '../forms';
 import { getStyles } from './styles';
-import { I18n, Mixins } from '../lib';
-import transform from 'tcomb-json-schema';
-import { Form, UserImage, TranslatedMessage } from '../components';
 
-let { translate } = I18n;
+export default class SignUpSection extends React.Component {
 
-function buildSchema() {
-  return {
-    '$schema': 'http://json-schema.org/draft-04/schema#',
-    'type': 'object',
-    'properties': {
-      'name': {
-        'type': 'string',
-        'title': translate('edit profile name field')
-      },
-      'password': {
-        'type': 'string',
-        'title': translate('edit profile password field'),
-        'format': 'password',
-        'help': <TranslatedMessage message='edit profile password help text' />
-      },
-      'email': {
-        'type': 'string',
-        'title': translate('edit profile email field'),
-        'format': 'email',
-        'minLength': 1
-      }
-    },
-    'required': [
-      'name',
-      'email'
-    ]
-  };
-}
+  handleSubtitleClick(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (this.props.formIsSubmitted || !this.props.hasForm) {
+      this.props.activateShowProfileSection();
+    } else {
+      this.props.hideDialog();
+    }
+  }
 
-export default React.createClass({
-  displayName: 'LogInSection',
-
-  mixins: [
-    Mixins.AsyncActions
-  ],
-
-  getAsyncActions() {
-    return {
-      updateUser: this.props.updateUser
-    };
-  },
-
-  getSchema() {
-    let SCHEMA = buildSchema();
-    if (this.props.hasForm) {
-      if (this.props.formIsSubmitted) {
-        return {
-          type: 'object',
-          properties: {
-            ...SCHEMA.properties,
-            ...this.props.form.fields_schema.properties
-          },
-          required: SCHEMA.required.concat(this.props.form.fields_schema.required)
-        };
-      }
-
-      return this.props.form.fields_schema;
+  renderHeader(styles) {
+    let title;
+    let subtitle;
+    if (this.props.formIsSubmitted || !this.props.hasForm) {
+      title = 'edit profile header';
+      subtitle = 'edit profile cancel button';
+    } else {
+      title = 'edit profile header when profile incomplete';
+      subtitle = 'edit profile cancel button when profile incomplete';
     }
 
-    return SCHEMA;
-  },
+    let { picture } = this.props.user || {};
+    return <div style={styles.sectionHeader}>
+      <UserImage style={styles.sectionUserImage} src={picture} />
+      <TranslatedMessage tag='h1' style={styles.sectionTitle} message={title} />
+      <a href='javascript: void 0;' onClick={bind(this.handleSubtitleClick, this)}>
+        <TranslatedMessage tag='p' style={styles.sectionText} message={subtitle} />
+      </a>
+    </div>;
+  }
 
-  getType() {
-    return transform(this.getSchema());
-  },
+  renderFooter(styles) {
+    return <div style={styles.sectionFooter}></div>;
+  }
 
-  getFields() {
-    let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
-
-    return reduce(this.getSchema().properties, function(m, v, k) {
-      let f = {
-        label: v.title,
-        help: v.help,
-        hasError: !!errors[k]
-      };
-
-      if (v.type === 'string') {
-        f.type = v.format === 'uri' ? 'url' : (v.format || 'text');
-      }
-
-      m[k] = f;
-
-      return m;
-    }, {});
-  },
-
-  handleLogOut(e) {
-    e.preventDefault();
-
-    this.props.logOut();
-    this.props.hideDialog();
-  },
-
-  handleSubmit(value) {
-    this.getAsyncAction('updateUser')(value);
-  },
+  renderForm() {
+    return <EditProfileForm {...this.props} />;
+  }
 
   render() {
-    let title = '';
-    let subtitle = '';
-    let button = '';
-    let disabled = false;
-
-    if (this.props.formIsSubmitted || !this.props.hasForm) {
-      title = translate('edit profile header');
-      subtitle = <a href='javascript: void 0;' onClick={this.props.activateShowProfileSection}>
-        {translate('edit profile cancel button')}
-      </a>;
-      button = translate('edit profile button text');
-    } else {
-      title = translate('edit profile header when profile incomplete');
-      subtitle = <a href='javascript: void 0;' onClick={this.props.hideDialog}>
-        {translate('edit profile cancel button when profile incomplete')}
-      </a>;
-      button = translate('edit profile button text when profile incomplete');
-    }
-
-    if (this.state.updateUserState === 'pending') {
-      button = translate('edit profile button text when attempting edit');
-      disabled = true;
-    }
-
-    let u = this.props.user;
-    let value = { ...u, ...(this.props.form.user_data && this.props.form.user_data.data) };
-    let styles = getStyles();
-
+    const styles = getStyles();
     return (
       <div>
-        <div style={styles.sectionHeader}>
-          <UserImage style={styles.sectionUserImage} src={u.picture} />
-          <h1 style={styles.sectionTitle}>{title}</h1>
-          <p style={styles.sectionText}>{subtitle}</p>
-        </div>
-
-        <Form type={this.getType()}
-          fields={this.getFields()}
-          value={value}
-          submitMessage={button}
-          onSubmit={this.handleSubmit}
-          disabled={disabled}
-          autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
+        {this.renderHeader(styles)}
+        {this.renderForm(styles)}
+        {this.renderFooter(styles)}
       </div>
     );
   }
-});
+}
+
+

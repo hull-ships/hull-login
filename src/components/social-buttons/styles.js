@@ -1,5 +1,3 @@
-'use strict';
-
 const Styles = {
   color: '#FF6262',
   borderColor: 'rgba(255, 98, 98, 0.25)',

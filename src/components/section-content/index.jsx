@@ -3,7 +3,7 @@ import Divider from '../divider';
 import Form from '../form';
 import SocialButtons from '../social-buttons';
 
-const SectionContent = React.createClass({
+export default React.createClass({
   displayName: 'SectionContent',
 
   render() {
@@ -31,5 +31,3 @@ const SectionContent = React.createClass({
     </div>;
   }
 });
-
-export default SectionContent;
