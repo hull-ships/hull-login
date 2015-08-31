@@ -1,20 +1,17 @@
-'use strict';
-
 import React from 'react';
 import t from 'tcomb-form';
-import { translate } from '../../lib/i18n';
-import { Email } from '../../lib/types';
-import Form from '../form';
 import { getStyles } from './styles';
-import AsyncActionsMixin from '../../mixins/async-actions';
-import OrganizationImage from './organization-image';
-import { TranslatedMessage } from '../i18n';
+import { Form, OrganizationImage, TranslatedMessage } from '../components';
+import { Mixins, I18n, FieldTypes } from '../lib';
+
+let { translate } = I18n;
+let { Email } = FieldTypes;
 
 export default React.createClass({
   displayName: 'ResetPasswordSection',
 
   mixins: [
-    AsyncActionsMixin
+    Mixins.AsyncActions
   ],
 
   getAsyncActions() {
@@ -26,7 +23,6 @@ export default React.createClass({
   getInitialState() {
     return { displayErrors: false };
   },
-
 
   getType() {
     return t.struct({

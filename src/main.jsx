@@ -2,18 +2,19 @@
 
 import React from 'react';
 import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
-import LayeredComponentMixin from '../lib/layered-component-mixin';
-import { translate } from '../lib/i18n';
-import Overlay from './overlay';
-import Styles from './styles';
-import sections from './sections';
-import { TranslatedMessage } from './i18n';
+import { Mixins, I18n } from './lib';
+import Sections from './sections';
+import { Overlay, Styles, TranslatedMessage } from './components';
+
+
+let { translate } = I18n;
+
 
 export default React.createClass({
-  displayName: 'Ship',
+  displayName: 'HullLoginShip',
 
   mixins: [
-    LayeredComponentMixin
+    Mixins.LayeredComponent
   ],
 
   getInitialState() {
@@ -53,7 +54,7 @@ export default React.createClass({
       thanks: translate('thanks header')
     };
 
-    const Section = sections[this.state.activeSection];
+    const Section = Sections[this.state.activeSection];
     const t = titles[this.state.activeSection];
     return (
       <Overlay className={this.getScope()} onClose={this.props.actions.hideDialog} title={t} visible={true}>

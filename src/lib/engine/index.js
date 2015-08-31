@@ -129,7 +129,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
   },
 
   getStorageKey() {
-    return [STORAGE_KEY, this._ship.id].join('-')
+    return [STORAGE_KEY, this._ship.id].join('-');
   },
 
   saveState(attrs) {

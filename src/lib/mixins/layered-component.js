@@ -1,4 +1,5 @@
 // From http://jsfiddle.net/LBAr8/
+// From https://github.com/Khan/react-components/blob/master/js/layered-component-mixin.jsx
 
 /* Create a new "layer" on the page, like a modal or overlay.
  *

@@ -1,6 +1,6 @@
 const NOOP = function NOOP() {};
 
-export default function preloadImage(src, callback) {
+function preloadImage(src, callback) {
   let cb = (typeof callback === 'function') ? callback : NOOP;
   if (src) {
     let image = new Image();
@@ -12,3 +12,7 @@ export default function preloadImage(src, callback) {
     return cb(new Error('Empty SRC'));
   }
 }
+
+export default {
+  preloadImage
+};

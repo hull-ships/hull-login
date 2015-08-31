@@ -1,6 +1,7 @@
 import React from 'react';
-import { TranslatedMessage, hasTranslation } from '../i18n';
+import { hasTranslation } from '../../lib/i18n';
 import { getStyles } from './styles';
+import TranslatedMessage from '../translated-message';
 
 
 export default React.createClass({

@@ -1,10 +1,10 @@
-import _ from 'underscore';
+import { reduce } from 'underscore';
 
 export default {
   getInitialState() {
     this._asyncActions = {};
 
-    return _.reduce(this.getAsyncActions(), (m, v, k) => {
+    return reduce(this.getAsyncActions(), (m, v, k) => {
       this._asyncActions[k] = this._processAction(v, k);
 
       m[`${k}State`] = null;

@@ -53,9 +53,13 @@ function translate(message, data) {
   }
 }
 
-
 function hasTranslation(message) {
   return !!_messages[message];
 }
 
-export default { setTranslations, setLocale, translate, hasTranslation };
+export default {
+  setLocale,
+  setTranslations,
+  translate,
+  hasTranslation
+};

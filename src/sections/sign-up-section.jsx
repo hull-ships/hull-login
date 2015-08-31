@@ -1,21 +1,17 @@
-'use strict';
-
 import React from 'react';
 import t from 'tcomb-form';
-import { translate } from '../../lib/i18n';
-import { Name, Email, Password } from '../../lib/types';
 import { getStyles } from './styles';
-import AsyncActionsMixin from '../../mixins/async-actions';
-import renderSectionContent from './render-section-content';
-import SocialLoginErrors from '../social-login-errors';
-import { TranslatedMessage } from '../i18n';
-import OrganizationImage from './organization-image';
+import { FieldTypes, I18n, Mixins } from '../lib';
+import { TranslatedMessage, OrganizationImage, SocialLoginErrors, SectionContent } from '../components';
+
+let { translate } = I18n;
+let { Email, Password } = FieldTypes;
 
 export default React.createClass({
   displayName: 'SignUpSection',
 
   mixins: [
-    AsyncActionsMixin
+    Mixins.AsyncActions
   ],
 
   getInitialState() {
@@ -82,7 +78,7 @@ export default React.createClass({
       d = false;
     }
 
-    let content = renderSectionContent(this.props, {
+    let formProps = {
       kind: (this.props.shipSettings.show_classic_login_as_button) ? 'expand' : 'compact',
       type: this.getType(),
       fields: this.getFields(),
@@ -91,7 +87,7 @@ export default React.createClass({
       onChange: this.handleChange,
       disabled: d,
       value: { email: this.props.currentEmail }
-    });
+    };
 
     const styles = getStyles();
     let loginLink;
@@ -114,11 +110,8 @@ export default React.createClass({
             variables={{ organization: this.props.organization.name }} />
           {loginLink}
         </div>
-
         <SocialLoginErrors {...this.props} />
-        
-        {content}
-
+        <SectionContent {...this.props} formProps={formProps} />
         <div style={styles.sectionFooter}>
           <TranslatedMessage tag='p'
             style={styles.sectionText}

@@ -45,17 +45,22 @@ function classicLogin(options) {
   });
 }
 
-
 function socialLogin(options) {
+  let url = Hull.config('callbackUrl') ||
+            document.location.origin + '/a/hull-callback';
   return Hull.login({
-    redirect_url: Hull.config('callbackUrl') || document.location.origin + '/a/hull-callback',
+    redirect_url: url,
     ...options
   });
 }
 
 export function signUp(options) {
   const password = { options };
-  return Hull.api('services/shopify/customers', options, 'post').then((user)=> {
+  return Hull.api(
+    'services/shopify/customers',
+    'post',
+    options
+  ).then((user)=> {
     const { email } = user;
     return shopifyLogin(email, password);
   });
@@ -67,5 +72,9 @@ export function logIn(options) {
 }
 
 export function resetPassword(email) {
-  return Hull.api('services/shopify/customers/request_password_reset', 'post', { email });
+  return Hull.api(
+    'services/shopify/customers/request_password_reset',
+    'post',
+    { email }
+  );
 }

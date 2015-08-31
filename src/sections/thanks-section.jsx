@@ -1,9 +1,6 @@
-'use strict';
-
 import React from 'react';
 import { getStyles } from './styles';
-import OrganizationImage from './organization-image';
-import { TranslatedMessage } from '../i18n';
+import { OrganizationImage, TranslatedMessage } from '../components';
 
 export default React.createClass({
   displayName: 'ThanksSection',

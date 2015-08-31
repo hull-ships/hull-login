@@ -7,5 +7,9 @@ export function signUp(options) {
 }
 
 export function resetPassword(email) {
-  return window.Hull.api('users/request_password_reset', 'post', { email });
+  return window.Hull.api(
+    'users/request_password_reset',
+    'post',
+    { email }
+  );
 }

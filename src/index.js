@@ -1,13 +1,12 @@
-'use strict';
+import Components from './components';
+import Sections from './sections';
+import Core from './lib';
+import Styles from './styles';
 
-import bootstrap from './bootstrap';
-
-function onReady(hull, user, platform, organization) {
-  let d = platform.deployments[0];
-  d.organization = organization;
-
-  bootstrap(document.querySelector('#ship'), d);
-}
-
-Hull.ready(onReady);
+export default {
+  Sections,
+  Core,
+  Components,
+  Styles
+};
 

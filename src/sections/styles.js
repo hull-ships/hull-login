@@ -1,6 +1,4 @@
-'use strict';
-
-import { getSettings } from '../../styles/settings';
+import { getSettings } from '../styles/settings';
 
 const sectionHeader = {
   marginBottom: 30

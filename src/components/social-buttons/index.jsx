@@ -1,9 +1,12 @@
 import React from 'react';
-import capitalize from '../lib/capitalize';
-import { translate } from '../lib/i18n';
-import Button from './button';
-import Help from './help';
-import { TranslatedMessage } from './i18n';
+import { translate } from '../../lib/i18n';
+import Button from '../button';
+import Help from '../help';
+import TranslatedMessage from '../translated-message';
+
+export default function capitalize(s) {
+  return s[0].toUpperCase() + s.slice(1);
+}
 
 export default React.createClass({
   renderButton: function(provider, index) {

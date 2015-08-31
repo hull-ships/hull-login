@@ -1,14 +1,11 @@
-'use strict';
-
-import _ from 'underscore';
+import { reduce } from 'underscore';
 import React from 'react';
-import { translate } from '../../lib/i18n';
 import { getStyles } from './styles';
+import { I18n, Mixins } from '../lib';
 import transform from 'tcomb-json-schema';
-import AsyncActionsMixin from '../../mixins/async-actions';
-import Form from '../form';
-import UserImage from './user-image';
-import { TranslatedMessage } from '../i18n';
+import { Form, UserImage, TranslatedMessage } from '../components';
+
+let { translate } = I18n;
 
 function buildSchema() {
   return {
@@ -37,13 +34,13 @@ function buildSchema() {
       'email'
     ]
   };
-};
+}
 
 export default React.createClass({
   displayName: 'LogInSection',
 
   mixins: [
-    AsyncActionsMixin
+    Mixins.AsyncActions
   ],
 
   getAsyncActions() {
@@ -79,7 +76,7 @@ export default React.createClass({
   getFields() {
     let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return _.reduce(this.getSchema().properties, function(m, v, k) {
+    return reduce(this.getSchema().properties, function(m, v, k) {
       let f = {
         label: v.title,
         help: v.help,

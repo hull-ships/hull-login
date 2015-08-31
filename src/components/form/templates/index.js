@@ -13,11 +13,9 @@ function render(Component, locals) {
 
   if (locals.config.kind === 'compact') {
     let error;
-    
     if (locals.error) {
-      error = locals.error && <p style={styles.errorMessage}>{locals.error}</p>;  
+      error = locals.error && <p style={styles.errorMessage}>{locals.error}</p>;
     }
-    
     return <label style={s}>
       <Component {...locals} />
       {error}

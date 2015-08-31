@@ -1,21 +1,17 @@
-'use strict';
-
 import React from 'react';
 import t from 'tcomb-form';
-import { translate } from '../../lib/i18n';
-import { Login, Password } from '../../lib/types';
+import { translate } from '../lib/i18n';
 import { getStyles } from './styles';
-import AsyncActionsMixin from '../../mixins/async-actions';
-import OrganizationImage from './organization-image';
-import renderSectionContent from './render-section-content';
-import { TranslatedMessage } from '../i18n';
-import SocialLoginErrors from '../social-login-errors';
+import { FieldTypes, Mixins } from '../lib';
+import { OrganizationImage, TranslatedMessage, SocialLoginErrors, SectionContent } from '../components';
+
+let { Login, Password } = FieldTypes;
 
 export default React.createClass({
   displayName: 'LogInSection',
 
   mixins: [
-    AsyncActionsMixin
+    Mixins.AsyncActions
   ],
 
   getInitialState() {
@@ -71,8 +67,6 @@ export default React.createClass({
     }
   },
 
-
-
   render() {
     let m;
     let d;
@@ -84,7 +78,8 @@ export default React.createClass({
       d = false;
     }
 
-    let content = renderSectionContent(this.props, {
+
+    let formProps = {
       kind: 'compact',
       type: this.getType(),
       fields: this.getFields(),
@@ -93,7 +88,8 @@ export default React.createClass({
       onChange: this.handleChange,
       disabled: d,
       value: { login: this.props.currentEmail }
-    });
+    };
+
 
     const styles = getStyles();
 
@@ -120,7 +116,7 @@ export default React.createClass({
 
         <SocialLoginErrors {...this.props} />
 
-        {content}
+        <SectionContent {...this.props} formProps={formProps} />
 
         <div style={styles.sectionFooter}>
           <p style={styles.sectionText}>
