@@ -3,7 +3,6 @@ import Divider from './divider';
 import Form from './form';
 import Icon from './icon';
 import Overlay from './overlay';
-import SocialLoginErrors from './social-login-errors';
 import Styles from './styles';
 import TranslatedMessage from './translated-message';
 import UserImage from './user-image';
@@ -17,7 +16,6 @@ export default {
   Form,
   Icon,
   Overlay,
-  SocialLoginErrors,
   Styles,
   TranslatedMessage,
   UserImage,
