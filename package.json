@@ -1,10 +1,10 @@
 {
   "name": "hull-login",
   "description": "A Login Ship",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/hull-ships/hull-login",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "author": {
     "name": "Hull",
     "email": "contact@hull.io",
@@ -18,8 +18,8 @@
     "url": "https://github.com/hull-ships/hull-login/issues"
   },
   "scripts": {
-    "start": "./node_modules/.bin/gulp server",
-    "prepublish": "./node_modules/.bin/gulp build"
+    "start": "gulp server",
+    "prepublish" : "babel -d build/ src/"
   },
   "keywords": [
     "hull",
@@ -57,6 +57,7 @@
     "file-loader": "^0.8.1",
     "gh-pages": "^0.2.0",
     "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
     "gulp-eslint": "^0.14.0",
     "gulp-util": "^3.0.1",
     "json-loader": "^0.5.1",

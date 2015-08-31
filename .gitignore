@@ -3,4 +3,5 @@ bower_components
 stats.json
 .DS_Store
 dist
+build
 npm-debug.log
