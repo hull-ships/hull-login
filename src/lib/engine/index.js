@@ -47,38 +47,39 @@ const EVENT = 'CHANGE';
 
 const STORAGE_KEY = 'hull-login';
 
-function Engine(deployment) {
-  this._ship = deployment.ship;
-  this._platform = deployment.platform;
-  this._settings = deployment.settings;
-  this._organization = deployment.organization;
-  this._form = this._ship.resources.profile_form;
+export default class Engine extends EventEmitter {
 
-  this.resetState();
-  this.resetUser();
-  Hull.on('hull.user.**', (user) => {
-    // Ignore the events that come from actions.
-    if (this.isWorking()) { return; }
+  constructor(deployment) {
+    super();
+    this._ship = deployment.ship;
+    this._platform = deployment.platform;
+    this._settings = deployment.settings;
+    this._organization = deployment.organization;
+    this._form = this._ship.resources.profile_form;
 
-    let nextUser = user || {};
-    let previousUser = this._user || {};
+    this.resetState();
+    this.resetUser();
+    Hull.on('hull.user.**', (user) => {
+      // Ignore the events that come from actions.
+      if (this.isWorking()) { return; }
 
-    if (nextUser.id !== previousUser.id) { this.fetchShip(); }
-  });
+      let nextUser = user || {};
+      let previousUser = this._user || {};
 
-  _.each(this.getActions(), function(a, k) {
-    Hull.on('hull.login.' + k, a);
-  });
+      if (nextUser.id !== previousUser.id) { this.fetchShip(); }
+    });
 
-  this.emitChange();
+    _.each(this.getActions(), function(a, k) {
+      Hull.on('hull.login.' + k, a);
+    });
 
-  let savedState = this.getSavedState();
-  const showSignUpSection = !savedState.returningUser && !savedState.dialogHidden;
-  const t = this._ship.settings.show_sign_up_section_after;
-  if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
-}
+    this.emitChange();
 
-Engine.prototype = assign({}, EventEmitter.prototype, {
+    let savedState = this.getSavedState();
+    const showSignUpSection = !savedState.returningUser && !savedState.dialogHidden;
+    const t = this._ship.settings.show_sign_up_section_after;
+    if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
+  }
 
   getActions() {
     if (this._actions) { return this._actions; }
@@ -89,7 +90,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     }, {});
 
     return this._actions;
-  },
+  }
 
   getState() {
     return {
@@ -114,29 +115,29 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
       activeSection: this.getActiveSection(),
       currentEmail: this._currentEmail
     };
-  },
+  }
 
   addChangeListener(listener) {
     this.addListener(EVENT, listener);
-  },
+  }
 
   removeChangeListener(listener) {
     this.removeListener(EVENT, listener);
-  },
+  }
 
   emitChange() {
     this.emit(EVENT);
-  },
+  }
 
   getStorageKey() {
     return [STORAGE_KEY, this._ship.id].join('-');
-  },
+  }
 
   saveState(attrs) {
     let state = assign({}, this.getSavedState(), attrs);
     window.localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
     return state;
-  },
+  }
 
   getSavedState() {
     let state = {};
@@ -152,7 +153,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
       }
     }
     return state || {};
-  },
+  }
 
   resetState() {
     this.resetUser();
@@ -168,7 +169,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     let savedState = this.getSavedState();
     this._currentEmail = savedState.currentEmail;
     this._returningUser = savedState.returningUser;
-  },
+  }
 
   resetUser() {
     this._user = Hull.currentUser();
@@ -183,7 +184,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     }
 
     this._identities = identities;
-  },
+  }
 
   fetchShip() {
     // As today Hull.api calls cannot be aborted... So I set an ID to every
@@ -201,7 +202,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
       this.resetUser();
       this.emitChange();
     });
-  },
+  }
 
   getProviders() {
     let providers = [];
@@ -219,7 +220,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     }
 
     return providers;
-  },
+  }
 
   getActiveSection() {
     let sections;
@@ -236,12 +237,12 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     }
 
     return sections.indexOf(this._activeSection) > -1 ? this._activeSection : defaultSection;
-  },
+  }
 
   showDialog() {
     let section = this._returningUser ? 'logIn' : 'signUp';
     return this.activateSection(section);
-  },
+  }
 
   hideDialog() {
     this.saveState({ dialogHidden: true });
@@ -256,7 +257,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     this._activeSection = null;
 
     this.emitChange();
-  },
+  }
 
   signUp(credentials) {
     return this.perform('signUp', credentials).then(() => {
@@ -268,7 +269,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
         }
       });
     });
-  },
+  }
 
   logIn(providerOrCredentials) {
     return this.perform('logIn', providerOrCredentials).then((user) => {
@@ -286,7 +287,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
         }
       });
     });
-  },
+  }
 
   logOut() {
     return Hull.logout().then(() => {
@@ -295,21 +296,21 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
 
       this.fetchShip();
     });
-  },
+  }
 
   linkIdentity(provider) {
     return this.perform('linkIdentity', provider).then(() => {
       this.resetUser();
       this.emitChange();
     });
-  },
+  }
 
   unlinkIdentity(provider) {
     return this.perform('unlinkIdentity', provider).then(() => {
       this.resetUser();
       this.emitChange();
     });
-  },
+  }
 
   getBackend() {
     let backend;
@@ -322,11 +323,11 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
         break;
     }
     return backend;
-  },
+  }
 
   getBackendMethod(method) {
     return this.getBackend()[method] || Hull[method] || (()=> { throw new Error('Unknow method ' + method); });
-  },
+  }
 
   perform(method, provider) {
     const statusKey = !!STATUS[method] && ('_' + STATUS[method]);
@@ -364,7 +365,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
 
       this.emitChange();
     });
-  },
+  }
 
   resetPassword(email) {
     this._errors.resetPassword = null;
@@ -394,7 +395,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
       this.emitChange();
     });
     return ret;
-  },
+  }
 
   updateUser(value) {
     let formWasSubmitted = this.formIsSubmitted();
@@ -442,7 +443,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     });
 
     return r;
-  },
+  }
 
   redirect() {
     this._redirectLater = false;
@@ -459,34 +460,34 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     } else {
       document.location.href = location;
     }
-  },
+  }
 
   updateCurrentEmail(value) {
     if (/@/.test(value)) {
       this._currentEmail = value;
       this.saveState({ currentEmail: value });
     }
-  },
+  }
 
   activateLogInSection() {
     this.activateSection('logIn');
-  },
+  }
 
   activateSignUpSection() {
     this.activateSection('signUp');
-  },
+  }
 
   activateResetPasswordSection() {
     this.activateSection('resetPassword');
-  },
+  }
 
   activateShowProfileSection() {
     this.activateSection('showProfile');
-  },
+  }
 
   activateEditProfileSection() {
     this.activateSection('editProfile');
-  },
+  }
 
   activateSection(name) {
     this.clearTimers();
@@ -499,7 +500,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     } else {
       throw new Error('"' + name + '" is not a valid section name');
     }
-  },
+  }
 
   activateThanksSectionAndHideLater() {
     if (!this._ship.settings.show_thanks_section_after_sign_up) {
@@ -512,7 +513,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     let t = this._ship.settings.hide_thanks_section_after;
 
     if (t > 0) { this.hideLater(t); }
-  },
+  }
 
   showLater(time, name) {
     this.clearTimers();
@@ -523,7 +524,7 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
 
       this.emitChange();
     }, time * 1000);
-  },
+  }
 
   hideLater(time) {
     this.clearTimers();
@@ -531,28 +532,29 @@ Engine.prototype = assign({}, EventEmitter.prototype, {
     this._hideLaterTimer = setTimeout(() => {
       this.hideDialog();
     }, time * 1000);
-  },
+  }
 
   clearTimers() {
     clearTimeout(this._hideLaterTimer);
     clearTimeout(this._showLaterTimer);
-  },
+  }
 
   hasForm() {
     return this._form && this._form.fields_list.length > 0;
-  },
+  }
 
   formIsSubmitted() {
     return this._form.user_data && !!this._form.user_data.created_at;
-  },
+  }
 
   isWorking() {
     return this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking;
-  },
+  }
 
   isShopifyCustomer() {
     return this._platform.type === 'platforms/shopify_shop' && Hull.config().customerId !== 'disabled';
   }
-});
 
-export default Engine;
+}
+
+

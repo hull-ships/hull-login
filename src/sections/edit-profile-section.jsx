@@ -2,7 +2,7 @@ import React from 'react';
 import { bind } from 'underscore';
 import { TranslatedMessage, UserImage } from '../components';
 import { EditProfileForm } from '../forms';
-import BaseSection from './base-section'
+import BaseSection from './base-section';
 
 export default class SignUpSection extends BaseSection {
 

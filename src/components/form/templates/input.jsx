@@ -34,7 +34,7 @@ export default React.createClass({
       ...this.getBrowserStateEvents(),
       ...this.props,
       onChange: this.handleChange
-    }
+    };
     return <input ref='input' {...props} />;
   }
 });
