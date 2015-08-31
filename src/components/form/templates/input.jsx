@@ -18,6 +18,20 @@ export default React.createClass({
     this.props.onChange(e.target.value);
   },
 
+  componentDidMount() {
+    if (this.props.autoFocus) {
+      setTimeout(()=> {
+        if (this.isMounted()) {
+          let input = this.refs.input;
+          if (input) {
+            let node = input.getDOMNode();
+            node.focus();
+          }
+        }
+      }, 300);
+    }
+  },
+
   render() {
     let s = this.buildStyles(getStyles().formInput);
 
@@ -27,11 +41,10 @@ export default React.createClass({
         {this.props.help}
       </Help>;
     }
-    help = null;
 
     return (
       <span>
-        <input style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />
+        <input ref='input' style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />
         {help}
       </span>
     );
