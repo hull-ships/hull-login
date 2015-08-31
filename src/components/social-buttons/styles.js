@@ -8,7 +8,11 @@ const Styles = {
   borderWidth: '1px',
   borderStyle: 'solid',
   marginBottom: 10,
-  borderRadius: 3
+  borderRadius: 3,
+  paddingLeft: 14,
+  paddingRight: 14,
+  paddingBottom: 7,
+  paddingTop: 7
 };
 
 
