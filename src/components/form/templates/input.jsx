@@ -4,8 +4,6 @@ import React from 'react';
 import { getStyles } from '../styles';
 import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 
-import Help from '../../help';
-
 export default React.createClass({
   displayName: 'Input',
 
@@ -33,21 +31,13 @@ export default React.createClass({
   },
 
   render() {
-    let s = this.buildStyles(getStyles().formInput);
-
-    let help = null;
-    if (this.props.help) {
-      help = <Help>
-        {this.props.help}
-      </Help>;
+    let props = {
+      style: this.buildStyles(getStyles().formInput),
+      ...this.getBrowserStateEvents(),
+      ...this.props,
+      onChange: this.handleChange
     }
-
-    return (
-      <span>
-        <input ref='input' style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />
-        {help}
-      </span>
-    );
+    return <input ref='input' {...props} />;
   }
 });
 
