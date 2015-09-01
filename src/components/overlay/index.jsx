@@ -18,7 +18,6 @@ export default React.createClass({
     className: React.PropTypes.string,
     title: React.PropTypes.string.isRequired,
     visible: React.PropTypes.bool.isRequired,
-
     onClose: React.PropTypes.func.isRequired
   },
 
@@ -176,7 +175,7 @@ export default React.createClass({
       MozTransition: 'opacity 300ms ease-out',
       transition: 'opacity 300ms ease-out',
       maxHeight: '100vh',
-      overflow: 'scroll'
+      overflow: 'hidden'
     };
 
     if (this.state.viewport === 'normal') {
