@@ -174,7 +174,6 @@ export default React.createClass({
       msTransition: 'opacity 300ms ease-out',
       MozTransition: 'opacity 300ms ease-out',
       transition: 'opacity 300ms ease-out',
-      maxHeight: '100vh',
       overflow: 'hidden'
     };
 
