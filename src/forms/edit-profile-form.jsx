@@ -1,4 +1,4 @@
-import { reduce } from 'underscore';
+import { reduce, include } from 'underscore';
 import React from 'react';
 import { I18n, Mixins } from '../lib';
 import transform from 'tcomb-json-schema';
@@ -6,26 +6,47 @@ import { Form, TranslatedMessage } from '../components';
 
 let { translate } = I18n;
 
+function getHelpMessage(v) {
+  if (typeof v.help === 'string') { return v.help; }
+
+  let m;
+  if (v.minLength > 1 && v.maxLength > 1) {
+    m = 'form help string between';
+  } else if (v.minLength > 1) {
+    m = 'form help string min';
+  } else if (v.maxLength) {
+    m = 'form help string max';
+  }
+
+  if (m != null) {
+    return <TranslatedMessage message={m} variables={v} />;
+  }
+}
+
 function buildSchema() {
   return {
     '$schema': 'http://json-schema.org/draft-04/schema#',
     'type': 'object',
     'properties': {
-      'name': {
+      'first_name': {
         'type': 'string',
-        'title': translate('edit profile name field')
+        'title': translate('edit profile first_name field')
       },
-      'password': {
+      'last_name': {
         'type': 'string',
-        'title': translate('edit profile password field'),
-        'format': 'password',
-        'help': <TranslatedMessage message='edit profile password help text' />
+        'title': translate('edit profile last_name field')
       },
       'email': {
         'type': 'string',
         'title': translate('edit profile email field'),
         'format': 'email',
         'minLength': 1
+      },
+      'password': {
+        'type': 'string',
+        'title': translate('edit profile password field'),
+        'format': 'password',
+        'help': <TranslatedMessage message='edit profile password help text' />
       }
     },
     'required': [
@@ -73,12 +94,19 @@ export default React.createClass({
   },
 
   getFields() {
+    let schema = this.getSchema();
     let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return reduce(this.getSchema().properties, function(m, v, k) {
+    return reduce(schema.properties, function(m, v, k) {
+      let label = v.title;
+      let isRequired = include(schema.required, k);
+      if (isRequired) { label += ' *'; }
+
+      let help = v.help || getHelpMessage(v);
+
       let f = {
-        label: v.title,
-        help: v.help,
+        label,
+        help,
         hasError: !!errors[k]
       };
 
