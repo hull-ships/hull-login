@@ -29,7 +29,7 @@ function shopifyLogin(email, password) {
         if (response && response.status === 404) {
           resolve({
             response,
-            status 
+            status
           });
         } else {
           reject({
