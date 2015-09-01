@@ -1,7 +1,6 @@
 import Button from './button';
 import Divider from './divider';
 import Form from './form';
-import Icon from './icon';
 import Overlay from './overlay';
 import Styles from './styles';
 import TranslatedMessage from './translated-message';
@@ -14,7 +13,6 @@ export default {
   Button,
   Divider,
   Form,
-  Icon,
   Overlay,
   Styles,
   TranslatedMessage,
