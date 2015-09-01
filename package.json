@@ -19,7 +19,8 @@
   },
   "scripts": {
     "start": "gulp server",
-    "prepublish" : "babel -d build/ src/"
+    "prepublish" : "babel -d build/ src/",
+    "postinstall": "babel -d build/ src/"
   },
   "keywords": [
     "hull",
