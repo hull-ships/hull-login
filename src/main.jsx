@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
-import { Mixins, I18n } from './lib';
+import { Mixins, I18n, Utils } from './lib';
 import Sections from './sections';
 import { Overlay, Styles, TranslatedMessage } from './components';
-
 
 let { translate } = I18n;
 
@@ -19,11 +18,26 @@ export default React.createClass({
   },
 
   componentWillMount() {
+    this.preloadImages();
     this.props.engine.addChangeListener(this._onChange);
   },
 
   componentWillUnmount() {
     this.props.engine.removeChangeListener(this._onChange);
+  },
+
+  preloadImages() {
+    let ship = this.state.ship;
+    if (ship && ship.manifest && ship.manifest.settings) {
+      ship.manifest.settings.map((s)=> {
+        if (s && s.format === 'image') {
+          let imageUrl = this.state.shipSettings[s.name];
+          if (imageUrl) {
+            Utils.preloadImage(imageUrl);
+          }
+        }
+      });
+    }
   },
 
   _onChange() {
