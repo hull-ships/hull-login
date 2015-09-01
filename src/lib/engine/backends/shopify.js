@@ -14,7 +14,7 @@ function shopifyLogin(email, password) {
   let { superagent, Promise } = Hull.utils;
   let url = document.location.origin + '/account/login';
   let formData = {
-    return_to: document.location.origin + '/___RETURN_TO___',
+    return_to: '/___RETURN_TO___',
     form_types: 'customer_login',
     ...wrapCustomer({ email, password })
   };
@@ -23,12 +23,21 @@ function shopifyLogin(email, password) {
     superagent.post(url)
       .type('form')
       .send(formData)
-      .end((error, response={}) => {
-        const status = { response };
+      .end((...res) => {
+        const response = res[res.length - 1] || {};
+        const { status } = response;
         if (response && response.status === 404) {
-          resolve({ error, response, status });
+          resolve({
+            response,
+            status 
+          });
         } else {
-          reject(new Error('invalid credentials'));
+          reject({
+            status: 401,
+            message: 'invalid credentials',
+            reason: 'invalid_credentials',
+            provider: 'classic'
+          });
         }
       });
   });
