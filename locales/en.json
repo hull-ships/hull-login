@@ -5,18 +5,22 @@
   "edit profile cancel button when profile incomplete": "Skip this step",
   "edit profile cancel button": "Cancel",
   "edit profile email field": "Your email",
+  "edit profile first_name field": "First name",
   "edit profile header when profile incomplete": "Complete your profile",
   "edit profile header": "Edit your profile",
-  "edit profile name field": "Your name",
+  "edit profile last_name field": "Last name",
   "edit profile password field": "Your password",
   "edit profile password help text": "Leave blank to keep your old password",
+
+  "form help string between": "must be between {minLength} and {maxLength} characters",
+  "form help string max": "must not be longer than {maxLength}",
+  "form help string min": "must be at least {minLength} characters",
 
   "Link your {provider} account": "Link your {provider} account",
   "Linking {provider} account": "Linking {provider} account",
 
   "log-in button text when attempting login": "Logging in",
   "log-in button text": "Log in",
-  "log-in description": "",
   "log-in email help text": "",
   "log-in email placeholder": "Your email or username",
   "log-in forgot password link": "Forgot password?",
@@ -35,7 +39,6 @@
   "log-in invalid credentials error": "Invalid email or password",
   "log-in password help text": "",
   "log-in password placeholder": "Your password",
-  "log-in photo header": "",
   "log-in social button text when attempting login": "Logging in with {provider}",
   "log-in social button text": "Log in with {provider}",
   "log-in switch to sign-up link": "Don't have an account? Sign up!",
@@ -57,9 +60,11 @@
 
   "sign-up button text when attempting sign-up": "Signing up",
   "sign-up button text": "Sign up",
+  "sign-up email is already taken error": "Email has already been taken",
   "sign-up email help text": "",
+  "sign-up email is invalid error": "Email is invalid",
   "sign-up email placeholder": "Your email",
-  "sign-up fine print": "By signing up you agree to {organization}'s Terms of Service.",
+  "sign-up fine print": "By signing up, you agree to {organization}'s Terms of Service.",
   "sign-up header": "Sign up for {organization}",
   "sign-up help text for Angellist": "",
   "sign-up help text for Facebook": "",
@@ -72,20 +77,26 @@
   "sign-up help text for Tumblr": "",
   "sign-up help text for Twitter": "",
   "sign-up help text for Vkontakte": "",
-  "sign-up name help text": "",
-  "sign-up name placeholder": "Your name",
   "sign-up password help text": "",
   "sign-up password placeholder": "Your password",
+  "sign-up password too short error" : "password is too short (minimum is 5 characters).",
   "sign-up social button text when attempting sign-up": "Signing up with {provider}",
   "sign-up social button text": "Sign up with {provider}",
   "sign-up switch to log-in link": "Already have an account? Log in.",
 
+  "social-login error auth_failed" : "Authentication failed",
+  "social-login error auth_failed": "Authentication failed",
+  "social-login error email_taken": "Email has already been taken",
+  "social-login error identity_taken": "Identity has already been taken",
+  "social-login error unknown": "Authentication failed",
+  "social-login error window_closed": "Window closed",
+
   "thanks header": "Thanks for signing up!",
-  "thanks message": "Hi {name} your registration is now complete and so we'll keep you up to date.",
+  "thanks message": "Hi {name}, your registration is now complete and so we'll keep you up to date.",
 
   "Unlink your {provider} account": "Unlink your {provider} account",
   "Unlinking {provider} account": "Unlinking {provider} account",
-  
+
   "view profile header": "View your profile",
   "view profile switch to edit profile link": "Edit profile"
 }
