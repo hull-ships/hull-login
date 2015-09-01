@@ -19,8 +19,7 @@
   },
   "scripts": {
     "start": "gulp server",
-    "prepublish" : "babel -d build/ src/",
-    "postinstall": "babel -d build/ src/"
+    "prepublish" : "babel -d build/ src/"
   },
   "keywords": [
     "hull",
@@ -29,22 +28,19 @@
     "react"
   ],
   "peerDependencies": {
-    "react": ">=0.12.2",
-    "underscore": ">= 1.8.2",
-    "tcomb-form": "^0.4.9",
-    "tcomb-json-schema": "oliger/tcomb-json-schema#master"
+    "react": ">=0.12.2"
   },
   "dependencies": {
     "babel-runtime": "^5.6.5",
     "bounce.js": "citelao/bounce.js#master",
     "color": "^0.8.0",
-    "json-svg-icons": "hull/json-svg-icons#master",
     "messageformat": "^0.2.2",
     "object-assign": "^2.0.0",
     "radium": "^0.10.1",
-    "underscore-contrib": "^0.3.0",
-    "underscore.inflections": "^0.2.1",
-    "underscore.string": "^3.0.3"
+    "underscore": ">= 1.8.2",
+    "tcomb-form": "^0.4.9",
+    "tcomb-json-schema": "oliger/tcomb-json-schema#master",
+    "react": ">=0.12.2"
   },
   "devDependencies": {
     "babel": "^5.6.7",
