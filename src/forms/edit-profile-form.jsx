@@ -28,13 +28,9 @@ function buildSchema() {
     '$schema': 'http://json-schema.org/draft-04/schema#',
     'type': 'object',
     'properties': {
-      'first_name': {
+      'name': {
         'type': 'string',
-        'title': translate('edit profile first_name field')
-      },
-      'last_name': {
-        'type': 'string',
-        'title': translate('edit profile last_name field')
+        'title': translate('edit profile name field')
       },
       'email': {
         'type': 'string',
@@ -118,13 +114,6 @@ export default React.createClass({
 
       return m;
     }, {});
-  },
-
-  handleLogOut(e) {
-    e.preventDefault();
-
-    this.props.logOut();
-    this.props.hideDialog();
   },
 
   handleSubmit(value) {

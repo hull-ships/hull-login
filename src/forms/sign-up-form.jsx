@@ -3,7 +3,7 @@ import t from 'tcomb-form';
 import { FieldTypes, I18n, Mixins } from '../lib';
 import { TranslatedMessage, Form } from '../components';
 
-let { Email, Password } = FieldTypes;
+let { Name, Email, Password } = FieldTypes;
 let { translate } = I18n;
 
 export default React.createClass({
@@ -25,6 +25,7 @@ export default React.createClass({
 
   getType() {
     return t.struct({
+      name: Name,
       email: Email,
       password: Password
     });
@@ -35,13 +36,20 @@ export default React.createClass({
     let errors = ((this.props.errors.signUp || {}).errors || {});
 
     return {
+      name: {
+        placeholder: translate('sign-up name placeholder'),
+        type: 'text',
+        help: <TranslatedMessage message='sign-up name help text' />,
+        hasError: displayErrors && !!errors.name,
+        error: displayErrors && errors.name && translate(['sign-up name', errors.name, 'error'].join(' ')),
+        autoFocus: true
+      },
       email: {
         placeholder: translate('sign-up email placeholder'),
         type: 'email',
         help: <TranslatedMessage message='sign-up email help text' />,
         hasError: displayErrors && !!errors.email,
-        error: displayErrors && errors.email && translate(['sign-up email', errors.email, 'error'].join(' ')),
-        autoFocus: true
+        error: displayErrors && errors.email && translate(['sign-up email', errors.email, 'error'].join(' '))
       },
       password: {
         placeholder: translate('sign-up password placeholder'),
