@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import { reduce, size, pick, each } from 'underscore';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import * as Backends from './backends';
@@ -71,16 +71,22 @@ export default class Engine extends EventEmitter {
       if (nextUser.id !== previousUser.id) { this.fetchShip(); }
     });
 
-    _.each(this.getActions(), function(a, k) {
+    each(this.getActions(), function(a, k) {
       Hull.on('hull.login.' + k, a);
     });
 
     this.emitChange();
 
     let savedState = this.getSavedState();
-    const showSignUpSection = !savedState.returningUser && !savedState.dialogHidden;
-    const t = this._ship.settings.show_sign_up_section_after;
-    if (showSignUpSection && t > 0) { this.showLater(t, 'signUp'); }
+    if (savedState.completeSignup && !this.formIsSubmitted()) {
+      this.showLater(1, 'editProfile');
+    } else {
+      const showSignUpSection = !savedState.returningUser && !savedState.dialogHidden;
+      const t = this._ship.settings.show_sign_up_section_after;
+      if (showSignUpSection && t > 0) {
+        this.showLater(t, 'signUp');
+      }
+    }
   }
 
   getActions() {
@@ -137,7 +143,15 @@ export default class Engine extends EventEmitter {
   }
 
   saveState(attrs) {
-    let state = assign({}, this.getSavedState(), attrs);
+    let state = reduce(attrs, (s, v, k)=> {
+      if (v === null && s.hasOwnProperty(k)) {
+        delete s[k];
+      } else {
+        s[k] = v;
+      }
+      return s;
+    }, this.getSavedState());
+
     if (isLocalStorageSupported !== false) {
       try {
         window.localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
@@ -256,7 +270,7 @@ export default class Engine extends EventEmitter {
   }
 
   hideDialog() {
-    this.saveState({ dialogHidden: true });
+    this.saveState({ dialogHidden: true, completeSignup: null });
 
     this.clearTimers();
 
@@ -271,6 +285,7 @@ export default class Engine extends EventEmitter {
   }
 
   signUp(credentials) {
+    this.saveState({ completeSignup: true });
     return this.perform('signUp', credentials).then(() => {
       return this.fetchShip().then(() => {
         this._redirectLater = true;
@@ -365,23 +380,22 @@ export default class Engine extends EventEmitter {
 
     let promise = fn(options);
 
-    if (!promise || !promise.then) {
-      return promise;
+    if (promise && promise.then) {
+      return promise.then(() => {
+        this[statusKey] = false;
+        this._errors = {};
+
+        this.emitChange();
+      }, (error) => {
+        this[statusKey] = false;
+
+        error.provider = provider;
+        this._errors[method] = error;
+
+        this.emitChange();
+      });
     }
 
-    return promise.then(() => {
-      this[statusKey] = false;
-      this._errors = {};
-
-      this.emitChange();
-    }, (error) => {
-      this[statusKey] = false;
-
-      error.provider = provider;
-      this._errors[method] = error;
-
-      this.emitChange();
-    });
   }
 
   resetPassword(email) {
@@ -417,14 +431,14 @@ export default class Engine extends EventEmitter {
   updateUser(value) {
     let formWasSubmitted = this.formIsSubmitted();
 
-    let user = _.reduce(['name', 'email', 'password', 'first_name', 'last_name'], (m, k) => {
+    let user = reduce(['name', 'email', 'password', 'first_name', 'last_name'], (m, k) => {
       let v = value[k];
       if (typeof v === 'string' && v.trim() !== '') { m[k] = v; }
 
       return m;
     }, {});
 
-    let data = _.reduce(this._form.fields_list, (m, { name }) => {
+    let data = reduce(this._form.fields_list, (m, { name }) => {
       let v = value[name];
       if (v != null) { m[name] = v; }
 
@@ -432,13 +446,13 @@ export default class Engine extends EventEmitter {
     }, {});
 
     let promises = [];
-    if (_.size(user)) {
+    if (size(user)) {
       let promise = Hull.api(this._user.id, 'put', user).then((r) => {
         this._user = r;
       });
       promises.push(promise);
     }
-    if (_.size(data)) {
+    if (size(data)) {
       let promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
         this._form = r;
       });
@@ -575,7 +589,7 @@ export default class Engine extends EventEmitter {
     return assign(
       user.extra,
       formData,
-      _.pick(this._user, 'id', 'name', 'first_name', 'last_name', 'email', 'address')
+      pick(this._user, 'id', 'name', 'first_name', 'last_name', 'email', 'address')
     );
   }
 
