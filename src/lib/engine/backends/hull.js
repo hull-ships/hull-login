@@ -13,3 +13,8 @@ export function resetPassword(email) {
     { email }
   );
 }
+
+export function logOut(options) {
+  return window.Hull.logout(options);
+}
+

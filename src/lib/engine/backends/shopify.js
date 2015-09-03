@@ -87,3 +87,9 @@ export function resetPassword(email) {
     { email }
   );
 }
+
+export function logOut(/* options */) {
+  let logoutUrl = document.location.origin + '/account/logout';
+  return Hull.logout({ redirect_url: logoutUrl });
+}
+

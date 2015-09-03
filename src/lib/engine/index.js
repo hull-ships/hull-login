@@ -47,6 +47,8 @@ const EVENT = 'CHANGE';
 
 const STORAGE_KEY = 'hull-login';
 
+let isLocalStorageSupported;
+
 export default class Engine extends EventEmitter {
 
   constructor(deployment) {
@@ -136,7 +138,13 @@ export default class Engine extends EventEmitter {
 
   saveState(attrs) {
     let state = assign({}, this.getSavedState(), attrs);
-    window.localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
+    if (isLocalStorageSupported !== false) {
+      try {
+        window.localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
+      } catch(err) {
+        isLocalStorageSupported = false;
+      }
+    }
     return state;
   }
 
@@ -195,7 +203,9 @@ export default class Engine extends EventEmitter {
     this._fetchShipPromiseId = id;
 
     return Hull.api(this._ship.id).then((ship) => {
-      if (id !== this._fetchShipPromiseId) { return; }
+      if (id !== this._fetchShipPromiseId) {
+        return; 
+      }
 
       this._ship = ship;
       this._form = this._ship.resources.profile_form;
@@ -290,8 +300,8 @@ export default class Engine extends EventEmitter {
     });
   }
 
-  logOut() {
-    return Hull.logout().then(() => {
+  logOut(options) {
+    return this.perform('logOut', options).then(() => {
       this.resetUser();
       this.emitChange();
 
@@ -353,7 +363,13 @@ export default class Engine extends EventEmitter {
 
     let fn = this.getBackendMethod(method);
 
-    return fn(options).then(() => {
+    let promise = fn(options);
+
+    if (!promise || !promise.then) {
+      return promise;
+    }
+
+    return promise.then(() => {
       this[statusKey] = false;
       this._errors = {};
 
