@@ -3,10 +3,10 @@ import React from 'react';
 import assign from 'object-assign';
 import { getSettings } from '../../styles/settings';
 
-let mediaQuery = window.matchMedia('(min-width: 460px)');
+let mediaQuery = window.matchMedia && window.matchMedia('(min-width: 460px)');
 
 function getViewport() {
-  return mediaQuery.matches ? 'normal' : 'compact';
+  return (mediaQuery == null || mediaQuery.matches) ? 'normal' : 'compact';
 }
 
 const FOCUSABLE_ELEMENTS_SELECTOR = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex]:not([tabindex="-1"]), *[contenteditable]';
@@ -27,14 +27,18 @@ export default React.createClass({
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeydown, true);
-    mediaQuery.addListener(this.handleMediaQueryChange);
+    if (mediaQuery != null) {
+      mediaQuery.addListener(this.handleMediaQueryChange);
+    }
 
     React.findDOMNode(this.refs.overlay).focus();
   },
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.handleKeydown, true);
-    mediaQuery.removeListener(this.handleMediaQueryChange);
+    if (mediaQuery != null) {
+      mediaQuery.removeListener(this.handleMediaQueryChange);
+    }
   },
 
   componentDidUpdate() {
