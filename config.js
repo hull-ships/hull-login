@@ -24,7 +24,8 @@ var hotReload = true;
 
 var entry = {
   ship:  "./"+sourceFolder+"/ship.js",
-  index: "./"+sourceFolder+"/index.js"
+  index: "./"+sourceFolder+"/index.js",
+  test: "./"+sourceFolder+"/test.js"
 };
 
 // ADDITIONAL FILES TO BE COPIED BY GULP
