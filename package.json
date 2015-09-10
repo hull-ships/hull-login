@@ -39,7 +39,7 @@
     "radium": "^0.10.1",
     "underscore": ">= 1.8.2",
     "tcomb-form": "^0.4.9",
-    "tcomb-json-schema": "oliger/tcomb-json-schema#master",
+    "tcomb-json-schema": "hull/tcomb-json-schema#master",
     "react": ">=0.12.2"
   },
   "devDependencies": {

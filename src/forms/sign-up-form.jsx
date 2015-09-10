@@ -2,6 +2,7 @@ import React from 'react';
 import t from 'tcomb-form';
 import { FieldTypes, I18n, Mixins } from '../lib';
 import { TranslatedMessage, Form } from '../components';
+import _ from 'underscore';
 
 let { Name, Email, Password } = FieldTypes;
 let { translate } = I18n;
@@ -23,9 +24,24 @@ export default React.createClass({
     };
   },
 
+  getNameFields() {
+    if (this.props.shipSettings.show_name_field_on_sign_up) { return []; }
+
+    if (this.props.shipSettings.split_name_field) {
+      return ['first_name', 'last_name'];
+    }
+
+    return ['name'];
+  },
+
   getType() {
+    let p = _.reduce(this.getNameFields(), (m, f) => {
+      m[f] = Name;
+      return m;
+    }, {});
+
     return t.struct({
-      name: Name,
+      ...p,
       email: Email,
       password: Password
     });
@@ -35,15 +51,21 @@ export default React.createClass({
     let { displayErrors } = this.state;
     let errors = ((this.props.errors.signUp || {}).errors || {});
 
-    return {
-      name: {
-        placeholder: translate('sign-up name placeholder'),
+    let p = _.reduce(this.getNameFields(), (m, f) => {
+      m[f] = {
+        placeholder: translate(`sign-up ${f} placeholder`),
         type: 'text',
-        help: <TranslatedMessage message='sign-up name help text' />,
+        help: <TranslatedMessage message={`sign-up ${f} help text`} />,
         hasError: displayErrors && !!errors.name,
-        error: displayErrors && errors.name && translate(['sign-up name', errors.name, 'error'].join(' ')),
+        error: displayErrors && errors[f] && translate(['sign-up name', errors[f], 'error'].join(' ')),
         autoFocus: true
-      },
+      };
+
+      return m;
+    }, {});
+
+    return {
+      ...p,
       email: {
         placeholder: translate('sign-up email placeholder'),
         type: 'email',
@@ -99,4 +121,3 @@ export default React.createClass({
     return <Form {...formProps} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />;
   }
 });
-

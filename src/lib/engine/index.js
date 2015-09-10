@@ -122,7 +122,8 @@ export default class Engine extends EventEmitter {
       isUnlinking: this._isUnlinking,
       dialogIsVisible: this._dialogIsVisible,
       activeSection: this.getActiveSection(),
-      currentEmail: this._currentEmail
+      currentEmail: this._currentEmail,
+      isShopifyCustomer: this.isShopifyCustomer()
     };
   }
 
@@ -218,7 +219,7 @@ export default class Engine extends EventEmitter {
 
     return Hull.api(this._ship.id).then((ship) => {
       if (id !== this._fetchShipPromiseId) {
-        return; 
+        return;
       }
 
       this._ship = ship;
@@ -598,5 +599,3 @@ export default class Engine extends EventEmitter {
   }
 
 }
-
-

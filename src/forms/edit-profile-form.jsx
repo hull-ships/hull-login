@@ -23,35 +23,6 @@ function getHelpMessage(v) {
   }
 }
 
-function buildSchema() {
-  return {
-    '$schema': 'http://json-schema.org/draft-04/schema#',
-    'type': 'object',
-    'properties': {
-      'name': {
-        'type': 'string',
-        'title': translate('edit profile name field')
-      },
-      'email': {
-        'type': 'string',
-        'title': translate('edit profile email field'),
-        'format': 'email',
-        'minLength': 1
-      },
-      'password': {
-        'type': 'string',
-        'title': translate('edit profile password field'),
-        'format': 'password',
-        'help': <TranslatedMessage message='edit profile password help text' />
-      }
-    },
-    'required': [
-      'name',
-      'email'
-    ]
-  };
-}
-
 export default React.createClass({
   displayName: 'EditProfileForm',
 
@@ -65,24 +36,68 @@ export default React.createClass({
     };
   },
 
-  getSchema() {
-    let SCHEMA = buildSchema();
-    if (this.props.hasForm) {
-      if (this.props.formIsSubmitted) {
-        return {
-          type: 'object',
-          properties: {
-            ...SCHEMA.properties,
-            ...this.props.form.fields_schema.properties
-          },
-          required: SCHEMA.required.concat(this.props.form.fields_schema.required)
-        };
-      }
+  getDefaultSchema() {
+    let properties = {};
 
-      return this.props.form.fields_schema;
+    if (this.props.shipSettings.split_name_field) {
+      properties.first_name = {
+        type: 'string',
+        title: translate('edit profile first_name field')
+      };
+      properties.last_name = {
+        type: 'string',
+        title: translate('edit profile last_name field')
+      };
+    } else {
+      properties.name = {
+        type: 'string',
+        title: translate('edit profile name field')
+      };
     }
 
-    return SCHEMA;
+    if (this.props.isShopifyCustomer) {
+      properties.email = {
+        'type': 'string',
+        'title': translate('edit profile email field'),
+        'format': 'email',
+        'minLength': 1
+      };
+      properties.password = {
+        'type': 'string',
+        'title': translate('edit profile password field'),
+        'format': 'password',
+        'help': <TranslatedMessage message='edit profile password help text' />
+      };
+    }
+
+    return {
+      '$schema': 'http://json-schema.org/draft-04/schema#',
+      'type': 'object',
+      'properties': properties,
+      'required': [
+        'name',
+        'email'
+      ]
+    };
+  },
+
+  getSchema() {
+    let s = this.getDefaultSchema();
+
+    if (!this.props.hasForm) { return s; }
+
+    if (this.props.formIsSubmitted) {
+      return {
+        type: 'object',
+        properties: {
+          ...s.properties,
+          ...this.props.form.fields_schema.properties
+        },
+        required: s.required.concat(this.props.form.fields_schema.required)
+      };
+    }
+
+    return this.props.form.fields_schema;
   },
 
   getType() {
