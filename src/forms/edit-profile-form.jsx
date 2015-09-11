@@ -55,7 +55,7 @@ export default React.createClass({
       };
     }
 
-    if (this.props.isShopifyCustomer) {
+    if (!this.props.isShopifyCustomer) {
       properties.email = {
         'type': 'string',
         'title': translate('edit profile email field'),
