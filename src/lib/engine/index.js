@@ -396,7 +396,6 @@ export default class Engine extends EventEmitter {
         this.emitChange();
       });
     }
-
   }
 
   resetPassword(email) {
