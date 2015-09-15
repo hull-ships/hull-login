@@ -73,11 +73,25 @@
       "default": false
     },
     {
+      "name": "split_name_field",
+      "title": "Split name in two fields",
+      "description": "Split the name field in two fields (first name & last name).",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "name":"disable_buttons_automatically",
       "title": "Visually disable submit buttons for incomplete forms",
       "description": "If checked, disable the 'log in' and 'sign up' buttons when their forms are incomplete. Incomplete submissions will not be allowed regardless of the state of this option.",
       "type": "boolean",
       "default": false
+    },
+    {
+      "name": "show_name_field_on_sign_up",
+      "title": "Show name field on sign up",
+      "description": "If checked, show a field that ask the user for his name.",
+      "type": "boolean",
+      "default": true
     },
     {
       "name":"show_sign_up_section_after",
