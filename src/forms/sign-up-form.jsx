@@ -25,7 +25,7 @@ export default React.createClass({
   },
 
   getNameFields() {
-    if (this.props.shipSettings.show_name_field_on_sign_up) { return []; }
+    if (!this.props.shipSettings.show_name_field_on_sign_up) { return []; }
 
     if (this.props.shipSettings.split_name_field) {
       return ['first_name', 'last_name'];
