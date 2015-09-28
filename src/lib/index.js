@@ -5,13 +5,10 @@ import Utils from './utils';
 import FieldTypes from './field-types';
 import { setSettings } from '../styles/settings';
 
+function setupShip(ship) {
+  I18n.setTranslations(ship.translations);
 
-function start(deployment) {
-  let engine = new Engine(deployment);
-
-  I18n.setTranslations(deployment.ship.translations);
-
-  const shipSettings = deployment.ship.settings;
+  const shipSettings = ship.settings;
   setSettings({
     primaryColor: shipSettings.primary_color,
     textColor: shipSettings.text_color,
@@ -19,7 +16,17 @@ function start(deployment) {
     defaultBorderRadius: shipSettings.button_border_radius,
     mediumBorderRadius: shipSettings.overlay_border_radius
   });
+}
 
+function start(deployment) {
+  let engine = new Engine(deployment);
+  setupShip(deployment.ship);
+  if (deployment.onUpdate && typeof deployment.onUpdate === 'function') {
+    deployment.onUpdate(function(ship) {
+      setupShip(ship);
+      engine.updateShip(ship);
+    });
+  }
   return engine;
 }
 

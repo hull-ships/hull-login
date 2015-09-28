@@ -100,6 +100,11 @@ export default class Engine extends EventEmitter {
     return this._actions;
   }
 
+  updateShip(ship) {
+    this._ship = ship;
+    this.emitChange();
+  }
+
   getState() {
     return {
       user: this._user,
