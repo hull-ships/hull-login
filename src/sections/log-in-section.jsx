@@ -42,15 +42,18 @@ export default class LogInSection extends BaseSection {
 
   renderContent() {
     let { shipSettings } = this.props;
+    let content;
     if (shipSettings.show_classic_login) {
-      return <div>
+      content = <div>
         <SocialButtons {...this.props} />
         <Divider>or</Divider>
         <LogInForm {...this.props} />
       </div>;
     } else {
-      return <div><SocialButtons {...this.props} /></div>;
+      content = <div><SocialButtons {...this.props} /></div>;
     }
+
+    return content;
   }
 }
 
