@@ -27,22 +27,30 @@ export default class LogInSection extends BaseSection {
   }
 
   renderFooter(styles) {
-    return <div style={styles.sectionFooter}>
-      <p style={styles.sectionText}>
-        <TranslatedMessage tag='a'
-          href='javascript: void 0;'
-          onClick={this.props.activateResetPasswordSection}
-          message='log-in forgot password link' />
-      </p>
-    </div>;
+    let { shipSettings } = this.props;
+    if (shipSettings.show_classic_login) {
+      return <div style={styles.sectionFooter}>
+        <p style={styles.sectionText}>
+          <TranslatedMessage tag='a'
+            href='javascript: void 0;'
+            onClick={this.props.activateResetPasswordSection}
+            message='log-in forgot password link' />
+        </p>
+      </div>;
+    }
   }
 
   renderContent() {
-    return <div>
-      <SocialButtons {...this.props} />
-      <Divider>or</Divider>
-      <LogInForm {...this.props} />
-    </div>;
+    let { shipSettings } = this.props;
+    if (shipSettings.show_classic_login) {
+      return <div>
+        <SocialButtons {...this.props} />
+        <Divider>or</Divider>
+        <LogInForm {...this.props} />
+      </div>;
+    } else {
+      return <div><SocialButtons {...this.props} /></div>;
+    }
   }
 }
 
