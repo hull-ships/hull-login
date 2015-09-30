@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "gulp server",
-    "prepublish" : "babel -d build/ src/"
+    "prepublish": "babel -d build/ src/"
   },
   "keywords": [
     "hull",
@@ -53,6 +53,7 @@
     "eslint-plugin-react": "^2.5.2",
     "file-loader": "^0.8.1",
     "gh-pages": "^0.2.0",
+    "git-rev-sync": "^1.4.0",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
     "gulp-eslint": "^0.14.0",

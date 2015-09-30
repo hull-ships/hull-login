@@ -1,6 +1,5 @@
-'use strict';
-/*eslint-disable no-var*/
 /*global require, console*/
+/*eslint-disable no-var*/
 
 var _ = require('underscore');
 var path = require('path');
@@ -17,11 +16,14 @@ var ngrok = require('ngrok');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 
+var git = require('git-rev-sync');
+var pkg = require('./package.json');
+
+
 // Get our Config.
 var config = require('./config');
 var webpackConfig = require('./webpack.config');
 var webpackDevCompiler = webpack(webpackConfig.development.browser);
-
 
 // Task Bundles
 gulp.task('default', ['server']);
@@ -51,6 +53,7 @@ function handleError(err, taskName) {
 function webpackFeedbackHandler(err, stats) {
   var jsonStats = stats.toJson();
   handleError(err);
+
 
   if (jsonStats.errors.length > 0) {
     gutil.log('[webpack:build:error]', JSON.stringify(jsonStats.errors));
@@ -90,7 +93,7 @@ function ngrokServe(subdomain) {
 
     url = url.replace('https', 'http');
     notify({
-      message: ' Ngrok Started on ' + url
+      message: 'Ngrok Started on ' + url
     });
 
     gutil.log('[ship:server]', url);
@@ -122,6 +125,7 @@ gulp.task('copy-files:watch', function() {
 // demo.html WILL NOT WORK with this build.
 //
 // Webpack handles CSS/SCSS, JS, and HTML files.
+
 gulp.task('webpack:build', function(callback) {
   // Then, use Webpack to bundle all JS and html files to the destination folder
   notify('Building App');
@@ -163,6 +167,7 @@ gulp.task('webpack:server', function() {
     var url = webpackConfig.development.browser.output.publicPath + 'webpack-dev-server/';
 
     handleError(err, taskName);
+
     gutil.log('[' + taskName + '] started at ', url);
     notify({ message: 'Dev Server Started' });
     ngrokServe(config.libName);
@@ -171,8 +176,12 @@ gulp.task('webpack:server', function() {
 
 // Deploy production bundle to gh-pages.
 gulp.task('gh:deploy', function(callback) {
+  var basePath = path.join(process.cwd(), config.outputFolder);
+  var options = {
+    message: 'Deployed version ' + pkg.version + ' - rev. ' + git.short()
+  };
   notify('Deploying ' + config.outputFolder + ' to Github Pages');
-  ghpages.publish(path.join(process.cwd(), config.outputFolder), callback);
+  ghpages.publish(basePath, options, callback);
 });
 
 gulp.task('lint', function() {
