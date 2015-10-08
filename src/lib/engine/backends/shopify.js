@@ -54,12 +54,15 @@ function classicLogin(options) {
   });
 }
 
-function socialLogin(options) {
+function socialLogin(options = {}) {
   let url = Hull.config('callbackUrl') ||
-            document.location.origin + '/a/hull-callback';
+            `${document.location.origin}/a/hull-callback`;
+  if (options.redirect_url) {
+    url = `${url}?redirect_url=${options.redirect_url}`;
+  }
   return Hull.login({
-    redirect_url: url,
-    ...options
+    ...options,
+    redirect_url: url
   });
 }
 
