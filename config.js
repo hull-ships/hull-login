@@ -58,8 +58,6 @@ var output = {
   pathinfo: true,
   filename: "[name].js",
   chunkFileName: "[name].chunk.js",
-  libraryTarget: "umd",
-  library: displayName,
   publicPath: assetsFolder+"/"
 };
 
