@@ -10,7 +10,7 @@ function wrapCustomer(data) {
   return h;
 }
 
-function shopifyLogin(email, password) {
+function shopifyLogin(email, password, options = {}) {
   let { superagent, Promise } = Hull.utils;
   let url = document.location.origin + '/account/login';
   let formData = {
@@ -31,6 +31,9 @@ function shopifyLogin(email, password) {
             response,
             status
           });
+          if (options.redirect_url) {
+            window.location.href = options.redirect_url;
+          }
         } else {
           reject({
             status: 401,
@@ -43,14 +46,14 @@ function shopifyLogin(email, password) {
   });
 }
 
-function classicLogin(options) {
+function classicLogin(options = {}) {
   const params = {
     email: options.email || options.login,
     password: options.password
   };
   return Hull.api('services/shopify/customers/login', params, 'post').then(()=> {
     const { email, password } = params;
-    return shopifyLogin(email, password);
+    return shopifyLogin(email, password, options);
   });
 }
 
@@ -66,15 +69,15 @@ function socialLogin(options = {}) {
   });
 }
 
-export function signUp(options) {
-  const password = { options };
+export function signUp(options = {}) {
+  const { password } = options;
   return Hull.api(
     'services/shopify/customers',
     'post',
     options
   ).then((user)=> {
     const { email } = user;
-    return shopifyLogin(email, password);
+    return shopifyLogin(email, password, options);
   });
 }
 

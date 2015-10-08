@@ -51,8 +51,9 @@ let isLocalStorageSupported;
 
 export default class Engine extends EventEmitter {
 
-  constructor(deployment) {
+  constructor(deployment, hull) {
     super();
+    this._hull = hull;
     this._ship = deployment.ship;
     this._platform = deployment.platform;
     this._settings = deployment.settings;
@@ -61,7 +62,7 @@ export default class Engine extends EventEmitter {
 
     this.resetState();
     this.resetUser();
-    Hull.on('hull.user.**', (user) => {
+    this._hull.on('hull.user.**', (user) => {
       // Ignore the events that come from actions.
       if (this.isWorking()) { return; }
 
@@ -71,8 +72,11 @@ export default class Engine extends EventEmitter {
       if (nextUser.id !== previousUser.id) { this.fetchShip(); }
     });
 
-    each(this.getActions(), function(a, k) {
-      Hull.on('hull.login.' + k, a);
+    each(this.getActions(), (a, k) => {
+      this._hull.on('hull.login.' + k, (options) => {
+        this._transientOptions = options;
+        a();
+      });
     });
 
     this.emitChange();
@@ -232,6 +236,8 @@ export default class Engine extends EventEmitter {
 
       this.resetUser();
       this.emitChange();
+    }).catch(function(e) {
+      throw new Error('Error Fetching Ship', e);
     });
   }
 
@@ -276,6 +282,7 @@ export default class Engine extends EventEmitter {
   }
 
   hideDialog() {
+    this._transientOptions = {};
     this.saveState({ dialogHidden: true, completeSignup: null });
 
     this.clearTimers();
@@ -364,16 +371,16 @@ export default class Engine extends EventEmitter {
   perform(method, provider) {
     const statusKey = !!STATUS[method] && ('_' + STATUS[method]);
     const { Promise } = Hull.utils;
-    let options;
+    let options = assign({}, this._transientOptions);
 
     if (!statusKey) {
       return Promise.reject('Unknown method ' + method);
     }
 
     if (typeof provider === 'string') {
-      options = { provider: provider };
+      options = assign(options, { provider });
     } else {
-      options = assign({}, provider);
+      options = assign(options, provider);
       provider = 'classic';
     }
 
@@ -383,7 +390,6 @@ export default class Engine extends EventEmitter {
     this.emitChange();
 
     let fn = this.getBackendMethod(method);
-
     let promise = fn(options);
 
     if (promise && promise.then) {

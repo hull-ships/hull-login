@@ -18,8 +18,8 @@ function setupShip(ship) {
   });
 }
 
-function start(deployment) {
-  let engine = new Engine(deployment);
+function start(deployment, hull) {
+  let engine = new Engine(deployment, hull);
   setupShip(deployment.ship);
   if (deployment.onUpdate && typeof deployment.onUpdate === 'function') {
     deployment.onUpdate(function(ship) {
@@ -29,6 +29,7 @@ function start(deployment) {
   }
   return engine;
 }
+
 
 export default {
   start,
