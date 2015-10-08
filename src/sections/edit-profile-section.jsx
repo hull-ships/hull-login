@@ -2,6 +2,7 @@ import React from 'react';
 import { TranslatedMessage, UserImage } from '../components';
 import { EditProfileForm } from '../forms';
 import BaseSection from './base-section';
+import assign from 'object-assign';
 
 export default class SignUpSection extends BaseSection {
 
@@ -21,12 +22,11 @@ export default class SignUpSection extends BaseSection {
     }
 
     let { picture } = this.props.user || {};
+    const blockStyle = assign({}, styles.sectionText, {display: 'block'});
     return <div style={styles.sectionHeader}>
       <UserImage style={styles.sectionUserImage} src={picture} />
       <TranslatedMessage tag='h1' style={styles.sectionTitle} message={title} />
-      <a href='javascript: void 0;' onClick={handleClick}>
-        <TranslatedMessage tag='p' style={styles.sectionText} message={subtitle} />
-      </a>
+      <TranslatedMessage href='javascript: void 0;' tag='a' onClick={handleClick} style={blockStyle} message={subtitle} />
     </div>;
   }
 
