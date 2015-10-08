@@ -10,6 +10,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var ghpages = require('gh-pages');
 var notifier = require('node-notifier');
+var cloudfront = require('gulp-invalidate-cloudfront');
 
 var ngrok = require('ngrok');
 
