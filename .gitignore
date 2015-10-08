@@ -5,3 +5,4 @@ stats.json
 dist
 build
 npm-debug.log
+.env.sh

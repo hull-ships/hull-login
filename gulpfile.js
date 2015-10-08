@@ -31,7 +31,7 @@ gulp.task('serve', ['server']);
 
 gulp.task('server', function(callback) {runSequence('clean', 'copy-files:watch', 'webpack:server', callback); });
 gulp.task('build', function(callback) {runSequence('lint', 'clean', 'copy-files', 'webpack:build', callback); });
-gulp.task('deploy', function(callback) {runSequence('build', 'gh:deploy', callback); });
+gulp.task('deploy', function(callback) {runSequence('build', 'gh:deploy', 'cloudfront', callback); });
 
 
 function notify(message) {
@@ -192,3 +192,11 @@ gulp.task('lint', function() {
     .pipe(eslint.failAfterError());
 });
 
+
+gulp.task('cloudfront', function(callback){
+
+  if(!config.cloudfront){ throw new gutil.PluginError('cloudfront', 'cloudfront is not configured properly, checkout config.js'); }
+
+  return gulp.src('**/*.js')
+  .pipe(cloudfront(config.cloudfront.invalidationBatch, config.cloudfront.config))
+})

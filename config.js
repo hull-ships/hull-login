@@ -100,6 +100,28 @@ var plugins = [
 
 var externals = {};
 
+var cloudfront;
+if (process.env.AWS_KEY && process.env.AWS_SECRET) {
+  var cloudfrontInvalidations = ['/' + libName + '/*'];
+  cloudfront = {
+    config: {
+      credentials: {
+        accessKeyId: process.env.AWS_KEY,
+        secretAccessKey: process.env.AWS_SECRET,
+      },
+      distributionId: process.env.CLOUDFRONT_DISTRIBUTION_ID,
+      region: 'us-east-1',
+    },
+    invalidationBatch: {
+      CallerReference: new Date().toString(),
+      Paths: {
+        Quantity: cloudfrontInvalidations.length,
+        Items: cloudfrontInvalidations,
+      },
+    },
+  };
+}
+
 module.exports = {
   hotReload          : hotReload,
   libName            : libName,
@@ -111,6 +133,8 @@ module.exports = {
   assetsFolder       : assetsFolder,
   serverPort         : serverPort,
   previewUrl         : previewUrl,
+
+  cloudfront         : cloudfront,
 
   entry              : entry,
   output             : output,
