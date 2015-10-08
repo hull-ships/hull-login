@@ -3,7 +3,7 @@ import { UserImage, TranslatedMessage } from '../components';
 import BaseSection from './base-section';
 
 
-export default class ShopProfileSection extends BaseSection {
+export default class ShowProfileSection extends BaseSection {
 
   renderContent() {
     let settings = this.getStylesSettings();
@@ -57,7 +57,10 @@ export default class ShopProfileSection extends BaseSection {
         <TranslatedMessage tag='a'
           href='#'
           onClick={this.props.activateEditProfileSection}
-          message='view profile switch to edit profile link' />
+          message='view profile switch to edit profile link' /> · <TranslatedMessage tag='a'
+          href='#'
+          onClick={this.props.logOut}
+          message='nav logout link' />
       </p>
     </div>;
   }
