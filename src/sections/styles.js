@@ -5,7 +5,8 @@ const sectionHeader = {
 };
 
 const sectionOrganizationImage = {
-  marginBottom: 20
+  maxWidth: 280,
+  margin: '20px auto'
 };
 
 const sectionUserImage = {

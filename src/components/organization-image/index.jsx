@@ -6,7 +6,7 @@ const styles = {
   },
 
   image: {
-    maxWidth: 280,
+    maxWidth: '100%',
     maxHeight: 140
   }
 };
