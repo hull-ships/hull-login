@@ -59,6 +59,13 @@
       "default": true
     },
     {
+      "name":"show_inline",
+      "title": "Show inline",
+      "description":"Show login and signup forms in page instead of as a Modal",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "name":"show_classic_login",
       "title": "Allow email & password registration",
       "description": "Enable email-based sign ups on your website, i.e. sign ups that don't require social login.",
@@ -95,16 +102,16 @@
     },
     {
       "name":"show_sign_up_section_after",
-      "title": "Show sign up section delay",
+      "title": "Automatic Sign up popup delay",
       "description": "This is the wait time (in seconds) before automatically showing the sign-up section to unregistered visitors (once per user). 0 seconds disables the pop-up.",
       "type": "number",
       "format": "number",
       "minimum": 0,
-      "default": 2
+      "default": 0
     },
     {
       "name":"hide_thanks_section_after",
-      "title": "Hide thanks section delay",
+      "title": "Automatically Hide thanks section delay",
       "description": "This is the wait time (in seconds) before automatically hiding the thanks section (i.e. 'thanks for signing up!') once users finish registration (0 to disable).",
       "type": "number",
       "format": "number",
