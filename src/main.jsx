@@ -53,7 +53,7 @@ export default React.createClass({
   },
 
   renderOverlay() {
-    if (!this.state.dialogIsVisible) { return null; }
+    if (!this.state.dialogIsVisible || !!this.state.shipSettings.show_inline) { return null; }
 
     const d = { organization: this.state.organization.name };
     const titles = {
@@ -65,12 +65,20 @@ export default React.createClass({
       thanks: translate('thanks header')
     };
 
-    const Section = Sections[this.state.activeSection];
     const t = titles[this.state.activeSection];
     return (
       <Overlay className={this.getScope()} onClose={this.props.actions.hideDialog} title={t} visible={true}>
-        <Section {...this.state} {...this.props.actions} />
+        {this.renderContent()}
       </Overlay>
+    );
+  },
+
+  renderContent() {
+    const Section = Sections[this.state.activeSection];
+    return (
+      <div className={this.getScope()}>
+        <Section {...this.state} {...this.props.actions} />
+      </div>
     );
   },
 
@@ -96,7 +104,7 @@ export default React.createClass({
     };
   },
 
-  render() {
+  renderButtons() {
     const u = this.state.user;
 
     let buttons = [];
@@ -157,14 +165,17 @@ export default React.createClass({
         buttons.push(b);
       }
     }
+    return buttons;
+  },
 
+  render() {
     let s = this.getScope();
     let r = this.getResetStyles();
     return (
       <div className='hull-login'>
         <Styles scope={s} reset={r} />
         {this.renderUserStyles()}
-        {buttons}
+        {this.state.shipSettings.show_inline ? this.renderContent() : this.renderButtons()}
       </div>
     );
   }
