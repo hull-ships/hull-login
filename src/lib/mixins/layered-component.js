@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 export default {
   componentDidMount() {
@@ -47,9 +48,9 @@ export default {
     // a noscript element, like React does when an element's render returns
     // null.
     if (layerElement === null) {
-      React.render(<noscript />, this._layer);
+      ReactDOM.render(<noscript />, this._layer);
     } else {
-      React.render(layerElement, this._layer);
+      ReactDOM.render(layerElement, this._layer);
     }
 
     if (this.layerDidMount) {

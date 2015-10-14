@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { start } from './lib';
 import Main from './main';
 
 Hull.onEmbed(document, function boostrap(element, deployment, hull) {
   const engine = start(deployment, hull);
-  React.render(<Main engine={engine} actions={engine.getActions()} />, element);
+  ReactDOM.render(<Main engine={engine} actions={engine.getActions()} />, element);
 });
 
