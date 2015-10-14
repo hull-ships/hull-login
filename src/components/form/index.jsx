@@ -19,7 +19,7 @@ export default React.createClass({
   propTypes: {
     value: React.PropTypes.object,
     submitMessage: React.PropTypes.string,
-    type: React.PropTypes.string,
+    type: React.PropTypes.func.isRequired,
     fields: React.PropTypes.object,
     disabled: React.PropTypes.bool,
     autoDisableSubmit: React.PropTypes.bool,
