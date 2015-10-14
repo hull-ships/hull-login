@@ -10,7 +10,7 @@ export default React.createClass({
     children: React.PropTypes.oneOfType([
       React.PropTypes.element,
       React.PropTypes.array,
-    ]).isRequired,
+    ]),
   },
 
   mixins: [StyleResolverMixin, BrowserStateMixin],

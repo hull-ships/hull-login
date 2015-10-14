@@ -15,7 +15,7 @@ export default React.createClass({
   propTypes: {
     errors: React.PropTypes.object,
     user: React.PropTypes.object,
-    providers: React.PropTypes.object,
+    providers: React.PropTypes.array,
     activeSection: React.PropTypes.string,
     isWorking: React.PropTypes.bool,
   },
