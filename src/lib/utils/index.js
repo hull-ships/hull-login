@@ -1,9 +1,9 @@
 const NOOP = function NOOP() {};
 
 function preloadImage(src, callback) {
-  let cb = (typeof callback === 'function') ? callback : NOOP;
+  const cb = (typeof callback === 'function') ? callback : NOOP;
   if (src) {
-    let image = new Image();
+    const image = new Image();
     image.onerror = ()=> cb(new Error('Image load error'));
     image.onabort = ()=> cb(new Error('Image load abort'));
     image.onload = ()=> cb(null, image);
@@ -14,5 +14,5 @@ function preloadImage(src, callback) {
 }
 
 export default {
-  preloadImage
+  preloadImage,
 };

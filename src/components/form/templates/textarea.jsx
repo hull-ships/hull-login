@@ -5,10 +5,12 @@ import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 export default React.createClass({
   displayName: 'Textarea',
 
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
+
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired,
+  },
+
+  mixins: [ StyleResolverMixin, BrowserStateMixin ],
 
   handleChange(e) {
     this.props.onChange(e.target.value);
@@ -20,6 +22,6 @@ export default React.createClass({
     return (
       <textarea style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />
     );
-  }
+  },
 });
 

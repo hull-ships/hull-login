@@ -1,24 +1,24 @@
 import { getSettings } from '../styles/settings';
 
 const sectionHeader = {
-  marginBottom: 30
+  marginBottom: 30,
 };
 
 const sectionOrganizationImage = {
   maxWidth: 280,
-  margin: '20px auto'
+  margin: '20px auto',
 };
 
 const sectionUserImage = {
-  marginBottom: 10
+  marginBottom: 10,
 };
 
 const sectionText = {
-  textAlign: 'center'
+  textAlign: 'center',
 };
 
 const sectionFooter = {
-  marginTop: 30
+  marginTop: 30,
 };
 
 function getStyles() {
@@ -28,7 +28,7 @@ function getStyles() {
     color: settings.primaryColor,
     fontSize: 24,
     fontWeight: 300,
-    textAlign: 'center'
+    textAlign: 'center',
   };
 
   return {
@@ -37,11 +37,11 @@ function getStyles() {
     sectionUserImage,
     sectionTitle,
     sectionText,
-    sectionFooter
+    sectionFooter,
   };
 }
 
 export default {
-  getStyles
+  getStyles,
 };
 

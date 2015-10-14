@@ -7,6 +7,6 @@ export default {
   Sections,
   Core,
   Components,
-  Styles
+  Styles,
 };
 

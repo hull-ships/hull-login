@@ -3,15 +3,21 @@ import t from 'tcomb-form';
 import { FieldTypes, I18n, Mixins } from '../lib';
 import { TranslatedMessage, Form } from '../components';
 
-let { Login, Password } = FieldTypes;
-let { translate } = I18n;
+const { Login, Password } = FieldTypes;
+const { translate } = I18n;
 
 export default React.createClass({
   displayName: 'LogInForm',
 
-  mixins: [
-    Mixins.AsyncActions
-  ],
+  propTypes: {
+    logIn: React.PropTypes.func.isRequired,
+    currentEmail: React.PropTypes.string,
+    shipSettings: React.PropTypes.object.isRequired,
+    updateCurrentEmail: React.PropTypes.func.isRequired,
+    errors: React.PropTypes.object,
+  },
+
+  mixins: [Mixins.AsyncActions],
 
   getInitialState() {
     return { displayErrors: false };
@@ -19,14 +25,14 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
-      logIn: this.props.logIn
+      logIn: this.props.logIn,
     };
   },
 
   getType() {
     return t.struct({
       login: Login,
-      password: Password
+      password: Password,
     });
   },
 
@@ -39,17 +45,17 @@ export default React.createClass({
       login: {
         placeholder: translate('log-in email placeholder'),
         type: 'text',
-        help: <TranslatedMessage message='log-in email help text' />,
+        help: <TranslatedMessage message="log-in email help text" />,
         hasError,
         error: hasError && translate('log-in invalid credentials error'),
-        autoFocus: true
+        autoFocus: true,
       },
       password: {
         placeholder: translate('log-in password placeholder'),
         type: 'password',
-        help: <TranslatedMessage message='log-in password help text' />,
-        hasError
-      }
+        help: <TranslatedMessage message="log-in password help text" />,
+        hasError,
+      },
     };
   },
 
@@ -60,7 +66,7 @@ export default React.createClass({
 
   handleChange(changes) {
     this.setState({ displayErrors: false });
-    let { login } = changes.value;
+    const { login } = changes.value;
     if (login) {
       this.props.updateCurrentEmail(login);
     }
@@ -78,7 +84,7 @@ export default React.createClass({
     }
 
 
-    let formProps = {
+    const props = {
       kind: 'compact',
       type: this.getType(),
       fields: this.getFields(),
@@ -86,10 +92,10 @@ export default React.createClass({
       onSubmit: this.handleSubmit,
       onChange: this.handleChange,
       disabled: d,
-      value: { login: this.props.currentEmail }
+      value: { login: this.props.currentEmail },
     };
 
-    return <Form {...formProps} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />;
-  }
+    return <Form {...props} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />;
+  },
 });
 

@@ -1,18 +1,17 @@
 import React from 'react';
 
 const styles = {
-  imageContainer: {
-    textAlign: 'center'
-  },
-
-  image: {
-    maxWidth: '100%',
-    maxHeight: 140
-  }
+  imageContainer: { textAlign: 'center'},
+  image: {maxWidth: '100%', maxHeight: 140},
 };
 
 export default React.createClass({
   displayName: 'OrganizationImage',
+
+  propTypes: {
+    src: React.PropTypes.string,
+    style: React.PropTypes.object,
+  },
 
   render() {
     const url = this.props.src;
@@ -26,6 +25,6 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });
 

@@ -5,10 +5,12 @@ import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 export default React.createClass({
   displayName: 'Select',
 
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired,
+    options: React.PropTypes.object.isRequired,
+  },
+
+  mixins: [StyleResolverMixin, BrowserStateMixin],
 
   handleChange(e) {
     this.props.onChange(e.target.value);
@@ -34,6 +36,6 @@ export default React.createClass({
     return (
       <select style={s} {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange}>{options}</select>
     );
-  }
+  },
 });
 

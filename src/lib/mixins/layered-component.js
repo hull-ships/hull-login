@@ -41,7 +41,7 @@ export default {
     // funnels React's hierarchical updates through to a DOM node on an
     // entirely different part of the page.
 
-    let layerElement = this.renderLayer();
+    const layerElement = this.renderLayer();
     // Renders can return null, but React.render() doesn't like being asked
     // to render null. If we get null back from renderLayer(), just render
     // a noscript element, like React does when an element's render returns
@@ -63,5 +63,5 @@ export default {
     }
 
     React.unmountComponentAtNode(this._layer);
-  }
+  },
 };

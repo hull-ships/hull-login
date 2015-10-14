@@ -12,7 +12,7 @@ const Styles = {
   paddingLeft: 14,
   paddingRight: 14,
   paddingBottom: 7,
-  paddingTop: 7
+  paddingTop: 7,
 };
 
 

@@ -17,5 +17,5 @@ export default {
   TranslatedMessage,
   UserImage,
   OrganizationImage,
-  SocialButtons
+  SocialButtons,
 };

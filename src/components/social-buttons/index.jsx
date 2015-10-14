@@ -12,13 +12,21 @@ export default function capitalize(s) {
 
 export default React.createClass({
 
+  propTypes: {
+    errors: React.PropTypes.object,
+    user: React.PropTypes.object,
+    providers: React.PropTypes.object,
+    activeSection: React.PropTypes.string,
+    isWorking: React.PropTypes.bool,
+  },
+
   getErrorMessage() {
-    let error = this.props.errors.signUp || this.props.errors.logIn;
+    const error = this.props.errors.signUp || this.props.errors.logIn;
     if (error && error.provider && error.provider !== 'classic') {
-      let { reason, message } = error;
+      const { reason, message } = error;
       let errorMessage;
       if (reason) {
-        let msg = 'social-login error ' + reason;
+        const msg = 'social-login error ' + reason;
         if (hasTranslation(msg)) {
           errorMessage = <TranslatedMessage message={msg} variables={error} />;
         } else {
@@ -60,17 +68,17 @@ export default React.createClass({
       return null;
     }
 
-    let m = this.props[status] === provider.name ? button[1] : button[0];
-    let providerName = capitalize(provider.name);
-    let wording = translate(m, { provider: providerName });
-    let helpText = <TranslatedMessage message={help + ' for ' + providerName} />;
-    let handler = this.props[actionName].bind(null, provider.name);
-    let isLast = this.props.providers.length === index + 1;
-    let s = isLast ? {} : { marginBottom: 10 };
+    const m = this.props[status] === provider.name ? button[1] : button[0];
+    const providerName = capitalize(provider.name);
+    const wording = translate(m, { provider: providerName });
+    const helpText = <TranslatedMessage message={help + ' for ' + providerName} />;
+    const handler = this.props[actionName].bind(null, provider.name);
+    const isLast = this.props.providers.length === index + 1;
+    const s = isLast ? {} : { marginBottom: 10 };
 
     return (
       <span key={provider.name}>
-        <Button kind={provider.name} block={true} disabled={this.props.isWorking} onClick={handler}>
+        <Button kind={provider.name} block disabled={this.props.isWorking} onClick={handler}>
           {wording}
         </Button>
         <Help style={s}>
@@ -81,22 +89,22 @@ export default React.createClass({
   },
 
   renderErrors() {
-    let styles = getStyles();
-    let errorMessage = this.getErrorMessage();
+    const styles = getStyles();
+    const errorMessage = this.getErrorMessage();
     if (errorMessage) {
       return <div style={styles.socialLoginErrors}>{errorMessage}</div>;
     }
   },
 
   render: function() {
-    let { providers } = this.props;
-    let buttons = providers && providers.map(this.renderButton, this);
+    const { providers } = this.props;
+    const buttons = providers && providers.map(this.renderButton, this);
     return (
       <div>
         {this.renderErrors()}
         {buttons}
       </div>
     );
-  }
+  },
 });
 

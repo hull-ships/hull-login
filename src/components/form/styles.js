@@ -7,7 +7,7 @@ function getStyles() {
   const settings = getSettings();
 
   const formButton = {
-    marginTop: 10
+    marginTop: 10,
   };
 
   const formControl = {
@@ -37,9 +37,9 @@ function getStyles() {
       {
         focus: {
           borderColor: settings.grayDarkColor,
-          backgroundColor: settings.grayLighterColor
-        }
-      }
+          backgroundColor: settings.grayLighterColor,
+        },
+      },
     ],
 
     modifiers: [
@@ -53,13 +53,13 @@ function getStyles() {
           states: [
             {
               focus: {
-                borderColor: '#FF6262'
-              }
-            }
-          ]
-        }
-      }
-    ]
+                borderColor: '#FF6262',
+              },
+            },
+          ],
+        },
+      },
+    ],
   };
 
   const formInput = formControl;
@@ -71,13 +71,13 @@ function getStyles() {
     borderTopColor: settings.grayLightColor,
     backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIi8+PC9zdmc+")',
     backgroundPosition: '100% center',
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
   });
 
   const errorMessage = {
     color: '#FF6262',
     fontSize: 12,
-    marginTop: 5
+    marginTop: 5,
   };
 
 
@@ -86,11 +86,11 @@ function getStyles() {
     formInput,
     formTextarea,
     formSelect,
-    errorMessage
+    errorMessage,
   };
 }
 
 export default {
-  getStyles
+  getStyles,
 };
 

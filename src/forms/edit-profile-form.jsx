@@ -1,10 +1,10 @@
-import { reduce, include } from 'underscore';
+import _ from 'lodash';
 import React from 'react';
 import { I18n, Mixins } from '../lib';
 import transform from 'tcomb-json-schema';
 import { Form, TranslatedMessage } from '../components';
 
-let { translate } = I18n;
+const { translate } = I18n;
 
 function getHelpMessage(v) {
   if (typeof v.help === 'string') { return v.help; }
@@ -18,7 +18,7 @@ function getHelpMessage(v) {
     m = 'form help string max';
   }
 
-  if (m != null) {
+  if (!!m) {
     return <TranslatedMessage message={m} variables={v} />;
   }
 }
@@ -26,74 +26,81 @@ function getHelpMessage(v) {
 export default React.createClass({
   displayName: 'EditProfileForm',
 
-  mixins: [
-    Mixins.AsyncActions
-  ],
+  propTypes: {
+    logIn: React.PropTypes.func.isRequired,
+    isShopifyCustomer: React.PropTypes.bool,
+    hasForm: React.PropTypes.bool,
+    formIsSubmitted: React.PropTypes.bool,
+    shipSettings: React.PropTypes.object.isRequired,
+    profileData: React.PropTypes.object.isRequired,
+    form: React.PropTypes.object.isRequired,
+    updateUser: React.PropTypes.func.isRequired,
+    errors: React.PropTypes.object,
+  },
+
+  mixins: [Mixins.AsyncActions ],
 
   getAsyncActions() {
     return {
-      updateUser: this.props.updateUser
+      updateUser: this.props.updateUser,
     };
   },
 
   getDefaultSchema() {
-    let properties = {};
+    const properties = {};
 
     if (this.props.shipSettings.split_name_field) {
       properties.first_name = {
         type: 'string',
-        title: translate('edit profile first_name field')
+        title: translate('edit profile first_name field'),
       };
       properties.last_name = {
         type: 'string',
-        title: translate('edit profile last_name field')
+        title: translate('edit profile last_name field'),
       };
     } else {
       properties.name = {
         type: 'string',
-        title: translate('edit profile name field')
+        title: translate('edit profile name field'),
       };
     }
 
     if (!this.props.isShopifyCustomer) {
       properties.email = {
-        'type': 'string',
-        'title': translate('edit profile email field'),
-        'format': 'email',
-        'minLength': 1
+        type: 'string',
+        title: translate('edit profile email field'),
+        format: 'email',
+        minLength: 1,
       };
       properties.password = {
-        'type': 'string',
-        'title': translate('edit profile password field'),
-        'format': 'password',
-        'help': <TranslatedMessage message='edit profile password help text' />
+        type: 'string',
+        title: translate('edit profile password field'),
+        format: 'password',
+        help: <TranslatedMessage message="edit profile password help text" />,
       };
     }
 
     return {
-      '$schema': 'http://json-schema.org/draft-04/schema#',
-      'type': 'object',
-      'properties': properties,
-      'required': [
-        'name',
-        'email'
-      ]
+      $schema: 'http://json-schema.org/draft-04/schema#',
+      type: 'object',
+      properties: properties,
+      required: ['name', 'email'],
     };
   },
 
   getSchema() {
-    let s = this.getDefaultSchema();
+    const schema = this.getDefaultSchema();
 
-    if (!this.props.hasForm) { return s; }
+    if (!this.props.hasForm) { return schema; }
 
     if (this.props.formIsSubmitted) {
       return {
         type: 'object',
         properties: {
-          ...s.properties,
-          ...this.props.form.fields_schema.properties
+          ...schema.properties,
+          ...this.props.form.fields_schema.properties,
         },
-        required: s.required.concat(this.props.form.fields_schema.required)
+        required: schema.required.concat(this.props.form.fields_schema.required),
       };
     }
 
@@ -105,27 +112,27 @@ export default React.createClass({
   },
 
   getFields() {
-    let schema = this.getSchema();
-    let errors = ((this.props.errors || {}).updateUser || {}).errors || {};
+    const schema = this.getSchema();
+    const errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return reduce(schema.properties, function(m, v, k) {
+    return _.reduce(schema.properties, function(m, v, k) {
       let label = v.title;
-      let isRequired = include(schema.required, k);
+      const isRequired = _.include(schema.required, k);
       if (isRequired) { label += ' *'; }
 
-      let help = v.help || getHelpMessage(v);
+      const help = v.help || getHelpMessage(v);
 
-      let f = {
+      const field = {
         label,
         help,
-        hasError: !!errors[k]
+        hasError: !!errors[k],
       };
 
       if (v.type === 'string') {
-        f.type = v.format === 'uri' ? 'url' : (v.format || 'text');
+        field.type = v.format === 'uri' ? 'url' : (v.format || 'text');
       }
 
-      m[k] = f;
+      m[k] = field;
 
       return m;
     }, {});
@@ -150,12 +157,14 @@ export default React.createClass({
       disabled = true;
     }
 
-    return <Form type={this.getType()}
-      fields={this.getFields()}
-      value={this.props.profileData}
-      submitMessage={button}
-      onSubmit={this.handleSubmit}
-      disabled={disabled}
-      autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />;
-  }
+    return (
+      <Form type={this.getType()}
+        fields={this.getFields()}
+        value={this.props.profileData}
+        submitMessage={button}
+        onSubmit={this.handleSubmit}
+        disabled={disabled}
+        autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
+    );
+  },
 });

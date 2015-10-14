@@ -16,7 +16,7 @@ const KINDS = [
   'soundcloud',
   'tumblr',
   'twitter',
-  'vkontakte'
+  'vkontakte',
 ];
 
 function getStyles() {
@@ -48,7 +48,7 @@ function getStyles() {
     modifiers: [
       {
         kind: KINDS.reduce(function(m, p) {
-          let normalHex = settings[`${p}Color`];
+          const normalHex = settings[`${p}Color`];
 
           m[p] = {
             backgroundColor: normalHex,
@@ -57,50 +57,50 @@ function getStyles() {
             states: [
               {
                 hover: {
-                  backgroundColor: color(normalHex).lighten(0.1).hexString()
-                }
+                  backgroundColor: color(normalHex).lighten(0.1).hexString(),
+                },
               },
               {
                 focus: {
                   backgroundColor: color(normalHex).lighten(0.1).hexString(),
-                  outlineWidth: 5
-                }
+                  outlineWidth: 5,
+                },
               },
               {
                 active: {
                   backgroundColor: color(normalHex).darken(0.2).hexString(),
                   backgroundImage: 'none',
-                  boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.04), inset 0 1px 0 0 rgba(0,0,0,.08)'
-                }
-              }
-            ]
+                  boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.04), inset 0 1px 0 0 rgba(0,0,0,.08)',
+                },
+              },
+            ],
           };
 
           return m;
-        }, {})
+        }, {}),
       },
       {
         block: {
           display: 'block',
-          width: '100%'
-        }
+          width: '100%',
+        },
       },
       {
         disabled: {
           cursor: 'default',
           opacity: 0.7,
-          boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.05)'
-        }
-      }
-    ]
+          boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.05)',
+        },
+      },
+    ],
   };
 
   return {
-    button
+    button,
   };
 }
 
 export default {
-  getStyles
+  getStyles,
 };
 

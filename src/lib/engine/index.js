@@ -1,4 +1,4 @@
-import { reduce, size, pick, each } from 'underscore';
+import _ from 'lodash';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import * as Backends from './backends';
@@ -6,13 +6,13 @@ import * as Backends from './backends';
 const USER_SECTIONS = [
   'showProfile',
   'editProfile',
-  'thanks'
+  'thanks',
 ];
 
 const VISITOR_SECTIONS = [
   'logIn',
   'signUp',
-  'resetPassword'
+  'resetPassword',
 ];
 
 const SECTIONS = USER_SECTIONS.concat(VISITOR_SECTIONS);
@@ -32,7 +32,7 @@ const ACTIONS = [
   'activateResetPasswordSection',
   'activateShowProfileSection',
   'activateEditProfileSection',
-  'updateCurrentEmail'
+  'updateCurrentEmail',
 ];
 
 const STATUS = {
@@ -40,7 +40,7 @@ const STATUS = {
   signUp: 'isLoggingIn',
   logOut: 'isLoggingOut',
   linkIdentity: 'isLinking',
-  unlinkIdentity: 'isUnlinking'
+  unlinkIdentity: 'isUnlinking',
 };
 
 const EVENT = 'CHANGE';
@@ -66,13 +66,13 @@ export default class Engine extends EventEmitter {
       // Ignore the events that come from actions.
       if (this.isWorking()) { return; }
 
-      let nextUser = user || {};
-      let previousUser = this._user || {};
+      const nextUser = user || {};
+      const previousUser = this._user || {};
 
       if (nextUser.id !== previousUser.id) { this.fetchShip(); }
     });
 
-    each(this.getActions(), (a, k) => {
+    _.each(this.getActions(), (a, k) => {
       this._hull.on('hull.login.' + k, (options) => {
         this._transientOptions = options;
         a();
@@ -81,7 +81,7 @@ export default class Engine extends EventEmitter {
 
     this.emitChange();
 
-    let savedState = this.getSavedState();
+    const savedState = this.getSavedState();
     if (savedState.completeSignup && !this.formIsSubmitted()) {
       this.showLater(1, 'editProfile');
     } else {
@@ -132,7 +132,7 @@ export default class Engine extends EventEmitter {
       dialogIsVisible: this._dialogIsVisible,
       activeSection: this.getActiveSection(),
       currentEmail: this._currentEmail,
-      isShopifyCustomer: this.isShopifyCustomer()
+      isShopifyCustomer: this.isShopifyCustomer(),
     };
   }
 
@@ -153,7 +153,7 @@ export default class Engine extends EventEmitter {
   }
 
   saveState(attrs) {
-    let state = reduce(attrs, (s, v, k)=> {
+    const state = _.reduce(attrs, (s, v, k)=> {
       if (v === null && s.hasOwnProperty(k)) {
         delete s[k];
       } else {
@@ -165,7 +165,7 @@ export default class Engine extends EventEmitter {
     if (isLocalStorageSupported !== false) {
       try {
         window.localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
-      } catch(err) {
+      } catch (err) {
         isLocalStorageSupported = false;
       }
     }
@@ -174,11 +174,11 @@ export default class Engine extends EventEmitter {
 
   getSavedState() {
     let state = {};
-    let val = window.localStorage.getItem(this.getStorageKey());
+    const val = window.localStorage.getItem(this.getStorageKey());
     if (val) {
       try {
         state = JSON.parse(val);
-      } catch(err) {
+      } catch (err) {
         state = {};
       }
       if (!state || (typeof state !== 'object')) {
@@ -199,7 +199,7 @@ export default class Engine extends EventEmitter {
     this._dialogIsVisible = false;
     this._activeSection = 'logIn';
 
-    let savedState = this.getSavedState();
+    const savedState = this.getSavedState();
     this._currentEmail = savedState.currentEmail;
     this._returningUser = savedState.returningUser;
   }
@@ -207,8 +207,8 @@ export default class Engine extends EventEmitter {
   resetUser() {
     this._user = Hull.currentUser();
 
-    let identities = {};
-    if (this._user != null) {
+    const identities = {};
+    if (!!this._user) {
       this.saveState({ returningUser: true });
       this.updateCurrentEmail(this._user.email);
       this._user.identities.forEach(function(identity) {
@@ -223,7 +223,7 @@ export default class Engine extends EventEmitter {
     // As today Hull.api calls cannot be aborted... So I set an ID to every
     // fetchShip calls to be sure to execute the callback only when the last
     // Hull.api call is resolved.
-    let id = (this._fetchShipPromiseId || 0) + 1;
+    const id = (this._fetchShipPromiseId || 0) + 1;
     this._fetchShipPromiseId = id;
 
     return Hull.api(this._ship.id).then((ship) => {
@@ -242,13 +242,13 @@ export default class Engine extends EventEmitter {
   }
 
   getProviders() {
-    let providers = [];
+    const providers = [];
 
     const services = Hull.config().services.auth;
 
-    for (let k in services) {
+    for (const k in services) {
       if (services.hasOwnProperty(k) && k !== 'hull') {
-        let provider = { name: k };
+        const provider = { name: k };
         provider.isLinked = !!this._identities[k];
         provider.isUnlinkable = provider.isLinked && this._user.main_identity !== k;
 
@@ -277,7 +277,7 @@ export default class Engine extends EventEmitter {
   }
 
   showDialog() {
-    let section = this._returningUser ? 'logIn' : 'signUp';
+    const section = this._returningUser ? 'logIn' : 'signUp';
     return this.activateSection(section);
   }
 
@@ -313,8 +313,8 @@ export default class Engine extends EventEmitter {
   logIn(providerOrCredentials) {
     return this.perform('logIn', providerOrCredentials).then((user) => {
       return this.fetchShip().then(() => {
-        let userIsNew = user.created_at === user.updated_at && user.stats.sign_in_count <= 1;
-        let hasForm = this.hasForm();
+        const userIsNew = user.created_at === user.updated_at && user.stats.sign_in_count <= 1;
+        const hasForm = this.hasForm();
 
         if (!hasForm && userIsNew) {
           this._redirectLater = true;
@@ -354,12 +354,12 @@ export default class Engine extends EventEmitter {
   getBackend() {
     let backend;
     switch (this._platform && this._platform.type) {
-      case 'platforms/shopify_shop':
-        backend = Backends.shopify;
-        break;
-      default:
-        backend = Backends.hull;
-        break;
+    case 'platforms/shopify_shop':
+      backend = Backends.shopify;
+      break;
+    default:
+      backend = Backends.hull;
+      break;
     }
     return backend;
   }
@@ -389,8 +389,8 @@ export default class Engine extends EventEmitter {
 
     this.emitChange();
 
-    let fn = this.getBackendMethod(method);
-    let promise = fn(options);
+    const fn = this.getBackendMethod(method);
+    const promise = fn(options);
 
     if (promise && promise.then) {
       return promise.then(() => {
@@ -414,21 +414,21 @@ export default class Engine extends EventEmitter {
     this.emitChange();
 
     const fn = this.getBackendMethod('resetPassword');
-    let ret = fn(email);
+    const ret = fn(email);
 
     ret.catch((error)=> {
       let err;
       if (error && error.status) {
         switch (error.status) {
-          case 429:
-            err = new Error('reset password too many requests error');
-            break;
-          case 404:
-            err = new Error('reset password invalid email error');
-            break;
-          default:
-            err = new Error('reset password invalid email error');
-            break;
+        case 429:
+          err = new Error('reset password too many requests error');
+          break;
+        case 404:
+          err = new Error('reset password invalid email error');
+          break;
+        default:
+          err = new Error('reset password invalid email error');
+          break;
         }
         this._errors.resetPassword = err;
       } else {
@@ -440,37 +440,37 @@ export default class Engine extends EventEmitter {
   }
 
   updateUser(value) {
-    let formWasSubmitted = this.formIsSubmitted();
+    const formWasSubmitted = this.formIsSubmitted();
 
-    let user = reduce(['name', 'email', 'password', 'first_name', 'last_name'], (m, k) => {
-      let v = value[k];
+    const user = _.reduce(['name', 'email', 'password', 'first_name', 'last_name'], (m, k) => {
+      const v = value[k];
       if (typeof v === 'string' && v.trim() !== '') { m[k] = v; }
 
       return m;
     }, {});
 
-    let data = reduce(this._form.fields_list, (m, { name }) => {
-      let v = value[name];
-      if (v != null) { m[name] = v; }
+    const data = _.reduce(this._form.fields_list, (m, { name }) => {
+      const v = value[name];
+      if (!!v) { m[name] = v; }
 
       return m;
     }, {});
 
-    let promises = [];
-    if (size(user)) {
-      let promise = Hull.api(this._user.id, 'put', user).then((r) => {
+    const promises = [];
+    if (_.size(user)) {
+      const promise = Hull.api(this._user.id, 'put', user).then((r) => {
         this._user = r;
       });
       promises.push(promise);
     }
-    if (size(data)) {
-      let promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
+    if (_.size(data)) {
+      const promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
         this._form = r;
       });
       promises.push(promise);
     }
 
-    let r = Promise.all(promises).then(() => {
+    const r = Promise.all(promises).then(() => {
       if (formWasSubmitted) {
         this.activateShowProfileSection();
       } else {
@@ -495,7 +495,7 @@ export default class Engine extends EventEmitter {
       location = location || document.location.href;
     }
 
-    if (location == null) { return; }
+    if (!location) { return; }
 
     if (document.location.href === location) {
       window.location.reload();
@@ -552,7 +552,7 @@ export default class Engine extends EventEmitter {
     this._activeSection = 'thanks';
     this.emitChange();
 
-    let t = this._ship.settings.hide_thanks_section_after;
+    const t = this._ship.settings.hide_thanks_section_after;
 
     if (t > 0) { this.hideLater(t); }
   }
@@ -594,13 +594,13 @@ export default class Engine extends EventEmitter {
   }
 
   getProfileData() {
-    let user = this._user;
-    let formData = user && this._form && this._form.user_data && this._form.user_data.data;
+    const user = this._user;
+    const formData = user && this._form && this._form.user_data && this._form.user_data.data;
     if (!user) return false;
     return assign(
       user.extra,
       formData,
-      pick(this._user, 'id', 'name', 'first_name', 'last_name', 'email', 'address')
+      _.pick(this._user, 'id', 'name', 'first_name', 'last_name', 'email', 'address')
     );
   }
 

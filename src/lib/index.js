@@ -14,12 +14,12 @@ function setupShip(ship) {
     textColor: shipSettings.text_color,
     linkColor: shipSettings.link_color,
     defaultBorderRadius: shipSettings.button_border_radius,
-    mediumBorderRadius: shipSettings.overlay_border_radius
+    mediumBorderRadius: shipSettings.overlay_border_radius,
   });
 }
 
 function start(deployment, hull) {
-  let engine = new Engine(deployment, hull);
+  const engine = new Engine(deployment, hull);
   setupShip(deployment.ship);
   if (deployment.onUpdate && typeof deployment.onUpdate === 'function') {
     deployment.onUpdate(function(ship) {
@@ -37,5 +37,5 @@ export default {
   FieldTypes,
   I18n,
   Mixins,
-  Utils
+  Utils,
 };

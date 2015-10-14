@@ -7,20 +7,24 @@ const styles = {
   fontSize: 12,
   marginTop: 0,
   marginBottom: 10,
-  opacity: 0.5
+  opacity: 0.5,
 };
 
 export default React.createClass({
   displayName: 'Help',
 
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
+
+  propTypes: {
+    children: React.PropTypes.any,
+  },
+
+  mixins: [StyleResolverMixin, BrowserStateMixin],
 
   render() {
-    return <span style={styles}>
-      {this.props.children}
-    </span>;
-  }
+    return (
+      <span style={styles}>
+        {this.props.children}
+      </span>
+    );
+  },
 });

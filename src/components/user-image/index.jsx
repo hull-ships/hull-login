@@ -1,5 +1,4 @@
 import React from 'react';
-import assign from 'object-assign';
 import { getSettings } from '../../styles/settings';
 
 const style = {
@@ -10,11 +9,16 @@ const style = {
   backgroundSize: 'cover',
   marginRight: 'auto',
   marginLeft: 'auto',
-  borderRadius: 100
+  borderRadius: 100,
 };
 
 export default React.createClass({
   displayName: 'UserImage',
+
+  propTypes: {
+    src: React.PropTypes.string,
+    style: React.PropTypes.object,
+  },
 
   render() {
     const url = this.props.src;
@@ -22,15 +26,10 @@ export default React.createClass({
     if (!url) { return <noscript />; }
 
     const settings = getSettings();
-    const s = assign({
-      backgroundColor: settings.grayLighterColor,
-      backgroundImage: 'url(' + url + ')'
-    }, style);
-
     return (
       <div style={this.props.style}>
-        <div style={s}/>
+        <div style={{ backgroundColor: settings.grayLighterColor, backgroundImage: `url(${url})`, ...style}}/>
       </div>
     );
-  }
+  },
 });

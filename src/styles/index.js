@@ -30,7 +30,7 @@ function getStyles() {
     zIndex: 'auto',
 
     clear: 'none',
-    'float': 'none',
+    float: 'none',
     overflow: 'visible',
 
     opacity: 1,
@@ -81,7 +81,7 @@ function getStyles() {
     MozAppearance: 'none',
 
     WebkitFontSmoothing: 'antialiased',
-    MozOsxFontSmoothing: 'grayscale'
+    MozOsxFontSmoothing: 'grayscale',
   };
 
   const link = {
@@ -89,30 +89,22 @@ function getStyles() {
     color: settings.linkColor,
     background: 'transparent',
     textDecoration: 'underline',
-    outlineWidth: 5
+    outlineWidth: 5,
   };
 
-  const linkHover = {
-    color: color(settings.linkColor).darken(0.2).hexString()
-  };
+  const linkHover = { color: color(settings.linkColor).darken(0.2).hexString() };
 
-  const linkFocus = {
-    color: color(settings.linkColor).darken(0.2).hexString()
-  };
+  const linkFocus = { color: color(settings.linkColor).darken(0.2).hexString() };
 
-  const placeholder = {
-    color: settings.grayColor
-  };
+  const placeholder = { color: settings.grayColor };
 
   return {
     reset,
     link,
     linkHover,
     linkFocus,
-    placeholder
+    placeholder,
   };
 }
 
-export default {
-  getStyles
-};
+export default { getStyles };

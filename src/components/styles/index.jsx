@@ -8,7 +8,8 @@ export default React.createClass({
   displayName: 'Styles',
 
   propTypes: {
-    scope: React.PropTypes.string.isRequired
+    scope: React.PropTypes.string.isRequired,
+    reset: React.PropTypes.bool.isRequired,
   },
 
   getSelector() {
@@ -18,9 +19,9 @@ export default React.createClass({
   getRules() {
     const styles = getStyles();
 
-    let rules = [
+    const rules = [
       { 'hull-login__modal__dialog': styles.base },
-      { 'a': styles.link },
+      { a: styles.link },
       { 'a:active': styles.link },
       { 'a:link': styles.link },
       { 'a:visited': styles.link },
@@ -37,7 +38,7 @@ export default React.createClass({
       { 'input::-webkit-input-placeholder': styles.placeholder },
       { 'textarea::-webkit-input-placeholder': styles.placeholder },
 
-      { '::-moz-focus-inner': s }
+      { '::-moz-focus-inner': s },
     ];
 
     if (this.props.reset) {
@@ -49,5 +50,5 @@ export default React.createClass({
 
   render() {
     return <Style scopeSelector={this.getSelector()} rules={this.getRules()} />;
-  }
+  },
 });

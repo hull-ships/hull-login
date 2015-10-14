@@ -5,24 +5,22 @@ import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 export default React.createClass({
   displayName: 'Button',
 
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
-
-  renderIcon() {
-    if (this.props.icon == null) { return; }
+  propTypes: {
+    icon: React.PropTypes.element,
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.element,
+      React.PropTypes.array,
+    ]).isRequired,
   },
 
-  render() {
-    let styles = getStyles();
-    let s = this.buildStyles(styles.button);
-    let icon = this.renderIcon();
-    let children = icon == null ? this.props.children : [icon, this.props.children];
+  mixins: [StyleResolverMixin, BrowserStateMixin],
 
+  render() {
+    const styles = getStyles();
+    const s = this.buildStyles(styles.button);
     return (
-      <button {...this.getBrowserStateEvents()} {...this.props} style={s}>{children}</button>
+      <button {...this.getBrowserStateEvents()} {...this.props} style={s}>{this.props.icon}{this.props.children}</button>
     );
-  }
+  },
 });
 

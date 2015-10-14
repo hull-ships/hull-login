@@ -16,11 +16,13 @@ function render(Component, locals) {
     if (locals.error) {
       error = locals.error && <p style={styles.errorMessage}>{locals.error}</p>;
     }
-    return <label style={s}>
-      <Component {...locals} />
-      {error}
-      <Help>{locals.help}</Help>
-    </label>;
+    return (
+      <label style={s}>
+        <Component {...locals} />
+        {error}
+        <Help>{locals.help}</Help>
+      </label>
+    );
   }
 
   return (
@@ -51,7 +53,7 @@ export default {
 
   struct(locals) {
     const l = locals.order.length;
-    let inputs = locals.order.map(function(n, i) {
+    const inputs = locals.order.map(function(n, i) {
       const isLast = i === l - 1;
       const s = isLast ? null : { marginBottom: 10 };
 
@@ -62,9 +64,9 @@ export default {
   },
 
   textbox(locals) {
-    let C = locals.type === 'textarea' ? Textarea : Input;
+    const Component = locals.type === 'textarea' ? Textarea : Input;
 
-    return render(C, locals);
-  }
+    return render(Component, locals);
+  },
 };
 

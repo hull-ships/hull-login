@@ -21,13 +21,15 @@ export default class SignUpSection extends BaseSection {
       handleClick = this.props.hideDialog.bind(this);
     }
 
-    let { picture } = this.props.user || {};
+    const { picture } = this.props.user || {};
     const blockStyle = assign({}, styles.sectionText, {display: 'block'});
-    return <div style={styles.sectionHeader}>
-      <UserImage style={styles.sectionUserImage} src={picture} />
-      <TranslatedMessage tag='h1' style={styles.sectionTitle} message={title} />
-      <TranslatedMessage href='javascript: void 0;' tag='a' onClick={handleClick} style={blockStyle} message={subtitle} />
-    </div>;
+    return (
+      <div style={styles.sectionHeader}>
+        <UserImage style={styles.sectionUserImage} src={picture} />
+        <TranslatedMessage tag="h1" style={styles.sectionTitle} message={title} />
+        <TranslatedMessage href="javascript: void 0;" tag="a" onClick={handleClick} style={blockStyle} message={subtitle} />
+      </div>
+    );
   }
 
   renderContent() {

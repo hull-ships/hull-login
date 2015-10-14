@@ -15,7 +15,7 @@ function getStyles() {
     padding: 0,
     borderBottom: 'none',
     borderLeft: 'none',
-    borderRight: 'none'
+    borderRight: 'none',
   };
 
   const dividerContent = {
@@ -25,16 +25,16 @@ function getStyles() {
     lineHeight: 1,
     textAlign: 'center',
     textTransform: 'uppercase',
-    letterSpacing: 1
+    letterSpacing: 1,
   };
 
   return {
     divider,
-    dividerContent
+    dividerContent,
   };
 }
 
 export default {
-  getStyles
+  getStyles,
 };
 

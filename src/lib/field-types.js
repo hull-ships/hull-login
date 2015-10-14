@@ -31,6 +31,6 @@ export default {
   Username,
   Login,
   Password,
-  Name
+  Name,
 };
 

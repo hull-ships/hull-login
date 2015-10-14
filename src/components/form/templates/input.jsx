@@ -5,37 +5,37 @@ import { StyleResolverMixin, BrowserStateMixin } from 'radium';
 export default React.createClass({
   displayName: 'Input',
 
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
-
-  handleChange(e) {
-    this.props.onChange(e.target.value);
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired,
+    autoFocus: React.PropTypes.bool.isRequired,
   },
+
+  mixins: [StyleResolverMixin, BrowserStateMixin],
+
 
   componentDidMount() {
     if (this.props.autoFocus) {
       setTimeout(()=> {
         if (this.isMounted()) {
-          let input = this.refs.input;
-          if (input) {
-            let node = input.getDOMNode();
-            node.focus();
-          }
+          const input = this.refs.input;
+          if (input) { input.focus(); }
         }
       }, 300);
     }
   },
 
+  handleChange(e) {
+    this.props.onChange(e.target.value);
+  },
+
   render() {
-    let props = {
+    const props = {
       style: this.buildStyles(getStyles().formInput),
       ...this.getBrowserStateEvents(),
       ...this.props,
-      onChange: this.handleChange
+      onChange: this.handleChange,
     };
-    return <input ref='input' {...props} />;
-  }
+    return <input ref="input" {...props} />;
+  },
 });
 
