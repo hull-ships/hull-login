@@ -1,0 +1,8 @@
+.help{
+  display: block;
+  textAlign: center;
+  fontSize: 12px;
+  marginTop: 0;
+  marginBottom: 10;
+  opacity: 0.5;
+}

@@ -12,6 +12,7 @@ export default React.createClass({
   propTypes: {
     logIn: React.PropTypes.func.isRequired,
     currentEmail: React.PropTypes.string,
+    isWorking: React.PropTypes.bool,
     shipSettings: React.PropTypes.object.isRequired,
     updateCurrentEmail: React.PropTypes.func.isRequired,
     errors: React.PropTypes.object,
@@ -74,13 +75,13 @@ export default React.createClass({
 
   render() {
     let m;
-    let d;
-    if (this.state.logInState === 'pending') {
+    let disabled;
+    if (this.props.isWorking || this.state.logInState === 'pending') {
       m = translate('log-in button text when attempting login');
-      d = true;
+      disabled = true;
     } else {
       m = translate('log-in button text');
-      d = false;
+      disabled = false;
     }
 
 
@@ -91,7 +92,7 @@ export default React.createClass({
       submitMessage: m,
       onSubmit: this.handleSubmit,
       onChange: this.handleChange,
-      disabled: d,
+      disabled: disabled,
       value: { login: this.props.currentEmail },
     };
 

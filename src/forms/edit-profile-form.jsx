@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import Icon from '../components/icon';
 import { I18n, Mixins } from '../lib';
 import transform from 'tcomb-json-schema';
 import { Form, TranslatedMessage } from '../components';
@@ -147,7 +148,7 @@ export default React.createClass({
     let disabled = false;
 
     if (this.props.formIsSubmitted || !this.props.hasForm) {
-      button = translate('edit profile button text');
+      button = <span><Icon name="valid" colorize/>{translate('edit profile button text')}</span>;
     } else {
       button = translate('edit profile button text when profile incomplete');
     }

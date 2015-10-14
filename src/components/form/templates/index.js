@@ -5,19 +5,15 @@ import Input from './input';
 import Textarea from './textarea';
 import Select from './select';
 import Help from '../../help';
-import { getStyles } from '../styles';
 
 function render(Component, locals) {
-  const styles = getStyles();
-  const s = { width: '100%' };
-
   if (locals.config.kind === 'compact') {
     let error;
     if (locals.error) {
-      error = locals.error && <p style={styles.errorMessage}>{locals.error}</p>;
+      error = locals.error && <p styleName="error">{locals.error}</p>;
     }
     return (
-      <label style={s}>
+      <label styleName="label">
         <Component {...locals} />
         {error}
         <Help>{locals.help}</Help>
@@ -26,7 +22,7 @@ function render(Component, locals) {
   }
 
   return (
-    <label style={s}>
+    <label styleName="label">
       {locals.label}
       <Component {...locals} />
       <Help>{locals.help}</Help>
@@ -55,9 +51,9 @@ export default {
     const l = locals.order.length;
     const inputs = locals.order.map(function(n, i) {
       const isLast = i === l - 1;
-      const s = isLast ? null : { marginBottom: 10 };
+      const s = isLast ? null : 'last';
 
-      return <div key={locals.inputs[n].key} style={s}>{locals.inputs[n]}</div>;
+      return <div key={locals.inputs[n].key} styleName={s}>{locals.inputs[n]}</div>;
     });
 
     return <div>{inputs}</div>;
@@ -69,4 +65,5 @@ export default {
     return render(Component, locals);
   },
 };
+
 

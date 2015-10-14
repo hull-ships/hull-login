@@ -1,17 +1,15 @@
 import React from 'react';
-import { getStyles } from '../styles';
-import { StyleResolverMixin, BrowserStateMixin } from 'radium';
+import cssModules from 'react-css-modules';
+import styles from '../form.css';
 
-export default React.createClass({
+const Input = React.createClass({
   displayName: 'Input',
 
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
-    autoFocus: React.PropTypes.bool.isRequired,
+    autoFocus: React.PropTypes.bool,
+    label: React.PropTypes.string.isRequired,
   },
-
-  mixins: [StyleResolverMixin, BrowserStateMixin],
-
 
   componentDidMount() {
     if (this.props.autoFocus) {
@@ -30,12 +28,11 @@ export default React.createClass({
 
   render() {
     const props = {
-      style: this.buildStyles(getStyles().formInput),
-      ...this.getBrowserStateEvents(),
       ...this.props,
       onChange: this.handleChange,
     };
-    return <input ref="input" {...props} />;
+    return <input styleName="input" ref="input" {...props} placeholder={this.props.label} />;
   },
 });
 
+export default cssModules(Input, styles);

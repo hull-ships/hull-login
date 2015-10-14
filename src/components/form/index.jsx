@@ -2,6 +2,8 @@ import React from 'react';
 import Bounce from 'bounce';
 import t from 'tcomb-form/lib';
 import Button from '../button';
+import cssModules from 'react-css-modules';
+import styles from './form.css';
 
 import Templates from './templates';
 
@@ -12,24 +14,25 @@ function testPlaceholder() {
   return ('placeholder' in element);
 }
 
-export default React.createClass({
+const Form = React.createClass({
 
   displayName: 'Form',
 
   propTypes: {
     value: React.PropTypes.object,
-    submitMessage: React.PropTypes.string,
+    submitMessage: React.PropTypes.any,
     type: React.PropTypes.func.isRequired,
     fields: React.PropTypes.object,
     disabled: React.PropTypes.bool,
     autoDisableSubmit: React.PropTypes.bool,
     onSubmit: React.PropTypes.func.isRequired,
-    onChange: React.PropTypes.func.isRequired,
+    onChange: React.PropTypes.func,
     kind: React.PropTypes.oneOf(['compact', 'expand']),
   },
 
   getInitialState() {
     return {
+      valid: !!this.props.value,
       value: this.props.value || {},
       submitState: 'initial',
       expanded: false,
@@ -84,7 +87,7 @@ export default React.createClass({
   },
 
   handleChange(value) {
-    const changes = { value, valid: this.isValid() };
+    const changes = { value, valid: !!this.getValue() };
     this.setState(changes);
     if (this.props.onChange) {
       this.props.onChange(changes);
@@ -105,7 +108,7 @@ export default React.createClass({
   },
 
   isValid() {
-    return this.getValue() === null;
+    return !!this.state.valid;
   },
   isDisabled() {
     return !!this.props.disabled || (this.props.autoDisableSubmit && !this.isValid());
@@ -121,18 +124,16 @@ export default React.createClass({
       if (this.state.expanded) {
         disabled = this.isDisabled();
         form = (
-          <div style={{animation: 'slide 1s linear both'}}>
-            <TCombForm ref="form"
-              type={this.props.type}
-              options={options}
-              value={this.state.value}
-              onChange={this.handleChange} />
-          </div>
+          <TCombForm ref="form"
+            type={this.props.type}
+            options={options}
+            value={this.state.value}
+            onChange={this.handleChange} />
         );
       }
 
       return (
-        <form onSubmit={this.handleSubmit}>
+        <form styleName="form" onSubmit={this.handleSubmit}>
           {form}
           <Button style={s}
             block
@@ -145,14 +146,16 @@ export default React.createClass({
     }
 
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} styleName="form">
         <TCombForm ref="form"
           type={this.props.type}
           options={options}
           value={this.state.value}
           onChange={this.handleChange} />
-        <Button style={s} type="submit" kind="primary" block disabled={this.isDisabled()}>{this.props.submitMessage}</Button>
+        <Button style={s} type="submit" block disabled={this.isDisabled()}>{this.props.submitMessage}</Button>
       </form>
     );
   },
 });
+
+export default cssModules(Form, styles);

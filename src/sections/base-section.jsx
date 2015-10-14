@@ -1,39 +1,23 @@
 import React from 'react';
-import { getStyles } from './styles';
-import { getSettings } from '../styles/settings';
-
 
 export default class BaseSection extends React.Component {
 
-  getStyles() {
-    return getStyles();
+  renderHeader() {
   }
 
-  getStylesSettings() {
-    return getSettings();
+  renderFooter() {
   }
 
-  renderHeader(/* styles */) {
-
-  }
-
-  renderFooter(/* styles */) {
-
-  }
-
-  renderContent(/* styles */) {
-
+  renderContent() {
   }
 
   render() {
-    const styles = this.getStyles();
     return (
       <div>
-        {this.renderHeader(styles)}
-        {this.renderContent(styles)}
-        {this.renderFooter(styles)}
+        {this.renderHeader()}
+        {this.renderContent()}
+        {this.renderFooter()}
       </div>
     );
   }
 }
-

@@ -1,4 +1,7 @@
 import React from 'react';
+import cssModules from 'react-css-modules';
+import styles from './main.css';
+import Icon from './components/icon';
 import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
 import { Mixins, I18n, Utils } from './lib';
 import Sections from './sections';
@@ -6,12 +9,13 @@ import { Overlay, Styles, TranslatedMessage } from './components';
 
 const { translate } = I18n;
 
-export default React.createClass({
+const HullLogin = React.createClass({
   displayName: 'HullLoginShip',
 
   propTypes: {
     engine: React.PropTypes.object.isRequired,
     actions: React.PropTypes.object.isRequired,
+    styles: React.PropTypes.object,
   },
 
   mixins: [Mixins.LayeredComponent],
@@ -27,14 +31,6 @@ export default React.createClass({
 
   componentWillUnmount() {
     this.props.engine.removeChangeListener(this._onChange);
-  },
-
-  getScope() {
-    return `ship-${this.state.ship.id}`;
-  },
-
-  getResetStyles() {
-    return this.state.shipSettings && this.state.shipSettings.reset_styles;
   },
 
   callAction(action) {
@@ -86,16 +82,22 @@ export default React.createClass({
 
     const t = titles[this.state.activeSection];
     return (
-      <Overlay className={this.getScope()} onClose={this.props.actions.hideDialog} title={t} visible>
+      <Overlay styleName="modal" onClose={this.props.actions.hideDialog} title={t} visible>
         {this.renderContent()}
       </Overlay>
     );
   },
 
+  renderSpinner() {
+    if (!this.state.isWorking) { return null; }
+    return <div className={this.props.styles.spinner}><Icon name="spinner"/></div>;
+  },
+
   renderContent() {
     const Section = Sections[this.state.activeSection];
     return (
-      <div className={this.getScope()}>
+      <div className={this.props.styles.content}>
+        {this.renderSpinner()}
         <Section {...this.state} {...this.props.actions} />
       </div>
     );
@@ -119,7 +121,7 @@ export default React.createClass({
             <TranslatedMessage tag="a"
               href="#"
               key="complete-profile"
-              className="hull-login__button hull-login__button--edit-profile"
+              styleName="edit-profile"
               onClick={this.callAction('activateEditProfileSection')}
               message="nav complete profile link" />
           );
@@ -128,7 +130,7 @@ export default React.createClass({
           const b = (
             <a href="#"
               key="show-profile"
-              className="hull-login__button hull-login__button--show-profile"
+              styleName="show-profile"
               onClick={this.callAction('activateShowProfileSection')}>{u.name || u.username || u.email}</a>
           );
           buttons.push(b);
@@ -142,7 +144,7 @@ export default React.createClass({
             <a href={url}
               key={`custom-action-${i}`}
               target={popup ? '_blank' : ''}
-              className="hull-login__button hull-login__button">{text}</a>
+              styleName="custom">{text}</a>
           );
           buttons.push(b);
         }
@@ -151,7 +153,8 @@ export default React.createClass({
       const b = (
         <TranslatedMessage tag="a"
           href="#"
-          className="hull-login__button hull-login__button--log-out"
+          key="log-out"
+          styleName="log-out"
           onClick={this.callAction('logOut')}
           message="nav logout link" />
       );
@@ -162,7 +165,7 @@ export default React.createClass({
           <TranslatedMessage tag="a"
             href="#"
             key="log-in"
-            className="hull-login__button hull-login__button--log-in"
+            styleName="log-in"
             onClick={this.callAction('activateLogInSection')}
             message="nav login link" />
         );
@@ -174,7 +177,7 @@ export default React.createClass({
           <TranslatedMessage tag="a"
             href="#"
             key="sign-up"
-            className="hull-login__button hull-login__button--sign-up"
+            styleName="sign-up"
             onClick={this.callAction('activateSignUpSection')}
             message="nav sign-up link" />
         );
@@ -186,11 +189,16 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="hull-login">
-        <Styles scope={this.getScope()} reset={this.getResetStyles()} />
+      <div styleName="ship">
+        <Styles
+          scope={this.props.styles.ship}
+          styles={this.props.styles}
+          settings={this.state.shipSettings} />
         {this.renderUserStyles()}
-        {this.state.shipSettings.show_inline ? this.renderContent() : this.renderButtons()}
+        {this.renderButtons()}
       </div>
     );
   },
 });
+
+export default cssModules(HullLogin, styles);

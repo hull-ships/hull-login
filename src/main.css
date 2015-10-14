@@ -1,0 +1,79 @@
+@import "styles/settings";
+
+.ship{
+  all:initial;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  line-height:var(--line-height);
+  margin-bottom: 200px;
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.content{
+  all:initial;
+  display:block;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  line-height:var(--line-height);
+  /*margin-bottom: 50px;*/
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.spinner{
+  left: 50%;
+  top: 0%;
+  position: absolute;
+  z-index: 10;
+  transform: translate3d(-50%,5px, 0);
+  padding: 0px;
+  border-radius: 1000px;
+  i{
+    display: block;
+    width: 64px;
+    height: 64px;
+  }
+  svg{
+    display: block;
+  }
+}
+
+.button{
+  composes: button from './styles/mixins.css';
+  margin:0 5px;
+}
+
+.custom{
+  composes: button;
+  font-size: 12px;
+}
+.log-in{
+  composes: button;
+  font-size: 12px;
+}
+.log-out{
+  composes: button;
+  font-size: 12px;
+}
+.sign-up{
+  composes: button;
+  font-size: 12px;
+}
+.edit-profile{
+  composes: button;
+  font-size: 12px;
+}
+.show-profile{
+  composes: button;
+  font-size: 12px;
+}
+

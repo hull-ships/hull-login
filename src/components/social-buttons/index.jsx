@@ -1,19 +1,24 @@
 import React from 'react';
 import { translate } from '../../lib/i18n';
 import Button from '../button';
+import Icon from '../icon';
 import Help from '../help';
 import TranslatedMessage from '../translated-message';
 import { hasTranslation } from '../../lib/i18n';
-import { getStyles } from './styles';
+
+import cssModules from 'react-css-modules';
+import styles from './social-buttons.css';
+
 
 export default function capitalize(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
 
-export default React.createClass({
+const SocialButtons = React.createClass({
 
   propTypes: {
     errors: React.PropTypes.object,
+    styles: React.PropTypes.object,
     user: React.PropTypes.object,
     providers: React.PropTypes.array,
     activeSection: React.PropTypes.string,
@@ -79,24 +84,22 @@ export default React.createClass({
     return (
       <span key={provider.name}>
         <Button kind={provider.name} block disabled={this.props.isWorking} onClick={handler}>
+          <Icon name={provider.name} colorize/>
           {wording}
         </Button>
-        <Help style={s}>
-          {helpText}
-        </Help>
+        <Help style={s}>{helpText}</Help>
       </span>
     );
   },
 
   renderErrors() {
-    const styles = getStyles();
     const errorMessage = this.getErrorMessage();
     if (errorMessage) {
-      return <div style={styles.socialLoginErrors}>{errorMessage}</div>;
+      return <div className={this.props.styles.errors}>{errorMessage}</div>;
     }
   },
 
-  render: function() {
+  render() {
     const { providers } = this.props;
     const buttons = providers && providers.map(this.renderButton, this);
     return (
@@ -108,3 +111,5 @@ export default React.createClass({
   },
 });
 
+
+export default cssModules(SocialButtons, styles);

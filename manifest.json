@@ -59,13 +59,6 @@
       "maximun": 100
     },
     {
-      "name":"reset_styles",
-      "title": "Reset styles",
-      "description":"Isolate ship design from rest of the page by resetting the CSS styles within. Uncheck this if you want to style the ship yourself.",
-      "type": "boolean",
-      "default": true
-    },
-    {
       "name":"show_inline",
       "title": "Show inline",
       "description":"Show login and signup forms in page instead of as a Modal",
@@ -98,7 +91,7 @@
       "title": "Visually disable submit buttons for incomplete forms",
       "description": "If checked, disable the 'log in' and 'sign up' buttons when their forms are incomplete. Incomplete submissions will not be allowed regardless of the state of this option.",
       "type": "boolean",
-      "default": false
+      "default": true
     },
     {
       "name": "show_name_field_on_sign_up",

@@ -1,0 +1,17 @@
+@import '../../styles/settings';
+
+.wrapper{
+  display: block;
+}
+
+.image{
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  background-position: center center;
+  background-size: cover;
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 100px;
+  background-color:var(--blue-gray-lightest);
+}

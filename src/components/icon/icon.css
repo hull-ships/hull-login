@@ -1,0 +1,19 @@
+@import "../../styles/settings";
+
+.icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  line-height: var(--line-height);
+  vertical-align: -20%;
+  + span{
+    margin-left: 3px;
+  }
+  &.colorized{
+    fill : currentColor;
+    svg path{
+      fill:currentColor;
+    }
+  }
+}
+

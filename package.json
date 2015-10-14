@@ -28,6 +28,7 @@
   ],
   "dependencies": {
     "bounce.js": "citelao/bounce.js#master",
+    "classnames": "^2.1.5",
     "color": "^0.10.1",
     "lodash": "^3.10.1",
     "messageformat": "^0.2.2",

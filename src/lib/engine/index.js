@@ -2,6 +2,7 @@ import _ from 'lodash';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import * as Backends from './backends';
+import I18n from '../i18n';
 
 const USER_SECTIONS = [
   'showProfile',
@@ -78,7 +79,7 @@ export default class Engine extends EventEmitter {
         a();
       });
     });
-
+    this.updateTranslations();
     this.emitChange();
 
     const savedState = this.getSavedState();
@@ -91,6 +92,10 @@ export default class Engine extends EventEmitter {
         this.showLater(t, 'signUp');
       }
     }
+  }
+
+  updateTranslations() {
+    I18n.setTranslations(this._ship.translations);
   }
 
   getActions() {
@@ -106,6 +111,7 @@ export default class Engine extends EventEmitter {
 
   updateShip(ship) {
     this._ship = ship;
+    this.updateTranslations();
     this.emitChange();
   }
 
@@ -590,7 +596,7 @@ export default class Engine extends EventEmitter {
   }
 
   isWorking() {
-    return this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking;
+    return !!(this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking);
   }
 
   getProfileData() {

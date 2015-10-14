@@ -1,0 +1,117 @@
+@import "../../styles/settings";
+
+.button{
+  composes: button from '../../styles/mixins.css';
+  margin-bottom: 5px;
+
+  &.block{
+    display: block;
+    width: 100%;
+  }
+  &.disabled{
+    cursor: default;
+    opacity: 0.3;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+  }
+
+
+/*  &.primary{
+    background-color:var(--primary);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--primary) blackness(-10%));
+    }
+  }
+*/
+  &.secondary{
+    background-color:var(--secondary);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--secondary) blackness(-10%));
+    }
+  }
+  &.tertiary{
+    background-color:var(--tertiary);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--tertiary) blackness(-10%));
+    }
+  }
+  &.facebook{
+    background-color:var(--facebook);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--facebook) blackness(-10%));
+    }
+  }
+  &.foursquare{
+    background-color:var(--foursquare);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--foursquare) blackness(-10%));
+    }
+  }
+  &.github{
+    background-color:var(--github);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--github) blackness(-10%));
+    }
+  }
+  &.google{
+    background-color:var(--google);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--google) blackness(-10%));
+    }
+  }
+  &.instagram{
+    background-color:var(--instagram);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--instagram) blackness(-10%));
+    }
+  }
+  &.linkedin{
+    background-color:var(--linkedin);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--linkedin) blackness(-10%));
+    }
+  }
+  &.soundcloud{
+    background-color:var(--soundcloud);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--soundcloud) blackness(-10%));
+    }
+  }
+  &.tumblr{
+    background-color:var(--tumblr);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--tumblr) blackness(-10%));
+    }
+  }
+  &.twitter{
+    background-color:var(--twitter);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--twitter) blackness(-10%));
+    }
+  }
+  &.vkontakte{
+    background-color:var(--vkontakte);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--vkontakte) blackness(-10%));
+    }
+  }
+
+  &.primary, &.secondary, &.tertiary, &.facebook, &.foursquare, &.github, &.google, &.instagram, &.linkedin, &.soundcloud, &.tumblr, &.twitter, &.vkontakte{
+    /*background-image: linear-gradient(rgba(255,255,255,.07), rgba(255,255,255,0));*/
+    &:focus{
+      outline-width:5px;
+    }
+    &:active{
+      background-image: none;
+      /*box-shadow:inset 0 0 0 1px rgba(0,0,0,.04), inset 0 1px 0 0 rgba(0,0,0,.08);*/
+    }
+  }
+
+  i{
+    margin-right: 5px;
+    /*float: left;*/
+    vertical-align: -50%;
+    width: 24px;
+    height: 24px;
+  }
+
+}

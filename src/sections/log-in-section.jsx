@@ -1,17 +1,21 @@
 import React from 'react';
+import cssModules from 'react-css-modules';
+import styles from './sections.css';
+
 import { SocialButtons, TranslatedMessage, OrganizationImage, Divider } from '../components';
 import { LogInForm } from '../forms';
 import BaseSection from './base-section';
 
-export default class LogInSection extends BaseSection {
+class LogInSection extends BaseSection {
 
-  renderHeader(styles) {
+  renderHeader() {
     let signupLink;
     if (this.props.shipSettings.show_signup) {
       signupLink = (
-        <p style={styles.sectionText}>
+        <p styleName="text">
           <TranslatedMessage tag="a"
             href="#"
+            className={this.props.styles.link}
             onClick={this.props.activateSignUpSection}
             message="log-in switch to sign-up link" />
         </p>
@@ -19,10 +23,10 @@ export default class LogInSection extends BaseSection {
     }
 
     return (
-      <div style={styles.sectionHeader}>
-        <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
+      <div styleName="header">
+        <OrganizationImage src={this.props.shipSettings.logo_image} />
         <TranslatedMessage tag="h1"
-          style={styles.sectionTitle}
+          styleName="title"
           message="log-in header"
           variables={{ organization: this.props.organization.name }} />
         {signupLink}
@@ -30,13 +34,14 @@ export default class LogInSection extends BaseSection {
     );
   }
 
-  renderFooter(styles) {
+  renderFooter() {
     const { shipSettings } = this.props;
     if (shipSettings.show_classic_login) {
       return (
-        <div style={styles.sectionFooter}>
-          <p style={styles.sectionText}>
+        <div styleName="footer">
+          <p styleName="text">
             <TranslatedMessage tag="a"
+              className={this.props.styles.link}
               href="javascript: void 0;"
               onClick={this.props.activateResetPasswordSection}
               message="log-in forgot password link" />
@@ -65,3 +70,5 @@ export default class LogInSection extends BaseSection {
   }
 }
 
+
+export default cssModules(LogInSection, styles);

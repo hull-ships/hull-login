@@ -1,0 +1,98 @@
+@import "./settings";
+
+
+.borderColor{
+  border-color:var(--blue-gray-lightest);
+}
+.borderRadius{
+  border-radius: var(--global-radius);
+}
+.smallBorderRadius{
+  border-radius: calc(var(--global-radius)/2);
+}
+.boxShadowFilet{
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.darkerText{
+  color: var(--blue-gray-darker);
+}
+.primaryText{
+  color: var(--primary);
+}
+.linkText{
+  color: var(--link-color);
+}
+.primaryBackground{
+  background-color: var(--primary)
+}
+.link{
+  composes: linkText;
+  cursor: pointer;
+  background: transparent;
+  text-decoration: none;
+  outline-width: 5px;
+  transition: all .2s ease-out;
+  &:hover{
+    color: color(var(--link-color) blackness(-20%));
+  }
+  &:focus{
+    color: color(var(--link-color) blackness(-20%));
+  }
+}
+
+.button{
+  composes: primaryBackground;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border-radius: 100px;
+  appearance: none;
+  border: none;
+  box-sizing: border-box;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 22px;
+  outline-width: 0;
+  padding: 7px 14px 7px 14px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  white-space: nowrap;
+  transition: opacity .2s ease-out, color .2s ease-out, background-color .2s ease-out;
+}
+
+.control{
+  composes: boxShadowFilet;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  width: 100%;
+  padding: 6px 10px;
+  font-size: var(--font-size);
+  line-height: calc(var(--line-height)*2);
+  appearance: none;
+  color: var(--black);
+  border: 0;
+  /*box-shadow: inset 0 0 0 2px var(--off-white);*/
+  border-radius: var(--input-radius);
+  resize: none;
+  transition: all .2s ease-out;
+  &:focus{
+    outline: none;
+    box-shadow: inset 0 0 0 1px var(--primary);
+  }
+  &.has-error{
+    color: #FF6262;
+    border-color: #FF6262;
+    border-top-color: #FF6262;
+    box-shadow: none;
+    &:focus{
+      border-color: #FF6262;
+    }  
+  }
+}
+
+.error{
+  color: #FF6262;
+  font-size: var(--font-size);
+  margin-top: 5px;
+}

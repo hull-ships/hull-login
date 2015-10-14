@@ -1,0 +1,36 @@
+@import '../../styles/settings';
+
+.form{
+  animation: slide 1s linear both;
+  label{
+    display: block;
+    margin-bottom: var(--line-height);
+  }
+}
+
+.input{
+  composes: control from '../../styles/mixins.css';
+}
+.textarea{
+  composes: control from '../../styles/mixins.css';
+}
+.select{
+  composes: borderColor from '../../styles/mixins.css';
+  box-shadow: none;
+  background-image: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMTJweCIgeT0iMHB4IiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIzcHgiIHZpZXdCb3g9IjAgMCA2IDMiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDYgMyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBvbHlnb24gcG9pbnRzPSI1Ljk5MiwwIDIuOTkyLDMgLTAuMDA4LDAgIi8+PC9zdmc+")';
+  background-position: 100% center;
+  background-repeat: no-repeat;
+}
+
+.errorMessage{
+  composes: error from '../../styles/mixins.css';
+}
+
+
+.label{
+  width: 100%;
+}
+
+.last{
+  margin-bottom: 10px;
+}

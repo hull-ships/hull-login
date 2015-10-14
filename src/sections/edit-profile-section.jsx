@@ -1,12 +1,15 @@
 import React from 'react';
+import cssModules from 'react-css-modules';
+import styles from './sections.css';
+
 import { TranslatedMessage, UserImage } from '../components';
 import { EditProfileForm } from '../forms';
 import BaseSection from './base-section';
 import assign from 'object-assign';
 
-export default class SignUpSection extends BaseSection {
+class SignUpSection extends BaseSection {
 
-  renderHeader(styles) {
+  renderHeader() {
     let title;
     let subtitle;
     let handleClick;
@@ -24,10 +27,12 @@ export default class SignUpSection extends BaseSection {
     const { picture } = this.props.user || {};
     const blockStyle = assign({}, styles.sectionText, {display: 'block'});
     return (
-      <div style={styles.sectionHeader}>
-        <UserImage style={styles.sectionUserImage} src={picture} />
-        <TranslatedMessage tag="h1" style={styles.sectionTitle} message={title} />
-        <TranslatedMessage href="javascript: void 0;" tag="a" onClick={handleClick} style={blockStyle} message={subtitle} />
+      <div styleName="header">
+        <UserImage styleName="user-image" src={picture} />
+        <TranslatedMessage tag="h1" styleName="title" message={title} />
+        <p styleName="text">
+          <TranslatedMessage href="#" tag="a" className={this.props.styles.link} onClick={handleClick} style={blockStyle} message={subtitle} />
+        </p>
       </div>
     );
   }
@@ -36,3 +41,6 @@ export default class SignUpSection extends BaseSection {
     return <EditProfileForm {...this.props} />;
   }
 }
+
+
+export default cssModules(SignUpSection, styles);
