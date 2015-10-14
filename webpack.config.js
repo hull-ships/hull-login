@@ -1,70 +1,52 @@
-var _ = require('underscore');
-var path = require('path');
-var webpack = require('webpack');
-var config = require('./config');
+var _           = require('lodash');
+var webpack     = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
 
 
-var devOutput = _.extend({},config.output,{publicPath: config.previewUrl+config.assetsFolder+'/'});
+module.exports = function(config){
 
-if(config.hotReload){
-  var devEntry = _.reduce(config.entry,function(entries,v,k){
-    entries[k] = ['webpack-dev-server/client?'+config.previewUrl, 'webpack/hot/dev-server', v];
-    return entries;
-  },{});
-  var devPlugins = [new webpack.HotModuleReplacementPlugin(), new webpack.NoErrorsPlugin()]
-} else {
-  var devEntry = config.entry
-  var devPlugins = [new webpack.NoErrorsPlugin()]
-}
-
-module.exports = {
-  development:{
-   browser: {
+  return {
+    development:{
+      name     : 'browser',
+      // devtool  : '#source-map',
+      devServer: true,
+      module   : {loaders: config.devLoaders},
+      resolve  : config.resolve,
+      postcss  : config.postcss,
+      node: {
+        fs: "empty" //Prevents MessageFormat from erroring
+      },
+      entry    : config.devEntry,
+      output   : config.output,
+      plugins  : config.devPlugins.concat([
+        new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('development') } }),
+      ])
+    },
+    production:{
       name     : 'browser',
       devtool  : '#source-map',
-      devServer: true,
-      entry    : devEntry,
-      output   : devOutput,
-      resolve  : {
-        root: [path.join(__dirname, "bower_components")],
-        extensions: config.extensions
-      },
-      node: {
-        fs: "empty"
-      },
       module   : {loaders: config.loaders},
-      plugins:  config.plugins.concat([
-        new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('development') } })
-      ]).concat(devPlugins)
-    }
-  },
-  production:{
-    browser: {
-      name    : 'browser',
-      entry   : config.entry,
-      output  : config.output,
-      resolve : {
-        root: [path.join(__dirname, "bower_components")],
-        extensions: config.extensions
-      },
+      resolve  : config.resolve,
+      postcss  : config.postcss,
       node: {
-        fs: "empty"
+        fs: "empty" //Prevents MessageFormat from erroring
       },
-      module  : {loaders: config.loaders},
-      plugins : config.plugins.concat([
+      entry    : config.entry,
+      output   : config.output,
+      plugins  : config.plugins.concat([
         new webpack.DefinePlugin({'process.env': {'NODE_ENV': JSON.stringify('production') } }),
+        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
-          comments: false,
+          output: {comments: false},
+          compress: { drop_console: true },
           minimize:true,
           ascii_only:true,
           quote_keys:true,
-          sourceMap: false,
-          beautify: false,
-          compress: { drop_console: true }
+          sourceMap: true,
+          beautify: false
         }),
-        new webpack.optimize.DedupePlugin(),
-        new StatsPlugin(path.join(__dirname, config.outputFolder, 'stats.json'), { chunkModules: true, profile: true })
+        new StatsPlugin('stats.json', { chunkModules: true, profile: true })
       ])
     }
   }

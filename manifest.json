@@ -34,6 +34,13 @@
       "default": "#aaaaaa"
     },
     {
+      "name":"background_color",
+      "title": "Background color",
+      "type": "string",
+      "format": "color",
+      "default": "#ffffff"
+    },
+    {
       "name":"button_border_radius",
       "title": "Button border radius",
       "type": "number",
