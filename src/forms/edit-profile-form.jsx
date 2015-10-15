@@ -116,26 +116,26 @@ export default React.createClass({
     const schema = this.getSchema();
     const errors = ((this.props.errors || {}).updateUser || {}).errors || {};
 
-    return _.reduce(schema.properties, function(m, v, k) {
-      let label = v.title;
-      const isRequired = _.include(schema.required, k);
+    return _.reduce(schema.properties, function(memo, value, key) {
+      let label = value.title;
+      const isRequired = _.include(schema.required, key);
       if (isRequired) { label += ' *'; }
 
-      const help = v.help || getHelpMessage(v);
+      const help = value.help || getHelpMessage(value);
 
       const field = {
         label,
         help,
-        hasError: !!errors[k],
+        hasError: !!errors[key],
       };
 
-      if (v.type === 'string') {
-        field.type = v.format === 'uri' ? 'url' : (v.format || 'text');
+      if (value.type === 'string') {
+        field.type = value.format === 'uri' ? 'url' : (value.format || 'text');
       }
 
-      m[k] = field;
+      memo[key] = field;
 
-      return m;
+      return memo;
     }, {});
   },
 
