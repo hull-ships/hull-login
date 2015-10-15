@@ -2,10 +2,10 @@ import React from 'react';
 import cssModules from 'react-css-modules';
 import styles from './main.css';
 import Icon from './components/icon';
-import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
 import { Mixins, I18n, Utils } from './lib';
 import Sections from './sections';
 import { Overlay, Styles, TranslatedMessage } from './components';
+import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
 
 const { translate } = I18n;
 
@@ -104,9 +104,7 @@ const HullLogin = React.createClass({
   },
 
   renderLayer() {
-    return (
-      <ReactTransitionGroup>{this.renderOverlay()}</ReactTransitionGroup>
-    );
+    return <ReactTransitionGroup>{this.renderOverlay()}</ReactTransitionGroup>;
   },
 
 
