@@ -17,21 +17,21 @@
       "title": "Primary color",
       "type": "string",
       "format": "color",
-      "default": "#fa5400"
+      "default": "#0093E6"
     },
     {
       "name":"text_color",
       "title": "Text color",
       "type": "string",
       "format": "color",
-      "default": "#aaaaaa"
+      "default": "#8091AD"
     },
     {
       "name":"link_color",
       "title": "Link color",
       "type": "string",
       "format": "color",
-      "default": "#aaaaaa"
+      "default": "#3F4654"
     },
     {
       "name":"background_color",
