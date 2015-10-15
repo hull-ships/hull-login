@@ -4,7 +4,10 @@
   animation: slide 1s linear both;
   label{
     display: block;
-    margin-bottom: var(--line-height);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-bottom: var(--line-height-normal);
   }
 }
 

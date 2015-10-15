@@ -3,10 +3,10 @@
 .ship{
   all:initial;
   font-family: var(--font-family);
-  font-size: var(--font-size);
+  font-size: var(--font-size-normal);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
-  line-height:var(--line-height);
+  line-height:var(--line-height-normal);
   margin-bottom: 200px;
   box-sizing: border-box;
   * {
@@ -18,10 +18,10 @@
   all:initial;
   display:block;
   font-family: var(--font-family);
-  font-size: var(--font-size);
+  font-size: var(--font-size-normal);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
-  line-height:var(--line-height);
+  line-height:var(--line-height-normal);
   /*margin-bottom: 50px;*/
   box-sizing: border-box;
   * {
@@ -48,7 +48,7 @@
 }
 
 .button{
-  composes: button from './styles/mixins.css';
+  composes: button-small from './styles/mixins.css';
   margin:0 5px;
 }
 

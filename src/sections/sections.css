@@ -18,8 +18,9 @@
 
 .title{
   composes: primaryText from '../styles/mixins.css';
-  font-size: 24px;
-  font-weight: 300;
+  font-size: var(--font-size-xlarge);
+  line-height: var(--line-height-xlarge);
+  font-weight: var(--font-weight-normal);
   text-align: center;
 }
 

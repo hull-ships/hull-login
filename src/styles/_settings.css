@@ -1,11 +1,17 @@
 :root{ 
   --caret-size : 11px;
-  --font-size: 12px;
-  --large-font-size: 14px;
-  --xlarge-font-size: 18px;
-  --line-height: 15px;
-  --large-line-height:20px;
+  --font-size-normal: 12px;
+  --line-height-normal: 15px;
+
+  --font-size-large: 14px;
+  --line-height-large:20px;
+
+  --font-size-xlarge: 24px;
+  --line-height-xlarge:28px;
+
+  --font-weight-normal: 300;
   --font-weight-bold: 700;
+
   --namespace: false;
 
   --global-radius: 3px;
