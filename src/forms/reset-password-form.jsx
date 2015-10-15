@@ -1,6 +1,7 @@
 import React from 'react';
 import t from 'tcomb-form';
 import { Form, TranslatedMessage } from '../components';
+import Icon from '../components/icon';
 import { Mixins, I18n, FieldTypes } from '../lib';
 
 const { translate } = I18n;
@@ -72,17 +73,17 @@ export default React.createClass({
   },
 
   render() {
-    let m;
-    let d;
+    let message;
+    let disabled;
     if (this.state.resetPasswordState === 'done') {
-      m = translate('reset password button text when completed reset');
-      d = true;
+      message = <span><Icon name="valid" colorize/>{translate('reset password button text when completed reset')}</span>;
+      disabled = true;
     } else if (this.state.resetPasswordState === 'pending') {
-      m = translate('reset password button text when attempting reset');
-      d = true;
+      message = <span><Icon name="spinner" colorize/>{translate('reset password button text when attempting reset')}</span>;
+      disabled = true;
     } else {
-      m = translate('reset password button text');
-      d = !!this.state.resetPasswordError;
+      message = <span><Icon name="send" colorize/>{translate('reset password button text')}</span>;
+      disabled = !!this.state.resetPasswordError;
     }
 
     return (
@@ -90,10 +91,10 @@ export default React.createClass({
         type={this.getType()}
         value={{ email: this.props.currentEmail }}
         fields={this.getFields()}
-        submitMessage={m}
+        submitMessage={message}
         onSubmit={this.handleSubmit}
         onChange={this.handleChange}
-        disabled={d}
+        disabled={disabled}
         autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically}
       />
     );

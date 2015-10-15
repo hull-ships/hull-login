@@ -3,14 +3,17 @@
 .form{
   animation: slide 1s linear both;
   label{
+    position: relative;
     display: block;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    font-size: 10px;
     margin-bottom: var(--line-height-normal);
-    p{
-      position: absolute;
-    }
+  }
+}
+.label{
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  font-size: 10px;
+  p{
+    position: absolute;
   }
 }
 
@@ -28,15 +31,14 @@
   background-repeat: no-repeat;
 }
 
-.errors{
-  composes: errors from '../../styles/mixins.css';
-}
-
-
 .label{
   width: 100%;
 }
 
 .last{
   margin-bottom: 10px;
+}
+
+.submit{
+  display: block;
 }

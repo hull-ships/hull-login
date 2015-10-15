@@ -23,6 +23,7 @@ const Form = React.createClass({
     submitMessage: React.PropTypes.any,
     type: React.PropTypes.func.isRequired,
     fields: React.PropTypes.object,
+    styles: React.PropTypes.object,
     disabled: React.PropTypes.bool,
     autoDisableSubmit: React.PropTypes.bool,
     onSubmit: React.PropTypes.func.isRequired,
@@ -56,7 +57,6 @@ const Form = React.createClass({
     this.state.enterTransition.remove();
   },
 
-
   getOptions() {
     return {
       config: {
@@ -64,6 +64,7 @@ const Form = React.createClass({
         submitState: this.state.submitState,
       },
       fields: this.props.fields,
+      auto: 'placeholders',
       templates: Templates,
     };
   },
@@ -93,7 +94,6 @@ const Form = React.createClass({
       this.props.onChange(changes);
     }
   },
-
 
   handleSubmit(e) {
     e.preventDefault();
@@ -152,7 +152,10 @@ const Form = React.createClass({
           options={options}
           value={this.state.value}
           onChange={this.handleChange} />
-        <Button style={s} type="submit" block disabled={this.isDisabled()}>{this.props.submitMessage}</Button>
+
+        <div styleName="submit">
+          <Button style={s} type="submit" block disabled={this.isDisabled()}>{this.props.submitMessage}</Button>
+        </div>
       </form>
     );
   },

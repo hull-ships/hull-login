@@ -123,11 +123,7 @@ export default React.createClass({
 
       const help = value.help || getHelpMessage(value);
 
-      const field = {
-        label,
-        help,
-        hasError: !!errors[key],
-      };
+      const field = {label, help, hasError: !!errors[key] };
 
       if (value.type === 'string') {
         field.type = value.format === 'uri' ? 'url' : (value.format || 'text');

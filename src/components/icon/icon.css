@@ -11,7 +11,7 @@
   }
   &.colorized{
     fill : currentColor;
-    svg path{
+    svg path, svg.rect{
       fill:currentColor;
     }
   }

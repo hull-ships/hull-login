@@ -7,8 +7,9 @@ const Input = React.createClass({
 
   propTypes: {
     onChange: React.PropTypes.func.isRequired,
+    attrs: React.PropTypes.object.isRequired,
     autoFocus: React.PropTypes.bool,
-    label: React.PropTypes.string.isRequired,
+    placeholder: React.PropTypes.string,
   },
 
   componentDidMount() {
@@ -31,7 +32,7 @@ const Input = React.createClass({
       ...this.props,
       onChange: this.handleChange,
     };
-    return <input styleName="input" ref="input" {...props} placeholder={this.props.label} />;
+    return <input styleName="input" ref="input" {...props} placeholder={this.props.attrs.placeholder} />;
   },
 });
 

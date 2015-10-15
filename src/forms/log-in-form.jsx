@@ -42,7 +42,6 @@ export default React.createClass({
     const e = this.props.errors.logIn;
     const { displayErrors } = this.state;
     const hasError = displayErrors && e && e.provider === 'classic';
-
     return {
       login: {
         placeholder: translate('log-in email placeholder'),

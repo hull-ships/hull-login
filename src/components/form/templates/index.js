@@ -5,26 +5,14 @@ import Input from './input';
 import Textarea from './textarea';
 import Select from './select';
 import Help from '../../help';
+import ErrrorMessage from '../../error';
 
 function render(Component, locals) {
-  if (locals.config.kind === 'compact') {
-    let error;
-    if (locals.error) {
-      error = locals.error && <p styleName="error">{locals.error}</p>;
-    }
-    return (
-      <label styleName="label">
-        <Component {...locals} />
-        {error}
-        <Help>{locals.help}</Help>
-      </label>
-    );
-  }
-
   return (
-    <label styleName="label">
-      {locals.label}
-      <Component {...locals} />
+    <label>
+      {locals.config.kind === 'compact' ? null : locals.label}
+      <Component {...locals} placeholder={locals.placeholder}/>
+      <ErrrorMessage>{locals.error}</ErrrorMessage>
       <Help>{locals.help}</Help>
     </label>
   );
@@ -61,7 +49,6 @@ export default {
 
   textbox(locals) {
     const Component = locals.type === 'textarea' ? Textarea : Input;
-
     return render(Component, locals);
   },
 };

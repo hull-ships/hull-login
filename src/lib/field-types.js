@@ -26,11 +26,5 @@ const Password = t.subtype(t.Str, minLength(1));
 
 const Name = t.subtype(t.Str, minLength(1));
 
-export default {
-  Email,
-  Username,
-  Login,
-  Password,
-  Name,
-};
+export default { Email, Username, Login, Password, Name };
 

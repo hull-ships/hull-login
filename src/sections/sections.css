@@ -53,7 +53,3 @@
   composes: smallBorderRadius from '../styles/mixins.css';
   background: rgba(255,255,255,.1);
 }
-
-.errors{
-  composes: errors from '../styles/mixins.css';
-}

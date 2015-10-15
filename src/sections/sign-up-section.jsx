@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import cssModules from 'react-css-modules';
 import styles from './sections.css';
 
@@ -48,17 +49,18 @@ class SignUpSection extends BaseSection {
 
   renderContent() {
     const { shipSettings } = this.props;
+    const props = _.omit(this.props, 'styles');
     let content;
     if (shipSettings.show_classic_login) {
       content = (
         <div>
-          <SocialButtons {...this.props} />
+          <SocialButtons {...props} />
           <Divider>or</Divider>
-          <SignUpForm {...this.props} />
+          <SignUpForm {...props} />
         </div>
       );
     } else {
-      content = <div><SocialButtons {...this.props} /></div>;
+      content = <div><SocialButtons {...props} /></div>;
     }
 
     return content;

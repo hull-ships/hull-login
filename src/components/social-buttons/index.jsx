@@ -3,6 +3,7 @@ import { translate } from '../../lib/i18n';
 import Button from '../button';
 import Icon from '../icon';
 import Help from '../help';
+import ErrrorMessage from '../error';
 import TranslatedMessage from '../translated-message';
 import { hasTranslation } from '../../lib/i18n';
 
@@ -95,7 +96,7 @@ const SocialButtons = React.createClass({
   renderErrors() {
     const errorMessage = this.getErrorMessage();
     if (errorMessage) {
-      return <div className={this.props.styles.errors}>{errorMessage}</div>;
+      return <ErrrorMessage>{errorMessage}</ErrrorMessage>;
     }
   },
 
@@ -103,7 +104,7 @@ const SocialButtons = React.createClass({
     const { providers } = this.props;
     const buttons = providers && providers.map(this.renderButton, this);
     return (
-      <div>
+      <div styleName="submit">
         {this.renderErrors()}
         {buttons}
       </div>

@@ -1,6 +1,9 @@
 @import "../../styles/settings";
 
 
+.meta{
+}
+
 .background{
   position: fixed;
   z-index: 9999;
@@ -55,7 +58,8 @@
 
   box-sizing: border-box;
   width: 100%;
-  padding: 20px;
+  min-height: 100vh;
+  padding: 0;
 
   transform: translate3d(0, 0, 0);
 
@@ -63,8 +67,9 @@
     composes: borderRadius from '../../styles/mixins.css';
     padding: 35px;
     margin-bottom: 10px;
+    min-height: 0;
     max-width: 500px;
-  } 
+  }
 
   display: inline-block;
 }
@@ -123,11 +128,12 @@
   &.enter{
     display: none;
   }
-  &.leave{}
+  &.leave{
+    visibility: visible;
+  }
 }
 
 .wrapper{
-
   &.enter.enterActive {
     animation: opening-keyframes .25s;
   }
@@ -138,7 +144,6 @@
 }
   
 .background {
-
   &.enter.enterActive {
     animation: overlay-opening-keyframes .25s;
   }
@@ -184,10 +189,10 @@
     opacity: 1;
   }
   to {
-    opacity: 0;
+    opacity: 0.5;
+    visibility: hidden;
   }
 }
-
 
 @keyframes panel-shake {
   0 {
