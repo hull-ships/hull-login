@@ -1,6 +1,4 @@
 @import "./settings";
-
-
 .fontWeightNormal{
   font-weight: var(--font-weight-normal)
 }
