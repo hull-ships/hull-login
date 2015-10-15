@@ -1,26 +1,16 @@
 import React from 'react';
-import { StyleResolverMixin, BrowserStateMixin } from 'radium';
+import cssModules from 'react-css-modules';
+import styles from './help.css';
 
-const styles = {
-  display: 'block',
-  textAlign: 'center',
-  fontSize: 12,
-  marginTop: 0,
-  marginBottom: 10,
-  opacity: 0.5
-};
-
-export default React.createClass({
-  displayName: 'Help',
-
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
+const Help = React.createClass({
+  propTypes: {
+    children: React.PropTypes.any,
+  },
 
   render() {
-    return <span style={styles}>
-      {this.props.children}
-    </span>;
-  }
+    if (!this.props.children) { return null;}
+    return <span styleName="help">{this.props.children}</span>;
+  },
 });
+
+export default cssModules(Help, styles);

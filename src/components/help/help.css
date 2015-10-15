@@ -1,0 +1,7 @@
+.help{
+  composes: fontSizeNormal from '../../styles/mixins.css';
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  opacity: 0.5;
+}

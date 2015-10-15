@@ -1,5 +1,4 @@
 import React from 'react';
-import assign from 'object-assign';
 import { translate } from '../../lib/i18n';
 
 // Inspired by/modified version of
@@ -11,14 +10,15 @@ export default React.createClass({
     message: React.PropTypes.string.isRequired,
     variables: React.PropTypes.object,
     tag: React.PropTypes.string,
-    allowHTML: React.PropTypes.bool
+    allowHTML: React.PropTypes.bool,
+    className: React.PropTypes.string,
   },
 
   getDefaultProps: function() {
     return {
       variables: {},
       tag: 'span',
-      allowHTML: true // TODO read from settings
+      allowHTML: true, // TODO read from settings
     };
   },
 
@@ -31,18 +31,19 @@ export default React.createClass({
 
     let rtn;
     if (this.props.allowHTML) {
-      let props = assign({
-        'className': this.props.className,
+      const props = {
+        className: this.props.className,
         dangerouslySetInnerHTML: {
-          __html: translation // TODO DOMPurify
-        }
-      }, this.props);
+          __html: translation, // TODO DOMPurify
+        },
+        ...this.props,
+      };
       rtn = React.createElement(this.props.tag, props);
     } else {
-      let props = assign({ 'className': this.props.className }, this.props);
+      const props = {className: this.props.className, ...this.props};
       rtn = React.createElement(this.props.tag, props, translation);
     }
 
     return rtn;
-  }
+  },
 });

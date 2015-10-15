@@ -8,6 +8,6 @@ export default {
   SignUpForm,
   LogInForm,
   ResetPasswordForm,
-  EditProfileForm
+  EditProfileForm,
 };
 

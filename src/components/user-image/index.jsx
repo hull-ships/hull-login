@@ -1,36 +1,26 @@
 import React from 'react';
-import assign from 'object-assign';
-import { getSettings } from '../../styles/settings';
+import cssModules from 'react-css-modules';
+import styles from './user-image.css';
 
-const style = {
-  width: 100,
-  height: 100,
-  overflow: 'hidden',
-  backgroundPosition: 'center center',
-  backgroundSize: 'cover',
-  marginRight: 'auto',
-  marginLeft: 'auto',
-  borderRadius: 100
-};
-
-export default React.createClass({
+const UserImage = React.createClass({
   displayName: 'UserImage',
+
+  propTypes: {
+    src: React.PropTypes.string,
+    style: React.PropTypes.object,
+  },
 
   render() {
     const url = this.props.src;
 
     if (!url) { return <noscript />; }
 
-    const settings = getSettings();
-    const s = assign({
-      backgroundColor: settings.grayLighterColor,
-      backgroundImage: 'url(' + url + ')'
-    }, style);
-
     return (
-      <div style={this.props.style}>
-        <div style={s}/>
+      <div styleName="wrapper">
+        <div styleName="image" style={{ backgroundImage: `url(${url})` }}/>
       </div>
     );
-  }
+  },
 });
+
+export default cssModules(UserImage, styles);

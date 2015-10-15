@@ -8,9 +8,9 @@ let _messages = {};
 function compileMessages() {
   _messages = {};
 
-  let mf = new MessageFormat(_locale);
+  const mf = new MessageFormat(_locale);
 
-  for (let k in _translations[_locale]) {
+  for (const k in _translations[_locale]) {
     if (_translations[_locale].hasOwnProperty(k)) {
       _messages[k] = mf.compile(_translations[_locale][k]);
     }
@@ -37,10 +37,10 @@ function translate(message, data) {
 
   let m = _messages[message];
 
-  if (m == null) {
+  if (!m) {
     console.warn('[i18n] "' + message + '". is missing in "' + _locale + '".'); // eslint-disable-line
 
-    let mf = new MessageFormat(_locale);
+    const mf = new MessageFormat(_locale);
     m = _messages[message] = mf.compile(message);
   }
 
@@ -61,5 +61,5 @@ export default {
   setLocale,
   setTranslations,
   translate,
-  hasTranslation
+  hasTranslation,
 };

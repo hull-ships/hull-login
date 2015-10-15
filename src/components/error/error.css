@@ -1,0 +1,7 @@
+.popover{
+  display: block;
+}
+
+.error{
+  composes: error from '../../styles/mixins.css';
+}

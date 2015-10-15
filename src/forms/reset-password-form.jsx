@@ -1,41 +1,49 @@
 import React from 'react';
 import t from 'tcomb-form';
 import { Form, TranslatedMessage } from '../components';
+import Icon from '../components/icon';
 import { Mixins, I18n, FieldTypes } from '../lib';
 
-let { translate } = I18n;
-let { Email } = FieldTypes;
+const { translate } = I18n;
+const { Email } = FieldTypes;
 
 export default React.createClass({
   displayName: 'ResetPasswordSection',
 
-  mixins: [
-    Mixins.AsyncActions
-  ],
-
-  getAsyncActions() {
-    return {
-      resetPassword: this.props.resetPassword
-    };
+  propTypes: {
+    resetPassword: React.PropTypes.func.isRequired,
+    currentEmail: React.PropTypes.string,
+    shipSettings: React.PropTypes.object.isRequired,
+    updateCurrentEmail: React.PropTypes.func.isRequired,
+    errors: React.PropTypes.object,
   },
+
+  mixins: [Mixins.AsyncActions],
+
 
   getInitialState() {
     return { displayErrors: false };
   },
 
+  getAsyncActions() {
+    return {
+      resetPassword: this.props.resetPassword,
+    };
+  },
+
   getType() {
     return t.struct({
-      email: Email
+      email: Email,
     });
   },
 
   getFields() {
-    let hasError = this.state.displayErrors && this.props.errors.resetPassword != null;
-    let errorMessage = this.props.errors.resetPassword && this.props.errors.resetPassword.message;
+    const hasError = this.state.displayErrors && !!this.props.errors.resetPassword;
+    const errorMessage = this.props.errors.resetPassword && this.props.errors.resetPassword.message;
 
     let help;
     if (this.state.resetPasswordState === 'done') {
-      help = <TranslatedMessage message='reset password message when completed reset' />;
+      help = <TranslatedMessage message="reset password message when completed reset" />;
     } else if (this.state.resetPasswordError) {
       help = <TranslatedMessage message={errorMessage} />;
     }
@@ -47,8 +55,8 @@ export default React.createClass({
         hasError,
         error: hasError && <TranslatedMessage message={errorMessage} />,
         help,
-        autoFocus: true
-      }
+        autoFocus: true,
+      },
     };
   },
 
@@ -57,7 +65,7 @@ export default React.createClass({
   },
 
   handleChange(changes) {
-    let { email } = changes.value;
+    const { email } = changes.value;
     if (email) {
       this.props.updateCurrentEmail(email);
     }
@@ -65,28 +73,31 @@ export default React.createClass({
   },
 
   render() {
-    let m;
-    let d;
+    let message;
+    let disabled;
     if (this.state.resetPasswordState === 'done') {
-      m = translate('reset password button text when completed reset');
-      d = true;
+      message = <span><Icon name="valid" colorize/>{translate('reset password button text when completed reset')}</span>;
+      disabled = true;
     } else if (this.state.resetPasswordState === 'pending') {
-      m = translate('reset password button text when attempting reset');
-      d = true;
+      message = <span><Icon name="spinner" colorize/>{translate('reset password button text when attempting reset')}</span>;
+      disabled = true;
     } else {
-      m = translate('reset password button text');
-      d = !!this.state.resetPasswordError;
+      message = <span><Icon name="send" colorize/>{translate('reset password button text')}</span>;
+      disabled = !!this.state.resetPasswordError;
     }
 
-    return <Form kind='compact'
-      type={this.getType()}
-      value={{ email: this.props.currentEmail }}
-      fields={this.getFields()}
-      submitMessage={m}
-      onSubmit={this.handleSubmit}
-      onChange={this.handleChange}
-      disabled={d}
-      autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />;
-  }
+    return (
+      <Form kind="compact"
+        type={this.getType()}
+        value={{ email: this.props.currentEmail }}
+        fields={this.getFields()}
+        submitMessage={message}
+        onSubmit={this.handleSubmit}
+        onChange={this.handleChange}
+        disabled={disabled}
+        autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically}
+      />
+    );
+  },
 });
 

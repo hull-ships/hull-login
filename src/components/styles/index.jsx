@@ -1,53 +1,170 @@
+import _ from 'lodash';
 import React from 'react';
+import radium from 'radium';
+import color from 'color';
+import styleMixins from '../../styles/mixins.css';
 import { Style } from 'radium';
-import { getStyles } from '../../styles';
 
-const s = { border: 0, padding: 0 };
-
-export default React.createClass({
-  displayName: 'Styles',
-
+const Styles = React.createClass({
   propTypes: {
-    scope: React.PropTypes.string.isRequired
+    scope: React.PropTypes.string.isRequired,
+    settings: React.PropTypes.object.isRequired,
+  },
+
+  getDefaultProps() {
+    return {
+      styles: {},
+    };
   },
 
   getSelector() {
-    return `.${this.props.scope}.${this.props.scope}`;
+    return `.${this.props.scope}`;
+  },
+
+  getStyles() {
+    const {
+      primary_color: primary,
+      link_color: link,
+      background_color: background,
+      text_color: text,
+      button_border_radius: buttonBorderRadius,
+      overlay_border_radius: overlayBorderRadius,
+    } = this.props.settings;
+
+    const buttonTextColor = color(primary).darken(0.5).dark() ? 'white' : '#444';
+    const controlTextColor = color(text).dark() ? text : '#444';
+    const controlBackgroundColor = color(background).lighten(0.1).hexString();
+    return {
+      primaryText: {
+        normal: {
+          color: primary,
+        },
+      },
+      darkerText: {
+        normal: {
+          color: color(text).darken(0.3).hexString(),
+        },
+      },
+      borderColor: {
+        normal: {
+          borderColor: color(text).alpha(0.5).hslString(),
+        },
+      },
+      linkText: {
+        'normal': {
+          color: link,
+        },
+        ':link': {
+          color: link,
+        },
+        ':active': {
+          color: link,
+        },
+        ':visited': {
+          color: link,
+        },
+        ':hover': {
+          color: color(link).darken(0.2).hexString(),
+        },
+        ':focus': {
+          color: color(link).darken(0.2).hexString(),
+        },
+      },
+      borderRadius: {
+        normal: {
+          borderRadius: overlayBorderRadius,
+        },
+      },
+      smallBorderRadius: {
+        normal: {
+          borderRadius: (buttonBorderRadius),
+        },
+      },
+      mainBackground: {
+        normal: {
+          color: this.props.settings.text_color,
+          backgroundColor: background,
+        },
+      },
+      control: {
+        'normal': {
+          color: controlTextColor,
+          backgroundColor: controlBackgroundColor,
+        },
+        ':focus': {
+          boxShadow: `inset 0 -2px 0 0 ${primary}`,
+
+        },
+      },
+      button: {
+        'normal': {
+          color: buttonTextColor,
+          borderRadius: buttonBorderRadius,
+          backgroundColor: primary,
+        },
+        ':link': {
+          color: buttonTextColor,
+          backgroundColor: primary,
+        },
+        ':visited': {
+          color: buttonTextColor,
+          backgroundColor: primary,
+        },
+        ':active': {
+          color: buttonTextColor,
+          backgroundColor: color(primary).darken(0.2).hexString(),
+        },
+        ':hover': {
+          color: buttonTextColor,
+          backgroundColor: color(primary).darken(0.2).hexString(),
+        },
+        ':focus': {
+          color: buttonTextColor,
+          backgroundColor: color(primary).darken(0.2).hexString(),
+        },
+      },
+
+      placeholder: {
+        color: color(text).alpha(0.2).hexString(),
+      },
+    };
   },
 
   getRules() {
-    const styles = getStyles();
+    const styles = this.getStyles();
 
-    let rules = [
-      { 'hull-login__modal__dialog': styles.base },
-      { 'a': styles.link },
-      { 'a:active': styles.link },
-      { 'a:link': styles.link },
-      { 'a:visited': styles.link },
-      { 'a:hover': styles.linkHover },
-      { 'a:focus': styles.linkFocus },
-
-      { '::-moz-placeholder': styles.placeholder },
-      { 'input::-moz-placeholder': styles.placeholder },
-      { 'textarea::-moz-placeholder': styles.placeholder },
-      { ':-ms-input-placeholder': styles.placeholder },
-      { 'input:-ms-input-placeholder': styles.placeholder },
-      { 'textarea:-ms-input-placeholder': styles.placeholder },
-      { '::-webkit-input-placeholder': styles.placeholder },
-      { 'input::-webkit-input-placeholder': styles.placeholder },
-      { 'textarea::-webkit-input-placeholder': styles.placeholder },
-
-      { '::-moz-focus-inner': s }
-    ];
-
-    if (this.props.reset) {
-      rules.unshift({ '*': styles.reset });
-    }
-
-    return rules;
+    return _.reduce(styleMixins, function(hash, cls, name) {
+      const style = styles[name];
+      if (!style) { return hash; }
+      _.each(cls.split(' '), function(n) {
+        if (!hash[`.${n}`]) {
+          _.each(style, function(rule, key) {
+            if (key === 'normal') {
+              hash[`.${n}`] = rule;
+            } else {
+              hash[`.${n}${key}`] = rule;
+            }
+          });
+        }
+      });
+      return hash;
+    }, {
+      [`.${this.props.scope} ::-moz-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} input::-moz-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} textarea::-moz-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} :-ms-input-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} input:-ms-input-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} textarea:-ms-input-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} ::-webkit-input-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} input::-webkit-input-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} textarea::-webkit-input-placeholder`]: styles.placeholder,
+      [`.${this.props.scope} ::-moz-focus-inner`]: { border: 0, padding: 0 },
+    });
   },
 
   render() {
-    return <Style scopeSelector={this.getSelector()} rules={this.getRules()} />;
-  }
+    return <Style rules={this.getRules()} />;
+  },
 });
+
+export default radium(Styles);

@@ -1,8 +1,8 @@
 function wrapCustomer(data) {
-  let h = {};
+  const h = {};
 
-  for (let k in data) {
-    if (data.hasOwnProperty(k) && data[k] != null) {
+  for (const k in data) {
+    if (data.hasOwnProperty(k) && !!data[k]) {
       h['customer[' + k + ']'] = data[k];
     }
   }
@@ -11,12 +11,12 @@ function wrapCustomer(data) {
 }
 
 function shopifyLogin(email, password, options = {}) {
-  let { superagent, Promise } = Hull.utils;
-  let url = document.location.origin + '/account/login';
-  let formData = {
+  const { superagent, Promise } = Hull.utils;
+  const url = document.location.origin + '/account/login';
+  const formData = {
     return_to: '/___RETURN_TO___',
     form_types: 'customer_login',
-    ...wrapCustomer({ email, password })
+    ...wrapCustomer({ email, password }),
   };
 
   return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ function shopifyLogin(email, password, options = {}) {
         if (response && response.status === 404) {
           resolve({
             response,
-            status
+            status,
           });
           if (options.redirect_url) {
             window.location.href = options.redirect_url;
@@ -39,7 +39,7 @@ function shopifyLogin(email, password, options = {}) {
             status: 401,
             message: 'invalid credentials',
             reason: 'invalid_credentials',
-            provider: 'classic'
+            provider: 'classic',
           });
         }
       });
@@ -49,7 +49,7 @@ function shopifyLogin(email, password, options = {}) {
 function classicLogin(options = {}) {
   const params = {
     email: options.email || options.login,
-    password: options.password
+    password: options.password,
   };
   return Hull.api('services/shopify/customers/login', params, 'post').then(()=> {
     const { email, password } = params;
@@ -63,10 +63,7 @@ function socialLogin(options = {}) {
   if (options.redirect_url) {
     url = `${url}?redirect_url=${options.redirect_url}`;
   }
-  return Hull.login({
-    ...options,
-    redirect_url: url
-  });
+  return Hull.login({ ...options, redirect_url: url });
 }
 
 export function signUp(options = {}) {
@@ -95,7 +92,6 @@ export function resetPassword(email) {
 }
 
 export function logOut(/* options */) {
-  let logoutUrl = document.location.origin + '/account/logout';
-  return Hull.logout({ redirect_url: logoutUrl });
+  return Hull.logout({ redirect_url: `${document.location.origin}/account/logout` });
 }
 

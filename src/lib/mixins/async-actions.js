@@ -1,10 +1,10 @@
-import { reduce } from 'underscore';
+import _ from 'lodash';
 
 export default {
   getInitialState() {
     this._asyncActions = {};
 
-    return reduce(this.getAsyncActions(), (m, v, k) => {
+    return _.reduce(this.getAsyncActions(), (m, v, k) => {
       this._asyncActions[k] = this._processAction(v, k);
 
       m[`${k}State`] = null;
@@ -19,7 +19,7 @@ export default {
   },
 
   _processAction(action, name) {
-    let instance = this;
+    const instance = this;
     let timer;
 
     function setActionState(state, error, resetInitial) {
@@ -27,11 +27,11 @@ export default {
 
       if (!instance.isMounted()) { return; }
 
-      let h = {};
-      h[`${name}State`] = state;
-      h[`${name}Error`] = error;
+      const hash = {};
+      hash[`${name}State`] = state;
+      hash[`${name}Error`] = error;
 
-      instance.setState(h);
+      instance.setState(hash);
 
       if (resetInitial) {
         timer = setTimeout(function() { setActionState(null, null); }, 5000);
@@ -39,18 +39,18 @@ export default {
     }
 
     return function() {
-      let p = action.apply(null, arguments);
+      const promise = action.apply(null, arguments);
 
-      if (p.then == null) { return; }
+      if (!promise.then) { return; }
 
       setActionState('pending', null);
 
-      p.then(function() {
+      promise.then(function() {
         setActionState('done', null, true);
       }, function(error) {
         setActionState('failed', error, true);
       });
     };
-  }
+  },
 };
 

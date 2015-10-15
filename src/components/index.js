@@ -7,6 +7,7 @@ import TranslatedMessage from './translated-message';
 import UserImage from './user-image';
 import OrganizationImage from './organization-image';
 import SocialButtons from './social-buttons';
+import PageButtons from './page-buttons';
 
 export default {
   Button,
@@ -17,5 +18,6 @@ export default {
   TranslatedMessage,
   UserImage,
   OrganizationImage,
-  SocialButtons
+  SocialButtons,
+  PageButtons,
 };

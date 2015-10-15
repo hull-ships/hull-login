@@ -1,0 +1,56 @@
+@import "../styles/settings";
+
+.header {
+  margin-bottom: 30px;
+}
+
+.user-image{
+  margin-bottom: 10px;
+}
+
+.text{
+  text-align: center;
+}
+
+.footer{
+  margin-top: 30px;
+}
+
+.title{
+  composes: primaryText from '../styles/mixins.css';
+  font-size: var(--font-size-xlarge);
+  line-height: var(--line-height-xlarge);
+  font-weight: var(--font-weight-normal);
+  text-align: center;
+  margin-top: 30px;
+}
+
+.link{
+  composes: link from '../styles/mixins.css';
+}
+
+.field-first{
+  display: block;
+  padding: 10px;
+}
+.field{
+  composes: borderColor from '../styles/mixins.css';
+  composes: field-first;
+  display: block;
+  border-top: 1px solid;
+}
+.field-title{
+  composes: darkerText from '../styles/mixins.css';
+  display: inline-block;
+  font-weight: bold;
+  float: left;
+}
+.field-value{
+  text-align: right;
+}
+
+.fields{
+  composes: borderColor from '../styles/mixins.css';
+  composes: smallBorderRadius from '../styles/mixins.css';
+  background: rgba(255,255,255,.1);
+}

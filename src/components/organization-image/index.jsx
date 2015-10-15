@@ -1,18 +1,13 @@
 import React from 'react';
+import cssModules from 'react-css-modules';
+import styles from './organization-image.css';
 
-const styles = {
-  imageContainer: {
-    textAlign: 'center'
+const OrganizationImage = React.createClass({
+
+  propTypes: {
+    src: React.PropTypes.string,
+    style: React.PropTypes.object,
   },
-
-  image: {
-    maxWidth: '100%',
-    maxHeight: 140
-  }
-};
-
-export default React.createClass({
-  displayName: 'OrganizationImage',
 
   render() {
     const url = this.props.src;
@@ -20,12 +15,12 @@ export default React.createClass({
     if (!url) { return <noscript />; }
 
     return (
-      <div style={this.props.style}>
-        <div style={styles.imageContainer}>
-          <img style={styles.image} src={url} />
-        </div>
+      <div styleName="container">
+        <img styleName="image" src={url} />
       </div>
     );
-  }
+  },
+
 });
 
+export default cssModules(OrganizationImage, styles);

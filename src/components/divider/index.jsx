@@ -1,22 +1,31 @@
 import React from 'react';
-import { getStyles } from './styles';
+import cssModules from 'react-css-modules';
+import styles from './divider.css';
 
-export default React.createClass({
-  displayName: 'Divider',
+const Divider = React.createClass({
+
+  propTypes: {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.element,
+      React.PropTypes.array,
+      React.PropTypes.string,
+    ]).isRequired,
+  },
 
   componentDidMount() {
     // React does not support the `align` attribute. Firefox needs it to center
     // the `<legend />` inside the `<fieldset />`.
-    this.refs.content.getDOMNode().setAttribute('align', 'center');
+    return this.refs.content && this.refs.content.setAttribute('align', 'center');
   },
 
   render() {
-    const styles = getStyles();
-
     return (
-      <fieldset style={styles.divider}>
-        <legend ref='content' style={styles.dividerContent}>{this.props.children}</legend>
+      <fieldset styleName="divider">
+        <legend ref="content" styleName="content">{this.props.children}</legend>
       </fieldset>
     );
-  }
+  },
 });
+
+export default cssModules(Divider, styles);
+

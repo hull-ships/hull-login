@@ -1,4 +1,7 @@
 import React from 'react';
+import cssModules from 'react-css-modules';
+import styles from './sections.css';
+
 import { UserImage, TranslatedMessage } from '../components';
 import BaseSection from './base-section';
 
@@ -6,64 +9,43 @@ import BaseSection from './base-section';
 export default class ShowProfileSection extends BaseSection {
 
   renderContent() {
-    let settings = this.getStylesSettings();
-    let profileData = this.props.profileData;
-    let fields = this.props.form.fields_list.map((f, i)=> {
+    const profileData = this.props.profileData;
+    const fields = this.props.form.fields_list.map((f, i)=> {
       const isFirst = i === 0;
-
-      let fieldStyle = { padding: 10 };
-      if (!isFirst) {
-        fieldStyle.borderTopWidth = 1;
-        fieldStyle.borderTopStyle = 'solid';
-        fieldStyle.borderTopColor = settings.grayLightColor;
-      }
-
-      const labelStyle = {
-        color: settings.grayDarkerColor,
-        fontWeight: 'bold'
-      };
-
-      let value = profileData[f.name] || f.value || '-';
-
+      const value = profileData[f.name] || f.value || '-';
+      const styleName = isFirst ? 'field-first' : 'field';
       return (
-        <div className='hull-login__profile-field' key={f.name} style={fieldStyle}>
-          <p className='hull-login__profile-field__title' style={labelStyle}>{f.title}</p>
-          <p className='hull-login__profile-field__value'>{value}</p>
+        <div styleName={styleName} key={f.name}>
+          <p styleName="field-title">{f.title}</p>
+          <p styleName="field-value">{value}</p>
         </div>
       );
     }, this);
 
-    const fieldsStyle = {
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderColor: settings.grayLightColor,
-      borderRadius: settings.mediumBorderRadius,
-      boxShadow: 'inset 0 1px 0 rgba(0, 0, 0, 0.02)',
-      borderTopColor: settings.grayColor,
-      background: settings.grayLighterColor
-    };
-
-    return (
-      <div className='hull-login__profile-summary' style={fieldsStyle}>{fields}</div>
-    );
+    return <div styleName="fields">{fields}</div>;
   }
 
-  renderHeader(styles) {
+  renderHeader() {
     const u = this.props.user;
-    return <div style={styles.sectionHeader} className='hull-login__profile-header'>
-      <UserImage style={styles.sectionUserImage} src={u.picture} />
-      <h1 style={styles.sectionTitle}>{u.name || u.username || u.email}</h1>
-      <p style={styles.sectionText} className='hull-login__profile-edit-link'>
-        <TranslatedMessage tag='a'
-          href='#'
-          onClick={this.props.activateEditProfileSection}
-          message='view profile switch to edit profile link' /> · <TranslatedMessage tag='a'
-          href='#'
-          onClick={this.props.logOut}
-          message='nav logout link' />
-      </p>
-    </div>;
+    return (
+      <div styleName="header">
+        <UserImage styleName="user-image" src={u.picture} />
+        <h1 styleName="title">{u.name || u.username || u.email}</h1>
+        <p styleName="text">
+          <TranslatedMessage tag="a"
+            href="#"
+            className={this.props.styles.link}
+            onClick={this.props.activateEditProfileSection}
+            message="view profile switch to edit profile link" />&nbsp;&nbsp;·&nbsp;&nbsp;<TranslatedMessage tag="a"
+            href="#"
+            className={this.props.styles.link}
+            onClick={this.props.logOut}
+            message="nav logout link" />
+        </p>
+      </div>
+    );
   }
 
 }
 
+export default cssModules(ShowProfileSection, styles);

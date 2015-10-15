@@ -1,0 +1,108 @@
+.popover{
+  position: absolute;
+  right:-193px;
+  z-index: 10;
+  top: -5px;
+  perspective: 800;
+  -webkit-perspective: 800;
+  /*transform: translateX(246px);*/
+  .error{
+    text-align: left;
+  }
+}
+
+.error{
+  composes: error from '../../styles/mixins.css';
+  composes: borderRadius from '../../styles/mixins.css';
+  composes: mainBackground from '../../styles/mixins.css';
+  composes: boxShadowFilet from '../../styles/mixins.css';
+  composes: darkerText from '../../styles/mixins.css';
+  color: #FF6262 !important;
+  -webkit-font-smoothing:subpixel-antialiased;
+  font-size: 12px;
+  font-weight: 400;
+  max-width: 180px;
+  padding: 10px 15px 10px;
+  z-index: 120;
+  &:before, &:after{
+    position: absolute;
+    content: "";
+    display: block;
+    height: 0;
+    width: 0;
+    border: 8px inset;
+    z-index: 2;
+  } 
+  &:before{
+    left: -16px;
+    top: 16px;
+    border-color: transparent rgba(255, 98, 98, 0.5) transparent transparent;
+  };
+  &:after{
+    left: -15px;
+    top: 16px;
+    border-color: transparent #FFFFFF transparent transparent;
+  };
+}
+
+.error{
+  &.enter, &.appear, &.leave {
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(.8, .02, .45, .91);
+  }
+  &.enter, &.appear{
+    display: none;
+  }
+
+  &.enter.enterActive, &.appear.appearActive {
+    display: block;
+    animation: opening-keyframes .25s;
+  }
+
+  &.leave{
+    visibility: visible;
+  }
+
+  &.leave.leaveActive {
+    animation: closing-keyframes .25s;
+  }
+}
+
+
+@keyframes errorIconAnimation {
+  0 {
+    transform: translateX(-7px);
+  }
+
+  33% {
+    transform: translateX(0);
+  }
+
+  66% {
+    transform: translateX(-7px);
+  }
+}
+
+
+@keyframes opening-keyframes {
+  from {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+
+@keyframes closing-keyframes {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}

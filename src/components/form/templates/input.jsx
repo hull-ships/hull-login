@@ -1,41 +1,39 @@
 import React from 'react';
-import { getStyles } from '../styles';
-import { StyleResolverMixin, BrowserStateMixin } from 'radium';
+import cssModules from 'react-css-modules';
+import styles from '../form.css';
 
-export default React.createClass({
+const Input = React.createClass({
   displayName: 'Input',
 
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
-
-  handleChange(e) {
-    this.props.onChange(e.target.value);
+  propTypes: {
+    onChange: React.PropTypes.func.isRequired,
+    attrs: React.PropTypes.object.isRequired,
+    autoFocus: React.PropTypes.bool,
+    placeholder: React.PropTypes.string,
   },
 
   componentDidMount() {
     if (this.props.autoFocus) {
       setTimeout(()=> {
         if (this.isMounted()) {
-          let input = this.refs.input;
-          if (input) {
-            let node = input.getDOMNode();
-            node.focus();
-          }
+          const input = this.refs.input;
+          if (input) { input.focus(); }
         }
       }, 300);
     }
   },
 
+  handleChange(e) {
+    this.props.onChange(e.target.value);
+  },
+
   render() {
-    let props = {
-      style: this.buildStyles(getStyles().formInput),
-      ...this.getBrowserStateEvents(),
+    const props = {
       ...this.props,
-      onChange: this.handleChange
+      onChange: this.handleChange,
     };
-    return <input ref='input' {...props} />;
-  }
+    return <input styleName="input" ref="input" {...props}/>;
+  },
 });
 
+export default cssModules(Input, styles);

@@ -1,8 +1,5 @@
 {
-  "extends": "eslint-config-airbnb",
-  "env": {
-    "browser": true
-  },
+  "parser": "babel-eslint",
   "globals": {
     "Hull": true
   },
@@ -10,12 +7,14 @@
     "camelcase": [2, { "properties": "never" }],
     "func-names": [0],
     "indent": [2, 2],
+    "no-console": [0],
     "no-eq-null": [0],
     "no-extra-parens": [0],
     "no-loop-func": [0],
     "no-multi-spaces": [2],
     "no-param-reassign": [0],
-    "no-reserved-keys": [2],
+    "id-length": [0],
+    "quote-props": [2, "consistent-as-needed"],
     "no-script-url": [0],
     "no-undefined": [2],
     "no-undef-init": [2],
@@ -26,7 +25,5 @@
     "react/react-in-jsx-scope": [2],
     "strict": [0]
   },
-  "plugins": [
-    "react"
-  ]
+  "extends": "airbnb"
 }

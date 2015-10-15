@@ -1,8 +1,8 @@
 'use strict';
 
-import _ from 'underscore';
+import _ from 'lodash';
 
-let _settings = {
+const _settings = {
   primaryColor: '#fa5400',
 
   blackColor: '#222222',
@@ -31,12 +31,12 @@ let _settings = {
   defaultFontFamily: '"Helvetica Neue", Helvetica, Roboto, Arial, sans-serif',
   defaultLineHeight: 1.6,
   defaultBorderRadius: 3,
-  mediumBorderRadius: 6
+  mediumBorderRadius: 6,
 };
 
 function setSettings(settings) {
   _.each(settings, function(v, k) {
-    if (v != null) { _settings[k] = v; }
+    if (!!v) { _settings[k] = v; }
   });
 }
 
@@ -46,6 +46,6 @@ function getSettings() {
 
 export default {
   setSettings,
-  getSettings
+  getSettings,
 };
 

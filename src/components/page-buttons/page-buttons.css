@@ -1,0 +1,32 @@
+@import "../../styles/settings";
+
+.button{
+  composes: button-small from '../../styles/mixins.css';
+  margin:0 5px;
+}
+
+.custom{
+  composes: button;
+  font-size: 12px;
+}
+.log-in{
+  composes: button;
+  font-size: 12px;
+}
+.log-out{
+  composes: button;
+  font-size: 12px;
+}
+.sign-up{
+  composes: button;
+  font-size: 12px;
+}
+.edit-profile{
+  composes: button;
+  font-size: 12px;
+}
+.show-profile{
+  composes: button;
+  font-size: 12px;
+}
+

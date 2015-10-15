@@ -1,59 +1,76 @@
 import React from 'react';
+import _ from 'lodash';
+import cssModules from 'react-css-modules';
+import styles from './sections.css';
+
 import { SocialButtons, TranslatedMessage, OrganizationImage, Divider } from '../components';
 import { LogInForm } from '../forms';
 import BaseSection from './base-section';
 
-export default class LogInSection extends BaseSection {
+class LogInSection extends BaseSection {
 
-  renderHeader(styles) {
+  renderHeader() {
     let signupLink;
     if (this.props.shipSettings.show_signup) {
-      signupLink = <p style={styles.sectionText}>
-        <TranslatedMessage tag='a'
-          href='#'
-          onClick={this.props.activateSignUpSection}
-          message="log-in switch to sign-up link" />
-      </p>;
+      signupLink = (
+        <p styleName="text">
+          <TranslatedMessage tag="a"
+            href="#"
+            className={this.props.styles.link}
+            onClick={this.props.activateSignUpSection}
+            message="log-in switch to sign-up link" />
+        </p>
+      );
     }
 
-    return <div style={styles.sectionHeader}>
-      <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-      <TranslatedMessage tag='h1'
-        style={styles.sectionTitle}
-        message='log-in header'
-        variables={{ organization: this.props.organization.name }} />
-      {signupLink}
-    </div>;
+    return (
+      <div styleName="header">
+        <OrganizationImage src={this.props.shipSettings.logo_image} />
+        <TranslatedMessage tag="h1"
+          styleName="title"
+          message="log-in header"
+          variables={{ organization: this.props.organization.name }} />
+        {signupLink}
+      </div>
+    );
   }
 
-  renderFooter(styles) {
-    let { shipSettings } = this.props;
+  renderFooter() {
+    const { shipSettings } = this.props;
     if (shipSettings.show_classic_login) {
-      return <div style={styles.sectionFooter}>
-        <p style={styles.sectionText}>
-          <TranslatedMessage tag='a'
-            href='javascript: void 0;'
-            onClick={this.props.activateResetPasswordSection}
-            message='log-in forgot password link' />
-        </p>
-      </div>;
+      return (
+        <div styleName="footer">
+          <p styleName="text">
+            <TranslatedMessage tag="a"
+              className={this.props.styles.link}
+              href="javascript: void 0;"
+              onClick={this.props.activateResetPasswordSection}
+              message="log-in forgot password link" />
+          </p>
+        </div>
+      );
     }
   }
 
   renderContent() {
-    let { shipSettings } = this.props;
+    const { shipSettings } = this.props;
+    const props = _.omit(this.props, 'styles');
     let content;
     if (shipSettings.show_classic_login) {
-      content = <div>
-        <SocialButtons {...this.props} />
-        <Divider>or</Divider>
-        <LogInForm {...this.props} />
-      </div>;
+      content = (
+        <div>
+          <SocialButtons {...props} />
+          <Divider>or</Divider>
+          <LogInForm {...props} />
+        </div>
+      );
     } else {
-      content = <div><SocialButtons {...this.props} /></div>;
+      content = <div><SocialButtons {...props} /></div>;
     }
 
     return content;
   }
 }
 
+
+export default cssModules(LogInSection, styles);

@@ -1,52 +1,70 @@
 import React from 'react';
+import _ from 'lodash';
+import cssModules from 'react-css-modules';
+import styles from './sections.css';
+
 import { SocialButtons, TranslatedMessage, OrganizationImage, Divider } from '../components';
 import { SignUpForm } from '../forms';
 import BaseSection from './base-section';
 
-export default class SignUpSection extends BaseSection {
+class SignUpSection extends BaseSection {
 
-  renderHeader(styles) {
+  renderHeader() {
     let loginLink;
     if (this.props.shipSettings.show_login) {
-      loginLink = <p style={styles.sectionText}>
-        <TranslatedMessage tag='a'
-          href='#'
-          onClick={this.props.activateLogInSection}
-          message='sign-up switch to log-in link' />
-      </p>;
+      loginLink = (
+        <p styleName="text">
+          <TranslatedMessage tag="a"
+            href="#"
+            className={this.props.styles.link}
+            onClick={this.props.activateLogInSection}
+            message="sign-up switch to log-in link" />
+        </p>
+      );
     }
-    return <div style={styles.sectionHeader}>
-      <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-      <TranslatedMessage tag='h1'
-        style={styles.sectionTitle}
-        message="sign-up header"
-        variables={{ organization: this.props.organization.name }} />
-      {loginLink}
-    </div>;
+    return (
+      <div styleName="header">
+        <OrganizationImage src={this.props.shipSettings.logo_image} />
+        <TranslatedMessage tag="h1"
+          styleName="title"
+          message="sign-up header"
+          variables={{ organization: this.props.organization.name }} />
+        {loginLink}
+      </div>
+    );
   }
 
-  renderFooter(styles) {
-    return <div style={styles.sectionFooter}>
-      <TranslatedMessage tag='p'
-        style={styles.sectionText}
-        message="sign-up fine print"
-        variables={{ organization: this.props.organization.name }} />
-    </div>;
+  renderFooter() {
+    return (
+        <div styleName="footer">
+          <span styleName="text">
+            <TranslatedMessage tag="p"
+              styleName="text"
+              message="sign-up fine print"
+              variables={{ organization: this.props.organization.name }} />
+          </span>
+      </div>
+    );
   }
 
   renderContent() {
-    let { shipSettings } = this.props;
+    const { shipSettings } = this.props;
+    const props = _.omit(this.props, 'styles');
     let content;
     if (shipSettings.show_classic_login) {
-      content = <div>
-        <SocialButtons {...this.props} />
-        <Divider>or</Divider>
-        <SignUpForm {...this.props} />
-      </div>;
+      content = (
+        <div>
+          <SocialButtons {...props} />
+          <Divider>or</Divider>
+          <SignUpForm {...props} />
+        </div>
+      );
     } else {
-      content = <div><SocialButtons {...this.props} /></div>;
+      content = <div><SocialButtons {...props} /></div>;
     }
 
     return content;
   }
 }
+
+export default cssModules(SignUpSection, styles);

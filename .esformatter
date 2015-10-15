@@ -1,0 +1,19 @@
+{
+  "plugins": [
+    "esformatter-collapse-objects"
+  ],
+  "lineBreak": {
+    "before": {
+      "ArrayExpressionClosing": 1
+    },
+    "after": {
+      "ArrayExpressionOpening": 1,
+      "ArrayExpressionComma": 1
+    }
+  },
+  "whiteSpace": {
+    "before": {
+      "PropertyName": 1
+    }
+  }
+}

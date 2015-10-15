@@ -1,28 +1,35 @@
 import React from 'react';
-import { getStyles } from './styles';
-import { StyleResolverMixin, BrowserStateMixin } from 'radium';
+import cssModules from 'react-css-modules';
+import classnames from 'classnames';
+import styles from './button.css';
 
-export default React.createClass({
+const Button = React.createClass({
   displayName: 'Button',
 
-  mixins: [
-    StyleResolverMixin,
-    BrowserStateMixin
-  ],
-
-  renderIcon() {
-    if (this.props.icon == null) { return; }
+  propTypes: {
+    icon: React.PropTypes.element,
+    block: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
+    kind: React.PropTypes.string,
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.element,
+      React.PropTypes.array,
+      React.PropTypes.string,
+    ]).isRequired,
   },
 
   render() {
-    let styles = getStyles();
-    let s = this.buildStyles(styles.button);
-    let icon = this.renderIcon();
-    let children = icon == null ? this.props.children : [icon, this.props.children];
-
+    const cn = classnames({
+      button: true,
+      block: this.props.block,
+      disabled: this.props.disabled,
+      [this.props.kind]: !!this.props.kind,
+    });
     return (
-      <button {...this.getBrowserStateEvents()} {...this.props} style={s}>{children}</button>
+      <button {...this.props} styleName={cn}>{this.props.icon}{this.props.children}</button>
     );
-  }
+  },
 });
 
+
+export default cssModules(Button, styles, {allowMultiple: true});

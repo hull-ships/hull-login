@@ -1,23 +1,29 @@
 import React from 'react';
+import cssModules from 'react-css-modules';
+import styles from './sections.css';
+
 import { TranslatedMessage, OrganizationImage } from '../components';
 import { ResetPasswordForm } from '../forms';
 import BaseSection from './base-section';
 
-export default class ResetPasswordSection extends BaseSection {
+class ResetPasswordSection extends BaseSection {
 
-  renderHeader(styles) {
-    return <div style={styles.sectionHeader}>
-      <OrganizationImage style={styles.sectionOrganizationImage} src={this.props.shipSettings.logo_image} />
-      <TranslatedMessage tag='h1'
-        style={styles.sectionTitle}
-        message='reset password header' />
-      <p style={styles.sectionText}>
-        <TranslatedMessage tag='a'
-          href='#'
-          onClick={this.props.activateLogInSection}
-          message='reset password switch to log-in link' />
-      </p>
-    </div>;
+  renderHeader() {
+    return (
+      <div styleName="header">
+        <OrganizationImage src={this.props.shipSettings.logo_image} />
+        <TranslatedMessage tag="h1"
+          styleName="title"
+          message="reset password header" />
+        <p styleName="text">
+          <TranslatedMessage tag="a"
+            href="#"
+            className={this.props.styles.link}
+            onClick={this.props.activateLogInSection}
+            message="reset password switch to log-in link" />
+        </p>
+      </div>
+    );
   }
 
   renderContent() {
@@ -25,3 +31,4 @@ export default class ResetPasswordSection extends BaseSection {
   }
 }
 
+export default cssModules(ResetPasswordSection, styles);

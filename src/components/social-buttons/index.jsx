@@ -1,24 +1,38 @@
 import React from 'react';
 import { translate } from '../../lib/i18n';
 import Button from '../button';
+import Icon from '../icon';
 import Help from '../help';
+import ErrrorMessage from '../error';
 import TranslatedMessage from '../translated-message';
 import { hasTranslation } from '../../lib/i18n';
-import { getStyles } from './styles';
+
+import cssModules from 'react-css-modules';
+import styles from './social-buttons.css';
+
 
 export default function capitalize(s) {
   return s[0].toUpperCase() + s.slice(1);
 }
 
-export default React.createClass({
+const SocialButtons = React.createClass({
+
+  propTypes: {
+    errors: React.PropTypes.object,
+    styles: React.PropTypes.object,
+    user: React.PropTypes.object,
+    providers: React.PropTypes.array,
+    activeSection: React.PropTypes.string,
+    isWorking: React.PropTypes.bool,
+  },
 
   getErrorMessage() {
-    let error = this.props.errors.signUp || this.props.errors.logIn;
+    const error = this.props.errors.signUp || this.props.errors.logIn;
     if (error && error.provider && error.provider !== 'classic') {
-      let { reason, message } = error;
+      const { reason, message } = error;
       let errorMessage;
       if (reason) {
-        let msg = 'social-login error ' + reason;
+        const msg = 'social-login error ' + reason;
         if (hasTranslation(msg)) {
           errorMessage = <TranslatedMessage message={msg} variables={error} />;
         } else {
@@ -60,43 +74,43 @@ export default React.createClass({
       return null;
     }
 
-    let m = this.props[status] === provider.name ? button[1] : button[0];
-    let providerName = capitalize(provider.name);
-    let wording = translate(m, { provider: providerName });
-    let helpText = <TranslatedMessage message={help + ' for ' + providerName} />;
-    let handler = this.props[actionName].bind(null, provider.name);
-    let isLast = this.props.providers.length === index + 1;
-    let s = isLast ? {} : { marginBottom: 10 };
+    const m = this.props[status] === provider.name ? button[1] : button[0];
+    const providerName = capitalize(provider.name);
+    const wording = translate(m, { provider: providerName });
+    const helpText = <TranslatedMessage message={help + ' for ' + providerName} />;
+    const handler = this.props[actionName].bind(null, provider.name);
+    const isLast = this.props.providers.length === index + 1;
+    const s = isLast ? {} : { marginBottom: 10 };
 
     return (
       <span key={provider.name}>
-        <Button kind={provider.name} block={true} disabled={this.props.isWorking} onClick={handler}>
+        <Button kind={provider.name} block disabled={this.props.isWorking} onClick={handler}>
+          <Icon name={provider.name} colorize/>
           {wording}
         </Button>
-        <Help style={s}>
-          {helpText}
-        </Help>
+        <Help style={s}>{helpText}</Help>
       </span>
     );
   },
 
   renderErrors() {
-    let styles = getStyles();
-    let errorMessage = this.getErrorMessage();
+    const errorMessage = this.getErrorMessage();
     if (errorMessage) {
-      return <div style={styles.socialLoginErrors}>{errorMessage}</div>;
+      return <ErrrorMessage>{errorMessage}</ErrrorMessage>;
     }
   },
 
-  render: function() {
-    let { providers } = this.props;
-    let buttons = providers && providers.map(this.renderButton, this);
+  render() {
+    const { providers } = this.props;
+    const buttons = providers && providers.map(this.renderButton, this);
     return (
-      <div>
+      <div styleName="submit">
         {this.renderErrors()}
         {buttons}
       </div>
     );
-  }
+  },
 });
 
+
+export default cssModules(SocialButtons, styles);
