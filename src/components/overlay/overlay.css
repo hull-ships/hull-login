@@ -1,7 +1,7 @@
 @import "../../styles/settings";
 
 
-.overlay{
+.background{
   position: fixed;
   z-index: 9999;
   top: -5000px;
@@ -9,11 +9,9 @@
   bottom: -5000px;
   left: -5000px;
 
-  display: none;
   display: block;
   user-select: none;
   background-color: rgba(43,46,56,.9);
-  
 }
 
 .wrapper{
@@ -24,7 +22,6 @@
   bottom: 0;
   left: 0;
 
-  display: none;
   display: block;
   overflow: auto;
 
@@ -43,7 +40,7 @@
   }
 }
 
-.overlay, .wrapper {
+.background, .wrapper {
   backface-visibility: hidden;
 }
 
@@ -52,8 +49,6 @@
   position: relative;
   outline: none;
   text-size-adjust: 100%;
-
-
 
   box-sizing: border-box;
   width: 100%;
@@ -74,7 +69,6 @@
 .modal, .wrapper:after {
   vertical-align: middle;
 }
-
 
 .close-button{
   position: absolute;
@@ -110,8 +104,43 @@
 }
 
 
+.wrapper, .background{
+  &.enter, &.leave {
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(.8, .02, .45, .91);
+  }
+  &.enter.enterActive {
+    display: block;
+  }
+  &.enter{
+    display: none;
+  }
+  &.leave{}
+}
 
+.wrapper{
 
+  &.enter.enterActive {
+    animation: opening-keyframes .25s;
+  }
+
+  &.leave.leaveActive {
+    animation: closing-keyframes .25s;
+  }
+
+}
+  
+.background {
+
+  &.enter.enterActive {
+    animation: overlay-opening-keyframes .25s;
+  }
+
+  &.leave.leaveActive {
+    animation: overlay-closing-keyframes .25s;
+  }
+
+}
 
 @keyframes opening-keyframes {
   from {
@@ -136,11 +165,19 @@
 }
 
 @keyframes overlay-opening-keyframes {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes overlay-closing-keyframes {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
