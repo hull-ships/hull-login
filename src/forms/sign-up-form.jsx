@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../components/icon';
 import t from 'tcomb-form';
 import { FieldTypes, I18n, Mixins } from '../lib';
 import { TranslatedMessage, Form } from '../components';
@@ -109,7 +110,7 @@ export default React.createClass({
       m = translate('sign-up button text when attempting sign-up');
       d = true;
     } else {
-      m = translate('sign-up button text');
+      m = <span><Icon name="user" colorize/>{translate('sign-up button text')}</span>;
       d = false;
     }
 

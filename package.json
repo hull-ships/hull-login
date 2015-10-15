@@ -27,7 +27,6 @@
     "react"
   ],
   "dependencies": {
-    "bounce.js": "citelao/bounce.js#master",
     "classnames": "^2.1.5",
     "color": "^0.10.1",
     "lodash": "^3.10.1",

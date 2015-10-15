@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import cssModules from 'react-css-modules';
 import styles from './main.css';
 import Icon from './components/icon';
@@ -55,7 +56,7 @@ const HullLogin = React.createClass({
   },
 
   renderOverlay() {
-    // if (!!this.state.shipSettings.show_inline) { return null; }
+    if (!!this.state.shipSettings.show_inline) { return null; }
     const visible = !!this.state.dialogIsVisible;
     const data = { organization: this.state.organization.name };
     const titles = {
@@ -69,7 +70,11 @@ const HullLogin = React.createClass({
 
     const title = titles[this.state.activeSection];
     return (
-      <Overlay onClose={this.props.actions.hideDialog} title={title} visible={visible}>
+      <Overlay
+        onClose={this.props.actions.hideDialog}
+        hasErrors={!!_.size(this.state.errors)}
+        title={title}
+        visible={visible}>
         {this.renderContent()}
       </Overlay>
     );

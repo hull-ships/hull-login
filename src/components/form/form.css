@@ -8,6 +8,9 @@
     text-transform: uppercase;
     font-size: 10px;
     margin-bottom: var(--line-height-normal);
+    p{
+      position: absolute;
+    }
   }
 }
 
@@ -25,8 +28,8 @@
   background-repeat: no-repeat;
 }
 
-.errorMessage{
-  composes: error from '../../styles/mixins.css';
+.errors{
+  composes: errors from '../../styles/mixins.css';
 }
 
 

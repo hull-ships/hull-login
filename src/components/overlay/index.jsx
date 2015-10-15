@@ -12,6 +12,7 @@ const Overlay = React.createClass({
   propTypes: {
     title: React.PropTypes.string.isRequired,
     styles: React.PropTypes.object,
+    hasErrors: React.PropTypes.bool.isRequired,
     visible: React.PropTypes.bool.isRequired,
     onClose: React.PropTypes.func.isRequired,
     children: React.PropTypes.any,
@@ -75,6 +76,7 @@ const Overlay = React.createClass({
   },
   renderContent() {
     if (!this.props.visible) {return null;}
+    const modalClass = this.props.hasErrors ? 'modal-shake' : 'modal';
     return (
       <div
         onClick={this.handleClose}
@@ -87,7 +89,7 @@ const Overlay = React.createClass({
           role="dialog"
           key="modal"
           ref="modal"
-          styleName="modal"
+          styleName={modalClass}
           tabIndex={0}
           onClick={this.handleModalClick}>
 
@@ -109,6 +111,8 @@ const Overlay = React.createClass({
       <div className="meta">
         <ReactCSSTransitionGroup
             component="div"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
             transitionName={{ enter, enterActive, leave, leaveActive, appear, appearActive }}
         >{this.renderContent()}{this.renderBackground()}</ReactCSSTransitionGroup>
       </div>

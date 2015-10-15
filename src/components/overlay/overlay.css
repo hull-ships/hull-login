@@ -28,6 +28,9 @@
   text-align: center;
 
   -webkit-overflow-scrolling: touch;
+  perspective: 800;
+  -webkit-perspective: 800;
+
   &:after{
     display: inline-block;
     height: 100%;
@@ -64,6 +67,11 @@
   } 
 
   display: inline-block;
+}
+
+.modal-shake{
+  composes: modal;
+  animation: panel-shake 400ms ease-in-out;
 }
 
 .modal, .wrapper:after {
@@ -127,7 +135,6 @@
   &.leave.leaveActive {
     animation: closing-keyframes .25s;
   }
-
 }
   
 .background {
@@ -139,7 +146,6 @@
   &.leave.leaveActive {
     animation: overlay-closing-keyframes .25s;
   }
-
 }
 
 @keyframes opening-keyframes {
@@ -179,5 +185,27 @@
   }
   to {
     opacity: 0;
+  }
+}
+
+
+@keyframes panel-shake {
+  0 {
+    transform: translateX(0)
+  }
+  13% {
+    transform: translateX(-6px) rotateY(-5deg)
+  }
+  38% {
+    transform: translateX(5px) rotateY(4deg)
+  }
+  63% {
+    transform: translateX(-3px) rotateY(-2deg)
+  }
+  88% {
+    transform: translateX(2px) rotateY(1deg)
+  }
+  100% {
+    transform: translateX(0)
   }
 }

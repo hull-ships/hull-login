@@ -3,13 +3,14 @@
 .button{
   composes: button from '../../styles/mixins.css';
   margin-bottom: 5px;
+  font-size: 13px;
 
   &.block{
     display: block;
     width: 100%;
   }
   &.disabled{
-    cursor: default;
+    cursor: not-allowed;
     opacity: 0.3;
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
   }
@@ -97,8 +98,7 @@
 
   i{
     margin-right: 5px;
-    /*float: left;*/
-    vertical-align: -50%;
+    vertical-align: -40%;
     width: 24px;
     height: 24px;
   }

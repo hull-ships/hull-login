@@ -108,8 +108,15 @@
   }
 }
 
-.error{
+.errors{
+  background-color: rgba(255, 98, 98, 0.11);
+  border-radius: 3px;
+  border: 1px solid rgba(255, 98, 98, 0.25);
+  box-shadow: none;
   color: #FF6262;
   font-size: var(--font-size-normal);
-  margin-top: 5px;
+  font-weight: var(--font-weight-normal);
+  margin: 5px 0 10px 0;
+  padding: 7px 14px;
+  text-align: center;
 }
