@@ -104,7 +104,7 @@ const HullLogin = React.createClass({
       <div styleName="ship">
         <Styles scope={this.props.styles.ship} styles={this.props.styles} settings={this.state.shipSettings} />
         {this.renderUserStyles()}
-        <PageButtons {...this.state} actions={this.props.actions}/>
+        {this.state.shipSettings.show_inline ? this.renderContent() : <PageButtons {...this.state} actions={this.props.actions}/>}
       </div>
     );
   },
