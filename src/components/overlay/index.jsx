@@ -106,7 +106,6 @@ const Overlay = React.createClass({
 
   render() {
     const { enter, enterActive, leave, leaveActive, appear, appearActive } = this.props.styles;
-    console.log({ enter, enterActive, leave, leaveActive, appear, appearActive });
     return (
       <div className="meta">
         <ReactCSSTransitionGroup
