@@ -30,8 +30,10 @@ const Styles = React.createClass({
       button_border_radius: buttonBorderRadius,
       overlay_border_radius: overlayBorderRadius,
     } = this.props.settings;
+
     const buttonTextColor = color(primary).darken(0.5).dark() ? 'white' : '#444';
     const controlTextColor = color(text).dark() ? text : '#444';
+    const controlBackgroundColor = color(background).lighten(0.1).hexString();
     return {
       primaryText: {
         normal: {
@@ -75,10 +77,10 @@ const Styles = React.createClass({
       },
       smallBorderRadius: {
         normal: {
-          borderRadius: (overlayBorderRadius / 2),
+          borderRadius: (buttonBorderRadius),
         },
       },
-      modal: {
+      mainBackground: {
         normal: {
           color: this.props.settings.text_color,
           backgroundColor: background,
@@ -87,9 +89,10 @@ const Styles = React.createClass({
       control: {
         'normal': {
           color: controlTextColor,
+          backgroundColor: controlBackgroundColor,
         },
         ':focus': {
-          boxShadow: `inset 0 0 0 1px ${primary}`,
+          boxShadow: `inset 0 -2px 0 0 ${primary}`,
 
         },
       },
