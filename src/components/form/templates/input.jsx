@@ -32,7 +32,7 @@ const Input = React.createClass({
       ...this.props,
       onChange: this.handleChange,
     };
-    return <input styleName="input" ref="input" {...props} placeholder={this.props.attrs.placeholder} />;
+    return <input styleName="input" ref="input" {...props}/>;
   },
 });
 

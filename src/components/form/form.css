@@ -5,7 +5,7 @@
   label{
     position: relative;
     display: block;
-    margin-bottom: var(--line-height-normal);
+    margin-bottom: calc(var(--line-height-normal)*2);
   }
 }
 .label{

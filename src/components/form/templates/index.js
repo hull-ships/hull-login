@@ -10,8 +10,8 @@ import ErrrorMessage from '../../error';
 function render(Component, locals) {
   return (
     <label>
-      {locals.config.kind === 'compact' ? null : locals.label}
-      <Component {...locals} placeholder={locals.placeholder}/>
+      {locals.label || locals.attrs.placeholder}
+      <Component {...locals}/>
       <ErrrorMessage>{locals.error}</ErrrorMessage>
       <Help>{locals.help}</Help>
     </label>
