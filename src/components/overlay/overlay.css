@@ -1,56 +1,146 @@
 @import "../../styles/settings";
 
-.container{
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.background{
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 20000;
-  background-color: rgba(0,0,0,.15);
-  opacity: 0;
-  transition: opacity 150ms ease-out;
-  user-select: none;
-  @media (--medium-up) {
-    position: fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-}
 
 .overlay{
-  background-color: white;
-  padding: 30px;
-  z-index: 20001;
-  outline: none;
-  position: relative;
-  transition: opacity 300ms ease-out;
-  overflow: hidden;
+  position: fixed;
+  z-index: 9999;
+  top: -5000px;
+  right: -5000px;
+  bottom: -5000px;
+  left: -5000px;
+
+  display: none;
+  display: block;
+  user-select: none;
+  background-color: rgba(43,46,56,.9);
+  
+}
+
+.wrapper{
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: none;
+  display: block;
+  overflow: auto;
+
+  text-align: center;
+
+  -webkit-overflow-scrolling: touch;
+  &:after{
+    display: inline-block;
+    height: 100%;
+    margin-left: -0.05em;
+    content: "";
+  }
+
   @media (--medium-up){
-    composes: borderRadius from '../../styles/mixins.css';
-    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.05);
-    width: 340px;
-    margin: 50px auto;
+    padding: 10px 10px 0;
   }
 }
+
+.overlay, .wrapper {
+  backface-visibility: hidden;
+}
+
+.modal{
+  composes: mainBackground from '../../styles/mixins.css';
+  position: relative;
+  outline: none;
+  text-size-adjust: 100%;
+
+
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+
+  transform: translate3d(0, 0, 0);
+
+  @media (--medium-up){
+    composes: borderRadius from '../../styles/mixins.css';
+    padding: 35px;
+    margin-bottom: 10px;
+    max-width: 500px;
+  } 
+
+  display: inline-block;
+}
+
+.modal, .wrapper:after {
+  vertical-align: middle;
+}
+
 
 .close-button{
   position: absolute;
-  text-align: center;
-  width: 20px;
-  height: 20px;
-  font-size: 20px;
-  line-height: 18px;
+  top: 0;
+  right: 0;
+
+  display: block;
+  overflow: visible;
+
+  width: 35px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+
+  cursor: pointer;
+  transition: color 0.2s;
   text-decoration: none;
-  top: 15px;
-  right: 15px;
+
+  color: #95979c;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  &:before{
+    font-family: Arial,"Helvetica CY","Nimbus Sans L",sans-serif!important;
+    font-size: 25px;
+    line-height: 35px;
+    content: "\00d7";
+    text-align: center;
+  }
+  &:hover, &:focus{
+    color: #2b2e38;
+  }
+}
+
+
+
+
+
+@keyframes opening-keyframes {
+  from {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes closing-keyframes {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes overlay-opening-keyframes {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes overlay-closing-keyframes {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

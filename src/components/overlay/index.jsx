@@ -2,6 +2,7 @@ import Bounce from 'bounce';
 import React from 'react';
 import cssModules from 'react-css-modules';
 import styles from './overlay.css';
+import ReactTransitionGroup from 'react/lib/ReactTransitionGroup';
 
 const mediaQuery = window.matchMedia && window.matchMedia('(min-width: 460px)');
 
@@ -140,24 +141,28 @@ const Overlay = React.createClass({
 
   render() {
     return (
-      <div styleName="container">
-        <div aria-hidden={!this.props.visible}
-          aria-label={this.props.title}
-          role="dialog"
-          styleName="overlay"
-          tabIndex={0}
-          ref="overlay">
+      <ReactTransitionGroup>
+        <div className="meta">
+          <div styleName="wrapper">
+            <div aria-hidden={!this.props.visible}
+              aria-label={this.props.title}
+              role="dialog"
+              styleName="modal"
+              tabIndex={0}
+              ref="overlay">
 
-          <a styleName="close-button"
-            href="#"
-            aria-label="Close"
-            title="Close this dialog"
-            onClick={this.handleClose} >×</a>
+              <a styleName="close-button"
+                href="#"
+                aria-label="Close"
+                title="Close this dialog"
+                onClick={this.handleClose} />
 
-          {this.props.children}
+              {this.props.children}
+            </div>
+          </div>
+          <div ref="background" styleName="overlay" onClick={this.handleClose} />
         </div>
-        <div ref="background" styleName="background" onClick={this.handleClose} />
-      </div>
+      </ReactTransitionGroup>
     );
   },
 });
