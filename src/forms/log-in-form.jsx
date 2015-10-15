@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../components/icon';
 import t from 'tcomb-form';
 import { FieldTypes, I18n, Mixins } from '../lib';
 import { TranslatedMessage, Form } from '../components';
@@ -74,13 +75,13 @@ export default React.createClass({
   },
 
   render() {
-    let m;
+    let message;
     let disabled;
     if (this.props.isWorking || this.state.logInState === 'pending') {
-      m = translate('log-in button text when attempting login');
+      message = translate('log-in button text when attempting login');
       disabled = true;
     } else {
-      m = translate('log-in button text');
+      message = <span><Icon name="lock" colorize/>{translate('log-in button text')}</span>;
       disabled = false;
     }
 
@@ -89,7 +90,7 @@ export default React.createClass({
       kind: 'compact',
       type: this.getType(),
       fields: this.getFields(),
-      submitMessage: m,
+      submitMessage: message,
       onSubmit: this.handleSubmit,
       onChange: this.handleChange,
       disabled: disabled,
