@@ -3,8 +3,10 @@
 .form{
   animation: slide 1s linear both;
   label{
+    text-align: left;
     position: relative;
     display: block;
+    line-height: var(--line-height-normal);
     margin-bottom: calc(var(--line-height-normal)*2);
   }
 }

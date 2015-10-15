@@ -1,8 +1,7 @@
 .help{
+  composes: fontSizeNormal from '../../styles/mixins.css';
   display: block;
-  textAlign: center;
-  fontSize: 12px;
-  marginTop: 0;
-  marginBottom: 10;
+  margin-top: 10px;
+  margin-bottom: 10px;
   opacity: 0.5;
 }
