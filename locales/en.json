@@ -19,7 +19,7 @@
   "Linking {provider} account": "Linking {provider} account",
 
   "log-in button text when attempting login": "Logging in",
-  "log-in button text": "Log in",
+  "log-in button text": "Log in with email",
   "log-in email help text": "",
   "log-in email placeholder": "Your email or username",
   "log-in forgot password link": "Forgot password?",
@@ -58,7 +58,7 @@
   "reset password too many requests error" : "Too many login attempts: Please try again in 10 minutes",
 
   "sign-up button text when attempting sign-up": "Signing up",
-  "sign-up button text": "Sign up",
+  "sign-up button text": "Sign up with email",
   "sign-up email is already taken error": "Email has already been taken",
   "sign-up email help text": "",
   "sign-up email is invalid error": "Email is invalid",
