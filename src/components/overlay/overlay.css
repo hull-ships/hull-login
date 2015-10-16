@@ -6,15 +6,16 @@
 
 .background{
   position: fixed;
-  z-index: 9999;
-  top: -5000px;
-  right: -5000px;
-  bottom: -5000px;
-  left: -5000px;
-
   display: block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   user-select: none;
-  background-color: rgba(43,46,56,.9);
+  z-index: 99;
+  /*background-color: rgba(43,46,56,.9);*/
+  background: linear-gradient(to bottom, rgba(43,46,56,.9), rgba(43,46,56,.9) 33%,rgba(28,43,66,.75));
 }
 
 .wrapper{
@@ -59,7 +60,7 @@
   box-sizing: border-box;
   width: 100%;
   min-height: 100vh;
-  padding: 0;
+  padding: 15px;
 
   transform: translate3d(0, 0, 0);
 
@@ -190,7 +191,7 @@
     opacity: 1;
   }
   to {
-    opacity: 0.5;
+    opacity: 0;
     visibility: hidden;
   }
 }

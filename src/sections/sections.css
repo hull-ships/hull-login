@@ -17,7 +17,8 @@
 }
 
 .title{
-  composes: primaryText from '../styles/mixins.css';
+  composes: primaryText fontFamilySans from '../styles/mixins.css';
+  font-family: var(--font-family);
   font-size: var(--font-size-xlarge);
   line-height: var(--line-height-xlarge);
   font-weight: var(--font-weight-normal);

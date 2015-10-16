@@ -1,35 +1,22 @@
 @import "styles/settings";
 
-.ship{
+.ship, .content{
   all:initial;
   font-family: var(--font-family);
   font-size: var(--font-size-normal);
   color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   line-height:var(--line-height-normal);
-  margin-bottom: 200px;
   box-sizing: border-box;
+}
+
+.ship{
+  margin-bottom: 200px;
   user-select: none;
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-font-smoothing: antialiased;
-  }
 }
 
 .content{
-  all:initial;
   display:block;
-  font-family: var(--font-family);
-  font-size: var(--font-size-normal);
-  color: var(--text-color);
-  -webkit-font-smoothing: antialiased;
-  line-height:var(--line-height-normal);
-  box-sizing: border-box;
-  * {
-    box-sizing: border-box;
-  }
 }
 
 .spinner{

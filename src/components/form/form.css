@@ -2,18 +2,19 @@
 
 .form{
   animation: slide 1s linear both;
-  label{
-    text-align: left;
-    position: relative;
-    display: block;
-    line-height: var(--line-height-normal);
-    margin-bottom: calc(var(--line-height-normal)*2);
-  }
 }
+
+.field{
+  text-align: left;
+  position: relative;
+  display: block;
+  line-height: var(--line-height-normal);
+  margin-bottom: calc(var(--line-height-normal)*2);
+}
+
 .label{
-  font-weight: var(--font-weight-bold);
+  composes: fontSizeSmall fontWeightBold from  '../../styles/mixins.css';
   text-transform: uppercase;
-  font-size: 10px;
   p{
     position: absolute;
   }
