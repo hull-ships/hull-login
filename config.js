@@ -142,7 +142,7 @@ var postcss = [
   /* END IE */
   require('postcss-initial'), // all:initial
   require('cssnext'),
-  require('cssnano')(), // Condense & Optimize
+  require('cssnano')({safe: true}), // Condense & Optimize
 ];
 
 // about babel : it's VERY SLOW. DO NOT APPLY IT TO EVERY SOURCE FILE. see the Excludes we applied

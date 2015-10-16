@@ -110,8 +110,8 @@ const Overlay = React.createClass({
       <div className="meta">
         <ReactCSSTransitionGroup
             component="div"
-            transitionEnterTimeout={250}
-            transitionLeaveTimeout={250}
+            transitionEnterTimeout={240}
+            transitionLeaveTimeout={240}
             transitionName={{ enter, enterActive, leave, leaveActive, appear, appearActive }}
         >{this.renderContent()}{this.renderBackground()}</ReactCSSTransitionGroup>
       </div>

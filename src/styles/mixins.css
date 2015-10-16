@@ -1,9 +1,16 @@
 @import "./settings";
+
 .fontWeightNormal{
   font-weight: var(--font-weight-normal)
 }
+.fontFamilySans{
+  font-family: var(--font-family);
+}
 .fontWeightBold{
-  font-weight: var(--font-weight-normal)
+  font-weight: var(--font-weight-bold)
+}
+.fontSizeSmall{
+  font-size: var(--font-size-small);
 }
 .fontSizeNormal{
   font-size: var(--font-size-normal);
@@ -39,8 +46,37 @@
 .mainBackground{
   background-color: var(--primary)
 }
+
+
+
+
+.reset{
+  composes: fontFamilySans fontWeightNormal;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-font-smoothing: antialiased;
+  font-style: initial;
+  text-align-last: auto;
+  text-decoration: none solid currentColor;
+  text-indent: 0;
+  text-shadow: none;
+  text-transform: none;
+  white-space: normal;
+  word-spacing: normal;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+
+
 .link{
+  composes: reset;
   composes: linkText;
+  composes: fontSizeNormal;
   cursor: pointer;
   background: transparent;
   text-decoration: none;
@@ -55,10 +91,13 @@
 }
 
 .button{
+  composes: reset;
   composes: primaryBackground;
+  composes: fontSizeLarge;
+  composes: fontFamilySans;
+  composes: borderRadius;
+  composes: fontWeightBold;
   cursor: pointer;
-  font-size: var(--font-size-normal);
-  font-weight: var(--font-weight-bold);
   line-height: calc(var(--line-height-normal)*2);
   appearance: none;
   border: none;
@@ -73,35 +112,23 @@
   white-space: nowrap;
   transition: opacity .2s ease-out, color .2s ease-out, background-color .2s ease-out;
   @media (--small-only){
-    border-radius: 0 !important;
     padding-top:12px;
     padding-bottom:12px;
   }
 }
-.button-small{
-  composes: button;
-  line-height: calc(var(--line-height-normal)*1.5);
-}
-
-.control{
-  composes: boxShadowFilet;
-  font-family: var(--font-family);
-  font-size: var(--font-size-normal);
-  width: 100%;
-  padding: 3px 0;
-  font-size: var(--font-size-normal);
-  line-height: calc(var(--line-height-normal)*2);
-  appearance: none;
-  color: var(--black);
-  border: 0;
-  border-radius: 0;
-  resize: none;
-  transition: all .2s ease-out;
-  height: calc(var(--line-height-normal)*2.5);
-  @media (--small-only){
-    padding-left: 15px;
-    padding-right: 15px;
+  .button-social{
+    composes: button;
+    text-align: left;
+    text-rendering: optimizeLegibility;
   }
+  .button-small{
+    composes: button;
+    line-height: calc(var(--line-height-normal)*1.5);
+  }
+
+
+.field{
+  composes: reset;
   &:focus{
     outline: none;
     box-shadow: inset 0 -1px 0 0 var(--primary);
@@ -117,7 +144,28 @@
   }
 }
 
+.control{
+  composes: boxShadowFilet;
+  composes: fontSizeLarge;
+  composes: fontWeightNormal;
+  composes: darkerText;
+  composes: field;
+
+  line-height: calc(var(--line-height-normal)*2);
+  height: calc(var(--line-height-normal)*2.5);
+
+  width: 100%;
+  padding: 0;
+  appearance: none;
+  border: 0;
+  border-radius: 0;
+  resize: none;
+  transition: all .2s ease-out;
+
+}
+
 .error{
+  composes: reset;
   composes: borderRadius;
   composes: boxShadowFilet;
   -webkit-font-smoothing:subpixel-antialiased;
@@ -131,8 +179,4 @@
   margin: 5px 0 10px 0;
   padding: 10px 14px;
   background-color: rgba(255, 98, 98, 0.11);
-  @media (--small-only){
-    margin-left: 5px;
-    margin-right: 5px;
-  }
 }

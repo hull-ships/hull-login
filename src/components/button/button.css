@@ -3,7 +3,20 @@
 .button{
   composes: button from '../../styles/mixins.css';
   margin-bottom: 5px;
-  font-size: 13px;
+
+  &:focus {
+    outline-width:5px;
+  }
+  &:active{
+    background-image: none;
+  }
+
+  i{
+    margin-right: 5px;
+    vertical-align: -40%;
+    width: 24px;
+    height: 24px;
+  }
 
   &.block{
     display: block;
@@ -86,21 +99,6 @@
       background-color:color(var(--vkontakte) blackness(-10%));
     }
   }
-
-  &.primary, &.secondary, &.tertiary, &.facebook, &.foursquare, &.github, &.google, &.instagram, &.linkedin, &.soundcloud, &.tumblr, &.twitter, &.vkontakte{
-    &:focus{
-      outline-width:5px;
-    }
-    &:active{
-      background-image: none;
-    }
-  }
-
-  i{
-    margin-right: 5px;
-    vertical-align: -40%;
-    width: 24px;
-    height: 24px;
-  }
-
 }
+
+

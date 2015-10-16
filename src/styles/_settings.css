@@ -1,7 +1,11 @@
 :root{ 
   --caret-size : 11px;
-  --font-size-normal: 12px;
-  --line-height-normal: 15px;
+
+  --font-size-small: 10px;
+  --line-height-small: 12px;
+
+  --font-size-normal: 13px;
+  --line-height-normal: 16px;
 
   --font-size-large: 14px;
   --line-height-large:20px;

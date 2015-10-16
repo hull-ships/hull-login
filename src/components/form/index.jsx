@@ -1,5 +1,4 @@
 import React from 'react';
-import Bounce from 'bounce';
 import t from 'tcomb-form/lib';
 import Button from '../button';
 import cssModules from 'react-css-modules';
@@ -37,24 +36,7 @@ const Form = React.createClass({
       value: this.props.value || {},
       submitState: 'initial',
       expanded: false,
-      enterTransition: new Bounce().scale({
-        from: { x: 1, y: 0 },
-        to: { x: 1, y: 1 },
-        bounces: 3,
-        easing: 'hardbounce',
-        duration: 1000,
-      }),
     };
-  },
-
-  componentDidMount() {
-    this.state.enterTransition.define('slide');
-    // const { value } = this.state;
-    // return value && this.setState({ valid: true });
-  },
-
-  componentWillUnmount() {
-    this.state.enterTransition.remove();
   },
 
   getOptions() {
@@ -116,7 +98,6 @@ const Form = React.createClass({
 
   render() {
     const options = this.getOptions();
-    const s = { marginTop: options.config.kind === 'compact' ? 10 : 30 };
 
     if (options.config.kind === 'expand') {
       let form;
@@ -135,11 +116,7 @@ const Form = React.createClass({
       return (
         <form styleName="form" onSubmit={this.handleSubmit}>
           {form}
-          <Button style={s}
-            block
-            type="submit"
-            kind="primary"
-            disabled={disabled}>
+          <Button block type="submit" kind="primary" disabled={disabled}>
             {this.props.submitMessage}</Button>
         </form>
       );
@@ -154,7 +131,7 @@ const Form = React.createClass({
           onChange={this.handleChange} />
 
         <div styleName="submit">
-          <Button style={s} type="submit" block disabled={this.isDisabled()}>{this.props.submitMessage}</Button>
+          <Button type="submit" block disabled={this.isDisabled()}>{this.props.submitMessage}</Button>
         </div>
       </form>
     );

@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React from 'react';
 import radium from 'radium';
+const Style = radium.Style;
 import color from 'color';
 import styleMixins from '../../styles/mixins.css';
-import { Style } from 'radium';
 
 const Styles = React.createClass({
   propTypes: {
@@ -32,7 +32,7 @@ const Styles = React.createClass({
     } = this.props.settings;
 
     const buttonTextColor = color(primary).darken(0.5).dark() ? 'white' : '#444';
-    const controlTextColor = color(text).dark() ? text : '#444';
+    const darkerTextColor = color(text).dark() ? text : color(text).darken(0.3).hexString();
     const controlBackgroundColor = color(background).lighten(0.1).hexString();
     return {
       primaryText: {
@@ -42,7 +42,7 @@ const Styles = React.createClass({
       },
       darkerText: {
         normal: {
-          color: color(text).darken(0.3).hexString(),
+          color: darkerTextColor,
         },
       },
       borderColor: {
@@ -86,20 +86,17 @@ const Styles = React.createClass({
           backgroundColor: background,
         },
       },
-      control: {
+      field: {
         'normal': {
-          color: controlTextColor,
           backgroundColor: controlBackgroundColor,
         },
         ':focus': {
           boxShadow: `inset 0 -2px 0 0 ${primary}`,
-
         },
       },
-      button: {
+      primaryBackground: {
         'normal': {
           color: buttonTextColor,
-          borderRadius: buttonBorderRadius,
           backgroundColor: primary,
         },
         ':link': {
@@ -123,7 +120,6 @@ const Styles = React.createClass({
           backgroundColor: color(primary).darken(0.2).hexString(),
         },
       },
-
       placeholder: {
         color: color(text).alpha(0.2).hexString(),
       },
@@ -136,17 +132,16 @@ const Styles = React.createClass({
     return _.reduce(styleMixins, function(hash, cls, name) {
       const style = styles[name];
       if (!style) { return hash; }
-      _.each(cls.split(' '), function(n) {
-        if (!hash[`.${n}`]) {
-          _.each(style, function(rule, key) {
-            if (key === 'normal') {
-              hash[`.${n}`] = rule;
-            } else {
-              hash[`.${n}${key}`] = rule;
-            }
-          });
-        }
-      });
+      const className = cls.split(' ')[0];
+      if (!hash[`.${className}`]) {
+        _.each(style, function(rule, key) {
+          if (key === 'normal') {
+            hash[`.${className}`] = rule;
+          } else {
+            hash[`.${className}${key}`] = rule;
+          }
+        });
+      }
       return hash;
     }, {
       [`.${this.props.scope} ::-moz-placeholder`]: styles.placeholder,
