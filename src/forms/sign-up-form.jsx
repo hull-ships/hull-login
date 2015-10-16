@@ -115,7 +115,7 @@ export default React.createClass({
     }
 
     const props = {
-      kind: (this.props.shipSettings.show_classic_login_as_button) ? 'expand' : 'compact',
+      kind: (this.props.shipSettings.show_classic_login_as_button) ? 'compact' : 'expand',
       type: this.getType(),
       fields: this.getFields(),
       submitMessage: m,

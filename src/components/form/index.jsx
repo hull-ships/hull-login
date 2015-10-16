@@ -116,7 +116,7 @@ const Form = React.createClass({
       return (
         <form styleName="form" onSubmit={this.handleSubmit}>
           {form}
-          <Button block type="submit" kind="primary" disabled={disabled}>
+          <Button block type="submit" disabled={disabled}>
             {this.props.submitMessage}</Button>
         </form>
       );

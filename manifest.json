@@ -74,10 +74,10 @@
     },
     {
       "name":"show_classic_login_as_button",
-      "title": "Show email registration as button",
+      "title": "Collapse Email form",
       "description": "Make email registration appear as a button just like social login. Clicking this button will expand the traditional sign-up form.",
       "type": "boolean",
-      "default": false
+      "default": true
     },
     {
       "name": "split_name_field",
