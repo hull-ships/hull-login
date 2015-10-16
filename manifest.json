@@ -74,10 +74,10 @@
     },
     {
       "name":"show_classic_login_as_button",
-      "title": "Show email registration as button",
+      "title": "Collapse Email form",
       "description": "Make email registration appear as a button just like social login. Clicking this button will expand the traditional sign-up form.",
       "type": "boolean",
-      "default": false
+      "default": true
     },
     {
       "name": "split_name_field",
@@ -96,7 +96,7 @@
     {
       "name": "show_name_field_on_sign_up",
       "title": "Show name field on sign up",
-      "description": "If checked, show a field that ask the user for his name.",
+      "description": "If checked, show a field that asks the user for his name.",
       "type": "boolean",
       "default": true
     },
