@@ -10,18 +10,6 @@ import BaseSection from './base-section';
 class SignUpSection extends BaseSection {
 
   renderHeader() {
-    let loginLink;
-    if (this.props.shipSettings.show_login) {
-      loginLink = (
-        <p styleName="text">
-          <TranslatedMessage tag="a"
-            href="#"
-            className={this.props.styles.link}
-            onClick={this.props.activateLogInSection}
-            message="sign-up switch to log-in link" />
-        </p>
-      );
-    }
     return (
       <div styleName="header">
         <OrganizationImage src={this.props.shipSettings.logo_image} />
@@ -29,7 +17,13 @@ class SignUpSection extends BaseSection {
           styleName="title"
           message="sign-up header"
           variables={{ organization: this.props.organization.name }} />
-        {loginLink}
+        <p styleName="text">
+          <TranslatedMessage tag="a"
+            href="#"
+            className={this.props.styles.link}
+            onClick={this.props.activateLogInSection}
+            message="sign-up switch to log-in link" />
+        </p>
       </div>
     );
   }
