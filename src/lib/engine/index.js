@@ -216,7 +216,6 @@ export default class Engine extends EventEmitter {
     const identities = {};
     if (!!this._user) {
       this.saveState({ returningUser: true });
-      this.updateCurrentEmail(this._user.email);
       this._user.identities.forEach(function(identity) {
         identities[identity.provider] = true;
       });
@@ -399,7 +398,11 @@ export default class Engine extends EventEmitter {
     const promise = fn(options);
 
     if (promise && promise.then) {
-      return promise.then(() => {
+      return promise.then((user) => {
+        if (provider === 'classic' && user && user.email) {
+          this.updateCurrentEmail(user.email, true);
+        }
+
         this[statusKey] = false;
         this._errors = {};
 
@@ -510,10 +513,12 @@ export default class Engine extends EventEmitter {
     }
   }
 
-  updateCurrentEmail(value) {
+  updateCurrentEmail(value, saveIt = false) {
     if (/@/.test(value)) {
       this._currentEmail = value;
-      this.saveState({ currentEmail: value });
+      if (saveIt) {
+        this.saveState({ currentEmail: value });
+      }
     }
   }
 
