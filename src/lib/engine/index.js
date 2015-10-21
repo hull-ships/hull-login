@@ -398,7 +398,7 @@ export default class Engine extends EventEmitter {
     const promise = fn(options);
 
     if (promise && promise.then) {
-      return promise.then((user) => {
+      promise.then((user) => {
         if (provider === 'classic' && user && user.email) {
           this.updateCurrentEmail(user.email, true);
         }
@@ -416,6 +416,8 @@ export default class Engine extends EventEmitter {
         this.emitChange();
       });
     }
+
+    return promise;
   }
 
   resetPassword(email) {
