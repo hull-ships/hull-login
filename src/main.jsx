@@ -86,13 +86,19 @@ const HullLogin = React.createClass({
   },
 
   renderContent() {
-    const Section = Sections[this.state.activeSection];
-    return (
-      <div className={this.props.styles.content}>
-        {this.renderSpinner()}
-        <Section {...this.state} {...this.props.actions} />
-      </div>
-    );
+    const { shipSettings } = this.state;
+
+    if (shipSettings.show_inline) {
+      const Section = Sections[this.state.activeSection];
+      return (
+        <div className={this.props.styles.content}>
+          {this.renderSpinner()}
+          <Section {...this.state} {...this.props.actions} />
+        </div>
+      );
+    } else if (shipSettings.show_signup || shipSettings.show_login || shipSettings.show_profile) {
+      return <PageButtons {...this.state} actions={this.props.actions}/>;
+    }
   },
 
   renderLayer() {
@@ -100,11 +106,12 @@ const HullLogin = React.createClass({
   },
 
   render() {
+    const { shipSettings } = this.state;
     return (
       <div styleName="ship">
-        <Styles scope={this.props.styles.ship} styles={this.props.styles} settings={this.state.shipSettings} />
+        <Styles scope={this.props.styles.ship} styles={this.props.styles} settings={shipSettings} />
         {this.renderUserStyles()}
-        {this.state.shipSettings.show_inline ? this.renderContent() : <PageButtons {...this.state} actions={this.props.actions}/>}
+        {this.renderContent()}
       </div>
     );
   },
