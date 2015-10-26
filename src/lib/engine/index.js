@@ -310,8 +310,6 @@ export default class Engine extends EventEmitter {
 
         if (!this.hasForm()) {
           this.activateThanksSectionAndHideLater();
-        } else {
-          this.redirect();
         }
       });
     });
