@@ -27,9 +27,6 @@ function shopifyLogin(email, password, options = {}, user) {
         const response = res[res.length - 1] || {};
         if (response && response.status === 404) {
           resolve(user);
-          if (options.redirect_url) {
-            window.location.href = options.redirect_url;
-          }
         } else {
           reject({
             status: 401,

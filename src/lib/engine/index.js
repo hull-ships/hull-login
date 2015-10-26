@@ -287,7 +287,6 @@ export default class Engine extends EventEmitter {
   }
 
   hideDialog() {
-    this._transientOptions = {};
     this.saveState({ dialogHidden: true, completeSignup: null });
 
     this.clearTimers();
@@ -299,6 +298,7 @@ export default class Engine extends EventEmitter {
     this._dialogIsVisible = false;
     this._activeSection = null;
 
+    this._transientOptions = {};
     this.emitChange();
   }
 
@@ -310,6 +310,8 @@ export default class Engine extends EventEmitter {
 
         if (!this.hasForm()) {
           this.activateThanksSectionAndHideLater();
+        } else {
+          this.redirect();
         }
       });
     });
@@ -501,7 +503,10 @@ export default class Engine extends EventEmitter {
   redirect() {
     this._redirectLater = false;
 
-    let location = this._settings.redirect_url;
+    const options = assign({}, this._settings, this._transientOptions || {});
+
+    let location = options.redirect_url;
+
     if (this.isShopifyCustomer()) {
       location = location || document.location.href;
     }
