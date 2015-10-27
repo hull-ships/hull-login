@@ -148,7 +148,8 @@ var postcss = [
 // about babel : it's VERY SLOW. DO NOT APPLY IT TO EVERY SOURCE FILE. see the Excludes we applied
 var loaderLibrary = {
   json: {test: /\.json$/, loader: 'json' },
-  css: {test: /\.(css|scss)$/, loaders: ['style?singleton=true', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'postcss'] },
+  css: {test: /\.(css|scss)$/, loaders: ['style?singleton=true', 'css?modules&importLoaders=1', 'postcss'] },
+  devCss: {test: /\.(css|scss)$/, loaders: ['style?singleton=true', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'postcss'] },
   file: {test: /\.jpe?g$|\.gif$|\.png|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: 'file' },
   svg: {test: /\.svg$/, loader: 'svg-inline' },
   js: {test: /\.(js)$/, loader: 'babel', exclude: /node_modules|src\/vendors/ },
@@ -158,7 +159,7 @@ var loaderLibrary = {
 
 var devLoaders = [
   loaderLibrary.json,
-  loaderLibrary.css,
+  loaderLibrary.devCss,
   loaderLibrary.file,
   loaderLibrary.js,
   (hotReload ? loaderLibrary.devJSX : loaderLibrary.prodJSX)
@@ -171,6 +172,7 @@ var loaders = [
   loaderLibrary.js,
   loaderLibrary.prodJSX,
 ];
+
 
 
 // We remove the 'dist' from the filenames for demo and index.html in package.json
