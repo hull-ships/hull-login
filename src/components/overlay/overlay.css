@@ -13,8 +13,7 @@
   left: 0;
 
   user-select: none;
-  z-index: 99;
-  /*background-color: rgba(43,46,56,.9);*/
+  z-index: 9999;
   background: linear-gradient(to bottom, rgba(43,46,56,.9), rgba(43,46,56,.9) 33%,rgba(28,43,66,.75));
 }
 
