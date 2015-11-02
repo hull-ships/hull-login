@@ -602,7 +602,7 @@ export default class Engine extends EventEmitter {
   }
 
   formIsSubmitted() {
-    return this._form.user_data && !!this._form.user_data.created_at;
+    return this._form && this._form.user_data && !!this._form.user_data.created_at;
   }
 
   isWorking() {
