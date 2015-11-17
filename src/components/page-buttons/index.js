@@ -106,18 +106,6 @@ const PageButtons = React.createClass({
         message="nav logout link" />
     );
   },
-  renderCustomButtons() {
-    if (!this.props.shipSettings.custom_buttons.length) { return null; }
-    return _.map(this.props.shipSettings.custom_buttons, function(value, i) {
-      const { url, popup, text } = value;
-      return (
-        <a href={url}
-          key={`custom-action-${i}`}
-          target={popup ? '_blank' : ''}
-          styleName="custom">{text}</a>
-      );
-    });
-  },
 
   render() {
     return (
@@ -128,8 +116,6 @@ const PageButtons = React.createClass({
         {this.renderCompleteProfileButton()}
         {this.renderProfileButton()}
         {this.renderLogoutButton()}
-
-        {this.renderCustomButtons()}
       </span>
     );
   },

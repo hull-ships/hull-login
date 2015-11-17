@@ -95,7 +95,7 @@
   composes: primaryBackground;
   composes: fontSizeLarge;
   composes: fontFamilySans;
-  composes: borderRadius;
+  composes: smallBorderRadius;
   composes: fontWeightBold;
   cursor: pointer;
   line-height: calc(var(--line-height-normal)*2);
@@ -140,7 +140,7 @@
     box-shadow: none;
     &:focus{
       border-color: #FF6262;
-    }  
+    }
   }
 }
 

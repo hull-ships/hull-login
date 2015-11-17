@@ -27,7 +27,6 @@ const Styles = React.createClass({
       link_color: link,
       background_color: background,
       text_color: text,
-      button_border_radius: buttonBorderRadius,
       overlay_border_radius: overlayBorderRadius,
     } = this.props.settings;
 
@@ -77,7 +76,7 @@ const Styles = React.createClass({
       },
       smallBorderRadius: {
         normal: {
-          borderRadius: (buttonBorderRadius),
+          borderRadius: (overlayBorderRadius / 2),
         },
       },
       mainBackground: {
