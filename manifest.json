@@ -100,7 +100,7 @@
       "title": "Automatic Sign up popup delay",
       "description": "This is the wait time (in seconds) before automatically showing the sign-up section to unregistered visitors (once per user). 0 seconds disables the pop-up.",
       "type": "number",
-      "format": "hidden",
+      "format": "number",
       "minimum": 0,
       "default": 0
     },
