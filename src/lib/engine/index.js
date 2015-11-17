@@ -124,7 +124,7 @@ export default class Engine extends EventEmitter {
       organization: this._organization,
       platform: this._platform,
       ship: this._ship,
-      form: this._form,
+      form: this.getProfileForm(),
       formIsSubmitted: this.formIsSubmitted(),
       hasForm: this.hasForm(),
       identities: this._identities,
@@ -460,7 +460,9 @@ export default class Engine extends EventEmitter {
       return m;
     }, {});
 
-    const data = _.reduce(this._form.fields_list, (m, { name }) => {
+    const form = this.getProfileForm();
+
+    const data = _.reduce(form.fields_list, (m, { name }) => {
       const v = value[name];
       if (!!v) { m[name] = v; }
 
@@ -474,8 +476,8 @@ export default class Engine extends EventEmitter {
       });
       promises.push(promise);
     }
-    if (_.size(data)) {
-      const promise = Hull.api(this._form.id + '/submit', 'put', { data }).then((r) => {
+    if (_.size(data) && form.id) {
+      const promise = Hull.api(form.id + '/submit', 'put', { data }).then((r) => {
         this._form = r;
       });
       promises.push(promise);
@@ -598,20 +600,27 @@ export default class Engine extends EventEmitter {
   }
 
   hasForm() {
-    return this._form && this._form.fields_list.length > 0;
+    const form = this.getProfileForm();
+    return form && !!form.id && form.fields_list.length > 0;
   }
 
   formIsSubmitted() {
-    return this._form && this._form.user_data && !!this._form.user_data.created_at;
+    const form = this.getProfileForm();
+    return form.user_data && !!form.user_data.created_at;
   }
 
   isWorking() {
     return !!(this._isLoggingIn || this._isLoggingOut || this._isLinking || this._isUnlinking);
   }
 
+  getProfileForm() {
+    return this._form || { fields_list: [] };
+  }
+
   getProfileData() {
     const user = this._user;
-    const formData = user && this._form && this._form.user_data && this._form.user_data.data;
+    const form = this.getProfileForm();
+    const formData = user && form && form.user_data && form.user_data.data;
     if (!user) return false;
     return assign(
       user.extra,
