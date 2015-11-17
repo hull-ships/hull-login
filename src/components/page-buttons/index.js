@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import cssModules from 'react-css-modules';
 import styles from './page-buttons.css';
 import TranslatedMessage from '../translated-message';
