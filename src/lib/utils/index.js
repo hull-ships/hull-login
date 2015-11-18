@@ -13,6 +13,18 @@ function preloadImage(src, callback) {
   }
 }
 
+function parseQueryString(queryString) {
+  queryString = queryString || document.location.search;
+
+  const params = {};
+  queryString.replace(/([^?=&]+)(=([^&]*))?/g, function($0, $1, $2, $3) {
+    params[$1] = $3;
+  });
+
+  return params;
+}
+
 export default {
   preloadImage,
+  parseQueryString,
 };

@@ -3,6 +3,7 @@ import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import * as Backends from './backends';
 import I18n from '../i18n';
+import { parseQueryString } from '../Utils';
 
 const USER_SECTIONS = [
   'showProfile',
@@ -508,7 +509,7 @@ export default class Engine extends EventEmitter {
     let location = options.redirect_url;
 
     if (this.isShopifyCustomer()) {
-      location = location || document.location.href;
+      location = parseQueryString().checkout_url || location || document.location.href;
     }
 
     if (!location) { return; }
@@ -632,5 +633,4 @@ export default class Engine extends EventEmitter {
   isShopifyCustomer() {
     return this._platform.type === 'platforms/shopify_shop' && Hull.config().customerId !== 'disabled';
   }
-
 }
