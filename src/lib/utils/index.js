@@ -18,7 +18,7 @@ function parseQueryString(queryString) {
 
   const params = {};
   queryString.replace(/([^?=&]+)(=([^&]*))?/g, function($0, $1, $2, $3) {
-    params[$1] = $3;
+    params[$1] = decodeURIComponent($3);
   });
 
   return params;
