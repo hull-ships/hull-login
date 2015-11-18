@@ -41,29 +41,21 @@
       "default": "#ffffff"
     },
     {
-      "name":"button_border_radius",
-      "title": "Button border radius",
-      "type": "number",
-      "format": "range",
-      "default": 3,
-      "minimum": 0,
-      "maximun": 100
-    },
-    {
       "name":"overlay_border_radius",
-      "title": "Overlay border radius",
+      "title": "Border radius",
       "type": "number",
       "format": "range",
       "default": 6,
       "minimum": 0,
-      "maximun": 100
+      "maximum": 20
     },
     {
       "name":"show_inline",
       "title": "Show inline",
       "description":"Show login and signup forms in page instead of as a Modal",
       "type": "boolean",
-      "default": false
+      "default": false,
+      "format" : "hidden"
     },
     {
       "name":"show_classic_login",
@@ -84,21 +76,24 @@
       "title": "Split name in two fields",
       "description": "Split the name field in two fields (first name & last name).",
       "type": "boolean",
-      "default": false
+      "default": false,
+      "format" : "hidden"
     },
     {
       "name":"disable_buttons_automatically",
       "title": "Visually disable submit buttons for incomplete forms",
       "description": "If checked, disable the 'log in' and 'sign up' buttons when their forms are incomplete. Incomplete submissions will not be allowed regardless of the state of this option.",
       "type": "boolean",
-      "default": true
+      "default": true,
+      "format" : "hidden"
     },
     {
       "name": "show_name_field_on_sign_up",
       "title": "Show name field on sign up",
       "description": "If checked, show a field that asks the user for his name.",
       "type": "boolean",
-      "default": true
+      "default": true,
+      "format" : "hidden"
     },
     {
       "name":"show_sign_up_section_after",
@@ -114,29 +109,32 @@
       "title": "Automatically Hide thanks section delay",
       "description": "This is the wait time (in seconds) before automatically hiding the thanks section (i.e. 'thanks for signing up!') once users finish registration (0 to disable).",
       "type": "number",
-      "format": "number",
-      "default": 2
+      "format": "hidden",
+      "default": 0
     },
     {
       "name":"show_login",
       "title": "Display log in link",
       "description": "When logged out, show a 'log in' link.",
       "type": "boolean",
-      "default": true
+      "default": false,
+      "format" : "hidden"
     },
     {
       "name":"show_signup",
       "title": "Display sign up link",
       "description": "When logged out, show a 'sign up' link.",
       "type": "boolean",
-      "default": true
+      "default": false,
+      "format" : "hidden"
     },
     {
       "name":"show_profile",
       "title": "Display user profile link",
       "description": "When logged in, show a link to view and edit their profile.",
       "type": "boolean",
-      "default": true
+      "default": false,
+      "format" : "hidden"
     },
     {
       "name": "custom_styles",
@@ -144,39 +142,6 @@
       "description": "Custom CSS to fine-tune Styles.",
       "type": "string",
       "format":"textarea"
-    },
-    {
-      "name":"custom_buttons",
-      "title": "Custom links",
-      "description": "Add custom links to show when a user is logged in.",
-      "type": "array",
-      "format": "table",
-      "items": {
-        "type": "object",
-        "properties": {
-          "text": {
-            "type": "string",
-            "title": "Link Name"
-          },
-          "url": {
-            "type": "string",
-            "title": "Link URL",
-            "format": "uri"
-          },
-          "popup": {
-            "type": "boolean",
-            "title": "New Window?"
-          }
-        },
-        "required": [ "text", "url" ]
-      },
-      "default": [
-        {
-          "text": "Account",
-          "url": "/account",
-          "popup": true
-        }
-      ]
     }
   ],
   "deployment_settings": [
@@ -187,13 +152,6 @@
       "type": "string"
     }
   ],
-  "resources": [
-    {
-      "name": "profile_form",
-      "type": "form"
-    }
-  ],
-  "locales": [
-    "en"
-  ]
+  "resources": [],
+  "locales": [ "en" ]
 }
