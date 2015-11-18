@@ -54,8 +54,7 @@
       "title": "Show inline",
       "description":"Show login and signup forms in page instead of as a Modal",
       "type": "boolean",
-      "default": false,
-      "format" : "hidden"
+      "default": false
     },
     {
       "name":"show_classic_login",
