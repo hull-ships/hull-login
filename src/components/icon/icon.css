@@ -9,6 +9,11 @@
   + span{
     margin-left: 3px;
   }
+
+  svg {
+    display: block;
+  }
+
   &.colorized{
     fill : currentColor;
     svg path, svg.rect{
@@ -16,4 +21,3 @@
     }
   }
 }
-
