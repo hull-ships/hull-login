@@ -75,8 +75,7 @@
       "title": "Split name in two fields",
       "description": "Split the name field in two fields (first name & last name).",
       "type": "boolean",
-      "default": false,
-      "format" : "hidden"
+      "default": false
     },
     {
       "name":"disable_buttons_automatically",
