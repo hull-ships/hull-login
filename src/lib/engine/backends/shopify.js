@@ -25,7 +25,7 @@ function shopifyLogin(email, password, options = {}, user) {
       .send(formData)
       .end((...res) => {
         const response = res[res.length - 1] || {};
-        if (response && response.status === 404) {
+        if ((response && response.status === 404) || (response.xhr && (response.xhr.responseURL || '').match(/password$/))) {
           resolve(user);
         } else {
           reject({
