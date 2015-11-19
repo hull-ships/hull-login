@@ -2,7 +2,7 @@ import _ from 'lodash';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import * as Backends from './backends';
-import { parseQueryString } from '../Utils';
+import { parseQueryString } from '../utils';
 
 const USER_SECTIONS = [
   'showProfile',
