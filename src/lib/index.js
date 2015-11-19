@@ -6,11 +6,19 @@ import I18n from './i18n';
 
 function start(deployment, hull) {
   const { onUpdate, settings } = deployment || {};
+
+  if (deployment.ship) {
+    I18n.setTranslations(deployment.ship.translations);
+  }
+
   const engine = new Engine(deployment, hull);
 
   function updateCustomizer(ship) {
     if (settings && settings._selector === '#___embedded_ship___') {
-      if (ship) { engine.updateShip(ship); }
+      if (ship) {
+        I18n.setTranslations(ship.translations);
+        engine.updateShip(ship);
+      }
       engine.showDialog();
     }
   }
