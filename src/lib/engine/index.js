@@ -509,7 +509,11 @@ export default class Engine extends EventEmitter {
     let location = options.redirect_url;
 
     if (this.isShopifyCustomer()) {
-      location = parseQueryString().checkout_url || location || document.location.href;
+      if (parseQueryString().checkout_url) {
+        location = document.location.origin + '/checkout';
+      } else {
+        location = location || document.location.href;
+      }
     }
 
     if (!location) { return; }
