@@ -1,3 +1,5 @@
+const origin = window.location.origin || window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+
 function wrapCustomer(data) {
   const h = {};
 
@@ -12,7 +14,7 @@ function wrapCustomer(data) {
 
 function shopifyLogin(email, password, options = {}, user) {
   const { superagent, Promise } = Hull.utils;
-  const url = document.location.origin + '/account/login';
+  const url = origin + '/account/login';
   const formData = {
     return_to: '/___RETURN_TO___',
     form_types: 'customer_login',
@@ -52,7 +54,7 @@ function classicLogin(options = {}) {
 
 function socialLogin(options = {}) {
   let url = Hull.config('callbackUrl') ||
-            `${document.location.origin}/a/hull-callback`;
+            `${origin}/a/hull-callback`;
   if (options.redirect_url) {
     url = `${url}?redirect_url=${options.redirect_url}`;
   }
@@ -85,6 +87,6 @@ export function resetPassword(email) {
 }
 
 export function logOut(/* options */) {
-  return Hull.logout({ redirect_url: `${document.location.origin}/account/logout` });
+  return Hull.logout({ redirect_url: `${origin}/account/logout` });
 }
 
