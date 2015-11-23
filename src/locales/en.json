@@ -89,12 +89,12 @@
   "sign-up social button text": "Sign up with {provider}",
   "sign-up switch to log-in link": "Already have an account? Log in.",
 
-  "social-login error auth_failed" : "Authentication failed",
   "social-login error auth_failed": "Authentication failed",
   "social-login error email_taken": "Email has already been taken",
   "social-login error identity_taken": "Identity has already been taken",
   "social-login error unknown": "Authentication failed",
   "social-login error window_closed": "Window closed",
+  "social-login error disabled_customer": "An email has been sent, please click the link included to verify your email address.",
 
   "thanks header": "Thanks for signing up!",
   "thanks message": "Hi {name}, your registration is now complete and so we'll keep you up to date.",
