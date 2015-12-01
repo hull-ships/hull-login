@@ -28,7 +28,7 @@ const Select = React.createClass({
     });
 
     return (
-      <select styleName="select" {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange}>{options}</select>
+      <select styleName="select" {...this.props} onChange={this.handleChange}>{options}</select>
     );
   },
 });

@@ -14,7 +14,7 @@ const Textarea = React.createClass({
 
   render() {
     return (
-      <textarea styleName="textarea" {...this.getBrowserStateEvents()} {...this.props} onChange={this.handleChange} />
+      <textarea styleName="textarea" {...this.props} onChange={this.handleChange} />
     );
   },
 });
