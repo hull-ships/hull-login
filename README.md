@@ -41,3 +41,5 @@ The dialog can be controlled by triggering events. with the `Hull.emit` function
 `options` is an optional Object passed to the next call to Hull.login() or Hull.signup(). It will persist as long as the modal is open, and disappear when it's dismissed. This way customers can switch between different tabs and sections without losing context.
 
 It is useful to specify redirect strategies with `options.strategy`, or redirect URLs with `options.redirect_url` [Checkout the Hull.js Documentation](http://www.hull.io/docs/references/hull_js/#user-signup-and-login) for all supported options.
+
+You can also prepopulate the user's email via `options.email`;
