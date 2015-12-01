@@ -131,7 +131,7 @@ export default class Engine extends EventEmitter {
       isUnlinking: this._isUnlinking,
       dialogIsVisible: this._dialogIsVisible,
       activeSection: this.getActiveSection(),
-      currentEmail: this._currentEmail,
+      currentEmail: this.getCurrentEmail(),
       isShopifyCustomer: this.isShopifyCustomer(),
     };
   }
@@ -527,6 +527,14 @@ export default class Engine extends EventEmitter {
         this.saveState({ currentEmail: value });
       }
     }
+  }
+
+  getCurrentEmail() {
+    let email = this._currentEmail;
+    if (this._transientOptions && /@/.test(this._transientOptions.email)) {
+      email = this._transientOptions.email;
+    }
+    return email;
   }
 
   activateLogInSection() {
