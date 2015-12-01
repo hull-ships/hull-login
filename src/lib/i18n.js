@@ -35,21 +35,16 @@ function translate(message, data) {
     return message;
   }
 
-  let m = _messages[message];
+  const m = _messages[message];
 
   if (!m) {
     console.warn('[i18n] "' + message + '". is missing in "' + _locale + '".'); // eslint-disable-line
-
-    const mf = new MessageFormat(_locale);
-    m = _messages[message] = mf.compile(message);
-  }
-
-  try {
-    return m(data);
-  } catch (e) {
-    console.error('[i18n] Cannot translate "' + message + '". ' + e.message); // eslint-disable-line
-
-    return '[error] ' + message;
+  } else {
+    try {
+      return m(data);
+    } catch (e) {
+      console.error('[i18n] Cannot translate "' + message + '". ' + e.message); // eslint-disable-line
+    }
   }
 }
 
