@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import cssModules from 'react-css-modules';
 import styles from '../form.css';
 
 const Select = React.createClass({
   propTypes: {
-    onChange: React.PropTypes.func.isRequired,
-    options: React.PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired,
+    options: PropTypes.array.isRequired
   },
 
   handleChange(e) {
