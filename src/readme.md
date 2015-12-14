@@ -7,10 +7,11 @@ __The Hull Login Modal Ship allows you to log customers in with a beautiful, in-
 The Login Modal ship is extremely configurable. It lets you customize a range of options to make it blend in your site in the best way possible.
 
 ##### Logo Image
-<img src="./images/logo_image.jpg" alt=""/>
 Add your brand's Logo
+<img src="./images/logo_image.jpg" alt=""/>
 
-##### Translations
+##### Text Strings
+Edit all UI text strings
 <img src="./images/translations.jpg" alt=""/>
 
 ##### Primary Color
