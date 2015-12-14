@@ -108,6 +108,7 @@ var files = {
   'src/icons/**/*': path.join(outputFolder, assetsFolder, 'icons'),
   'src/locales/**/*': path.join(outputFolder, 'locales'),
   'manifest.json': outputFolder,
+  'src/*.md': outputFolder,
   'src/*.ico': outputFolder,
   'src/*.jpg': outputFolder,
   'src/*.png': outputFolder,
