@@ -50,6 +50,8 @@ const Overlay = React.createClass({
     if (e.key === 'Escape' || e.keyCode === 27) { this.props.onClose(); }
 
     if (e.key === 'Tab' || e.keyCode === 9) {
+      if (this.refs.modal == null) { return; }
+
       const focussed = e.target;
       const focusableElements = this.refs.modal.querySelectorAll(FOCUSABLE_ELEMENTS_SELECTOR);
 
@@ -74,6 +76,7 @@ const Overlay = React.createClass({
       }
     }
   },
+
   renderContent() {
     if (!this.props.visible) {return null;}
     const modalClass = this.props.hasErrors ? 'modal-shake' : 'modal';
