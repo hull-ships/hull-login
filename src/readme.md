@@ -58,6 +58,17 @@ Automatically displays the popup the first time a visitor comes on your site aft
 Add custom CSS to the ship. We recommend you inspect the embedded ship with Chrome so you can target classes accurately
 <img src="./images/custom_css.jpg" alt=""/>
 
+##### Changing Fonts
+Changing the fonts for the Login Ship is easy. paste the following code in the Custom CSS box, using the right Font Family instead of `Helvetica`:
+```css
+._2mIIbscL4UJ7OCmjZHqSZu,
+._33tK0-LYOsci0aZunQyZmT,
+._2mIIbscL4UJ7OCmjZHqSZu *,
+._33tK0-LYOsci0aZunQyZmT * {
+  font-family: Helvetica;
+}
+```
+
 ## Events
 
 The dialog can be controlled by triggering events. with the `Hull.emit` function.
