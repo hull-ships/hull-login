@@ -512,7 +512,7 @@ export default class Engine extends EventEmitter {
 
     let location = options.redirect_url;
 
-    const origin = window.location.origin || window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+    const origin = window.location.origin || window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
     if (this.isShopifyCustomer()) {
       if (parseQueryString().checkout_url) {
