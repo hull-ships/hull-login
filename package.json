@@ -71,6 +71,7 @@
     "json-loader": "^0.5.3",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
+    "localtunnel": "^1.8.1",
     "merge-stream": "^1.0.0",
     "moment": "^2.9.0",
     "ngrok": "^0.2.2",
