@@ -2,6 +2,7 @@
   "name": "Login",
   "description": "A complete user registration and social login modal",
   "picture": "picture.png",
+  "readme" : "readme.md",
   "index": "ship.js",
   "version": "0.0.1",
   "settings": [
