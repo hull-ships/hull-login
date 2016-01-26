@@ -4,6 +4,8 @@ import { EventEmitter } from 'events';
 import * as Backends from './backends';
 import { parseQueryString } from '../utils';
 
+const SHIP_NAMESPACE = 'hull.login';
+
 const USER_SECTIONS = [
   'showProfile',
   'editProfile',
@@ -74,7 +76,7 @@ export default class Engine extends EventEmitter {
     });
 
     _.each(this.getActions(), (a, k) => {
-      this._hull.on('hull.login.' + k, (options) => {
+      this._hull.on(`${SHIP_NAMESPACE}.${k}`, (options) => {
         this._transientOptions = options;
         a();
       });
@@ -146,6 +148,10 @@ export default class Engine extends EventEmitter {
 
   emitChange() {
     this.emit(EVENT);
+  }
+
+  hullEmit(event = '', options = {}) {
+    this._hull.emit(`${SHIP_NAMESPACE}.${event}`, options);
   }
 
   getStorageKey() {
@@ -277,11 +283,14 @@ export default class Engine extends EventEmitter {
 
   showDialog() {
     const section = this._returningUser ? 'logIn' : 'signUp';
-    return this.activateSection(section);
+    const result = this.activateSection(section);
+    this.hullEmit('dialogShown');
+    return result;
   }
 
   hideDialog() {
     this.saveState({ dialogHidden: true, completeSignup: null });
+
 
     this.clearTimers();
 
@@ -289,11 +298,13 @@ export default class Engine extends EventEmitter {
       this.redirect();
     }
 
+
     this._dialogIsVisible = false;
     this._activeSection = null;
 
     this._transientOptions = {};
     this.emitChange();
+    this.hullEmit('dialogHidden');
   }
 
   signUp(credentials) {
@@ -501,7 +512,7 @@ export default class Engine extends EventEmitter {
 
     let location = options.redirect_url;
 
-    const origin = window.location.origin || window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+    const origin = window.location.origin || window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
     if (this.isShopifyCustomer()) {
       if (parseQueryString().checkout_url) {
@@ -565,6 +576,7 @@ export default class Engine extends EventEmitter {
       this._activeSection = name;
       this._errors = {};
       this.emitChange();
+      this.hullEmit(`${name}SectionActivated`);
     } else {
       throw new Error('"' + name + '" is not a valid section name');
     }

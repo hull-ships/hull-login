@@ -13,7 +13,7 @@ var config      = require('./config');
   'deploy',
   'format',
   'lint',
-  // 'ngrok',
+  'localtunnel',
   'webpack',
   // 'iconfont',
   // 'iconsprite',
@@ -34,7 +34,7 @@ gulp.task('watch', function(callback) {
 });
 
 gulp.task('serve', function(callback) {
-  runSequence(['webpack:server'], callback);
+  runSequence(['webpack:server','localtunnel'], callback);
 });
 
 // Batch, Public Tasks
