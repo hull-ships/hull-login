@@ -18,7 +18,7 @@
     "url": "https://github.com/hull-ships/hull-login/issues"
   },
   "scripts": {
-    "start": "gulp server"
+    "start": "./node_modules/.bin/gulp server"
   },
   "keywords": [
     "hull",
