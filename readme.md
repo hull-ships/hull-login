@@ -8,55 +8,55 @@ The Login Modal ship is extremely configurable. It lets you customize a range of
 
 ##### Logo Image
 Add your brand's Logo
-<img src="./images/logo_image.jpg" alt=""/>
+![Logo_image](./images/logo_image.jpg)
 
 ##### Text Strings
 Edit all UI text strings
-<img src="./images/translations.jpg" alt=""/>
+![Translations](./images/translations.jpg)
 
 ##### Primary Color
 Accent color, used for Buttons and main titles
-<img src="./images/primary_color.jpg" alt=""/>
+![Primary_color](./images/primary_color.jpg)
 
 ##### Text Color
 Color of basic text and form fields
-<img src="./images/text_color.jpg" alt=""/>
+![Text_color](./images/text_color.jpg)
 
 ##### Link Color
 Color of the text links
-<img src="./images/link_color.jpg" alt=""/>
+![Link_color](./images/link_color.jpg)
 
 ##### Background Color
 Modal Background color
-<img src="./images/background_color.jpg" alt=""/>
+![Background_color](./images/background_color.jpg)
 
 ##### Border Radius
 Controls the Modal and Button border radius. Both are linked for best visual harmony.
-<img src="./images/border_radius.jpg" alt=""/>
+![Border_radius](./images/border_radius.jpg)
 
 ##### Show Inline
 Displays the entire form in directly the page, where the Ship is inserted instead of an Overlay.
-<img src="./images/show_inline.jpg" alt=""/>
+![Show_inline](./images/show_inline.jpg)
 
 ##### Allow Email & Password Registration
 Enable registration with an Email and Password combo. When disabled, users have to use Social Login to connect.
-<img src="./images/email_registration.jpg" alt=""/>
+![Email_registration](./images/email_registration.jpg)
 
 ##### Expand Email form by default
 Displays the input fields when opening the form. Otherwise, they're only shown when user clicks "Sign up with email"
-<img src="./images/expand.jpg" alt=""/>
+![Expand](./images/expand.jpg)
 
 ##### Split name in two fields
 Displays "First Name" and "Last Name" fields instead of a single "Name" field
-<img src="./images/split_name.jpg" alt=""/>
+![Split_name](./images/split_name.jpg)
 
 ##### Automatic Signup popup delay
 Automatically displays the popup the first time a visitor comes on your site after the specified delay. By default equals 0, and never shows the popup automatically.
-<img src="./images/delay.jpg" alt=""/>
+![Delay](./images/delay.jpg)
 
 ##### Custom CSS
 Add custom CSS to the ship. We recommend you inspect the embedded ship with Chrome so you can target classes accurately
-<img src="./images/custom_css.jpg" alt=""/>
+![Custom_css](./images/custom_css.jpg)
 
 ##### Changing Fonts
 Changing the fonts for the Login Ship is easy. paste the following code in the Custom CSS box, using the right Font Family instead of `Helvetica`:
