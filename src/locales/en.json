@@ -88,6 +88,7 @@
   "sign-up social button text when attempting sign-up": "Signing up with {provider}",
   "sign-up social button text": "Sign up with {provider}",
   "sign-up switch to log-in link": "Already have an account? Log in.",
+  "sign-up email is disabled error": "An email has been sent, please click the link included to verify your email address.",
 
   "social-login error auth_failed": "Authentication failed",
   "social-login error email_taken": "Email has already been taken",
