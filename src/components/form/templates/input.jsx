@@ -9,7 +9,7 @@ const Input = React.createClass({
     onChange: React.PropTypes.func.isRequired,
     attrs: React.PropTypes.object.isRequired,
     autoFocus: React.PropTypes.bool,
-    placeholder: React.PropTypes.string,
+    placeholder: React.PropTypes.string
   },
 
   componentDidMount() {
@@ -30,10 +30,10 @@ const Input = React.createClass({
   render() {
     const props = {
       ...this.props,
-      onChange: this.handleChange,
+      onChange: this.handleChange
     };
     return <input styleName="input" ref="input" {...props}/>;
-  },
+  }
 });
 
 export default cssModules(Input, styles);

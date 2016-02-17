@@ -16,7 +16,7 @@ export default React.createClass({
     isWorking: React.PropTypes.bool,
     shipSettings: React.PropTypes.object.isRequired,
     updateCurrentEmail: React.PropTypes.func.isRequired,
-    errors: React.PropTypes.object,
+    errors: React.PropTypes.object
   },
 
   mixins: [Mixins.AsyncActions],
@@ -27,14 +27,14 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
-      logIn: this.props.logIn,
+      logIn: this.props.logIn
     };
   },
 
   getType() {
     return t.struct({
       login: Login,
-      password: Password,
+      password: Password
     });
   },
 
@@ -49,14 +49,14 @@ export default React.createClass({
         help: <TranslatedMessage message="log-in email help text" />,
         hasError,
         error: hasError && translate('log-in invalid credentials error'),
-        autoFocus: true,
+        autoFocus: true
       },
       password: {
         placeholder: translate('log-in password placeholder'),
         type: 'password',
         help: <TranslatedMessage message="log-in password help text" />,
-        hasError,
-      },
+        hasError
+      }
     };
   },
 
@@ -93,10 +93,10 @@ export default React.createClass({
       onSubmit: this.handleSubmit,
       onChange: this.handleChange,
       disabled: disabled,
-      value: { login: this.props.currentEmail },
+      value: { login: this.props.currentEmail }
     };
 
     return <Form {...props} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />;
-  },
+  }
 });
 

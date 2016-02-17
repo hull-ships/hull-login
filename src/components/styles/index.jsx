@@ -8,12 +8,12 @@ import styleMixins from '../../styles/mixins.css';
 const Styles = React.createClass({
   propTypes: {
     scope: React.PropTypes.string.isRequired,
-    settings: React.PropTypes.object.isRequired,
+    settings: React.PropTypes.object.isRequired
   },
 
   getDefaultProps() {
     return {
-      styles: {},
+      styles: {}
     };
   },
 
@@ -27,7 +27,7 @@ const Styles = React.createClass({
       link_color: link,
       background_color: background,
       text_color: text,
-      overlay_border_radius: overlayBorderRadius,
+      overlay_border_radius: overlayBorderRadius
     } = this.props.settings;
 
     const buttonTextColor = color(primary).darken(0.5).dark() ? 'white' : '#444';
@@ -36,92 +36,92 @@ const Styles = React.createClass({
     return {
       primaryText: {
         normal: {
-          color: primary,
-        },
+          color: primary
+        }
       },
       darkerText: {
         normal: {
-          color: darkerTextColor,
-        },
+          color: darkerTextColor
+        }
       },
       borderColor: {
         normal: {
-          borderColor: color(text).alpha(0.5).hslString(),
-        },
+          borderColor: color(text).alpha(0.5).hslString()
+        }
       },
       linkText: {
         'normal': {
-          color: link,
+          color: link
         },
         ':link': {
-          color: link,
+          color: link
         },
         ':active': {
-          color: link,
+          color: link
         },
         ':visited': {
-          color: link,
+          color: link
         },
         ':hover': {
-          color: color(link).darken(0.2).hexString(),
+          color: color(link).darken(0.2).hexString()
         },
         ':focus': {
-          color: color(link).darken(0.2).hexString(),
-        },
+          color: color(link).darken(0.2).hexString()
+        }
       },
       borderRadius: {
         normal: {
-          borderRadius: overlayBorderRadius,
-        },
+          borderRadius: overlayBorderRadius
+        }
       },
       smallBorderRadius: {
         normal: {
-          borderRadius: (overlayBorderRadius / 2),
-        },
+          borderRadius: (overlayBorderRadius / 2)
+        }
       },
       mainBackground: {
         normal: {
           color: this.props.settings.text_color,
-          backgroundColor: background,
-        },
+          backgroundColor: background
+        }
       },
       field: {
         'normal': {
-          backgroundColor: controlBackgroundColor,
+          backgroundColor: controlBackgroundColor
         },
         ':focus': {
-          boxShadow: `inset 0 -2px 0 0 ${primary}`,
-        },
+          boxShadow: `inset 0 -2px 0 0 ${primary}`
+        }
       },
       primaryBackground: {
         'normal': {
           color: buttonTextColor,
-          backgroundColor: primary,
+          backgroundColor: primary
         },
         ':link': {
           color: buttonTextColor,
-          backgroundColor: primary,
+          backgroundColor: primary
         },
         ':visited': {
           color: buttonTextColor,
-          backgroundColor: primary,
+          backgroundColor: primary
         },
         ':active': {
           color: buttonTextColor,
-          backgroundColor: color(primary).darken(0.2).hexString(),
+          backgroundColor: color(primary).darken(0.2).hexString()
         },
         ':hover': {
           color: buttonTextColor,
-          backgroundColor: color(primary).darken(0.2).hexString(),
+          backgroundColor: color(primary).darken(0.2).hexString()
         },
         ':focus': {
           color: buttonTextColor,
-          backgroundColor: color(primary).darken(0.2).hexString(),
-        },
+          backgroundColor: color(primary).darken(0.2).hexString()
+        }
       },
       placeholder: {
-        color: color(text).alpha(0.2).hexString(),
-      },
+        color: color(text).alpha(0.2).hexString()
+      }
     };
   },
 
@@ -152,13 +152,13 @@ const Styles = React.createClass({
       [`.${this.props.scope} ::-webkit-input-placeholder`]: styles.placeholder,
       [`.${this.props.scope} input::-webkit-input-placeholder`]: styles.placeholder,
       [`.${this.props.scope} textarea::-webkit-input-placeholder`]: styles.placeholder,
-      [`.${this.props.scope} ::-moz-focus-inner`]: { border: 0, padding: 0 },
+      [`.${this.props.scope} ::-moz-focus-inner`]: { border: 0, padding: 0 }
     });
   },
 
   render() {
     return <Style rules={this.getRules()} />;
-  },
+  }
 });
 
 export default radium(Styles);

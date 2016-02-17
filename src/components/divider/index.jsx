@@ -8,8 +8,8 @@ const Divider = React.createClass({
     children: React.PropTypes.oneOfType([
       React.PropTypes.element,
       React.PropTypes.array,
-      React.PropTypes.string,
-    ]).isRequired,
+      React.PropTypes.string
+    ]).isRequired
   },
 
   componentDidMount() {
@@ -24,7 +24,7 @@ const Divider = React.createClass({
         <legend ref="content" styleName="content">{this.props.children}</legend>
       </fieldset>
     );
-  },
+  }
 });
 
 export default cssModules(Divider, styles);

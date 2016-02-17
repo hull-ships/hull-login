@@ -9,13 +9,13 @@ const SHIP_NAMESPACE = 'hull.login';
 const USER_SECTIONS = [
   'showProfile',
   'editProfile',
-  'thanks',
+  'thanks'
 ];
 
 const VISITOR_SECTIONS = [
   'logIn',
   'signUp',
-  'resetPassword',
+  'resetPassword'
 ];
 
 const SECTIONS = USER_SECTIONS.concat(VISITOR_SECTIONS);
@@ -35,7 +35,7 @@ const ACTIONS = [
   'activateResetPasswordSection',
   'activateShowProfileSection',
   'activateEditProfileSection',
-  'updateCurrentEmail',
+  'updateCurrentEmail'
 ];
 
 const STATUS = {
@@ -43,7 +43,7 @@ const STATUS = {
   signUp: 'isLoggingIn',
   logOut: 'isLoggingOut',
   linkIdentity: 'isLinking',
-  unlinkIdentity: 'isUnlinking',
+  unlinkIdentity: 'isUnlinking'
 };
 
 const EVENT = 'CHANGE';
@@ -134,7 +134,7 @@ export default class Engine extends EventEmitter {
       dialogIsVisible: this._dialogIsVisible,
       activeSection: this.getActiveSection(),
       currentEmail: this.getCurrentEmail(),
-      isShopifyCustomer: this.isShopifyCustomer(),
+      isShopifyCustomer: this.isShopifyCustomer()
     };
   }
 

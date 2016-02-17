@@ -29,7 +29,7 @@ const _settings = {
   defaultFontFamily: '"Helvetica Neue", Helvetica, Roboto, Arial, sans-serif',
   defaultLineHeight: 1.6,
   defaultBorderRadius: 3,
-  mediumBorderRadius: 6,
+  mediumBorderRadius: 6
 };
 
 function setSettings(settings) {
@@ -44,6 +44,6 @@ function getSettings() {
 
 export default {
   setSettings,
-  getSettings,
+  getSettings
 };
 

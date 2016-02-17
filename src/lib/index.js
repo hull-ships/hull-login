@@ -38,5 +38,5 @@ export default {
   FieldTypes,
   Mixins,
   I18n,
-  Utils,
+  Utils
 };

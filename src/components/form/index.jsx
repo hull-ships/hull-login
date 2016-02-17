@@ -27,7 +27,7 @@ const Form = React.createClass({
     autoDisableSubmit: React.PropTypes.bool,
     onSubmit: React.PropTypes.func.isRequired,
     onChange: React.PropTypes.func,
-    kind: React.PropTypes.oneOf(['compact', 'expand']),
+    kind: React.PropTypes.oneOf(['compact', 'expand'])
   },
 
   getInitialState() {
@@ -35,7 +35,7 @@ const Form = React.createClass({
       valid: !!this.props.value,
       value: this.props.value || {},
       submitState: 'initial',
-      expanded: false,
+      expanded: false
     };
   },
 
@@ -43,11 +43,11 @@ const Form = React.createClass({
     return {
       config: {
         kind: this.getKind(),
-        submitState: this.state.submitState,
+        submitState: this.state.submitState
       },
       fields: this.props.fields,
       auto: 'placeholders',
-      templates: Templates,
+      templates: Templates
     };
   },
 
@@ -135,7 +135,7 @@ const Form = React.createClass({
         </div>
       </form>
     );
-  },
+  }
 });
 
 export default cssModules(Form, styles);

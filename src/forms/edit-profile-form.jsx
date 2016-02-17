@@ -36,14 +36,14 @@ export default React.createClass({
     profileData: React.PropTypes.object.isRequired,
     form: React.PropTypes.object.isRequired,
     updateUser: React.PropTypes.func.isRequired,
-    errors: React.PropTypes.object,
+    errors: React.PropTypes.object
   },
 
   mixins: [Mixins.AsyncActions ],
 
   getAsyncActions() {
     return {
-      updateUser: this.props.updateUser,
+      updateUser: this.props.updateUser
     };
   },
 
@@ -53,16 +53,16 @@ export default React.createClass({
     if (this.props.shipSettings.split_name_field) {
       properties.first_name = {
         type: 'string',
-        title: translate('edit profile first_name field'),
+        title: translate('edit profile first_name field')
       };
       properties.last_name = {
         type: 'string',
-        title: translate('edit profile last_name field'),
+        title: translate('edit profile last_name field')
       };
     } else {
       properties.name = {
         type: 'string',
-        title: translate('edit profile name field'),
+        title: translate('edit profile name field')
       };
     }
 
@@ -71,13 +71,13 @@ export default React.createClass({
         type: 'string',
         title: translate('edit profile email field'),
         format: 'email',
-        minLength: 1,
+        minLength: 1
       };
       properties.password = {
         type: 'string',
         title: translate('edit profile password field'),
         format: 'password',
-        help: <TranslatedMessage message="edit profile password help text" />,
+        help: <TranslatedMessage message="edit profile password help text" />
       };
     }
 
@@ -85,7 +85,7 @@ export default React.createClass({
       $schema: 'http://json-schema.org/draft-04/schema#',
       type: 'object',
       properties: properties,
-      required: ['name', 'email'],
+      required: ['name', 'email']
     };
   },
 
@@ -99,9 +99,9 @@ export default React.createClass({
         type: 'object',
         properties: {
           ...schema.properties,
-          ...this.props.form.fields_schema.properties,
+          ...this.props.form.fields_schema.properties
         },
-        required: schema.required.concat(this.props.form.fields_schema.required),
+        required: schema.required.concat(this.props.form.fields_schema.required)
       };
     }
 
@@ -163,5 +163,5 @@ export default React.createClass({
         disabled={disabled}
         autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />
     );
-  },
+  }
 });

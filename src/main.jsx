@@ -15,7 +15,7 @@ const HullLogin = React.createClass({
   propTypes: {
     engine: React.PropTypes.object.isRequired,
     actions: React.PropTypes.object.isRequired,
-    styles: React.PropTypes.object,
+    styles: React.PropTypes.object
   },
 
   mixins: [Mixins.LayeredComponent],
@@ -65,7 +65,7 @@ const HullLogin = React.createClass({
       resetPassword: translate('reset password header'),
       showProfile: translate('view profile header'),
       editProfile: translate('edit profile header'),
-      thanks: translate('thanks header'),
+      thanks: translate('thanks header')
     };
 
     const title = titles[this.state.activeSection];
@@ -117,7 +117,7 @@ const HullLogin = React.createClass({
         {content}
       </div>
     );
-  },
+  }
 });
 
 export default cssModules(HullLogin, styles);

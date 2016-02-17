@@ -5,7 +5,7 @@ import styles from '../form.css';
 const Textarea = React.createClass({
 
   propTypes: {
-    onChange: React.PropTypes.func.isRequired,
+    onChange: React.PropTypes.func.isRequired
   },
 
   handleChange(e) {
@@ -16,7 +16,7 @@ const Textarea = React.createClass({
     return (
       <textarea styleName="textarea" {...this.props} onChange={this.handleChange} />
     );
-  },
+  }
 });
 
 export default cssModules(Textarea, styles);

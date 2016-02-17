@@ -11,12 +11,12 @@ const PageButtons = React.createClass({
     formIsSubmitted: React.PropTypes.bool,
     shipSettings: React.PropTypes.object.isRequired,
     user: React.PropTypes.object,
-    styles: React.PropTypes.object,
+    styles: React.PropTypes.object
   },
 
   getDefaultProps: function() {
     return {
-      shipSettings: {},
+      shipSettings: {}
     };
   },
 
@@ -117,7 +117,7 @@ const PageButtons = React.createClass({
         {this.renderLogoutButton()}
       </span>
     );
-  },
+  }
 
 });
 

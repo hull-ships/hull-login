@@ -5,7 +5,7 @@ import styles from '../form.css';
 const Select = React.createClass({
   propTypes: {
     onChange: PropTypes.func.isRequired,
-    options: PropTypes.array.isRequired,
+    options: PropTypes.array.isRequired
   },
 
   handleChange(e) {
@@ -30,7 +30,7 @@ const Select = React.createClass({
     return (
       <select styleName="select" {...this.props} onChange={this.handleChange}>{options}</select>
     );
-  },
+  }
 });
 
 export default cssModules(Select, styles);

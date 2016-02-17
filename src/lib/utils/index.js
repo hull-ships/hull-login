@@ -26,5 +26,5 @@ function parseQueryString(queryString) {
 
 export default {
   preloadImage,
-  parseQueryString,
+  parseQueryString
 };

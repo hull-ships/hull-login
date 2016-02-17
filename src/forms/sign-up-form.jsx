@@ -16,7 +16,7 @@ export default React.createClass({
     signUp: React.PropTypes.func.isRequired,
     currentEmail: React.PropTypes.string,
     updateCurrentEmail: React.PropTypes.func.isRequired,
-    errors: React.PropTypes.object,
+    errors: React.PropTypes.object
   },
 
   mixins: [ Mixins.AsyncActions ],
@@ -27,7 +27,7 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
-      signUp: this.props.signUp,
+      signUp: this.props.signUp
     };
   },
 
@@ -50,7 +50,7 @@ export default React.createClass({
     return t.struct({
       ...props,
       email: Email,
-      password: Password,
+      password: Password
     });
   },
 
@@ -65,7 +65,7 @@ export default React.createClass({
         help: <TranslatedMessage message={`sign-up ${f} help text`} />,
         hasError: displayErrors && !!errors.name,
         error: displayErrors && errors[f] && translate(['sign-up name', errors[f], 'error'].join(' ')),
-        autoFocus: true,
+        autoFocus: true
       };
 
       return m;
@@ -78,15 +78,15 @@ export default React.createClass({
         type: 'email',
         help: <TranslatedMessage message="sign-up email help text" />,
         hasError: displayErrors && !!errors.email,
-        error: displayErrors && errors.email && translate(['sign-up email', errors.email, 'error'].join(' ')),
+        error: displayErrors && errors.email && translate(['sign-up email', errors.email, 'error'].join(' '))
       },
       password: {
         placeholder: translate('sign-up password placeholder'),
         type: 'password',
         help: <TranslatedMessage message="sign-up password help text" />,
         hasError: displayErrors && !!errors.password,
-        error: displayErrors && errors.password && translate('sign-up password too short error'),
-      },
+        error: displayErrors && errors.password && translate('sign-up password too short error')
+      }
     };
   },
 
@@ -122,9 +122,9 @@ export default React.createClass({
       onSubmit: this.handleSubmit,
       onChange: this.handleChange,
       disabled: d,
-      value: { email: this.props.currentEmail },
+      value: { email: this.props.currentEmail }
     };
 
     return <Form {...props} autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically} />;
-  },
+  }
 });

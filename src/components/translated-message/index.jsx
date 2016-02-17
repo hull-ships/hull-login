@@ -11,14 +11,14 @@ export default React.createClass({
     variables: React.PropTypes.object,
     tag: React.PropTypes.string,
     allowHTML: React.PropTypes.bool,
-    className: React.PropTypes.string,
+    className: React.PropTypes.string
   },
 
   getDefaultProps: function() {
     return {
       variables: {},
       tag: 'span',
-      allowHTML: true, // TODO read from settings
+      allowHTML: true // TODO read from settings
     };
   },
 
@@ -34,9 +34,9 @@ export default React.createClass({
       const props = {
         className: this.props.className,
         dangerouslySetInnerHTML: {
-          __html: translation, // TODO DOMPurify
+          __html: translation // TODO DOMPurify
         },
-        ...this.props,
+        ...this.props
       };
       rtn = React.createElement(this.props.tag, props);
     } else {
@@ -45,5 +45,5 @@ export default React.createClass({
     }
 
     return rtn;
-  },
+  }
 });

@@ -18,7 +18,7 @@ function shopifyLogin(email, password, options = {}, user) {
   const formData = {
     return_to: '/___RETURN_TO___',
     form_types: 'customer_login',
-    ...wrapCustomer({ email, password }),
+    ...wrapCustomer({ email, password })
   };
 
   return new Promise((resolve, reject) => {
@@ -34,7 +34,7 @@ function shopifyLogin(email, password, options = {}, user) {
             status: 401,
             message: 'invalid credentials',
             reason: 'invalid_credentials',
-            provider: 'classic',
+            provider: 'classic'
           });
         }
       });
@@ -44,7 +44,7 @@ function shopifyLogin(email, password, options = {}, user) {
 function classicLogin(options = {}) {
   const params = {
     email: options.email || options.login,
-    password: options.password,
+    password: options.password
   };
   return Hull.api('services/shopify/customers/login', params, 'post').then((user)=> {
     const { email, password } = params;

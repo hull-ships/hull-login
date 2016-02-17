@@ -5,6 +5,6 @@ import Core from './lib';
 export default {
   Sections,
   Core,
-  Components,
+  Components
 };
 

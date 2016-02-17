@@ -14,8 +14,8 @@ const Button = React.createClass({
     children: React.PropTypes.oneOfType([
       React.PropTypes.element,
       React.PropTypes.array,
-      React.PropTypes.string,
-    ]).isRequired,
+      React.PropTypes.string
+    ]).isRequired
   },
 
   render() {
@@ -23,12 +23,12 @@ const Button = React.createClass({
       button: true,
       block: this.props.block,
       disabled: this.props.disabled,
-      [this.props.kind]: !!this.props.kind,
+      [this.props.kind]: !!this.props.kind
     });
     return (
       <button {...this.props} styleName={cn}>{this.props.icon}{this.props.children}</button>
     );
-  },
+  }
 });
 
 

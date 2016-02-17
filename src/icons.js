@@ -1,7 +1,4 @@
 export default {
-  // reply: require('svg-inline!./icons/reply.svg'),
-  // share: require('svg-inline!./icons/share.svg'),
-  // heart: require('svg-inline!./icons/heart.svg'),
   cog: require('svg-inline!./icons/cog.svg'),
   minus: require('svg-inline!./icons/minus.svg'),
   plus: require('svg-inline!./icons/plus.svg'),
@@ -29,5 +26,5 @@ export default {
   tumblr: require('svg-inline!./icons/tumblr.svg'),
   meetups: require('svg-inline!./icons/meetups.svg'),
   send: require('svg-inline!./icons/send.svg'),
-  email: require('svg-inline!./icons/send.svg'),
+  email: require('svg-inline!./icons/send.svg')
 };

@@ -15,7 +15,7 @@ export default React.createClass({
     currentEmail: React.PropTypes.string,
     shipSettings: React.PropTypes.object.isRequired,
     updateCurrentEmail: React.PropTypes.func.isRequired,
-    errors: React.PropTypes.object,
+    errors: React.PropTypes.object
   },
 
   mixins: [Mixins.AsyncActions],
@@ -27,13 +27,13 @@ export default React.createClass({
 
   getAsyncActions() {
     return {
-      resetPassword: this.props.resetPassword,
+      resetPassword: this.props.resetPassword
     };
   },
 
   getType() {
     return t.struct({
-      email: Email,
+      email: Email
     });
   },
 
@@ -55,8 +55,8 @@ export default React.createClass({
         hasError,
         error: hasError && <TranslatedMessage message={errorMessage} />,
         help,
-        autoFocus: true,
-      },
+        autoFocus: true
+      }
     };
   },
 
@@ -98,6 +98,6 @@ export default React.createClass({
         autoDisableSubmit={this.props.shipSettings.disable_buttons_automatically}
       />
     );
-  },
+  }
 });
 

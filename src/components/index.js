@@ -19,5 +19,5 @@ export default {
   UserImage,
   OrganizationImage,
   SocialButtons,
-  PageButtons,
+  PageButtons
 };

@@ -51,6 +51,6 @@ export default {
         setActionState('failed', error, true);
       });
     };
-  },
+  }
 };
 

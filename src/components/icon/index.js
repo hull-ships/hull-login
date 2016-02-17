@@ -15,7 +15,7 @@ export default class Icon extends React.Component {
   static propTypes = {
     name: React.PropTypes.string.isRequired,
     colorize: React.PropTypes.bool,
-    color: React.PropTypes.string,
+    color: React.PropTypes.string
   }
 
   static defaultProps = {colorize: false, style: {}, size: 16 };

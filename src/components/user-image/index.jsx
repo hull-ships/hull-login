@@ -7,7 +7,7 @@ const UserImage = React.createClass({
 
   propTypes: {
     src: React.PropTypes.string,
-    style: React.PropTypes.object,
+    style: React.PropTypes.object
   },
 
   render() {
@@ -20,7 +20,7 @@ const UserImage = React.createClass({
         <div styleName="image" style={{ backgroundImage: `url(${url})` }}/>
       </div>
     );
-  },
+  }
 });
 
 export default cssModules(UserImage, styles);

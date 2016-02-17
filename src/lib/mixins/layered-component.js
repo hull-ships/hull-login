@@ -64,5 +64,5 @@ export default {
     }
 
     React.unmountComponentAtNode(this._layer);
-  },
+  }
 };

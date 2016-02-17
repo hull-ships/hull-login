@@ -6,7 +6,7 @@ const OrganizationImage = React.createClass({
 
   propTypes: {
     src: React.PropTypes.string,
-    style: React.PropTypes.object,
+    style: React.PropTypes.object
   },
 
   render() {
@@ -19,8 +19,7 @@ const OrganizationImage = React.createClass({
         <img styleName="image" src={url} />
       </div>
     );
-  },
-
+  }
 });
 
 export default cssModules(OrganizationImage, styles);

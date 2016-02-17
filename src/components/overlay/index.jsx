@@ -15,7 +15,7 @@ const Overlay = React.createClass({
     hasErrors: React.PropTypes.bool.isRequired,
     visible: React.PropTypes.bool.isRequired,
     onClose: React.PropTypes.func.isRequired,
-    children: React.PropTypes.any,
+    children: React.PropTypes.any
   },
 
   componentDidMount() {
@@ -119,7 +119,7 @@ const Overlay = React.createClass({
         >{this.renderContent()}{this.renderBackground()}</ReactCSSTransitionGroup>
       </div>
     );
-  },
+  }
 });
 
 export default cssModules(Overlay, styles);

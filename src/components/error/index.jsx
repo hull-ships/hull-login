@@ -6,7 +6,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 const ErrrorMessage = React.createClass({
   propTypes: {
     styles: React.PropTypes.object,
-    children: React.PropTypes.any,
+    children: React.PropTypes.any
   },
 
   render() {
@@ -22,7 +22,7 @@ const ErrrorMessage = React.createClass({
             ><span styleName="error">{this.props.children}</span></ReactCSSTransitionGroup>
       </div>
     );
-  },
+  }
 });
 
 export default cssModules(ErrrorMessage, styles);

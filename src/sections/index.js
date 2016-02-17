@@ -11,6 +11,6 @@ export default {
   resetPassword: ResetPasswordSection,
   showProfile: ShowProfileSection,
   editProfile: EditProfileSection,
-  thanks: ThanksSection,
+  thanks: ThanksSection
 };
 

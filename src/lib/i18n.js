@@ -56,5 +56,5 @@ export default {
   setLocale,
   setTranslations,
   translate,
-  hasTranslation,
+  hasTranslation
 };

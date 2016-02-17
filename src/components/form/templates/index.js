@@ -17,8 +17,8 @@ class Formlet extends React.Component {
     children: React.PropTypes.oneOfType([
       React.PropTypes.element,
       React.PropTypes.array,
-      React.PropTypes.string,
-    ]).isRequired,
+      React.PropTypes.string
+    ]).isRequired
   }
 
   render() {
@@ -74,7 +74,7 @@ export default {
   textbox(locals) {
     const Component = locals.type === 'textarea' ? Textarea : Input;
     return render(Component, locals);
-  },
+  }
 };
 
 
