@@ -44,7 +44,7 @@ const SocialButtons = React.createClass({
     }
   },
 
-  renderButton(provider, index) {
+  renderButton(provider) {
     let actionName;
     let status;
     let button;
@@ -72,7 +72,6 @@ const SocialButtons = React.createClass({
     const providerName = capitalize(provider.name);
     const wording = translate(m, { provider: providerName });
     const handler = this.props[actionName].bind(null, provider.name);
-    const isLast = this.props.providers.length === index + 1;
 
     return (
       <span key={provider.name}>
