@@ -37,16 +37,18 @@ function translate(message, data, fallback) {
 
   const m = _messages[message];
 
+  let ret = fallback;
+
   if (!m) {
     console.warn('[i18n] "' + message + '". is missing in "' + _locale + '".'); // eslint-disable-line
-    return fallback;
   } else {
     try {
-      return m(data);
+      ret = m(data);
     } catch (e) {
       console.error('[i18n] Cannot translate "' + message + '". ' + e.message); // eslint-disable-line
     }
   }
+  return ret;
 }
 
 function hasTranslation(message) {
