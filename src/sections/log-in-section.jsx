@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import cssModules from 'react-css-modules';
 import styles from './sections.css';
+import { translate } from '../lib/i18n';
 
 import { SocialButtons, TranslatedMessage, OrganizationImage, Divider } from '../components';
 import { LogInForm } from '../forms';
@@ -48,12 +49,13 @@ class LogInSection extends BaseSection {
   renderContent() {
     const { shipSettings } = this.props;
     const props = _.omit(this.props, 'styles');
+
     let content;
     if (shipSettings.show_classic_login) {
       content = (
         <div>
           <SocialButtons {...props} />
-          <Divider>or</Divider>
+          <Divider>{translate('divider or', {}, 'or')}</Divider>
           <LogInForm {...props} />
         </div>
       );

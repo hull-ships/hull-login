@@ -61,6 +61,7 @@ export default React.createClass({
     const props = _.reduce(this.getNameFields(), (m, f) => {
       m[f] = {
         placeholder: translate(`sign-up ${f} placeholder`),
+        label: translate(`sign-up ${f} label`),
         type: 'text',
         help: <TranslatedMessage message={`sign-up ${f} help text`} />,
         hasError: displayErrors && !!errors.name,
@@ -75,6 +76,7 @@ export default React.createClass({
       ...props,
       email: {
         placeholder: translate('sign-up email placeholder'),
+        label: translate('sign-up email label'),
         type: 'email',
         help: <TranslatedMessage message="sign-up email help text" />,
         hasError: displayErrors && !!errors.email,
@@ -82,6 +84,7 @@ export default React.createClass({
       },
       password: {
         placeholder: translate('sign-up password placeholder'),
+        label: translate('sign-up password label'),
         type: 'password',
         help: <TranslatedMessage message="sign-up password help text" />,
         hasError: displayErrors && !!errors.password,

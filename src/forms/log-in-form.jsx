@@ -45,6 +45,7 @@ export default React.createClass({
     return {
       login: {
         placeholder: translate('log-in email placeholder'),
+        label: translate('log-in email label'),
         type: 'text',
         help: <TranslatedMessage message="log-in email help text" />,
         hasError,
@@ -53,6 +54,7 @@ export default React.createClass({
       },
       password: {
         placeholder: translate('log-in password placeholder'),
+        label: translate('log-in password label'),
         type: 'password',
         help: <TranslatedMessage message="log-in password help text" />,
         hasError
