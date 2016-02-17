@@ -36,6 +36,7 @@ var displayName = manifest.name || libName;
 var entry = {
   ship: './' + sourceFolder + '/ship.js',
   index: './' + sourceFolder + '/index.js',
+  test: './' + sourceFolder + '/test.js',
 };
 
 /*
