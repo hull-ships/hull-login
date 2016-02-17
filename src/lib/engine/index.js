@@ -231,19 +231,28 @@ export default class Engine extends EventEmitter {
     const id = (this._fetchShipPromiseId || 0) + 1;
     this._fetchShipPromiseId = id;
 
-    return Hull.api(this._ship.id).then((ship) => {
-      if (id !== this._fetchShipPromiseId) {
-        return;
-      }
+    let res;
+    if (this._ship && this._ship.id && this._ship.resources.profile_form) {
+      res = Hull.api(this._ship.id).then((ship) => {
+        if (id !== this._fetchShipPromiseId) {
+          return;
+        }
 
-      this._ship = ship;
-      this._form = this._ship.resources.profile_form;
+        this._ship = ship;
+        this._form = this._ship.resources.profile_form;
 
+        this.resetUser();
+        this.emitChange();
+      }).catch(function(e) {
+        throw new Error('Error Fetching Ship', e);
+      });
+    } else {
       this.resetUser();
       this.emitChange();
-    }).catch(function(e) {
-      throw new Error('Error Fetching Ship', e);
-    });
+      res = Hull.utils.Promise.resolve();
+    }
+
+    return res;
   }
 
   getProviders() {
@@ -325,7 +334,6 @@ export default class Engine extends EventEmitter {
       return this.fetchShip().then(() => {
         const userIsNew = user.created_at === user.updated_at && user.stats.sign_in_count <= 1;
         const hasForm = this.hasForm();
-
         if (!hasForm && userIsNew) {
           this._redirectLater = true;
           this.activateThanksSectionAndHideLater();
@@ -410,14 +418,12 @@ export default class Engine extends EventEmitter {
 
         this[statusKey] = false;
         this._errors = {};
-
         this.emitChange();
       }, (error) => {
         this[statusKey] = false;
 
         error.provider = provider;
         this._errors[method] = error;
-
         this.emitChange();
       });
     }
