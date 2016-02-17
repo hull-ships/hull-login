@@ -15,13 +15,12 @@ const defaultSettings = manifest.settings.reduce((settings, s) => {
 
 const deployment = {
   platform: {
-    type: 'platforms/shopify_shop'
+    type: 'platforms/website'
   },
   ship: {
     settings: {
       ...defaultSettings,
       logo_image: document.location.origin + '/picture.png',
-      show_inline: true
     },
     translations: { en },
     resources: {}
@@ -36,6 +35,13 @@ function onReady(hull) {
   const engine = start(deployment, hull);
   const app = <Main engine={engine} actions={engine.getActions()} />;
   ReactDOM.render(app, element);
+
+  hull.emit('hull.login.showDialog');
+  hull.on('hull.login.dialogHidden', () => {
+    setTimeout( () => {
+      hull.emit('hull.login.showDialog');
+    }, 500);
+  });
 }
 
 Hull.ready(onReady);
