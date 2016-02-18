@@ -20,7 +20,7 @@ const deployment = {
   ship: {
     settings: {
       ...defaultSettings,
-      logo_image: document.location.origin + '/picture.png',
+      logo_image: document.location.origin + '/picture.png'
     },
     translations: { en },
     resources: {}
