@@ -63,6 +63,12 @@
       background-color:color(var(--google) blackness(-10%));
     }
   }
+  &.amazon{
+    background-color:var(--amazon);
+    &:hover, &:focus, &:active{
+      background-color:color(var(--amazon) blackness(-10%));
+    }
+  }
   &.instagram{
     background-color:var(--instagram);
     &:hover, &:focus, &:active{

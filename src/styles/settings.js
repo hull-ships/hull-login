@@ -15,6 +15,7 @@ const _settings = {
   foursquareColor: '#0732a2',
   githubColor: '#333333',
   googleColor: '#dd4b39',
+  amazonColor: '#FFCC66',
   instagramColor: '#3f729b',
   linkedinColor: '#0976b4',
   soundcloudColor: '#ff8800',

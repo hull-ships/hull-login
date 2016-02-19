@@ -53,6 +53,7 @@
 
   --facebook-color: #3C5A98;
   --google-color:   #EB2F12;
+  --amazon-color:   #FFCC66;
   --twitter-color:  #00ABF5;
   --github-color:   #999999;
 
@@ -83,12 +84,11 @@
   --warning-color: var(--orange);
   --info-color: var(--primary);
 
-
-
   --facebook     : #3b5998;
   --foursquare   : #f94877;
   --github       : #999999;
   --google       : #dd4b39;
+  --amazon       : #FFCC66;
   --instagram    : #3f729b;
   --linkedin     : #0976b4;
   --pinterest    : #cc2127;

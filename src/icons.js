@@ -19,6 +19,7 @@ export default {
   twitter: require('svg-inline!./icons/twitter.svg'),
   linkedin: require('svg-inline!./icons/linkedin.svg'),
   google: require('svg-inline!./icons/google.svg'),
+  amazon: require('svg-inline!./icons/amazon.svg'),
   angellist: require('svg-inline!./icons/angellist.svg'),
   instagram: require('svg-inline!./icons/instagram.svg'),
   github: require('svg-inline!./icons/github.svg'),
