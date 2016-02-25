@@ -71,7 +71,7 @@ Changing the fonts for the Login Ship is easy. paste the following code in the C
 
 ## Events
 
-The dialog can be controlled by triggering events. with the `Hull.emit` function.
+With Javascript, the ship can be controlled with the `Hull.emit` method.
 
 - **`Hull.emit('hull.login.showDialog', options);`**: Opens the dialog.
 - **`Hull.emit('hull.login.hideDialog', options);`**: Hides the dialog.
