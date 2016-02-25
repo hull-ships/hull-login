@@ -65,6 +65,7 @@
   }
   &.amazon{
     background-color:var(--amazon);
+    color: #333333;
     &:hover, &:focus, &:active{
       background-color:color(var(--amazon) blackness(-10%));
     }
