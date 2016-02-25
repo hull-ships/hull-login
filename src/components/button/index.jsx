@@ -32,4 +32,4 @@ const Button = React.createClass({
 });
 
 
-export default cssModules(Button, styles, {allowMultiple: true});
+export default cssModules(Button, styles, { allowMultiple: true, errorWhenNotFound: false });
