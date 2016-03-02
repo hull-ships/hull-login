@@ -1,3 +1,5 @@
+import storage from './storage';
+
 const NOOP = function NOOP() {};
 
 function preloadImage(src, callback) {
@@ -26,5 +28,6 @@ function parseQueryString(queryString) {
 
 export default {
   preloadImage,
-  parseQueryString
+  parseQueryString,
+  storage
 };

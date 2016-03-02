@@ -2,7 +2,7 @@ import _ from 'lodash';
 import assign from 'object-assign';
 import { EventEmitter } from 'events';
 import * as Backends from './backends';
-import { parseQueryString } from '../utils';
+import { parseQueryString, storage } from '../utils';
 
 const SHIP_NAMESPACE = 'hull.login';
 
@@ -49,8 +49,6 @@ const STATUS = {
 const EVENT = 'CHANGE';
 
 const STORAGE_KEY = 'hull-login';
-
-let isLocalStorageSupported;
 
 export default class Engine extends EventEmitter {
 
@@ -167,31 +165,16 @@ export default class Engine extends EventEmitter {
       }
       return s;
     }, this.getSavedState());
-
-    if (isLocalStorageSupported !== false) {
-      try {
-        window.localStorage.setItem(this.getStorageKey(), JSON.stringify(state));
-      } catch (err) {
-        isLocalStorageSupported = false;
-      }
-    }
+    storage.setItem(this.getStorageKey(), state);
     return state;
   }
 
   getSavedState() {
-    let state = {};
-    const val = window.localStorage.getItem(this.getStorageKey());
-    if (val) {
-      try {
-        state = JSON.parse(val);
-      } catch (err) {
-        state = {};
-      }
-      if (!state || (typeof state !== 'object')) {
-        state = {};
-      }
+    const state = storage.getItem(this.getStorageKey());
+    if (state && typeof(state) === 'object') {
+      return state;
     }
-    return state || {};
+    return {};
   }
 
   resetState() {
