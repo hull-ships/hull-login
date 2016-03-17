@@ -401,6 +401,12 @@ export default class Engine extends EventEmitter {
 
         this[statusKey] = false;
         this._errors = {};
+
+        if (!this.hasForm() || this.formIsSubmitted()) {
+          this._dialogIsVisible = false;
+          this._activeSection = null;
+        }
+
         this.emitChange();
       }, (error) => {
         this[statusKey] = false;
