@@ -81,11 +81,21 @@ export default class Engine extends EventEmitter {
     });
     this.emitChange();
 
-    const savedState = this.getSavedState();
-    if (savedState.completeSignup && !this.formIsSubmitted()) {
+    const { completeSignup, dialogHiddenAt, returningUser } = this.getSavedState() || {};
+    if (completeSignup && !this.formIsSubmitted()) {
       this.showLater(1, 'editProfile');
     } else {
-      const showSignUpSection = !savedState.returningUser && !savedState.dialogHidden;
+      const now = new Date().getTime();
+      const showAgainAfter = 86400 * 1000; // 24 hours
+
+      let dialogHidden = false;
+      let timeSinceLastHideDialog = 0;
+      if (dialogHiddenAt && dialogHiddenAt > 0) {
+        timeSinceLastHideDialog = now - dialogHiddenAt;
+        dialogHidden = timeSinceLastHideDialog < showAgainAfter;
+      }
+
+      const showSignUpSection = !returningUser && !dialogHidden;
       const t = this._ship.settings.show_sign_up_section_after;
       if (showSignUpSection && t > 0) {
         this.showLater(t, 'signUp');
@@ -281,7 +291,7 @@ export default class Engine extends EventEmitter {
   }
 
   hideDialog() {
-    this.saveState({ dialogHidden: true, completeSignup: null });
+    this.saveState({ dialogHiddenAt: new Date().getTime(), completeSignup: null });
 
 
     this.clearTimers();
