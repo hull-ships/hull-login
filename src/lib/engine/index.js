@@ -95,7 +95,7 @@ export default class Engine extends EventEmitter {
         dialogHidden = timeSinceLastHideDialog < showAgainAfter;
       }
 
-      const showSignUpSection = !returningUser && !dialogHidden;
+      const showSignUpSection = storage.isEnabled() && !returningUser && !dialogHidden;
       const t = this._ship.settings.show_sign_up_section_after;
       if (showSignUpSection && t > 0) {
         this.showLater(t, 'signUp');

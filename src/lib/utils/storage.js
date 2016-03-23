@@ -1,4 +1,16 @@
 export default {
+
+  isEnabled() {
+    let enabled = false;
+    try {
+      window.localStorage.getItem('boom');
+      enabled = true;
+    } catch (err) {
+      enabled = false;
+    }
+    return enabled;
+  },
+
   getItem(key) {
     let ret;
     try {
@@ -11,6 +23,7 @@ export default {
     }
     return ret;
   },
+
   setItem(key, val) {
     let ret;
     try {
