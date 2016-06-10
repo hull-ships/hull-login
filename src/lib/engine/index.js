@@ -520,7 +520,10 @@ export default class Engine extends EventEmitter {
     const origin = window.location.origin || window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 
     if (this.isShopifyCustomer()) {
-      if (parseQueryString().checkout_url) {
+      const { checkout_url } = parseQueryString();
+      if (checkout_url && checkout_url.match(/^\//)) {
+        location = origin + checkout_url;
+      } else if (checkout_url && checkout_url.match(/checkouts/)) {
         location = origin + '/checkout';
       } else {
         location = location || document.location.href;
