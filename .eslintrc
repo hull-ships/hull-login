@@ -5,7 +5,7 @@
   },
   "rules": {
     "eqeqeq": [2, "smart"],
-    "camelcase": [2, { "properties": "never" }],
+    "camelcase": [0, { "properties": "never" }],
     "func-names": [0],
     "indent": [2, 2],
     "no-console": [0],
