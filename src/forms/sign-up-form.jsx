@@ -5,8 +5,8 @@ import { FieldTypes, I18n, Mixins } from '../lib';
 import { TranslatedMessage, Form } from '../components';
 import _ from 'lodash';
 
-const { Name, Email, Password } = FieldTypes;
-const { translate } = I18n;
+const { Name, Email, Password, Boolean } = FieldTypes;
+const { translate, hasTranslation } = I18n;
 
 export default React.createClass({
   displayName: 'SignUpForm',
@@ -47,11 +47,17 @@ export default React.createClass({
       return m;
     }, {});
 
-    return t.struct({
+    const ret = {
       ...props,
       email: Email,
       password: Password
-    });
+    };
+
+    if (hasTranslation('sign-up accepts_marketing label')) {
+      ret.accepts_marketing = Boolean;
+    }
+
+    return t.struct(ret);
   },
 
   getFields() {
@@ -72,7 +78,7 @@ export default React.createClass({
       return m;
     }, {});
 
-    return {
+    const ret = {
       ...props,
       email: {
         placeholder: translate('sign-up email placeholder'),
@@ -91,6 +97,16 @@ export default React.createClass({
         error: displayErrors && errors.password && translate('sign-up password too short error')
       }
     };
+
+    if (hasTranslation('sign-up accepts_marketing label')) {
+      ret.accepts_marketing = {
+        label: translate('sign-up accepts_marketing label'),
+        type: 'accepts_marketing',
+        hasError: false
+      };
+    }
+
+    return ret;
   },
 
   handleSubmit(value) {
@@ -101,6 +117,8 @@ export default React.createClass({
   handleChange(changes) {
     this.setState({ displayErrors: false });
     const { email } = changes.value;
+
+    this.props.onFormChange(changes);
     if (email) {
       this.props.updateCurrentEmail(email);
     }

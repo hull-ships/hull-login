@@ -55,9 +55,21 @@ function classicLogin(options = {}) {
 function socialLogin(options = {}) {
   let url = Hull.config('callbackUrl') ||
             `${origin}/a/hull-callback`;
+
+  const params = [];
+
   if (options.redirect_url) {
-    url = `${url}?redirect_url=${options.redirect_url}`;
+    params.push(`redirect_url=${options.redirect_url}`);
   }
+
+  if (options.hasOwnProperty('accepts_marketing')) {
+    params.push(`accepts_marketing=${options.accepts_marketing}`);
+  }
+
+  if (params.length > 0) {
+    url = `${url}?${params.join('&')}`;
+  }
+
   return Hull.login({ ...options, redirect_url: url });
 }
 

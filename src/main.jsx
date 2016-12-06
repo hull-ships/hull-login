@@ -87,8 +87,9 @@ const HullLogin = React.createClass({
 
   renderContent() {
     const Section = Sections[this.state.activeSection];
+    const className = this.props.styles && this.props.styles.content;
     return (
-      <div className={this.props.styles.content}>
+      <div className={className}>
         {this.renderSpinner()}
         <Section {...this.state} {...this.props.actions} />
       </div>

@@ -1,4 +1,4 @@
-import t from 'tcomb-form';
+import t, { Str, Boolean } from 'tcomb-form';
 
 function isEmail(value) {
   return /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(value);
@@ -14,17 +14,18 @@ function minLength(length) {
   };
 }
 
-const Email = t.subtype(t.Str, isEmail);
+const Email = t.subtype(Str, isEmail);
 
-const Username = t.subtype(t.Str, isUsername);
+const Username = t.subtype(Str, isUsername);
 
-const Login = t.subtype(t.Str, function(value) {
+const Login = t.subtype(Str, function(value) {
   return isUsername(value) || isEmail(value);
 });
 
-const Password = t.subtype(t.Str, minLength(1));
+const Password = t.subtype(Str, minLength(1));
 
-const Name = t.subtype(t.Str, minLength(1));
+const Name = t.subtype(Str, minLength(1));
 
-export default { Email, Username, Login, Password, Name };
+
+export default { Email, Username, Login, Password, Name, Boolean };
 

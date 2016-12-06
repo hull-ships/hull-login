@@ -16,7 +16,8 @@ export default React.createClass({
     isWorking: React.PropTypes.bool,
     shipSettings: React.PropTypes.object.isRequired,
     updateCurrentEmail: React.PropTypes.func.isRequired,
-    errors: React.PropTypes.object
+    errors: React.PropTypes.object,
+    onFormChange: React.PropTypes.func.isRequired
   },
 
   mixins: [Mixins.AsyncActions],
@@ -70,6 +71,8 @@ export default React.createClass({
   handleChange(changes) {
     this.setState({ displayErrors: false });
     const { login } = changes.value;
+
+    this.props.onFormChange(changes);
     if (login) {
       this.props.updateCurrentEmail(login);
     }

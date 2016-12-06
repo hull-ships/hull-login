@@ -4,6 +4,7 @@ import React from 'react';
 import Input from './input';
 import Textarea from './textarea';
 import Select from './select';
+import Checkbox from './checkbox';
 import Help from '../../help';
 import ErrrorMessage from '../../error';
 import cssModules from 'react-css-modules';
@@ -25,7 +26,6 @@ class Formlet extends React.Component {
     const {locals, children} = this.props;
     return (
       <span styleName="field">
-        <span styleName="label">{locals.label || locals.attrs.placeholder}</span>
         {children}
         <ErrrorMessage>{locals.error}</ErrrorMessage>
         <Help>{locals.help}</Help>
@@ -37,14 +37,20 @@ class Formlet extends React.Component {
 function render(Component, locals) {
   return (
     <Formlet locals={locals}>
+      <span styleName="label">{locals.label || locals.attrs.placeholder}</span>
       <Component {...locals}/>
     </Formlet>
   );
 }
 
 export default {
-  checkbox() {
-    // TODO
+
+  checkbox(locals) {
+    return (
+      <Formlet locals={locals}>
+        <Checkbox {...locals} />
+      </Formlet>
+    );
   },
 
   list() {

@@ -35,7 +35,8 @@ const ACTIONS = [
   'activateResetPasswordSection',
   'activateShowProfileSection',
   'activateEditProfileSection',
-  'updateCurrentEmail'
+  'updateCurrentEmail',
+  'onFormChange'
 ];
 
 const STATUS = {
@@ -554,6 +555,13 @@ export default class Engine extends EventEmitter {
       email = this._transientOptions.email;
     }
     return email;
+  }
+
+  onFormChange({ value = {} }) {
+    if (value.hasOwnProperty('accepts_marketing')) {
+      this._transientOptions = this._transientOptions || {};
+      this._transientOptions.accepts_marketing = value.accepts_marketing !== false;
+    }
   }
 
   activateLogInSection() {
