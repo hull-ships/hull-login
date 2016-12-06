@@ -48,6 +48,7 @@
   "reset password switch to log-in link": "Know your password? Log in!",
   "reset password too many requests error" : "Too many login attempts: Please try again in 10 minutes",
 
+  "sign-up accepts_marketing label": "Subscribe to receive occasional promotional emails. We will not share your personal information.",
   "sign-up button text when attempting sign-up": "Signing up",
   "sign-up button text": "Sign up with email",
   "sign-up email is already taken error": "Email has already been taken",
