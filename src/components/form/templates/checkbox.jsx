@@ -15,7 +15,7 @@ const Checkbox = React.createClass({
   render() {
     return (
       <label>
-        <input {...this.props} type="checkbox" onChange={this.handleChange} />
+        <input {...this.props} type="checkbox" onChange={this.handleChange} style={{ marginRight: 5 }} />
         <span styleName="label">{this.props.label}</span>
       </label>
     );
