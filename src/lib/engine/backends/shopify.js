@@ -41,6 +41,24 @@ function shopifyLogin(email, password, options = {}, user) {
   });
 }
 
+function shopifyFormLogin(email, password) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = '/account/login';
+  const inputEmail = document.createElement('input');
+  inputEmail.setAttribute('name', 'customer[email]');
+  inputEmail.setAttribute('value', email);
+  form.appendChild(inputEmail);
+
+  const inputPassword = document.createElement('input');
+  inputPassword.setAttribute('name', 'customer[password]');
+  inputPassword.setAttribute('value', password);
+  form.appendChild(inputEmail);
+
+  document.body.appendChild(form);
+  return form.submit();
+}
+
 function classicLogin(options = {}) {
   const params = {
     email: options.email || options.login,
@@ -49,7 +67,7 @@ function classicLogin(options = {}) {
   return Hull.api('services/shopify/customers/login', params, 'post').then((user)=> {
     const { email, password } = params;
     return shopifyLogin(email, password, options, user);
-  });
+  }, () => shopifyFormLogin(params.email, params.password));
 }
 
 function socialLogin(options = {}) {
@@ -101,4 +119,3 @@ export function resetPassword(email) {
 export function logOut(/* options */) {
   return Hull.logout({ redirect_url: `${origin}/account/logout` });
 }
-
