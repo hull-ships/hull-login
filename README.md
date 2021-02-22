@@ -4,6 +4,8 @@ Login Ship
 A login dialog you can embed in your site.
 
 ## Manifest URL
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhull-ships%2Fhull-login.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhull-ships%2Fhull-login?ref=badge_shield)
+
 
 ```
 https://hull-ships.github.io/hull-login/manifest.json
@@ -28,3 +30,7 @@ gulp
 
 ## Settings, Events, Docs
 [Checkout Docs](./src/readme.md)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fhull-ships%2Fhull-login.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fhull-ships%2Fhull-login?ref=badge_large)
