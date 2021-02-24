@@ -75,7 +75,7 @@
     "merge-stream": "^1.0.1",
     "moment": "^2.29.1",
     "ngrok": "^3.4.0",
-    "open": "0.0.5",
+    "open": "6.0.0",
     "postcss-clearfix": "^2.0.1",
     "postcss-color-rgba-fallback": "^4.0.0",
     "postcss-initial": "^4.0.0",
